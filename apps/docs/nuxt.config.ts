@@ -152,11 +152,6 @@ export default defineNuxtConfig({
   },
 
   hooks: {
-    // Every page would otherwise prefetch the docs' lazy chunks, which delays the
-    // homepage's fonts and stylesheet, and with them its LCP.
-    "build:manifest"(manifest) {
-      for (const chunk of Object.values(manifest)) chunk.prefetch = false;
-    },
     // Docus writes the assistant's endpoint into the public runtime config, and
     // so into every page, even with the assistant off. Off, nothing reads it.
     "nitro:config"(nitroConfig) {
