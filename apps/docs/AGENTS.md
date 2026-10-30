@@ -13,15 +13,15 @@ apps/docs/
 ├── wrangler.json             # the inkline Worker: dist/ as static assets
 ├── app/
 │   ├── app.vue               # mounts Docus under /docs, the homepage everywhere else
-│   ├── app.config.ts         # GitHub links, docsTheme (frameworks, wordmark, byline), ui colours
+│   ├── app.config.ts         # GitHub links, docsTheme (frameworks, wordmark, byline,
+│   │                         # headerLinks), ui colours
 │   ├── app.css               # Inkline's purple scale and --ui-primary, Tailwind @source lines
 │   ├── error.vue             # UxErrorPage
 │   ├── pages/index.vue       # the homepage: UxSite, UxHeader, UxHero, UxChapter, UxFinale
 │   ├── components/
-│   │   ├── app/              # AppHeaderCTA, AppHeaderBody: the docs header's links;
-│   │   │                     # VersionSelect (<AppVersionSelect>): the version select
+│   │   ├── app/              # AppHeaderCTA, AppHeaderBody: the layer's header with the
+│   │   │                     # version select; VersionSelect (<AppVersionSelect>)
 │   │   └── content/          # StorybookEmbed, BrowserFrame: the embed port
-│   ├── composables/useHeaderLinks.ts
 │   ├── data/site.ts          # DOCS_URL, GITHUB_URL
 │   ├── data/versions.ts      # VERSIONS: v5 (this site), v4, v3, v2
 │   └── lib/storybookEmbed.ts # the embed's URL and message helpers
@@ -40,9 +40,9 @@ apps/docs/
 
 ## Shared and local
 
-- **From the packages (don't copy or edit here):** Docus's header, sidebar, search, table of contents, colour mode, llms.txt, robots.txt and OG images; the layer's `FrameworkSwitcher`, Framework select and header wordmark; the homepage components and the scene. If a build needs a package change, flag it upstream rather than forking the package into this app.
-- **Copied from Open Components:** `app/app.vue`, `app/error.vue`, the header overrides in `app/components/app/`, `useHeaderLinks`, `server/`, and the generic parts of `nuxt.config.ts` and `app/app.config.ts`. Keep them close to the source, so a fix there carries over.
-- **Local to this app:** the brand (`app/app.config.ts`, `app/app.css`), the homepage, the embed port, the Vercel rules, the Cloudflare config and all markdown under `content/`.
+- **From the packages (don't copy or edit here):** Docus's header, sidebar, search, table of contents, colour mode, llms.txt, robots.txt and OG images; the layer's `FrameworkSwitcher`, Framework select, header wordmark and header links (`AppHeaderLinks`, from `docsTheme.headerLinks`); the homepage components and the scene. If a build needs a package change, flag it upstream rather than forking the package into this app.
+- **Copied from Open Components:** `app/app.vue`, `app/error.vue`, `server/`, and the generic parts of `nuxt.config.ts` and `app/app.config.ts`. Keep them close to the source, so a fix there carries over.
+- **Local to this app:** the brand (`app/app.config.ts`, `app/app.css`), the header overrides in `app/components/app/`, which compose the layer's `AppHeaderLinks` and `AppHeaderFramework` around the Version select, the homepage, the embed port, the Vercel rules, the Cloudflare config and all markdown under `content/`.
 
 ## Docs content
 
