@@ -1,4 +1,4 @@
-import { GITHUB_URL } from "./data/site";
+import { DOCS_URL, GITHUB_URL } from "./data/site";
 
 export default defineAppConfig({
   // The docs' GitHub, "Edit this page" and "Report an issue" links. Docus reads
@@ -27,6 +27,13 @@ export default defineAppConfig({
     // homepage header does.
     wordmark: { bold: "Ink", regular: "line" },
     byline: true,
+    // The docs header's links. GitHub is the last: AppHeaderCTA puts the
+    // Version select before it.
+    headerLinks: [
+      // The introduction, rather than /docs, which only redirects to it.
+      { label: "Documentation", to: DOCS_URL, activeFor: "/docs" },
+      { label: "GitHub", to: GITHUB_URL, target: "_blank" },
+    ],
   },
   ui: {
     colors: {
