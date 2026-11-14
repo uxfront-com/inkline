@@ -15,6 +15,9 @@ Private (`"private": true`) — never published.
 - The story list is read once from React's `/index.json` (React is the reference).
 - For each story, the suite screenshots each framework's standalone `iframe.html?id=<id>&viewMode=story`
   (`#storybook-root` element) and pixel-diffs it against the React render with `pixelmatch`.
+- Before each screenshot, the suite waits up to 30 s for Storybook to mark the story's render finished.
+  A cold dev server compiles a component family's code on the first story of that family, so that
+  story can take several seconds.
 - **No committed baseline images** — React is the live reference each run, so every framework renders on
   the same machine in the same run and cross-OS font/anti-aliasing drift can't cause false diffs.
 
@@ -68,8 +71,9 @@ per-framework tests.
 ## Green means green
 
 The suite surfaces **real** cross-framework differences, and it is now green and deterministic across
-all seven targets — Solid, Qwik (the suite waits for its container to resume), and the rest all match
-the React reference. A diff here is a real regression, so the check is **blocking** in CI. Any new red
+all seven targets: Solid, Qwik and the rest all match the React reference. The suite waits up to 30 s
+for each story's render to finish, since a cold dev server can take several seconds on the first story
+of a family. A diff here is a real regression, so the check is **blocking** in CI. Any new red
 is a genuine finding to fix, not test flakiness or an expected residual — read the uploaded Playwright
 report + diff images to triage it.
 

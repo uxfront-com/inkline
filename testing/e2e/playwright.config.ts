@@ -26,8 +26,7 @@ export default defineConfig({
     viewport: { width: 1280, height: 720 },
     deviceScaleFactor: 1,
     colorScheme: "light",
-    // A framework missing the target element (Qwik's empty render) should fail an interaction step
-    // fast, not hang for the default 30s.
+    // A missing target element should fail an interaction step fast, not hang for the default 30 s.
     actionTimeout: 5_000,
     trace: "on-first-retry",
   },

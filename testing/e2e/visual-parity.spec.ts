@@ -22,8 +22,7 @@ const COMPARED: ReadonlyArray<readonly [framework: string, port: number]> = [
   ["svelte", 6008],
   ["solid", 6009],
   ["angular", 6010],
-  // Qwik is compared like the others. (Its Storybook has had an empty-container resume issue upstream;
-  // the suite waits for the container to resume — see waitForStoryReady — so it does capture output.)
+  // Qwik is compared like the others.
   ["qwik", 6011],
   ["astro", 6012],
 ];

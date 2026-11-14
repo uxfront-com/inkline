@@ -95,8 +95,11 @@ function iframeUrl(port: number, id: string): string {
 }
 
 async function waitForStoryReady(page: Page): Promise<void> {
-  // Storybook 10 marks each render "finished" (or "errored") when it settles. Bounded so a framework
-  // that never finishes rendering fails fast instead of hanging — screenshotRoot then records it empty.
+  // Storybook 10 marks each render "finished" (or "errored") when it settles. A cold dev server
+  // compiles a component family's code on the first story of that family, so that story can take
+  // several seconds to finish. Bounded at 30 s so a framework that never finishes rendering doesn't
+  // hang the suite: screenshotRoot then records whatever is there. The options go in the third
+  // argument; the second is the page function's `arg`, and options passed there are ignored.
   try {
     await page.waitForFunction(
       () => {
@@ -110,27 +113,11 @@ async function waitForStoryReady(page: Page): Promise<void> {
           renders.some((r) => r.phase === "finished" || r.phase === "errored")
         );
       },
-      { timeout: 15_000 },
+      undefined,
+      { timeout: 30_000 },
     );
   } catch {
     // Capture whatever rendered (e.g. an empty container) rather than hanging.
-  }
-  // Qwik renders in two phases: the SSR container mounts "paused" (collapsed), then resumes and
-  // hydrates asynchronously. Storybook's render phase settles at mount — before resume — so a capture
-  // taken then intermittently catches the pre-resume container (a tiny placeholder) and reports a
-  // spurious dimension mismatch against the already-painted React reference. Wait for the container to
-  // reach `q:container="resumed"` when one is present; a no-op for every other framework. Bounded and
-  // non-fatal so a genuinely stuck resume still fails fast via screenshotRoot rather than hanging.
-  try {
-    await page.waitForFunction(
-      () => {
-        const container = document.querySelector("#storybook-root [q\\:container]");
-        return !container || container.getAttribute("q:container") === "resumed";
-      },
-      { timeout: 8_000 },
-    );
-  } catch {
-    // Resume never completed — capture whatever is there and let the diff surface it.
   }
   await page.evaluate(() => document.fonts.ready).catch(() => undefined);
   await page.waitForTimeout(120);
