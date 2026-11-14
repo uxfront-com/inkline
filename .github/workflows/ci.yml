@@ -283,7 +283,10 @@ jobs:
 
   visual-parity:
     name: Visual Parity (shard ${{ matrix.shard }})
-    runs-on: ubuntu-latest
+    # Playwright 1.60 (the locked @playwright/test) can't install Chromium on ubuntu-26.04, which
+    # ubuntu-latest became in October 2026. Playwright 1.61 adds it: move back to ubuntu-latest when
+    # testing/e2e upgrades.
+    runs-on: ubuntu-24.04
     needs: build
     # Blocking: listed in `ci-success.needs` below. Parity is green and deterministic across all seven
     # targets, so a diff here is a real regression and fails the pipeline. The uploaded Playwright report
