@@ -7,7 +7,7 @@ Repo-wide conventions for code, tests, files, and commits. This document is a po
 | Concern                   | Tool                        | Configured in                                                                                          |
 | ------------------------- | --------------------------- | ------------------------------------------------------------------------------------------------------ |
 | Package manager           | pnpm 11.x                   | [`package.json`](../package.json) `packageManager` field                                               |
-| Node runtime              | Node ≥22.12.0               | [`package.json`](../package.json) `engines.node`                                                       |
+| Node runtime              | Node ≥24                    | [`package.json`](../package.json) `engines.node`                                                       |
 | Workspace layout          | pnpm workspaces             | [`pnpm-workspace.yaml`](../pnpm-workspace.yaml)                                                        |
 | Build / dev / test driver | Vite+ (`vp` CLI)            | per-package [`vite.config.ts`](../vite.config.ts) + root [`vite.config.ts`](../vite.config.ts)         |
 | Linter                    | OXLint (via `vp lint`)      | root [`vite.config.ts`](../vite.config.ts) `lint` section                                              |

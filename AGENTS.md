@@ -72,7 +72,7 @@ For the user-facing language reference (primitives, control flow, options), the 
 
 These apply everywhere. Package-level `AGENTS.md` files repeat them only when consequential.
 
-- **Tooling**: pnpm 11, Node ≥22.12, Vite+ (`vp` CLI). OXLint via `vp lint`; Oxfmt via `vp fmt`. **Not ESLint, not Prettier.**
+- **Tooling**: pnpm 11, Node ≥24, Vite+ (`vp` CLI). OXLint via `vp lint`; Oxfmt via `vp fmt`. **Not ESLint, not Prettier.**
 - **Tests**: colocated as `<file>.test.ts`. Vitest. Never in a separate `tests/` folder.
 - **Commits**: conventional commits with package scope — `feat(compiler): …`, `fix(ci): …`. See [docs/conventions.md](./docs/conventions.md) → "Commit messages".
 - **Changesets**: every change to a published package needs one (`pnpm changeset`). See [docs/release-process.md](./docs/release-process.md).
