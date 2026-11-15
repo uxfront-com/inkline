@@ -17,8 +17,7 @@ export default defineConfig({
     lib: {
       entry: {
         index: "./src/index.ts",
-        headless: "./.inkline/headless.ts",
-        stories: "./.inkline/stories.ts",
+        headless: "../components/dist/solid/headless.ts",
       },
       formats: ["es"],
       fileName: (_format, entryName) => `${entryName}.js`,

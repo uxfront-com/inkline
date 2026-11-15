@@ -1,1 +1,1 @@
-export * from "../.inkline/index.ts";
+export * from "../../components/dist/angular/index.ts";

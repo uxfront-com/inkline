@@ -238,7 +238,6 @@
     },
     "IRadioFieldBase": {
       "props": [
-        "checked",
         "disabled",
         "id",
         "name",
@@ -246,10 +245,10 @@
         "required",
         "value"
       ],
-      "models": [],
-      "events": [
-        "change"
+      "models": [
+        "selected"
       ],
+      "events": [],
       "attributes": true
     },
     "IRadioGroup": {

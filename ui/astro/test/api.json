@@ -33,52 +33,61 @@
   "components": {
     "IBadge": {
       "props": [
+        "class",
         "color",
         "label",
         "size",
+        "style",
         "variant"
       ],
       "models": [],
       "events": [],
-      "attributes": true
+      "attributes": false
     },
     "IBadgeBase": {
       "props": [
-        "label"
+        "class",
+        "label",
+        "style"
       ],
       "models": [],
       "events": [],
-      "attributes": true
+      "attributes": false
     },
     "IButton": {
       "props": [
         "block",
+        "class",
         "color",
         "disabled",
         "label",
         "loading",
         "size",
+        "style",
         "type",
         "variant"
       ],
       "models": [],
       "events": [],
-      "attributes": true
+      "attributes": false
     },
     "IButtonBase": {
       "props": [
+        "class",
         "disabled",
         "label",
         "loading",
+        "style",
         "type"
       ],
       "models": [],
       "events": [],
-      "attributes": true
+      "attributes": false
     },
     "ICheckbox": {
       "props": [
         "checked",
+        "class",
         "color",
         "disabled",
         "id",
@@ -87,77 +96,92 @@
         "name",
         "readonly",
         "required",
-        "size"
+        "size",
+        "style"
       ],
       "models": [],
       "events": [],
-      "attributes": true
+      "attributes": false
     },
     "ICheckboxBase": {
-      "props": [],
+      "props": [
+        "class",
+        "style"
+      ],
       "models": [],
       "events": [],
-      "attributes": true
+      "attributes": false
     },
     "ICheckboxControlBase": {
       "props": [
         "checked",
+        "class",
         "disabled",
         "id",
         "indeterminate",
         "name",
         "readonly",
-        "required"
+        "required",
+        "style"
       ],
       "models": [],
       "events": [],
-      "attributes": true
+      "attributes": false
     },
     "IFieldGroup": {
       "props": [
         "block",
+        "class",
         "id",
-        "orientation"
+        "orientation",
+        "style"
       ],
       "models": [],
       "events": [],
-      "attributes": true
+      "attributes": false
     },
     "IFieldGroupBase": {
       "props": [
-        "id"
+        "class",
+        "id",
+        "style"
       ],
       "models": [],
       "events": [],
-      "attributes": true
+      "attributes": false
     },
     "IHamburgerMenu": {
       "props": [
         "animation",
         "ariaControls",
         "ariaLabel",
+        "class",
         "color",
         "disabled",
         "open",
-        "size"
+        "size",
+        "style"
       ],
       "models": [],
       "events": [],
-      "attributes": true
+      "attributes": false
     },
     "IHamburgerMenuBase": {
       "props": [
         "ariaControls",
         "ariaLabel",
+        "class",
         "disabled",
-        "open"
+        "open",
+        "style"
       ],
       "models": [],
       "events": [],
-      "attributes": true
+      "attributes": false
     },
     "IInput": {
       "props": [
+        "class",
         "color",
         "disabled",
         "id",
@@ -166,21 +190,24 @@
         "placeholder",
         "readonly",
         "size",
+        "style",
         "type",
         "value",
         "variant"
       ],
       "models": [],
       "events": [],
-      "attributes": true
+      "attributes": false
     },
     "IInputBase": {
       "props": [
-        "id"
+        "class",
+        "id",
+        "style"
       ],
       "models": [],
       "events": [],
-      "attributes": true
+      "attributes": false
     },
     "IInputControlBase": {
       "props": [
@@ -194,57 +221,70 @@
       ],
       "models": [],
       "events": [],
-      "attributes": true
+      "attributes": false
     },
     "IInputPrefixBase": {
-      "props": [],
+      "props": [
+        "class",
+        "style"
+      ],
       "models": [],
       "events": [],
-      "attributes": true
+      "attributes": false
     },
     "IInputSuffixBase": {
-      "props": [],
+      "props": [
+        "class",
+        "style"
+      ],
       "models": [],
       "events": [],
-      "attributes": true
+      "attributes": false
     },
     "IInputTextareaBase": {
       "props": [
+        "class",
         "disabled",
         "id",
         "name",
         "placeholder",
         "readonly",
+        "style",
         "value"
       ],
       "models": [],
       "events": [],
-      "attributes": true
+      "attributes": false
     },
     "IRadioBase": {
       "props": [
-        "id"
+        "class",
+        "id",
+        "style"
       ],
       "models": [],
       "events": [],
-      "attributes": true
+      "attributes": false
     },
     "IRadioFieldBase": {
       "props": [
-        "checked",
+        "class",
         "disabled",
         "id",
         "name",
         "readonly",
         "required",
+        "selected",
+        "style",
         "value"
       ],
       "models": [],
       "events": [],
-      "attributes": true
+      "attributes": false
     },
     "IRadioGroup": {
       "props": [
+        "class",
         "color",
         "disabled",
         "id",
@@ -254,60 +294,73 @@
         "orientation",
         "readonly",
         "size",
+        "style",
         "value"
       ],
       "models": [],
       "events": [],
-      "attributes": true
+      "attributes": false
     },
     "IRadioGroupBase": {
       "props": [
+        "class",
         "id",
         "label",
-        "readonly"
+        "readonly",
+        "style"
       ],
       "models": [],
       "events": [],
-      "attributes": true
+      "attributes": false
     },
     "ISwitch": {
       "props": [
         "checked",
+        "class",
         "color",
         "disabled",
         "id",
         "label",
         "name",
         "readonly",
-        "size"
+        "size",
+        "style"
       ],
       "models": [],
       "events": [],
-      "attributes": true
+      "attributes": false
     },
     "ISwitchBase": {
-      "props": [],
+      "props": [
+        "class",
+        "style"
+      ],
       "models": [],
       "events": [],
-      "attributes": true
+      "attributes": false
     },
     "ISwitchControlBase": {
       "props": [
         "checked",
+        "class",
         "disabled",
         "id",
         "name",
-        "readonly"
+        "readonly",
+        "style"
       ],
       "models": [],
       "events": [],
-      "attributes": true
+      "attributes": false
     },
     "ISwitchLabelBase": {
-      "props": [],
+      "props": [
+        "class",
+        "style"
+      ],
       "models": [],
       "events": [],
-      "attributes": true
+      "attributes": false
     }
   }
 }

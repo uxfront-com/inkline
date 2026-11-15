@@ -8,7 +8,7 @@ import { buildApiReport, formatApiReport } from "../../components/scripts/api-re
 // difference is an API change: update `api.json` with the command in `api-report.ts`, and list
 // every changed line in this package's changeset.
 it("ships the API that api.json records", async () => {
-  const emitted = fileURLToPath(new URL("../.inkline", import.meta.url));
+  const emitted = fileURLToPath(new URL("../../components/dist/angular", import.meta.url));
   const expected = readFileSync(new URL("api.json", import.meta.url), "utf8");
   expect(formatApiReport(await buildApiReport("angular", emitted))).toBe(expected);
 });

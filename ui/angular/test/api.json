@@ -33,13 +33,14 @@
   "components": {
     "IBadge": {
       "selectors": [
-        "ink-badge"
+        "uf-i-badge"
       ],
       "props": [
+        "class",
         "color",
-        "klass",
         "label",
         "size",
+        "style",
         "variant"
       ],
       "models": [],
@@ -48,11 +49,12 @@
     },
     "IBadgeBase": {
       "selectors": [
-        "ink-badge-base"
+        "uf-i-badge-base"
       ],
       "props": [
-        "klass",
-        "label"
+        "class",
+        "label",
+        "style"
       ],
       "models": [],
       "events": [],
@@ -60,16 +62,17 @@
     },
     "IButton": {
       "selectors": [
-        "ink-button"
+        "uf-i-button"
       ],
       "props": [
         "block",
+        "class",
         "color",
         "disabled",
-        "klass",
         "label",
         "loading",
         "size",
+        "style",
         "type",
         "variant"
       ],
@@ -79,13 +82,14 @@
     },
     "IButtonBase": {
       "selectors": [
-        "ink-button-base"
+        "uf-i-button-base"
       ],
       "props": [
+        "class",
         "disabled",
-        "klass",
         "label",
         "loading",
+        "style",
         "type"
       ],
       "models": [],
@@ -94,19 +98,20 @@
     },
     "ICheckbox": {
       "selectors": [
-        "ink-checkbox"
+        "uf-i-checkbox"
       ],
       "props": [
+        "class",
         "color",
         "disabled",
         "id",
         "indeterminate",
-        "klass",
         "label",
         "name",
         "readonly",
         "required",
-        "size"
+        "size",
+        "style"
       ],
       "models": [
         "checked"
@@ -116,10 +121,11 @@
     },
     "ICheckboxBase": {
       "selectors": [
-        "ink-checkbox-base"
+        "uf-i-checkbox-base"
       ],
       "props": [
-        "klass"
+        "class",
+        "style"
       ],
       "models": [],
       "events": [],
@@ -127,16 +133,17 @@
     },
     "ICheckboxControlBase": {
       "selectors": [
-        "ink-checkbox-control-base"
+        "uf-i-checkbox-control-base"
       ],
       "props": [
+        "class",
         "disabled",
         "id",
         "indeterminate",
-        "klass",
         "name",
         "readonly",
-        "required"
+        "required",
+        "style"
       ],
       "models": [
         "checked"
@@ -146,13 +153,14 @@
     },
     "IFieldGroup": {
       "selectors": [
-        "ink-field-group"
+        "uf-i-field-group"
       ],
       "props": [
         "block",
+        "class",
         "id",
-        "klass",
-        "orientation"
+        "orientation",
+        "style"
       ],
       "models": [],
       "events": [],
@@ -160,11 +168,12 @@
     },
     "IFieldGroupBase": {
       "selectors": [
-        "ink-field-group-base"
+        "uf-i-field-group-base"
       ],
       "props": [
+        "class",
         "id",
-        "klass"
+        "style"
       ],
       "models": [],
       "events": [],
@@ -172,16 +181,17 @@
     },
     "IHamburgerMenu": {
       "selectors": [
-        "ink-hamburger-menu"
+        "uf-i-hamburger-menu"
       ],
       "props": [
         "animation",
         "ariaControls",
         "ariaLabel",
+        "class",
         "color",
         "disabled",
-        "klass",
-        "size"
+        "size",
+        "style"
       ],
       "models": [
         "open"
@@ -191,13 +201,14 @@
     },
     "IHamburgerMenuBase": {
       "selectors": [
-        "ink-hamburger-menu-base"
+        "uf-i-hamburger-menu-base"
       ],
       "props": [
         "ariaControls",
         "ariaLabel",
+        "class",
         "disabled",
-        "klass"
+        "style"
       ],
       "models": [
         "open"
@@ -207,18 +218,19 @@
     },
     "IInput": {
       "selectors": [
-        "ink-input"
+        "uf-i-input"
       ],
       "props": [
+        "class",
         "color",
         "disabled",
         "id",
         "invalid",
-        "klass",
         "name",
         "placeholder",
         "readonly",
         "size",
+        "style",
         "type",
         "variant"
       ],
@@ -230,11 +242,12 @@
     },
     "IInputBase": {
       "selectors": [
-        "ink-input-base"
+        "uf-i-input-base"
       ],
       "props": [
+        "class",
         "id",
-        "klass"
+        "style"
       ],
       "models": [],
       "events": [],
@@ -242,12 +255,11 @@
     },
     "IInputControlBase": {
       "selectors": [
-        "ink-input-control-base"
+        "uf-i-input-control-base"
       ],
       "props": [
         "disabled",
         "id",
-        "klass",
         "name",
         "placeholder",
         "readonly",
@@ -261,10 +273,11 @@
     },
     "IInputPrefixBase": {
       "selectors": [
-        "ink-input-prefix-base"
+        "uf-i-input-prefix-base"
       ],
       "props": [
-        "klass"
+        "class",
+        "style"
       ],
       "models": [],
       "events": [],
@@ -272,10 +285,11 @@
     },
     "IInputSuffixBase": {
       "selectors": [
-        "ink-input-suffix-base"
+        "uf-i-input-suffix-base"
       ],
       "props": [
-        "klass"
+        "class",
+        "style"
       ],
       "models": [],
       "events": [],
@@ -283,15 +297,16 @@
     },
     "IInputTextareaBase": {
       "selectors": [
-        "ink-input-textarea-base"
+        "uf-i-input-textarea-base"
       ],
       "props": [
+        "class",
         "disabled",
         "id",
-        "klass",
         "name",
         "placeholder",
-        "readonly"
+        "readonly",
+        "style"
       ],
       "models": [
         "value"
@@ -301,11 +316,12 @@
     },
     "IRadioBase": {
       "selectors": [
-        "ink-radio-base"
+        "uf-i-radio-base"
       ],
       "props": [
+        "class",
         "id",
-        "klass"
+        "style"
       ],
       "models": [],
       "events": [],
@@ -313,39 +329,40 @@
     },
     "IRadioFieldBase": {
       "selectors": [
-        "ink-radio-field-base"
+        "uf-i-radio-field-base"
       ],
       "props": [
-        "checked",
+        "class",
         "disabled",
         "id",
-        "klass",
         "name",
         "readonly",
         "required",
+        "style",
         "value"
       ],
-      "models": [],
-      "events": [
-        "change"
+      "models": [
+        "selected"
       ],
+      "events": [],
       "attributes": true
     },
     "IRadioGroup": {
       "selectors": [
-        "ink-radio-group"
+        "uf-i-radio-group"
       ],
       "props": [
+        "class",
         "color",
         "disabled",
         "id",
-        "klass",
         "label",
         "name",
         "options",
         "orientation",
         "readonly",
-        "size"
+        "size",
+        "style"
       ],
       "models": [
         "value"
@@ -355,13 +372,14 @@
     },
     "IRadioGroupBase": {
       "selectors": [
-        "ink-radio-group-base"
+        "uf-i-radio-group-base"
       ],
       "props": [
+        "class",
         "id",
-        "klass",
         "label",
-        "readonly"
+        "readonly",
+        "style"
       ],
       "models": [],
       "events": [],
@@ -369,17 +387,18 @@
     },
     "ISwitch": {
       "selectors": [
-        "ink-switch"
+        "uf-i-switch"
       ],
       "props": [
+        "class",
         "color",
         "disabled",
         "id",
-        "klass",
         "label",
         "name",
         "readonly",
-        "size"
+        "size",
+        "style"
       ],
       "models": [
         "checked"
@@ -389,10 +408,11 @@
     },
     "ISwitchBase": {
       "selectors": [
-        "ink-switch-base"
+        "uf-i-switch-base"
       ],
       "props": [
-        "klass"
+        "class",
+        "style"
       ],
       "models": [],
       "events": [],
@@ -400,14 +420,15 @@
     },
     "ISwitchControlBase": {
       "selectors": [
-        "ink-switch-control-base"
+        "uf-i-switch-control-base"
       ],
       "props": [
+        "class",
         "disabled",
         "id",
-        "klass",
         "name",
-        "readonly"
+        "readonly",
+        "style"
       ],
       "models": [
         "checked"
@@ -417,10 +438,11 @@
     },
     "ISwitchLabelBase": {
       "selectors": [
-        "ink-switch-label-base"
+        "uf-i-switch-label-base"
       ],
       "props": [
-        "klass"
+        "class",
+        "style"
       ],
       "models": [],
       "events": [],

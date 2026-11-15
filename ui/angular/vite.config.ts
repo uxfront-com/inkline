@@ -17,7 +17,6 @@ export default defineConfig({
       entry: {
         index: "src/index.ts",
         headless: "src/headless.ts",
-        stories: "src/stories.ts",
       },
       formats: ["es"],
       fileName: (_format, entryName) => `fesm2022/${entryName}.mjs`,
