@@ -1,3 +1,7 @@
 .styleframe/
-.coverage-artifacts/
-coverage/
+# Unframework: the build, the test run's scratch and failure screenshots, and visual's run directory and specs.
+dist/
+.reports/
+.live/
+.vitest/
+.unframework/
