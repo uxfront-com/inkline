@@ -1,0 +1,6 @@
+- text: Name
+- textbox "Name":
+  - /placeholder: Your name
+  - text: Grace
+- textbox "Email"
+- status: Grace
