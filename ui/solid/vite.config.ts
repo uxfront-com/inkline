@@ -5,7 +5,9 @@ import styleframe from "styleframe/plugin/vite";
 
 export default defineConfig({
   plugins: [
-    solid() as any,
+    // The package's tests read its build in Node, and need no Solid compiler. Under Vitest,
+    // vite-plugin-solid adds jest-dom as a setup file that doesn't resolve from this package.
+    ...(process.env.VITEST ? [] : [solid() as any]),
     styleframe({
       entry: resolve(__dirname, "../components/styleframe.config.ts"),
       include: [resolve(__dirname, "../components/src/**/*.styleframe.ts")],

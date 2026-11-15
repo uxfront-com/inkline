@@ -65,6 +65,7 @@
     "styleframe": "catalog:",
     "tslib": "catalog:",
     "typescript": "catalog:ts6",
+    "vitest": "catalog:",
     "zone.js": "catalog:"
   },
   "peerDependencies": {

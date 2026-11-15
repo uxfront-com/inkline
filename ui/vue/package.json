@@ -45,6 +45,7 @@
     "storybook": "catalog:",
     "styleframe": "catalog:",
     "typescript": "catalog:ts6",
+    "vitest": "catalog:",
     "vue": "catalog:"
   },
   "peerDependencies": {

@@ -1,0 +1,430 @@
+{
+  "entries": {
+    ".": [
+      "IBadge",
+      "IButton",
+      "ICheckbox",
+      "IFieldGroup",
+      "IHamburgerMenu",
+      "IInput",
+      "IRadioGroup",
+      "ISwitch"
+    ],
+    "./headless": [
+      "IBadgeBase",
+      "IButtonBase",
+      "ICheckboxBase",
+      "ICheckboxControlBase",
+      "IFieldGroupBase",
+      "IHamburgerMenuBase",
+      "IInputBase",
+      "IInputControlBase",
+      "IInputPrefixBase",
+      "IInputSuffixBase",
+      "IInputTextareaBase",
+      "IRadioBase",
+      "IRadioFieldBase",
+      "IRadioGroupBase",
+      "ISwitchBase",
+      "ISwitchControlBase",
+      "ISwitchLabelBase"
+    ]
+  },
+  "components": {
+    "IBadge": {
+      "selectors": [
+        "ink-badge"
+      ],
+      "props": [
+        "color",
+        "klass",
+        "label",
+        "size",
+        "variant"
+      ],
+      "models": [],
+      "events": [],
+      "attributes": true
+    },
+    "IBadgeBase": {
+      "selectors": [
+        "ink-badge-base"
+      ],
+      "props": [
+        "klass",
+        "label"
+      ],
+      "models": [],
+      "events": [],
+      "attributes": true
+    },
+    "IButton": {
+      "selectors": [
+        "ink-button"
+      ],
+      "props": [
+        "block",
+        "color",
+        "disabled",
+        "klass",
+        "label",
+        "loading",
+        "size",
+        "type",
+        "variant"
+      ],
+      "models": [],
+      "events": [],
+      "attributes": true
+    },
+    "IButtonBase": {
+      "selectors": [
+        "ink-button-base"
+      ],
+      "props": [
+        "disabled",
+        "klass",
+        "label",
+        "loading",
+        "type"
+      ],
+      "models": [],
+      "events": [],
+      "attributes": true
+    },
+    "ICheckbox": {
+      "selectors": [
+        "ink-checkbox"
+      ],
+      "props": [
+        "color",
+        "disabled",
+        "id",
+        "indeterminate",
+        "klass",
+        "label",
+        "name",
+        "readonly",
+        "required",
+        "size"
+      ],
+      "models": [
+        "checked"
+      ],
+      "events": [],
+      "attributes": true
+    },
+    "ICheckboxBase": {
+      "selectors": [
+        "ink-checkbox-base"
+      ],
+      "props": [
+        "klass"
+      ],
+      "models": [],
+      "events": [],
+      "attributes": true
+    },
+    "ICheckboxControlBase": {
+      "selectors": [
+        "ink-checkbox-control-base"
+      ],
+      "props": [
+        "disabled",
+        "id",
+        "indeterminate",
+        "klass",
+        "name",
+        "readonly",
+        "required"
+      ],
+      "models": [
+        "checked"
+      ],
+      "events": [],
+      "attributes": true
+    },
+    "IFieldGroup": {
+      "selectors": [
+        "ink-field-group"
+      ],
+      "props": [
+        "block",
+        "id",
+        "klass",
+        "orientation"
+      ],
+      "models": [],
+      "events": [],
+      "attributes": true
+    },
+    "IFieldGroupBase": {
+      "selectors": [
+        "ink-field-group-base"
+      ],
+      "props": [
+        "id",
+        "klass"
+      ],
+      "models": [],
+      "events": [],
+      "attributes": true
+    },
+    "IHamburgerMenu": {
+      "selectors": [
+        "ink-hamburger-menu"
+      ],
+      "props": [
+        "animation",
+        "ariaControls",
+        "ariaLabel",
+        "color",
+        "disabled",
+        "klass",
+        "size"
+      ],
+      "models": [
+        "open"
+      ],
+      "events": [],
+      "attributes": true
+    },
+    "IHamburgerMenuBase": {
+      "selectors": [
+        "ink-hamburger-menu-base"
+      ],
+      "props": [
+        "ariaControls",
+        "ariaLabel",
+        "disabled",
+        "klass"
+      ],
+      "models": [
+        "open"
+      ],
+      "events": [],
+      "attributes": true
+    },
+    "IInput": {
+      "selectors": [
+        "ink-input"
+      ],
+      "props": [
+        "color",
+        "disabled",
+        "id",
+        "invalid",
+        "klass",
+        "name",
+        "placeholder",
+        "readonly",
+        "size",
+        "type",
+        "variant"
+      ],
+      "models": [
+        "value"
+      ],
+      "events": [],
+      "attributes": true
+    },
+    "IInputBase": {
+      "selectors": [
+        "ink-input-base"
+      ],
+      "props": [
+        "id",
+        "klass"
+      ],
+      "models": [],
+      "events": [],
+      "attributes": true
+    },
+    "IInputControlBase": {
+      "selectors": [
+        "ink-input-control-base"
+      ],
+      "props": [
+        "disabled",
+        "id",
+        "klass",
+        "name",
+        "placeholder",
+        "readonly",
+        "type"
+      ],
+      "models": [
+        "value"
+      ],
+      "events": [],
+      "attributes": true
+    },
+    "IInputPrefixBase": {
+      "selectors": [
+        "ink-input-prefix-base"
+      ],
+      "props": [
+        "klass"
+      ],
+      "models": [],
+      "events": [],
+      "attributes": true
+    },
+    "IInputSuffixBase": {
+      "selectors": [
+        "ink-input-suffix-base"
+      ],
+      "props": [
+        "klass"
+      ],
+      "models": [],
+      "events": [],
+      "attributes": true
+    },
+    "IInputTextareaBase": {
+      "selectors": [
+        "ink-input-textarea-base"
+      ],
+      "props": [
+        "disabled",
+        "id",
+        "klass",
+        "name",
+        "placeholder",
+        "readonly"
+      ],
+      "models": [
+        "value"
+      ],
+      "events": [],
+      "attributes": true
+    },
+    "IRadioBase": {
+      "selectors": [
+        "ink-radio-base"
+      ],
+      "props": [
+        "id",
+        "klass"
+      ],
+      "models": [],
+      "events": [],
+      "attributes": true
+    },
+    "IRadioFieldBase": {
+      "selectors": [
+        "ink-radio-field-base"
+      ],
+      "props": [
+        "checked",
+        "disabled",
+        "id",
+        "klass",
+        "name",
+        "readonly",
+        "required",
+        "value"
+      ],
+      "models": [],
+      "events": [
+        "change"
+      ],
+      "attributes": true
+    },
+    "IRadioGroup": {
+      "selectors": [
+        "ink-radio-group"
+      ],
+      "props": [
+        "color",
+        "disabled",
+        "id",
+        "klass",
+        "label",
+        "name",
+        "options",
+        "orientation",
+        "readonly",
+        "size"
+      ],
+      "models": [
+        "value"
+      ],
+      "events": [],
+      "attributes": true
+    },
+    "IRadioGroupBase": {
+      "selectors": [
+        "ink-radio-group-base"
+      ],
+      "props": [
+        "id",
+        "klass",
+        "label",
+        "readonly"
+      ],
+      "models": [],
+      "events": [],
+      "attributes": true
+    },
+    "ISwitch": {
+      "selectors": [
+        "ink-switch"
+      ],
+      "props": [
+        "color",
+        "disabled",
+        "id",
+        "klass",
+        "label",
+        "name",
+        "readonly",
+        "size"
+      ],
+      "models": [
+        "checked"
+      ],
+      "events": [],
+      "attributes": true
+    },
+    "ISwitchBase": {
+      "selectors": [
+        "ink-switch-base"
+      ],
+      "props": [
+        "klass"
+      ],
+      "models": [],
+      "events": [],
+      "attributes": true
+    },
+    "ISwitchControlBase": {
+      "selectors": [
+        "ink-switch-control-base"
+      ],
+      "props": [
+        "disabled",
+        "id",
+        "klass",
+        "name",
+        "readonly"
+      ],
+      "models": [
+        "checked"
+      ],
+      "events": [],
+      "attributes": true
+    },
+    "ISwitchLabelBase": {
+      "selectors": [
+        "ink-switch-label-base"
+      ],
+      "props": [
+        "klass"
+      ],
+      "models": [],
+      "events": [],
+      "attributes": true
+    }
+  }
+}

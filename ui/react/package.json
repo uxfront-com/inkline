@@ -45,7 +45,8 @@
     "jsdom": "catalog:",
     "react": "catalog:",
     "storybook": "catalog:",
-    "styleframe": "catalog:"
+    "styleframe": "catalog:",
+    "vitest": "catalog:"
   },
   "peerDependencies": {
     "react": ">=18"

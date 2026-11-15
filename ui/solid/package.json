@@ -45,7 +45,8 @@
     "storybook-solidjs-vite": "catalog:",
     "styleframe": "catalog:",
     "typescript": "catalog:ts6",
-    "vite-plugin-solid": "catalog:"
+    "vite-plugin-solid": "catalog:",
+    "vitest": "catalog:"
   },
   "peerDependencies": {
     "solid-js": ">=1"
