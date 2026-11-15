@@ -1,0 +1,30 @@
+{
+  "description": "The styled checkbox, its `checked` model bound by a parent, in each state, and labelled by its slot.",
+  "ssr": {
+    "unchecked": {
+      "props": {}
+    },
+    "checked": {
+      "props": {
+        "initial": true
+      }
+    },
+    "readonly": {
+      "props": {
+        "initial": true,
+        "readonly": true
+      }
+    },
+    "disabled": {
+      "props": {
+        "disabled": true,
+        "required": true
+      }
+    },
+    "indeterminate": {
+      "props": {
+        "indeterminate": true
+      }
+    }
+  }
+}
