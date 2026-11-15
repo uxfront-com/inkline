@@ -122,9 +122,7 @@ has a limit and a workaround, and the composed Storybook has a workaround of its
   [`ui/qwik/.storybook/main.ts`](../../ui/qwik/.storybook/main.ts) patches it after the plugin
   runs: it flattens the `.inkline/**` chunk names that Rolldown rejects, and drops Vite 8's
   `native:import-analysis-build`, whose `__VITE_PRELOAD__` markers nothing replaces once Qwik's
-  plugin has removed `vite:build-import-analysis`. A Qwik story mounts paused and
-  resumes a moment later, so the visual-parity suite waits for `q:container="resumed"` before it
-  takes a screenshot ([`testing/e2e/storybook.ts`](../../testing/e2e/storybook.ts)).
+  plugin has removed `vite:build-import-analysis`.
 - **Angular.** A static build renders the compiled package in `ui/angular/dist`, not the source, so
   build the package first. [`ui/angular/.storybook/main.ts`](../../ui/angular/.storybook/main.ts)
   leaves Analog's build optimizer out of that build, because linking drops the class metadata that
