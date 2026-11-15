@@ -1,9 +1,9 @@
-import { defineComponent } from "@inkline/core";
-import IBadge from "../styled/IBadge.ink.tsx";
+import "virtual:styleframe.css";
+import IBadge from "../styled/IBadge.uf.tsx";
 
-export default defineComponent(() => {
+export default function BadgeSizes() {
   return (
-    <div id="story">
+    <div>
       <IBadge size="xs">Extra Small</IBadge>
       <IBadge size="sm">Small</IBadge>
       <IBadge size="md">Medium</IBadge>
@@ -11,4 +11,4 @@ export default defineComponent(() => {
       <IBadge size="xl">Extra Large</IBadge>
     </div>
   );
-});
+}

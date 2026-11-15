@@ -1,0 +1,8 @@
+{
+  "description": "The headless badge, labelled by its prop and by its slot.",
+  "ssr": {
+    "default": {
+      "props": {}
+    }
+  }
+}

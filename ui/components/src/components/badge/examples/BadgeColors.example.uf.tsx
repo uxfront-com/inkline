@@ -1,9 +1,9 @@
-import { defineComponent } from "@inkline/core";
-import IBadge from "../styled/IBadge.ink.tsx";
+import "virtual:styleframe.css";
+import IBadge from "../styled/IBadge.uf.tsx";
 
-export default defineComponent(() => {
+export default function BadgeColors() {
   return (
-    <div id="story">
+    <div>
       <IBadge color="primary">Primary</IBadge>
       <IBadge color="secondary">Secondary</IBadge>
       <IBadge color="success">Success</IBadge>
@@ -12,4 +12,4 @@ export default defineComponent(() => {
       <IBadge color="info">Info</IBadge>
     </div>
   );
-});
+}
