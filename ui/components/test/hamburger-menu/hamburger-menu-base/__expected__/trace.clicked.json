@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "steps": [
+    {
+      "action": "click getByRole('button', { name: 'Toggle menu' })",
+      "dom": [
+        "<div>",
+        "  <button aria-controls=\"menu\" aria-expanded=\"true\" aria-label=\"Toggle menu\" type=\"button\" uf:focused=\"\">",
+        "    <span aria-hidden=\"true\" class=\"hamburger-menu-inner\"></span>",
+        "  </button>",
+        "  <nav aria-label=\"Main\" id=\"menu\">",
+        "    <a href=\"#home\">",
+        "      \"Home\"",
+        "    </a>",
+        "  </nav>",
+        "</div>"
+      ],
+      "aria": [
+        "- button \"Toggle menu\" [expanded]",
+        "- navigation \"Main\":",
+        "  - link \"Home\":",
+        "    - /url: \"#home\""
+      ],
+      "events": {
+        "toggle": [
+          [
+            true
+          ]
+        ]
+      }
+    }
+  ]
+}

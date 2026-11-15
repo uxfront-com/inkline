@@ -1,12 +1,12 @@
-import { defineComponent } from "@inkline/core";
-import IHamburgerMenu from "../styled/IHamburgerMenu.ink.tsx";
+import "virtual:styleframe.css";
+import IHamburgerMenu from "../styled/IHamburgerMenu.uf.tsx";
 
-export default defineComponent(() => {
+export default function HamburgerMenuColors() {
   return (
-    <div id="story">
+    <div>
       <IHamburgerMenu color="light" ariaLabel="Light menu" />
       <IHamburgerMenu color="dark" ariaLabel="Dark menu" />
       <IHamburgerMenu color="neutral" ariaLabel="Neutral menu" />
     </div>
   );
-});
+}
