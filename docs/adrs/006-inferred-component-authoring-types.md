@@ -1,9 +1,9 @@
 # ADR-006: The component authoring surface is _inferred_ from `defineComponent`, not _generated_ by the compiler
 
-Date: 2026-08-08 · Status: Accepted
+Date: 2026-08-08 · Status: Superseded
 Deciders: Project owner · Informed by: internal tracker UXF-162 (delivery RFC + measurements), UXF-161 (feasibility spike), UXF-135 (blast-radius RFC)
 Supersedes: [ADR-005](./005-generated-component-authoring-types.md) · Superseded by:
-[ADR-008](./008-authoring-surface-is-inferred-from-options-alone.md) **in part**
+[ADR-008](./008-authoring-surface-is-inferred-from-options-alone.md) **in part**, then [ADR-012](./012-components-compile-with-unframework.md)
 
 > **Correction — see [ADR-008](./008-authoring-surface-is-inferred-from-options-alone.md).**
 > Decision 1 below, and the matching phrasing in Context, say the authoring type is derived from

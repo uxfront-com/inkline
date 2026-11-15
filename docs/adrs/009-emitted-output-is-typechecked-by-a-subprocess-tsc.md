@@ -1,8 +1,8 @@
 # ADR-009: Emitted output is typechecked by a subprocess `tsc`, on react and solid only
 
-Date: 2026-08-27 · Status: Accepted
+Date: 2026-08-27 · Status: Superseded
 Deciders: Project owner (landed as [#589](https://github.com/inkline/inkline/pull/589), `d6e9ad7`, 2026-08-27) · Informed by: internal tracker UXF-205 (harness verdict and receipts), UXF-206 (this record), parent UXF-204
-Supersedes: — · Superseded by: —
+Supersedes: — · Superseded by: [ADR-012](./012-components-compile-with-unframework.md)
 
 > **Replaces a draft that never landed.** A `Proposed` ADR written 2026-08-11 — _"ADR-008: Emitted
 > output is typechecked in the unit suite, in-process, behind a poison test"_ — described this gate

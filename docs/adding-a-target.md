@@ -182,8 +182,8 @@ Three layers required:
 Once the new target is built-in, add the consumer-facing UI package:
 
 1. Create `ui/<new-target>/` matching the shape of [`ui/react/`](../ui/react/) (with the framework-specific tweaks documented in that package's [`AGENTS.md`](../ui/react/AGENTS.md)).
-2. Update [`ui/components/inkline.config.ts`](../ui/components/inkline.config.ts) `targetOutDir` so the cross-framework compile writes into `ui/<new-target>/.inkline/`.
-3. Update the root [`package.json`](../package.json) `storybook:frameworks` script and the `wait-on` list in `storybook:app` with the new port.
+2. Add the target to `targets` in [`ui/components/unframework.config.ts`](../ui/components/unframework.config.ts), once Unframework compiles to it, and point the new package's build at `ui/components/dist/<new-target>/`.
+3. Add the package's `test/api.json` and `test/api.test.ts`, as the other packages have them.
 4. Add the new subpath to [`core/inkline/package.json`](../core/inkline/package.json) `exports` (`./<new-target>`) and to its [`AGENTS.md`](../core/inkline/AGENTS.md).
 5. Touch [docs/contributing.md](./contributing.md) → "Dev loops" and [scope.md](./scope.md) → "Compilation targets".
 

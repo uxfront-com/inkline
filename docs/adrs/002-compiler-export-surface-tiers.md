@@ -1,8 +1,8 @@
 # ADR-002: Tier the `@inkline/compiler` export surface via subpath exports
 
-Date: 2026-07-29 · Status: Accepted
+Date: 2026-07-29 · Status: Superseded
 Deciders: Project owner · Informed by: internal tracker UXF-91 (RFC), UXF-71 finding #15 (friction audit), UXF-144 (this record)
-Supersedes: — · Superseded by: —
+Supersedes: — · Superseded by: [ADR-012](./012-components-compile-with-unframework.md)
 
 Resolves one of the two items [ADR-001](./001-compiler-dx-invests-in-diagnostics.md) left explicitly
 undecided ("Narrowing the compiler's public export surface").

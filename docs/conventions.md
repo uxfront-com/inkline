@@ -53,7 +53,7 @@ Tests live next to their source as `<file>.test.ts`. Examples:
 
 Run all tests with `vp run -r test` from the repo root; run a single package's tests with `vp test` inside that package. Coverage uses `@vitest/coverage-v8`.
 
-**Exception — Playwright e2e.** The cross-framework visual-parity suite uses Playwright, not Vitest, and lives in its own package [`testing/e2e`](../testing/e2e/) (`*.spec.ts`). Run it with `pnpm --filter @inkline/e2e test:e2e` (a `test:e2e` script, deliberately not `test`), so the Vitest gate never collects it. See [`testing/e2e/AGENTS.md`](../testing/e2e/AGENTS.md).
+**Exception: the component tests.** `ui/components` runs its tests with Unframework, which runs Vitest in Chromium on every target. Each component's case is a directory under [`ui/components/test/`](../ui/components/test/), with its spec, a harness parent and its expectations, and `test:targets` runs them, not `test`. See [`ui/components/AGENTS.md`](../ui/components/AGENTS.md).
 
 ## Code style
 

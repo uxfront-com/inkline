@@ -8,22 +8,21 @@ pays for the same lesson twice.
 
 | #                                                                     | Title                                                                   | Date       | Status     | Tags                      |
 | --------------------------------------------------------------------- | ----------------------------------------------------------------------- | ---------- | ---------- | ------------------------- |
-| [001](./001-compiler-dx-invests-in-diagnostics.md)                    | Invest compiler DX in diagnostics, ordered coverage → rendering → prose | 2026-07-27 | Accepted   | compiler, cli, dx         |
-| [002](./002-compiler-export-surface-tiers.md)                         | Tier the `@inkline/compiler` export surface via subpath exports         | 2026-07-29 | Accepted   | compiler, api, semver, dx |
-| [003](./003-typed-jsx-intrinsic-elements-from-a-vendored-upstream.md) | Type `JSX.IntrinsicElements` from a vendored upstream, behind an alias  | 2026-07-29 | Accepted   | core, authoring, dx       |
-| [004](./004-inkline-check-does-not-type-check.md)                     | `inkline check` does not type-check; `tsc` owns types                   | 2026-07-28 | Accepted   | cli, types, dx            |
+| [001](./001-compiler-dx-invests-in-diagnostics.md)                    | Invest compiler DX in diagnostics, ordered coverage → rendering → prose | 2026-07-27 | Superseded | compiler, cli, dx         |
+| [002](./002-compiler-export-surface-tiers.md)                         | Tier the `@inkline/compiler` export surface via subpath exports         | 2026-07-29 | Superseded | compiler, api, semver, dx |
+| [003](./003-typed-jsx-intrinsic-elements-from-a-vendored-upstream.md) | Type `JSX.IntrinsicElements` from a vendored upstream, behind an alias  | 2026-07-29 | Superseded | core, authoring, dx       |
+| [004](./004-inkline-check-does-not-type-check.md)                     | `inkline check` does not type-check; `tsc` owns types                   | 2026-07-28 | Superseded | cli, types, dx            |
 | [005](./005-generated-component-authoring-types.md)                   | Keep `InkComponent`'s index signature; generate authoring types         | 2026-08-06 | Superseded | core, compiler, authoring |
-| [006](./006-inferred-component-authoring-types.md)                    | Authoring types are inferred from `defineComponent`, not generated      | 2026-08-08 | Accepted † | core, compiler, authoring |
+| [006](./006-inferred-component-authoring-types.md)                    | Authoring types are inferred from `defineComponent`, not generated      | 2026-08-08 | Superseded | core, compiler, authoring |
 | [007](./007-website-ships-as-a-static-site.md)                        | `apps/website` ships as a fully static site on Vercel                   | 2026-08-08 | Accepted   | website, deploy, infra    |
-| [008](./008-authoring-surface-is-inferred-from-options-alone.md)      | The inferred surface comes from options alone, not the setup body       | 2026-08-11 | Accepted   | core, compiler, authoring |
-| [009](./009-emitted-output-is-typechecked-by-a-subprocess-tsc.md)     | Emitted output is typechecked by a subprocess `tsc`, on react and solid | 2026-08-27 | Accepted   | compiler, testing, types  |
-| [010](./010-defineprops-joins-the-macro-family.md)                    | `defineProps` joins the macro family; the macro registry is formalized  | 2026-08-31 | Accepted   | core, compiler, authoring |
-| [011](./011-the-defineslot-binding-is-optional.md)                    | The `defineSlot` binding is optional                                    | 2026-09-07 | Accepted   | core, compiler, authoring |
+| [008](./008-authoring-surface-is-inferred-from-options-alone.md)      | The inferred surface comes from options alone, not the setup body       | 2026-08-11 | Superseded | core, compiler, authoring |
+| [009](./009-emitted-output-is-typechecked-by-a-subprocess-tsc.md)     | Emitted output is typechecked by a subprocess `tsc`, on react and solid | 2026-08-27 | Superseded | compiler, testing, types  |
+| [010](./010-defineprops-joins-the-macro-family.md)                    | `defineProps` joins the macro family; the macro registry is formalized  | 2026-08-31 | Superseded | core, compiler, authoring |
+| [011](./011-the-defineslot-binding-is-optional.md)                    | The `defineSlot` binding is optional                                    | 2026-09-07 | Superseded | core, compiler, authoring |
+| [012](./012-components-compile-with-unframework.md)                   | Components compile with Unframework                                     | 2026-11-15 | Accepted   | components, build, tests  |
 
-† ADR-006 is superseded **in part** by ADR-008 — its Decision 1 mechanism claim and its Option D
-uniqueness claim, only. Decisions 2–7 remain the live decisions, so its status stays `Accepted`
-rather than flipping. This is the sole exception to the superseding rule below, and it is noted at
-the top of ADR-006 itself.
+ADR-006 was superseded **in part** by ADR-008, for its Decision 1 mechanism claim and its Option D
+uniqueness claim only, and then in whole by ADR-012, with every other compiler record.
 
 If you arrived here from a link to `008-emitted-output-is-typechecked-in-the-unit-suite.md`: that
 draft was never merged, its number was subsequently taken by ADR-008 above, and the decision it
@@ -63,5 +62,5 @@ Not ADR material: implementation details inside one owner's lane, reversible def
 - [../rfcs/README.md](../rfcs/README.md) — the arguments these decisions came out of. The RFC is the
   argument, the ADR is the ruling.
 - [conventions.md](../conventions.md) — code, file, test, and commit conventions.
-- [architecture.md](../architecture.md) — how `.ink.tsx` becomes seven framework outputs.
+- [architecture.md](../architecture.md) — how a `.uf.tsx` component becomes seven framework packages.
 - [scope.md](../scope.md) — capability boundaries and what is deferred.

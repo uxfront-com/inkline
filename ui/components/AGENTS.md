@@ -1,108 +1,83 @@
 # @inkline/components
 
-The **single source of truth** for every Inkline component. All seven framework packages (`@inkline/react`, `@inkline/vue`, …) are populated by compiling files in this package's `src/`. This package itself is private (`"private": true` in [`package.json`](./package.json)) and is never published.
+The **single source of truth** for every Inkline component. Each component is written once as a `.uf.tsx` file here, and [Unframework](https://unframework.dev) compiles it to the seven framework packages (`@inkline/react`, `@inkline/vue`, …). This package is private (`"private": true` in [`package.json`](./package.json)) and is never published.
 
-If you are reading this because you wanted to change a React (or Vue, or …) component: stop. Edit a `.ink.tsx` file under `src/components/` here, then rebuild.
+If you're reading this because you wanted to change a React (or Vue, or …) component: stop. Edit its `.uf.tsx` file under `src/components/` here, then build again.
 
-For author-facing instructions, see [docs/authoring-components.md](../../docs/authoring-components.md).
+For the walkthrough, see [docs/authoring-components.md](../../docs/authoring-components.md). For the language, see [Unframework's documentation](https://unframework.dev/docs).
 
 ## Layout
 
 ```
 ui/components/
-├── inkline.config.ts      # Compile targets + per-target output paths
-├── styleframe.config.ts   # styleframe (design tokens) config
-├── vite.config.ts         # Vite+ build + tests
+├── unframework.config.ts  # Targets, the Angular toolchain, the test and preview servers' Vite config
+├── vitest.config.ts       # `unframework test`'s cases: everything under test/
+├── styleframe.config.ts   # Styleframe (design tokens) config
+├── tsconfig.json          # Type-checks the sources with Unframework's JSX types
+├── scripts/
+│   ├── recipes.ts         # Writes src/recipes.ts from the *.styleframe.ts files
+│   ├── barrels.ts         # Splits each target's barrel into index.ts and headless.ts
+│   └── api-report.ts      # The framework packages' API report (ui/<framework>/test/api.json)
 ├── src/
-│   ├── index.ts           # Re-exports (intentionally minimal)
-│   └── components/
-│       └── <name>/
-│           ├── headless/<I<Name>Base>.ink.tsx   # behavior, no styling
-│           ├── styled/<I<Name>>.ink.tsx         # composes headless + styleframe class
-│           └── stories/                         # I<Name>.ink.stories.ts meta + <Variant>.ink.tsx stories
-└── dist/                  # styleframe runtime output (NOT the compiled components)
+│   ├── recipes.ts         # Generated: each recipe's props type
+│   └── components/<name>/
+│       ├── types.ts                          # The family's props types
+│       ├── headless/I<Name>Base.uf.tsx       # Behaviour, no styling
+│       ├── styled/I<Name>.uf.tsx             # Composes the headless parts, with the recipes
+│       ├── styled/I<Name>.styleframe.ts      # The family's recipes
+│       └── examples/<Example>.example.uf.tsx # What `unframework visual` and `preview` render
+├── test/<name>/<case>/    # One case per component: its spec, a harness parent, case.json, __expected__/
+└── dist/<target>/         # Generated: Unframework's output for each target
 ```
 
-The compiled components do **not** land in `dist/` here. They land in `ui/<framework>/.inkline/` per the `targetOutDir` mapping in [`inkline.config.ts`](./inkline.config.ts). The `srcDir` option controls how much of the source path is preserved in the output — with `srcDir: "src"`, a source file at `src/components/badge/headless/IBadgeBase.ink.tsx` produces output at `.inkline/components/badge/headless/IBadgeBase.vue`:
+`pnpm build` writes each target's tree to `dist/<target>`, and each `ui/<framework>` package builds from it. Never hand-edit `dist/`.
 
-```ts
-srcDir: "src",
-targetOutDir: {
-  react:   "../react/.inkline",
-  vue:     "../vue/.inkline",
-  svelte:  "../svelte/.inkline",
-  solid:   "../solid/.inkline",
-  angular: "../angular/.inkline",
-  qwik:    "../qwik/.inkline",
-  astro:   "../astro/.inkline",
-}
-```
-
-The config's `barrels` option also writes three barrel files into each target's `.inkline/`: `index.ts` (styled components), `headless.ts` (headless parts), and `stories.ts` (namespace re-exports of the generated stories). The framework packages' `src/` and build entries point at these.
-
-## Build
+## Commands
 
 ```bash
-pnpm build   # vp build && inkline compile 'src/**/*.ink.tsx' --config inkline.config.ts --no-clean
-pnpm dev     # inkline compile 'src/**/*.ink.tsx' --config inkline.config.ts --watch
+pnpm build          # unframework build, then scripts/barrels.ts
+pnpm dev            # unframework preview: every example and component on every target
+pnpm test:recipes   # node --test: src/recipes.ts is current, and the barrel split works
+pnpm test:targets   # unframework test: every case on every target, in Chromium and on the server
+pnpm visual         # unframework visual: every example on every target, compared with the reference
 ```
 
-`vp build` first compiles styleframe artifacts; `inkline compile` then runs the [`@inkline/cli`](../../tooling/cli/) compile command for every target. The output is written directly into the framework packages' `.inkline/` directories, which their `src/index.ts` re-exports.
+`test:targets` and `visual` drive Playwright's Chromium: install it once with `pnpm exec playwright install chromium`. When a component's output changes on purpose, run `pnpm test:targets -- --update`, then review every file it writes under `test/*/*/__expected__/`. Those files are what every target is held to.
 
-## Headless / styled split
+This package has no `test` script, so the repository's `pnpm run test` doesn't run the browser tests. `pnpm run ready` runs `test:recipes` and `test:targets` after it.
 
-Every component ships in two variants under its own directory:
+## Headless and styled
 
-- **`headless/I<Name>Base.ink.tsx`** — structure, slots, props, events. No design tokens, no styleframe class names. Behavior + accessibility. One per part; this is what consumers swap in if they want to ship their own styling.
-- **`styled/I<Name>.ink.tsx`** — composes the headless part(s) and applies styleframe-generated classes via `virtual:styleframe`.
+Every family ships in two layers:
 
-Example: [`src/components/badge/`](./src/components/badge/) — the canonical single-part pattern to copy. The headless variant declares `slots: { default: {} }` so consumers can override content via slotting; the styled variant pulls `badgeRecipe(props)` from `virtual:styleframe` to produce the class name.
+- **`headless/I<Name>Base.uf.tsx`**: structure, slots, props, models and events, with no design tokens and no recipe classes. This is what a consumer swaps in to ship their own styling.
+- **`styled/I<Name>.uf.tsx`**: composes the family's headless parts and gives each the class its recipe returns, imported from `virtual:styleframe`. A parent's `class` falls through to a component's root element.
 
-All current components (headless and styled sources alike) declare `meta: { headless: true }`. On Angular this opts into attribute-selector emission: the headless root element becomes the Angular host (e.g. `button[ink-button-base]`), and a styled component whose root is a single headless part collapses onto that host with the recipe class merged — zero wrapper element. The element-selector `<ink-*>` wrapper is still emitted alongside (dual selector). See [`ui/angular/AGENTS.md`](../angular/AGENTS.md).
+One styled component composes all of a family's parts: [`src/components/input/`](./src/components/input/) is the model, where [`styled/IInput.uf.tsx`](./src/components/input/styled/IInput.uf.tsx) composes the shell, the control, the textarea and the prefix and suffix addons.
 
-**A styled component may compose _all_ of a family's headless parts into one component** — there is one styled component per family, not one per part. [`src/components/input/`](./src/components/input/) is the model: the five `headless/IInput*Base` parts (shell, control, textarea, prefix, suffix) are composed by a single [`styled/IInput.ink.tsx`](./src/components/input/styled/IInput.ink.tsx). Optional addon slots are gated with `<Show when={hasSlot("prefix")}>` so an unused addon emits nothing; on Qwik/Angular (no runtime slot presence) `hasSlot` is `true` and the empty wrapper is collapsed by `:empty` rules in [`IInput.styleframe.ts`](./src/components/input/styled/IInput.styleframe.ts). All recipes for the family are registered in that one `.styleframe.ts`.
-
-## Stories
-
-Stories live under `src/components/<name>/stories/` — an `I<Name>.ink.stories.ts` meta plus `.ink.tsx` render helpers — and are compiled per-framework by the same [`inkline compile`](../../tooling/cli/AGENTS.md) run, which writes generated CSF stories (and the `stories.ts` barrel) into each target's `.inkline/`. See [docs/authoring-components.md](../../docs/authoring-components.md) → "Stories".
-
-## Tests
-
-`vp test`. Tests live colocated next to source as `<name>.test.ts`. Component-level tests typically use [`@inkline/test-utils`](../../tooling/test-utils/) to mount the compiled output across multiple targets and assert HTML equivalence.
-
-For compiler-level coverage (you're exercising a new compiler feature), prefer adding a fixture under [`core/compiler/src/__fixtures__/`](../../core/compiler/src/__fixtures__/) instead — keep this package focused on UI behavior, not compiler regressions.
-
-### `.ink.tsx` coverage
-
-`vp test --coverage` reports real line/branch coverage on the authored `.ink.tsx`. The Angular SSR helper ([`src/components/angular-ssr-helper.ts`](./src/components/angular-ssr-helper.ts)) drives each mounted component through the React target via `coverInkViaReact`; V8 instruments the generated JS and inlined source maps remap that execution back onto the `.ink.tsx`. It is wired into `mountStyledOnAngular`, so any test that SSR-mounts a styled component contributes coverage automatically — no per-test setup, and it is a no-op when coverage is off.
-
-The config in [`vite.config.ts`](./vite.config.ts) deliberately leaves `coverage.include` **unset**: `.ink.tsx` is not a real module, so listing it would make the v8 provider's "uncovered files" pass parse it and throw `PARSE_ERROR`. Only components that actually render appear — the remap introduces them. Branch/statement precision is coarse today (a whole expression compiles to one source span), so a fully-exercised component can still read below 100%.
+Props types live in each family's `types.ts`, a plain module every output copies, since Vue's compiler can't read a props type from another component's file. A recipe's props are typed from [`src/recipes.ts`](./src/recipes.ts) with `Pick`, like `Pick<ButtonRecipeProps, "color" | "variant" | "size">`: Unframework passes `virtual:styleframe` through only for the recipe functions a `class` calls.
 
 ## When you change a component
 
-1. Edit `src/components/<name>/{headless,styled,stories}/*.ink.tsx`.
-2. Rebuild: `pnpm build` (or rely on `pnpm dev --watch`).
-3. Verify it works across all seven targets: `pnpm run storybook` from the repo root (concurrently runs compile + per-framework Storybook + aggregator).
-4. Add a changeset for **each affected framework package** (`@inkline/react`, `@inkline/vue`, …) — the change ships through the per-framework packages, not through this private package.
+1. Edit `src/components/<name>/**/*.uf.tsx`. If you changed a `*.styleframe.ts` file, run `node scripts/recipes.ts`.
+2. Run `pnpm build`, `pnpm test:recipes`, `pnpm test:targets` and `pnpm visual`.
+3. Build the framework packages and run their tests, which compare each one's API with its `test/api.json`.
+4. Add a changeset for **each affected framework package**. The change ships through them, not through this private package.
 
-## When you add a new component
+## When you add a component
 
-1. Create `src/components/<name>/{headless,styled,stories}/`.
-2. Author the headless variant first; verify it compiles to all seven targets.
-3. Author the styled variant; rebuild.
-4. Add stories per variant.
-5. Re-export from [`src/components/index.ts`](./src/components/index.ts) — the per-framework `.inkline/` barrels (`index.ts`, `headless.ts`, `stories.ts`) are generated automatically.
-6. Add a changeset for the seven framework packages (assuming a meaningful release).
+1. Create `src/components/<name>/` with its `types.ts`, `headless/`, `styled/` and `examples/`. The barrel split ships a component only from a `styled/` or `headless/` directory.
+2. Add a case under `test/<name>/` for each component, with a harness parent where a slot or a model needs one. A harness parent never takes a component's file name.
+3. Add the component to each framework package's `test/api.json`, with the command in that package's `AGENTS.md`, and add a changeset for the seven packages.
 
 ## Pitfalls
 
-- **Do not edit anything under `ui/<framework>/.inkline/` or `ui/<framework>/.styleframe/`.** Both are rebuilt on every compile; your edits will be lost.
-- **The `dist/` here is styleframe runtime output, not the component compile output.** Don't confuse the two.
-- **`virtual:styleframe` imports require the styleframe plugin in the consumer's Vite config.** The per-framework packages set this up. If a new build path skips it, styling will be missing at runtime.
+- **Don't edit `dist/`, `src/recipes.ts` or `.styleframe/`.** They're generated.
+- **A target difference is a failing test, not a flake.** Unframework compares every target with the reference, Vue. Fix the source, or record the difference in Unframework.
+- **`virtual:styleframe` needs Styleframe's plugin in the consumer's Vite config.** The framework packages and `unframework.config.ts` set it up.
 
 ## See also
 
-- [docs/authoring-components.md](../../docs/authoring-components.md) — the contributor walkthrough.
-- [docs/architecture.md](../../docs/architecture.md) — what the compiler does with the `.ink.tsx` source.
-- The seven `ui/<framework>/AGENTS.md` files — what each output package re-exports.
-- [`tooling/cli/AGENTS.md`](../../tooling/cli/AGENTS.md) — the `compile` command (components + stories) invoked by this package's scripts.
+- [docs/authoring-components.md](../../docs/authoring-components.md): the contributor walkthrough.
+- [docs/architecture.md](../../docs/architecture.md): how a component becomes seven packages.
+- The seven `ui/<framework>/AGENTS.md` files: what each package ships.

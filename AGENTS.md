@@ -1,6 +1,6 @@
 # Inkline
 
-A write-once, compile-everywhere component framework. Author UI components in `.ink.tsx` using a signal-based reactivity model; the compiler emits idiomatic React, Vue 3, Svelte 5, Solid, Angular, Qwik, and Astro output. No runtime dependency on `@inkline/core` is shipped.
+A UI library in seven frameworks. Each component is written once as a `.uf.tsx` file in `ui/components`, and [Unframework](https://unframework.dev) compiles it to idiomatic React, Vue 3, Svelte 5, Solid, Angular, Qwik and Astro, styled with Styleframe. The compiler packages under `core/` and `tooling/` are retiring, and no component builds with them.
 
 This file is the entry point for any LLM agent or new contributor working in the repo. Read it first, then descend to the nearest `AGENTS.md` for the area you're editing.
 
@@ -11,7 +11,7 @@ vp install              # install + configure git hooks
 vp run ready            # build + check + test (mirrors the CI gate)
 pnpm run typecheck      # types only — build + type-check. Never `tsc` from the root.
 vp run dev              # start the docs website (alias for `vp run website#dev`)
-pnpm run storybook      # run all 7 framework Storybooks side-by-side
+pnpm --filter @inkline/components dev   # unframework preview: every example on all 7 targets
 ```
 
 Run `vp env doctor` if anything about the toolchain looks wrong, and `vp help` for the full command list. Vite+ docs: [viteplus.dev/guide/](https://viteplus.dev/guide/).
@@ -23,9 +23,8 @@ core/        @inkline/core (authoring primitives), @inkline/compiler,
              @inkline/plugin (unplugin), @inkline/config-loader, inkline (barrel)
 tooling/     @inkline/cli, @inkline/storybook, @inkline/test-utils,
              @inkline/agents-check (docs link-integrity test)
-testing/     @inkline/e2e (Playwright cross-framework visual-parity tests)
 ui/          @inkline/components (single source of truth) + 7 framework output packages
-apps/        docs (the docs site), storybook (unified aggregator for all 7 frameworks)
+apps/        docs (the docs site)
 docs/        architecture, conventions, contributing, release-process, authoring, maintenance
 docs/adrs/   architecture decision records — why the codebase is the way it is
 .changeset/  pending changesets — one markdown file per upcoming change
@@ -39,32 +38,31 @@ Workspace globs live in [`pnpm-workspace.yaml`](./pnpm-workspace.yaml). Dependen
 
 Per package — descend to the `AGENTS.md` nearest the file you're editing (LLM tools resolve nearest-wins):
 
-| Package                                                                                                  | When to look                                                             |
-| -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| [`core/core/AGENTS.md`](./core/core/AGENTS.md)                                                           | Authoring primitives, JSX runtime                                        |
-| [`core/compiler/AGENTS.md`](./core/compiler/AGENTS.md)                                                   | Pipeline, IR, codegen, plugin hooks                                      |
-| [`core/plugin/AGENTS.md`](./core/plugin/AGENTS.md)                                                       | Bundler integration (Vite, webpack, Rollup, esbuild, Rspack, Farm)       |
-| [`core/config-loader/AGENTS.md`](./core/config-loader/AGENTS.md)                                         | `inkline.config.ts` loading                                              |
-| [`core/inkline/AGENTS.md`](./core/inkline/AGENTS.md)                                                     | The public `inkline` barrel package                                      |
-| [`tooling/cli/AGENTS.md`](./tooling/cli/AGENTS.md)                                                       | `inkline compile`, `inkline check`, `inkline init`                       |
-| [`tooling/storybook/AGENTS.md`](./tooling/storybook/AGENTS.md)                                           | Story authoring + per-target story generation                            |
-| [`tooling/test-utils/AGENTS.md`](./tooling/test-utils/AGENTS.md)                                         | Cross-target test harnesses                                              |
-| [`ui/components/AGENTS.md`](./ui/components/AGENTS.md)                                                   | **Where you author components** — the single source for all 7 frameworks |
-| [`ui/react/AGENTS.md`](./ui/react/AGENTS.md) and the six siblings                                        | Per-framework output packages — generated, do not hand-edit              |
-| [`apps/storybook/AGENTS.md`](./apps/storybook/AGENTS.md), [`apps/docs/AGENTS.md`](./apps/docs/AGENTS.md) | The two consumer apps                                                    |
-| [`testing/e2e/AGENTS.md`](./testing/e2e/AGENTS.md)                                                       | Playwright cross-framework visual-parity tests                           |
+| Package                                                           | When to look                                                             |
+| ----------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| [`core/core/AGENTS.md`](./core/core/AGENTS.md)                    | Authoring primitives, JSX runtime                                        |
+| [`core/compiler/AGENTS.md`](./core/compiler/AGENTS.md)            | Pipeline, IR, codegen, plugin hooks                                      |
+| [`core/plugin/AGENTS.md`](./core/plugin/AGENTS.md)                | Bundler integration (Vite, webpack, Rollup, esbuild, Rspack, Farm)       |
+| [`core/config-loader/AGENTS.md`](./core/config-loader/AGENTS.md)  | `inkline.config.ts` loading                                              |
+| [`core/inkline/AGENTS.md`](./core/inkline/AGENTS.md)              | The public `inkline` barrel package                                      |
+| [`tooling/cli/AGENTS.md`](./tooling/cli/AGENTS.md)                | `inkline compile`, `inkline check`, `inkline init`                       |
+| [`tooling/storybook/AGENTS.md`](./tooling/storybook/AGENTS.md)    | Story authoring + per-target story generation                            |
+| [`tooling/test-utils/AGENTS.md`](./tooling/test-utils/AGENTS.md)  | Cross-target test harnesses                                              |
+| [`ui/components/AGENTS.md`](./ui/components/AGENTS.md)            | **Where you author components** — the single source for all 7 frameworks |
+| [`ui/react/AGENTS.md`](./ui/react/AGENTS.md) and the six siblings | Per-framework packages, built from Unframework's output                  |
+| [`apps/docs/AGENTS.md`](./apps/docs/AGENTS.md)                    | The docs site                                                            |
 
 Per topic — read the relevant `docs/`:
 
-| Doc                                                            | When to read                                                       |
-| -------------------------------------------------------------- | ------------------------------------------------------------------ |
-| [docs/architecture.md](./docs/architecture.md)                 | How `.ink.tsx` becomes 7 framework outputs (pipeline, IR, codegen) |
-| [docs/authoring-components.md](./docs/authoring-components.md) | How to add or modify a component                                   |
-| [docs/conventions.md](./docs/conventions.md)                   | Code, file, test, commit conventions                               |
-| [docs/contributing.md](./docs/contributing.md)                 | Dev workflow, before-PR checklist, CI gate                         |
-| [docs/release-process.md](./docs/release-process.md)           | Changesets + npm publish flow                                      |
-| [docs/maintenance.md](./docs/maintenance.md)                   | How we keep docs from drifting                                     |
-| [docs/adrs/README.md](./docs/adrs/README.md)                   | Why the codebase is the way it is — decision records               |
+| Doc                                                            | When to read                                           |
+| -------------------------------------------------------------- | ------------------------------------------------------ |
+| [docs/architecture.md](./docs/architecture.md)                 | How a `.uf.tsx` component becomes 7 framework packages |
+| [docs/authoring-components.md](./docs/authoring-components.md) | How to add or modify a component                       |
+| [docs/conventions.md](./docs/conventions.md)                   | Code, file, test, commit conventions                   |
+| [docs/contributing.md](./docs/contributing.md)                 | Dev workflow, before-PR checklist, CI gate             |
+| [docs/release-process.md](./docs/release-process.md)           | Changesets + npm publish flow                          |
+| [docs/maintenance.md](./docs/maintenance.md)                   | How we keep docs from drifting                         |
+| [docs/adrs/README.md](./docs/adrs/README.md)                   | Why the codebase is the way it is — decision records   |
 
 For the user-facing language reference (primitives, control flow, options), the canonical source is [`core/compiler/README.md`](./core/compiler/README.md).
 
@@ -76,7 +74,7 @@ These apply everywhere. Package-level `AGENTS.md` files repeat them only when co
 - **Tests**: colocated as `<file>.test.ts`. Vitest. Never in a separate `tests/` folder.
 - **Commits**: conventional commits with package scope — `feat(compiler): …`, `fix(ci): …`. See [docs/conventions.md](./docs/conventions.md) → "Commit messages".
 - **Changesets**: every change to a published package needs one (`pnpm changeset`). See [docs/release-process.md](./docs/release-process.md).
-- **Generated directories — never hand-edit**: `ui/<framework>/.inkline/`, `ui/<framework>/.styleframe/`, all `dist/`, `coverage/`, `storybook-static/`.
+- **Generated directories — never hand-edit**: `ui/components/dist/` (Unframework's output), `ui/components/src/recipes.ts`, `ui/<framework>/.styleframe/`, every other `dist/` and `coverage/`.
 - **Archived directory — never touch**: `.old/` is the v0 codebase, kept for reference only.
 - **Doc freshness**: if your change touches public API, build flow, conventions, or the directory shape, update the relevant `AGENTS.md` / `docs/*.md`. See [docs/maintenance.md](./docs/maintenance.md).
 

@@ -1,8 +1,8 @@
 # ADR-001: Invest compiler DX in diagnostics, ordered coverage → rendering → prose
 
-Date: 2026-07-27 · Status: Accepted
+Date: 2026-07-27 · Status: Superseded
 Deciders: Project owner · Informed by: internal tracker UXF-70 (goal), UXF-71 (friction audit), UXF-72 (prior-art survey)
-Supersedes: — · Superseded by: —
+Supersedes: — · Superseded by: [ADR-012](./012-components-compile-with-unframework.md)
 
 ## Context
 

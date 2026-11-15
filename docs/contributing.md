@@ -48,13 +48,13 @@ recipe.
 
 ## Dev loops
 
-| Goal                                          | Command                                                                                      | Notes                                                                                                                                           |
-| --------------------------------------------- | -------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| Run the docs website                          | `vp run dev` (alias for `vp run website#dev`)                                                | Live-reloading website at the default Vite port.                                                                                                |
-| Develop components against all 7 frameworks   | `pnpm run storybook`                                                                         | Runs four concurrent processes: compile, story-generate, framework Storybooks (ports 6006–6012), aggregator app (port 6100).                    |
-| Visually compare all 7 frameworks             | `pnpm run test:e2e`                                                                          | Playwright cross-framework visual-parity suite (boots/reuses the composition Storybook). See [testing/e2e/AGENTS.md](../testing/e2e/AGENTS.md). |
-| Develop components against a single framework | `pnpm run storybook:react` (also `:vue`, `:svelte`, `:solid`, `:angular`, `:qwik`, `:astro`) | Story generator + single Storybook.                                                                                                             |
-| Work inside one package                       | `cd <pkg> && vp dev` (if applicable)                                                         | Most packages expose `vp build` / `vp test` / `vp check`.                                                                                       |
+| Goal                                        | Command                                          | Notes                                                                                                                                                    |
+| ------------------------------------------- | ------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Run the docs website                        | `vp run dev` (alias for `vp run website#dev`)    | Live-reloading website at the default Vite port.                                                                                                         |
+| Develop components against all 7 frameworks | `pnpm --filter @inkline/components dev`          | `unframework preview`: every example and component on every target, side by side. See [ui/components/AGENTS.md](../ui/components/AGENTS.md).             |
+| Test components on all 7 frameworks         | `pnpm --filter @inkline/components test:targets` | `unframework test`, in Chromium and in a server render. Install Chromium once with `pnpm --filter @inkline/components exec playwright install chromium`. |
+| Visually compare all 7 frameworks           | `pnpm --filter @inkline/components visual`       | `unframework visual`: every example on every target, compared with the reference.                                                                        |
+| Work inside one package                     | `cd <pkg> && vp dev` (if applicable)             | Most packages expose `vp build` / `vp test` / `vp check`.                                                                                                |
 
 The full command surface for the root is in [`package.json`](../package.json) `scripts`. Vite+ specifics live at [viteplus.dev/guide/](https://viteplus.dev/guide/).
 

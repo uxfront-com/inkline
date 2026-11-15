@@ -1,8 +1,8 @@
 # ADR-003: Type `JSX.IntrinsicElements` by deriving it from a vendored upstream, behind an Inkline-owned alias
 
-Date: 2026-07-29 · Status: Accepted
+Date: 2026-07-29 · Status: Superseded
 Deciders: Project owner · Informed by: internal tracker UXF-71 (friction audit), UXF-90 (RFC + measurements), UXF-133 (implementation)
-Supersedes: — · Superseded by: —
+Supersedes: — · Superseded by: [ADR-012](./012-components-compile-with-unframework.md)
 
 Resolves the first item ADR-001 left in "Explicitly still undecided". ADR-001 is unchanged and still
 Accepted; its ordering of diagnostic work stands, subject to the revisit trigger it wrote for exactly
