@@ -1,0 +1,13 @@
+{
+  "description": "The headless radio group, named by its label, and read-only.",
+  "ssr": {
+    "default": {
+      "props": {}
+    },
+    "readonly": {
+      "props": {
+        "readonly": true
+      }
+    }
+  }
+}
