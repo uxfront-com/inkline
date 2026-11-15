@@ -1,7 +1,7 @@
-import { defineComponent } from "@inkline/core";
-import IButton from "../styled/IButton.ink.tsx";
+import "virtual:styleframe.css";
+import IButton from "../styled/IButton.uf.tsx";
 
-export default defineComponent(() => {
+export default function ButtonSizes() {
   return (
     <div>
       <IButton size="xs">Extra Small</IButton>
@@ -11,4 +11,4 @@ export default defineComponent(() => {
       <IButton size="xl">Extra Large</IButton>
     </div>
   );
-});
+}

@@ -1,9 +1,9 @@
-import { defineComponent } from "@inkline/core";
-import IButton from "../styled/IButton.ink.tsx";
+import "virtual:styleframe.css";
+import IButton from "../styled/IButton.uf.tsx";
 
-export default defineComponent(() => {
+export default function ButtonIcon() {
   return (
-    <div id="story">
+    <div>
       <IButton>
         <span aria-hidden="true">★</span> Starred
       </IButton>
@@ -12,4 +12,4 @@ export default defineComponent(() => {
       </IButton>
     </div>
   );
-});
+}

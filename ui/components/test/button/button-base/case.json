@@ -1,0 +1,8 @@
+{
+  "description": "The headless button: its type, disabled and loading states, and its label from the prop and the slot.",
+  "ssr": {
+    "default": {
+      "props": {}
+    }
+  }
+}

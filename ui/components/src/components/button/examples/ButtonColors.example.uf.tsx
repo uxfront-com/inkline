@@ -1,9 +1,9 @@
-import { defineComponent } from "@inkline/core";
-import IButton from "../styled/IButton.ink.tsx";
+import "virtual:styleframe.css";
+import IButton from "../styled/IButton.uf.tsx";
 
-export default defineComponent(() => {
+export default function ButtonColors() {
   return (
-    <div id="story">
+    <div>
       <IButton color="primary">Primary</IButton>
       <IButton color="secondary">Secondary</IButton>
       <IButton color="success">Success</IButton>
@@ -15,4 +15,4 @@ export default defineComponent(() => {
       <IButton color="neutral">Neutral</IButton>
     </div>
   );
-});
+}

@@ -1,9 +1,9 @@
-import { defineComponent } from "@inkline/core";
-import IButton from "../styled/IButton.ink.tsx";
+import "virtual:styleframe.css";
+import IButton from "../styled/IButton.uf.tsx";
 
-export default defineComponent(() => {
+export default function ButtonVariants() {
   return (
-    <div id="story">
+    <div>
       <IButton variant="solid">Solid</IButton>
       <IButton variant="outline">Outline</IButton>
       <IButton variant="soft">Soft</IButton>
@@ -12,4 +12,4 @@ export default defineComponent(() => {
       <IButton variant="link">Link</IButton>
     </div>
   );
-});
+}
