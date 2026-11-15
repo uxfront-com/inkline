@@ -9,7 +9,6 @@
   "exports": {
     ".": "./dist/index.js",
     "./headless": "./dist/headless.js",
-    "./stories": "./dist/stories.js",
     "./css": "./dist/index.css",
     "./package.json": "./package.json"
   },
@@ -19,20 +18,13 @@
   "scripts": {
     "build": "vp build",
     "validate": "vp check",
-    "test": "vp test --passWithNoTests",
-    "storybook": "storybook dev -p 6008",
-    "storybook:build": "storybook build -o storybook-static",
-    "prestorybook": "pnpm --filter @inkline/components exec inkline compile 'src/**/*.ink.tsx' --config inkline.config.ts --target svelte"
+    "test": "vp test --passWithNoTests"
   },
   "dependencies": {
     "@styleframe/runtime": "catalog:"
   },
   "devDependencies": {
     "@inkline/components": "workspace:*",
-    "@inkline/storybook": "workspace:*",
-    "@storybook/addon-a11y": "catalog:",
-    "@storybook/addon-docs": "catalog:",
-    "@storybook/svelte-vite": "catalog:",
     "@styleframe/cli": "catalog:",
     "@styleframe/core": "catalog:",
     "@styleframe/license": "catalog:",
@@ -41,8 +33,8 @@
     "@styleframe/theme": "catalog:",
     "@styleframe/transpiler": "catalog:",
     "@sveltejs/vite-plugin-svelte": "catalog:",
+    "@types/node": "catalog:",
     "jsdom": "catalog:",
-    "storybook": "catalog:",
     "styleframe": "catalog:",
     "svelte": "catalog:",
     "vitest": "catalog:"

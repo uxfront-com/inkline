@@ -25,6 +25,7 @@ minimumReleaseAgeExclude:
   - "@styleframe/*"
   - styleframe
   - "@uxfront/*"
+  - "@unframework.dev/*"
   - ansis@4.3.1
   - js-yaml@4.2.0
   - launch-editor@2.14.1
@@ -32,19 +33,22 @@ minimumReleaseAgeExclude:
 catalog:
   "@ampproject/remapping": ^2.3.0
   "@analogjs/storybook-angular": ^2.9.7
-  "@analogjs/vite-plugin-angular": ^2.9.7
+  "@analogjs/vite-plugin-angular": 2.9.7
   "@angular-eslint/eslint-plugin": ^22.6.0
   "@angular-eslint/template-parser": ^22.6.0
   "@angular/animations": 22.2.6
-  "@angular/build": ^22.2.7
+  "@angular/build": 22.2.7
   "@angular/cli": ^22.2.7
-  "@angular/compiler": ^22.2.6
-  "@angular/compiler-cli": ^22.2.6
-  "@angular/core": ^22.2.6
-  "@angular/platform-browser": ^22.2.6
+  "@angular/common": 22.2.6
+  "@angular/compiler": 22.2.6
+  "@angular/compiler-cli": 22.2.6
+  "@angular/core": 22.2.6
+  "@angular/platform-browser": 22.2.6
   "@angular/platform-browser-dynamic": ^22.2.6
-  "@angular/platform-server": ^22.2.6
+  "@angular/platform-server": 22.2.6
+  "@babel/core": ^7.29.7
   "@jridgewell/trace-mapping": ^0.3.31
+  "@qwik.dev/core": 2.0.0-beta.47
   "@storybook-astro/framework": ^1.16.0
   "@storybook/addon-a11y": ^10.6.7
   "@storybook/addon-docs": ^10.6.7
@@ -62,21 +66,26 @@ catalog:
   "@styleframe/transpiler": ^3.4.2
   "@sveltejs/vite-plugin-svelte": ^7.1.2
   "@tsdown/css": ^0.22.0
-  "@typescript/typescript6": ^6.0.2
   "@types/node": ^24.13.2
   "@types/react": ^19.2.17
   "@types/react-dom": ^19.2.3
   "@typescript-eslint/parser": ^8.61.0
+  "@typescript/typescript6": ^6.0.2
+  "@unframework.dev/testing": ^0.2.0
+  "@unframework.dev/visual": ^0.2.0
   "@uxfront/layer-docs": ^0.8.0
   "@uxfront/layer-ui": ^0.1.7
   "@uxfront/scene": ^0.5.0
   "@uxfront/ui": ^0.6.0
-  "@vitejs/plugin-react": ^6.0.2
+  "@uxfront/unframework": ^0.2.0
+  "@vitejs/plugin-react": ^6.1.1
   "@vitejs/plugin-vue": ^6.0.7
+  "@vitest/browser-playwright": 5.0.3
   "@vitest/coverage-v8": ^4.1.8
   "@vueuse/core": ^14.4.0
   "@vue/server-renderer": ^3.5.43
   astro: ^7.4.11
+  babel-plugin-react-compiler: ^1.0.0
   concurrently: ^10.0.3
   csstype: ^3.2.3
   docus: ^5.13.0
@@ -88,6 +97,7 @@ catalog:
   eslint-plugin-vue: ^10.9.2
   jsdom: ^29.1.1
   oxlint: ^1.69.0
+  playwright: ^1.63.0
   react: ^19.2.7
   react-dom: ^19.2.7
   rollup-plugin-svelte: ^7.2.3
@@ -140,6 +150,11 @@ catalog:
 catalogs:
   ts6:
     typescript: npm:@typescript/typescript6@^6.0.2
+  # Unframework's test, visual and preview tools peer on these exact versions, so `ui/components`
+  # takes them from here instead of the vite-plus aliases in `catalog:` (see `overrides` below).
+  unframework:
+    vite: 8.3.1
+    vitest: 5.0.3
 
 catalogMode: prefer
 # @analogjs/vite-plugin-angular consumes `typescript` via a bare, undeclared
@@ -163,6 +178,16 @@ packageExtensions:
 overrides:
   vite: "catalog:"
   vitest: "catalog:"
+  # `ui/components` tests, renders and previews through Unframework, whose tools peer on the real
+  # Vite and Vitest, at the versions of the `unframework` catalog. So do its Angular toolchain and
+  # the Vitest packages they load.
+  "@inkline/components>vite": "catalog:unframework"
+  "@inkline/components>vitest": "catalog:unframework"
+  "@inkline/toolchain-angular>vite": "catalog:unframework"
+  # vite-plugin-solid adds jest-dom as a setup file of every non-browser Vitest project when it can
+  # resolve it, and it resolves it from its own directory, where the project can't. No package here
+  # uses jest-dom, so its optional peer stays uninstalled, as in Unframework's own workspace.
+  "vite-plugin-solid>@testing-library/jest-dom": "-"
   "@nuxt/vite-builder>vite": "^8.3.2"
 peerDependencyRules:
   allowAny:
