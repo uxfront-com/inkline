@@ -1,0 +1,24 @@
+{
+  "description": "The headless switch control, its `checked` model bound by a parent, in each state.",
+  "ssr": {
+    "unchecked": {
+      "props": {}
+    },
+    "checked": {
+      "props": {
+        "initial": true
+      }
+    },
+    "readonly": {
+      "props": {
+        "initial": true,
+        "readonly": true
+      }
+    },
+    "disabled": {
+      "props": {
+        "disabled": true
+      }
+    }
+  }
+}
