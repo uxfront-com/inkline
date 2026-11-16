@@ -5,23 +5,25 @@ description: The seven framework output packages and the boundaries Inkline live
 
 # Framework interop
 
+> Inkline's components now compile with Unframework. For how a component is written, built and tested, read [docs/authoring-components.md](../../../docs/authoring-components.md) and [docs/architecture.md](../../../docs/architecture.md); where this guide differs from them, they win.
+
 Inkline sits on two borders. **Downstream**: one compiled component must feel native in seven framework ecosystems. **Upstream**: every styled component consumes styleframe recipes. Both borders are trust surfaces — nothing crosses them silently degraded.
 
 ## The seven crossings (`ui/<framework>/`)
 
-| Package            | Storybook | Runtime peers | Notes                                                    |
-| ------------------ | --------- | ------------- | -------------------------------------------------------- |
-| `@inkline/react`   | :6006     | react ≥18     | reference target for e2e parity                          |
-| `@inkline/vue`     | :6007     | vue ≥3        | SFC `<script setup>` output                              |
-| `@inkline/svelte`  | :6008     | svelte 5      | runes (`$state`/`$derived`/`$bindable`)                  |
-| `@inkline/solid`   | :6009     | solid-js      | matches React pixel-exact today                          |
-| `@inkline/angular` | :6010     | angular 21    | `ink-*` attribute selectors, `klass` input, SSR-verified |
-| `@inkline/qwik`    | :6011     | qwik 2.0-beta | storybook-framework-qwik is a canary — see gaps          |
-| `@inkline/astro`   | :6012     | astro         | static SSR — one-way binds, inert custom events          |
+| Package            | Runtime peers                | Notes                                             |
+| ------------------ | ---------------------------- | ------------------------------------------------- |
+| `@inkline/react`   | react ≥19.2                  | the output calls `useEffectEvent`                 |
+| `@inkline/vue`     | vue ≥3                       | Vue is the reference every target is compared to  |
+| `@inkline/svelte`  | svelte ≥5                    | runes (`$state`/`$derived`/`$bindable`)           |
+| `@inkline/solid`   | solid-js ≥1                  |                                                   |
+| `@inkline/angular` | @angular/core ^22            | `uf-i-*` selectors, `class` and `style` inputs    |
+| `@inkline/qwik`    | @qwik.dev/core 2.0.0-beta.47 | pinned to the beta Unframework's release supports |
+| `@inkline/astro`   | astro ^7                     | server render only: models and events are inert   |
 
-Anatomy is identical everywhere: `src/index.ts` is one line (`export * from "../.inkline/index.ts"`); `.inkline/` (compiled components + barrels) and `.styleframe/` are machine output — **nobody edits them**; hand-maintained surface is `package.json`, `vite.config.ts`, `tsconfig.json`, `.storybook/`. Exports map: `.` (styled), `./headless`, `./stories`, `./css`, `./package.json` — this map is the public contract; changing it is semver-major territory. `prestorybook` recompiles the source for that target so Storybook never shows stale components.
+Anatomy is identical everywhere: each package's Vite library build re-exports Unframework's output in `ui/components/dist/<framework>` ([docs/architecture.md](../../../docs/architecture.md)). `dist/` and `.styleframe/` are machine output: **nobody edits them**. The hand-maintained surface is `package.json`, `vite.config.ts`, `tsconfig.json` and `test/api.json`. Exports map: `.` (styled), `./headless`, `./css` where the package has one, and `./package.json`. This map is the public contract, and `test/api.json` records it: changing it is semver-major territory.
 
-Framework versions are pinned in the `pnpm-workspace.yaml` catalog (React 19.2, Vue 3.5, Svelte 5.5x, Solid 1.9, Angular 21.2, Astro 6.4, Storybook 10.4 at snapshot). **Framework upgrades are deliberate migrations**: bump catalog → rebuild → conformance + visual parity → note behavior changes; when a new framework version changes the idiomatic output shape, that's a codegen change (coordinate with @atlas).
+Framework versions are pinned in the `pnpm-workspace.yaml` catalog (React 19.2, Vue 3.5, Svelte 5.5x, Solid 1.9, Angular 22.2, Astro 7 at snapshot). **Framework upgrades are deliberate migrations**: bump catalog → rebuild → conformance + visual parity → note behavior changes; when a new framework version changes the idiomatic output shape, that's a codegen change (coordinate with @atlas).
 
 ## Idiom fidelity (the downstream promise)
 
@@ -33,7 +35,6 @@ Emitted code must read like a native wrote it. Enforcement: per-target **conform
 - Qwik/Angular lack runtime slot presence: `hasSlot` compiles to `true` (INK0068) + the `:empty` CSS collapse convention.
 - Angular: kebab `ink-*` selectors, `klass` class-merge, host-collapse variants; native attrs (e.g. `hidden`) must be explicit base props — fallthrough breaks on wrapper variants.
 - Solid: `undefined` renders as `"undefined"` on native string props — sources coalesce with `?? ""`.
-- Qwik Storybook: stories render in dev and in the static build. The static build needs two patches to Qwik's Vite plugin (`ui/qwik/.storybook/main.ts`), and a story mounts paused before it resumes, so visual parity waits for `q:container="resumed"` (`testing/e2e/storybook.ts`).
 
 A new gap must land as: compiler diagnostic (INKxxxx) + per-target note in docs + (where possible) a CSS/authoring convention that neutralizes it. Losing a capability quietly destroys consumer trust permanently.
 
@@ -45,6 +46,6 @@ Inkline is **customer zero** of styleframe — the relationship runs both ways:
 - **Outbound**: recipe gaps blocking the catalog (toast, combobox, date-picker, data-table…) are filed upstream with the component spec attached — Inkline's component API research is styleframe's best requirements document. Never fork a local one-off for a family upstream is about to ship.
 - Version bumps ride the catalog in `pnpm-workspace.yaml`; the styleframe first-party packages are deliberately excluded from pnpm's `minimumReleaseAge` guard (intentionally fresh, trusted).
 
-## Story ids are an interop contract too
+## Cases and examples are an interop contract too
 
-The story generator (`tooling/storybook`) keeps story ids identical across all 7 Storybooks — the e2e visual-parity suite drives every framework by React's id list. Renaming a story meta/variant changes ids in seven places and invalidates parity baselines; treat it like an API rename (migration note, @gauntlet heads-up).
+Every case under `ui/components/test/` and every `*.example.uf.tsx` runs on all seven targets, compared with Vue's output ([docs/authoring-components.md](../../../docs/authoring-components.md)). Renaming a case's scenario or an example changes its expectations on every target: treat it like an API rename.

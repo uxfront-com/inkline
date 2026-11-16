@@ -14,6 +14,8 @@ allowed-tools:
 
 # Component documentation & release prep
 
+> Inkline's components now compile with Unframework. For how a component is written, built and tested, read [docs/authoring-components.md](../../../docs/authoring-components.md) and [docs/architecture.md](../../../docs/architecture.md); where this guide differs from them, they win.
+
 The public docs website **does not exist yet** — so the "document" phase today means: make the API self-documenting (TSDoc), prepare the release (changeset), keep the repo's own docs honest, and stage the future docs-site content without shipping anything speculative.
 
 ## Read first
@@ -35,7 +37,7 @@ The component ships through the **per-framework packages**, not the private `@in
 
 - Confirm the styled + headless exports are in `ui/components/src/components/index.ts`.
 - If any `AGENTS.md` or `docs/*.md` maintains a component list or examples, update it. **Do not** treat `docs/authoring-components.md` as a code template — it has drifted; the live source is canonical.
-- Do **not** edit generated dirs (`ui/<framework>/.inkline/`, `.styleframe/`) or `.old/`.
+- Do **not** edit generated dirs (`dist/`, `.styleframe/`) or `.old/`.
 
 ### 4. Docs website — TBD (stage, don't ship)
 
@@ -45,7 +47,7 @@ The website (`apps/website`) has no component-doc pages yet. Do not invent a doc
 - the **anatomy** (parts + the styled composition),
 - a **props/slots/events table** (generated from the TSDoc'd interfaces),
 - **accessibility notes** (the APG pattern, keyboard map, ARIA from the spec),
-- **live examples** mirroring the Storybook variants.
+- **live examples** mirroring the component's `*.example.uf.tsx` files.
 
 Leave a short note in the changeset or PR description that the website page is pending the docs-site implementation.
 
