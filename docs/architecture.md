@@ -8,7 +8,7 @@ This page explains how a component goes from its source to the seven packages, a
 
 ```
 ui/components/src/**/*.uf.tsx
-        │  unframework build, then scripts/barrels.ts
+        │  scripts/styleframe-types.ts, unframework build, then scripts/barrels.ts
         ▼
 ui/components/dist/<target>/   (index.ts: styled, headless.ts: headless)
         │  each package's vp build (vp build && vp pack on Astro)
@@ -16,7 +16,7 @@ ui/components/dist/<target>/   (index.ts: styled, headless.ts: headless)
 ui/<framework>/dist/           (the published entries: ., ./headless, ./css)
 ```
 
-1. **Compile.** `pnpm --filter @inkline/components build` runs `unframework build`, which compiles every `.uf.tsx` under `src/` to each target's tree in `dist/<target>`, copies the plain `.ts` modules the sources import, like each family's `types.ts` and the generated `src/recipes.ts`, and writes a barrel, `index.ts`.
+1. **Compile.** `pnpm --filter @inkline/components build` first writes Styleframe's type declarations to `ui/components/.styleframe/` with [`scripts/styleframe-types.ts`](../ui/components/scripts/styleframe-types.ts), since they type `virtual:styleframe` for the type check and `unframework build` doesn't run Styleframe's plugin. Then it runs `unframework build`, which compiles every `.uf.tsx` under `src/` to each target's tree in `dist/<target>`, copies the plain `.ts` modules the sources import, like each family's `types.ts` and the generated `src/recipes.ts`, and writes a barrel, `index.ts`.
 2. **Split.** [`scripts/barrels.ts`](../ui/components/scripts/barrels.ts) splits each barrel into the two entries the packages ship: `index.ts` exports the components under a `styled/` directory, and `headless.ts` those under `headless/`. It fails on any other line.
 3. **Package.** Each `ui/<framework>` package keeps its Vite library build, with Styleframe's plugin, which serves `virtual:styleframe`, the recipes the components import. Its entries re-export the two files in `ui/components/dist/<framework>`, and its `./css` entry, where it has one, is the stylesheet Vite extracts from `virtual:styleframe.css`.
 

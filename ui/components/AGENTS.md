@@ -16,6 +16,7 @@ ui/components/
 ├── tsconfig.json          # Type-checks the sources with Unframework's JSX types
 ├── scripts/
 │   ├── recipes.ts         # Writes src/recipes.ts from the *.styleframe.ts files
+│   ├── styleframe-types.ts # Writes .styleframe/, the types of virtual:styleframe
 │   ├── barrels.ts         # Splits each target's barrel into index.ts and headless.ts
 │   └── api-report.ts      # The framework packages' API report (ui/<framework>/test/api.json)
 ├── src/
@@ -27,6 +28,7 @@ ui/components/
 │       ├── styled/I<Name>.styleframe.ts      # The family's recipes
 │       └── examples/<Example>.example.uf.tsx # What `unframework visual` and `preview` render
 ├── test/<name>/<case>/    # One case per component: its spec, a harness parent, case.json, __expected__/
+├── .styleframe/           # Generated: Styleframe's declarations, which type virtual:styleframe
 └── dist/<target>/         # Generated: Unframework's output for each target
 ```
 
@@ -35,9 +37,9 @@ ui/components/
 ## Commands
 
 ```bash
-pnpm build          # unframework build, then scripts/barrels.ts
+pnpm build          # scripts/styleframe-types.ts, then unframework build and scripts/barrels.ts
 pnpm dev            # unframework preview: every example and component on every target
-pnpm test:recipes   # node --test: src/recipes.ts is current, and the barrel split works
+pnpm test:recipes   # node --test: src/recipes.ts is current, .styleframe/ declares virtual:styleframe, and the barrel split works
 pnpm test:targets   # unframework test: every case on every target, in Chromium and on the server
 pnpm visual         # unframework visual: every example on every target, compared with the reference
 ```
@@ -72,7 +74,7 @@ Props types live in each family's `types.ts`, a plain module every output copies
 
 ## Pitfalls
 
-- **Don't edit `dist/`, `src/recipes.ts` or `.styleframe/`.** They're generated.
+- **Don't edit `dist/`, `src/recipes.ts` or `.styleframe/`.** They're generated. `pnpm build` writes `.styleframe/` first, because `tsconfig.json` types `virtual:styleframe` only through it, so the sources type-check only after a build.
 - **A target difference is a failing test, not a flake.** Unframework compares every target with the reference, Vue. Fix the source, or record the difference in Unframework.
 - **`virtual:styleframe` needs Styleframe's plugin in the consumer's Vite config.** The framework packages and `unframework.config.ts` set it up.
 

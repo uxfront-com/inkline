@@ -7,6 +7,7 @@
  * It loads `styleframe.config.ts` and every `*.styleframe.ts` file under `src/` the way Styleframe's
  * Vite plugin does, and keeps the `…RecipeProps` types of the declarations Styleframe's transpiler
  * writes for `virtual:styleframe`. `scripts/recipes.test.ts` fails when the committed file differs.
+ * `scripts/styleframe-types.ts` writes those declarations to `.styleframe/` from the same loading.
  *
  * Run it with `node scripts/recipes.ts` from `ui/components` to write the file again.
  */
@@ -36,8 +37,11 @@ function styleframeFiles(dir = join(ROOT, "src")): string[] {
     .sort();
 }
 
-/** The contents `src/recipes.ts` should have. */
-export async function generateRecipes(): Promise<string> {
+/**
+ * The type declarations Styleframe's transpiler writes for the components' configuration and
+ * recipes, as `{ name, content }` files: the ones Styleframe's Vite plugin writes to `.styleframe/`.
+ */
+export async function transpileTypes(): Promise<{ name: string; content: string }[]> {
   // Each extension imports `styleframe()` from `virtual:styleframe`, which returns the instance the
   // configuration created. Styleframe's plugin serves it from a shim of its own, as here.
   const shimDir = mkdtempSync(join(tmpdir(), "inkline-recipes-"));
@@ -59,16 +63,22 @@ export async function generateRecipes(): Promise<string> {
       delete globals[GLOBAL_INSTANCE_KEY];
     }
     const { files } = await transpile(instance, { type: "dts" });
-    const types = files.find((file) => file.name === DTS_TYPES_FILENAME)?.content;
-    if (!types) throw new Error(`Styleframe's transpiler wrote no ${DTS_TYPES_FILENAME}`);
-    const declarations = [...types.matchAll(/^export type (\w+RecipeProps) = (.+);$/gm)]
-      .map(([, name, type]) => `export type ${name} = ${type};\n`)
-      .sort();
-    if (declarations.length === 0) throw new Error("Styleframe declared no recipe props");
-    return `${HEADER}\n${declarations.join("")}`;
+    return files;
   } finally {
     rmSync(shimDir, { recursive: true, force: true });
   }
+}
+
+/** The contents `src/recipes.ts` should have. */
+export async function generateRecipes(): Promise<string> {
+  const files = await transpileTypes();
+  const types = files.find((file) => file.name === DTS_TYPES_FILENAME)?.content;
+  if (!types) throw new Error(`Styleframe's transpiler wrote no ${DTS_TYPES_FILENAME}`);
+  const declarations = [...types.matchAll(/^export type (\w+RecipeProps) = (.+);$/gm)]
+    .map(([, name, type]) => `export type ${name} = ${type};\n`)
+    .sort();
+  if (declarations.length === 0) throw new Error("Styleframe declared no recipe props");
+  return `${HEADER}\n${declarations.join("")}`;
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
