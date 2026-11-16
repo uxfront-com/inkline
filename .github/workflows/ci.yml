@@ -84,6 +84,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build-artifacts
+          path: ui
 
       # `generate`, not `build`: the site ships as a fully prerendered static
       # bundle (docs/adrs/007-website-ships-as-a-static-site.md). Only `generate`
@@ -143,6 +144,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build-artifacts
+          path: ui
 
       - name: Run oxlint
         run: npx vp lint
@@ -212,6 +214,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build-artifacts
+          path: ui
 
       - name: Run tests
         # Each shard runs only part of the suite, so per-package coverage is partial. Disable the
