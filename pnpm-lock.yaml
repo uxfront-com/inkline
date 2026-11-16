@@ -112,8 +112,8 @@ catalogs:
       specifier: ^8.61.0
       version: 8.61.0
     '@uxfront/layer-docs':
-      specifier: ^0.8.0
-      version: 0.8.0
+      specifier: ^0.8.4
+      version: 0.8.4
     '@uxfront/layer-ui':
       specifier: ^0.1.7
       version: 0.1.7
@@ -267,7 +267,7 @@ importers:
         version: 3.16.1(@farmfe/core@1.7.11(@types/node@26.1.1))(@nuxt/schema@4.6.1)(@oxc-project/types@0.155.0)(@rspack/core@2.0.8(@swc/helpers@0.5.23))(better-sqlite3@12.11.1)(confbox@0.2.4)(dotenv@17.4.2)(esbuild@0.28.1)(giget@3.3.0)(magic-string@1.4.3)(magicast@0.5.4)(mlly@1.8.2)(oxc-parser@0.143.0)(rolldown@1.2.13)(rollup@4.62.0)(valibot@1.4.1(@typescript/typescript6@6.0.2))(vite@8.3.4(@types/node@26.1.1)(esbuild@0.28.1)(jiti@2.7.0)(less@4.4.2)(sass@1.99.0)(terser@5.48.0)(tsx@4.22.4)(yaml@2.9.0))(webpack@5.107.2(esbuild@0.28.1)(lightningcss@1.33.0)(postcss@8.5.29))
       '@uxfront/layer-docs':
         specifier: 'catalog:'
-        version: 0.8.0(96705eb15abe6a2b54aee0d084887317)
+        version: 0.8.4(96705eb15abe6a2b54aee0d084887317)
       '@uxfront/layer-ui':
         specifier: 'catalog:'
         version: 0.1.7(@farmfe/core@1.7.11(@types/node@26.1.1))(@nuxt/schema@4.6.1)(@rspack/core@2.0.8(@swc/helpers@0.5.23))(confbox@0.2.4)(db0@0.3.4(better-sqlite3@12.11.1))(dotenv@17.4.2)(esbuild@0.28.1)(giget@3.3.0)(ioredis@5.11.1)(jiti@2.7.0)(magic-string@1.4.3)(mlly@1.8.2)(nuxt@4.6.1(2d18e4f14aa215d2158a42fd7758d164))(oxc-parser@0.143.0)(rolldown@1.2.13)(rollup@4.62.0)(unplugin@3.4.0(@farmfe/core@1.7.11(@types/node@26.1.1))(@rspack/core@2.0.8(@swc/helpers@0.5.23))(esbuild@0.28.1)(rolldown@1.2.13)(rollup@4.62.0)(vite@8.3.4(@types/node@26.1.1)(esbuild@0.28.1)(jiti@2.7.0)(less@4.4.2)(sass@1.99.0)(terser@5.48.0)(tsx@4.22.4)(yaml@2.9.0))(webpack@5.107.2(esbuild@0.28.1)(lightningcss@1.33.0)(postcss@8.5.29)))(vite@8.3.4(@types/node@26.1.1)(esbuild@0.28.1)(jiti@2.7.0)(less@4.4.2)(sass@1.99.0)(terser@5.48.0)(tsx@4.22.4)(yaml@2.9.0))(vue@3.5.43(@typescript/typescript6@6.0.2))(webpack@5.107.2(esbuild@0.28.1)(lightningcss@1.33.0)(postcss@8.5.29))
@@ -7950,8 +7950,8 @@ packages:
       webpack:
         optional: true
 
-  '@uxfront/layer-docs@0.8.0':
-    resolution: {integrity: sha512-bDUM+iC7RHWfhsVbcaDcy/yTDzZ6OHpV/OU9M1eqKcIr8WPAaEc85+4P6VLgf9IPqMyVuEaT/ZQ+RCYvYQL8QQ==}
+  '@uxfront/layer-docs@0.8.4':
+    resolution: {integrity: sha512-tdPZxL0tzJaEa3Mg7LlZfYpSgJ1a5FNcH5augAnjWUSKAL+K8QlMFNOg3cRJZQJrcTzdvt1ZcU/oIKy3VSOUuA==}
     peerDependencies:
       nuxt: ^4.5.0
       vue: ^3.5.0
@@ -7965,8 +7965,16 @@ packages:
   '@uxfront/scene@0.5.0':
     resolution: {integrity: sha512-hDI7jtlJHiHiqnUOwaWoCAw5ZMxwnR5PQ41XHJSLLYR31FIe2ZIJm/TO/46wnguAfALIPTJfXSiBSocsx18JwA==}
 
+  '@uxfront/scene@0.5.1':
+    resolution: {integrity: sha512-SCbqe1f/8TQ5+dcEC8cvxw0sSF1kPojdKop1rTme7FCrjuOAOukhdLbJVrQBi5QB1N+sHMCa1Y+Sl8+GE8ZkvQ==}
+
   '@uxfront/ui@0.6.0':
     resolution: {integrity: sha512-lkWo9OucP9drwIxWwLWrod5e5aR/zXjk4EyDkqiFEiCGMx3XyBBaEzLTz/lqe69Y3rW/bS5yN7eN54GM8kuiYQ==}
+    peerDependencies:
+      vue: ^3.5.0
+
+  '@uxfront/ui@0.9.1':
+    resolution: {integrity: sha512-DxPtNRTboMmEuuBkcn6pWUbMo5StnukV3f8ctFmcPow32JbOYNBKDyTzMeTLaTordwiyI6iHDZN53aQBhnWkzA==}
     peerDependencies:
       vue: ^3.5.0
 
@@ -11731,6 +11739,7 @@ packages:
   image-size@0.5.5:
     resolution: {integrity: sha512-6TDAlDPZxUFCv+fuOkIoXT/V/f3Qbq8e37p+YOiYrUv3v9cc3/6x78VdfPgFVaB9dZYeLUfKgHRebpkm/oP2VQ==}
     engines: {node: '>=0.10.0'}
+    deprecated: Please migrate to image-size@2.x
     hasBin: true
 
   imagetools-core@9.1.0:
@@ -13162,6 +13171,7 @@ packages:
 
   node-abort-controller@3.1.1:
     resolution: {integrity: sha512-AGK2yQKIjRuqnc6VkX2Xj5d+QW8xZ87pa1UK6yA6ouUyuxfHuMP6umE5QK7UmTeOAymo+Zx1Fxiuw9rVx8taHQ==}
+    deprecated: This package is no longer needed on supported Node.js versions. Node.js 16+ includes AbortController and AbortSignal as built-in globals. All Node.js versions requiring this polyfill are end-of-life. Use the built-in globals instead.
 
   node-addon-api@6.1.0:
     resolution: {integrity: sha512-+eawOlIgy680F0kBzPUNFhMZGtJ1YmqM6l4+Crf4IkImjYrO/mqPwRMh352g23uIaQKFItcQ64I7KMaJxHgAVA==}
@@ -24225,9 +24235,10 @@ snapshots:
       - rollup
       - unloader
 
-  '@uxfront/layer-docs@0.8.0(96705eb15abe6a2b54aee0d084887317)':
+  '@uxfront/layer-docs@0.8.4(96705eb15abe6a2b54aee0d084887317)':
     dependencies:
-      '@uxfront/ui': 0.6.0(vue@3.5.43(@typescript/typescript6@6.0.2))
+      '@nuxt/kit': 4.6.1(@nuxt/schema@4.6.1)(confbox@0.2.4)(dotenv@17.4.2)(giget@3.3.0)(jiti@2.7.0)(magic-string@1.4.3)(mlly@1.8.2)(oxc-parser@0.143.0)(rolldown@1.2.13)(unplugin@3.4.0(@farmfe/core@1.7.11(@types/node@26.1.1))(@rspack/core@2.0.8(@swc/helpers@0.5.23))(esbuild@0.28.1)(rolldown@1.2.13)(rollup@4.62.0)(vite@8.3.4(@types/node@26.1.1)(esbuild@0.28.1)(jiti@2.7.0)(less@4.4.2)(sass@1.99.0)(terser@5.48.0)(tsx@4.22.4)(yaml@2.9.0))(webpack@5.107.2(esbuild@0.28.1)(lightningcss@1.33.0)(postcss@8.5.29)))
+      '@uxfront/ui': 0.9.1(vue@3.5.43(@typescript/typescript6@6.0.2))
       '@vueuse/core': 14.4.0(vue@3.5.43(@typescript/typescript6@6.0.2))
       docus: 5.13.0(96705eb15abe6a2b54aee0d084887317)
       nuxt: 4.6.1(2d18e4f14aa215d2158a42fd7758d164)
@@ -24408,9 +24419,16 @@ snapshots:
 
   '@uxfront/scene@0.5.0': {}
 
+  '@uxfront/scene@0.5.1': {}
+
   '@uxfront/ui@0.6.0(vue@3.5.43(@typescript/typescript6@6.0.2))':
     dependencies:
       '@uxfront/scene': 0.5.0
+      vue: 3.5.43(@typescript/typescript6@6.0.2)
+
+  '@uxfront/ui@0.9.1(vue@3.5.43(@typescript/typescript6@6.0.2))':
+    dependencies:
+      '@uxfront/scene': 0.5.1
       vue: 3.5.43(@typescript/typescript6@6.0.2)
 
   '@vercel/nft@1.10.2(rollup@4.62.0)':
@@ -26968,12 +26986,12 @@ snapshots:
 
   css-loader@7.1.3(@rspack/core@2.0.8(@swc/helpers@0.5.23))(webpack@5.105.2(esbuild@0.27.3)(postcss@8.5.12)):
     dependencies:
-      icss-utils: 5.1.0(postcss@8.5.29)
-      postcss: 8.5.29
-      postcss-modules-extract-imports: 3.1.0(postcss@8.5.29)
-      postcss-modules-local-by-default: 4.2.0(postcss@8.5.29)
-      postcss-modules-scope: 3.2.1(postcss@8.5.29)
-      postcss-modules-values: 4.0.0(postcss@8.5.29)
+      icss-utils: 5.1.0(postcss@8.5.32)
+      postcss: 8.5.32
+      postcss-modules-extract-imports: 3.1.0(postcss@8.5.32)
+      postcss-modules-local-by-default: 4.2.0(postcss@8.5.32)
+      postcss-modules-scope: 3.2.1(postcss@8.5.32)
+      postcss-modules-values: 4.0.0(postcss@8.5.32)
       postcss-value-parser: 4.2.0
       semver: 7.8.5
     optionalDependencies:
@@ -29257,6 +29275,10 @@ snapshots:
   icss-utils@5.1.0(postcss@8.5.29):
     dependencies:
       postcss: 8.5.29
+
+  icss-utils@5.1.0(postcss@8.5.32):
+    dependencies:
+      postcss: 8.5.32
 
   ieee754@1.2.1: {}
 
@@ -32813,10 +32835,21 @@ snapshots:
     dependencies:
       postcss: 8.5.29
 
+  postcss-modules-extract-imports@3.1.0(postcss@8.5.32):
+    dependencies:
+      postcss: 8.5.32
+
   postcss-modules-local-by-default@4.2.0(postcss@8.5.29):
     dependencies:
       icss-utils: 5.1.0(postcss@8.5.29)
       postcss: 8.5.29
+      postcss-selector-parser: 7.1.4
+      postcss-value-parser: 4.2.0
+
+  postcss-modules-local-by-default@4.2.0(postcss@8.5.32):
+    dependencies:
+      icss-utils: 5.1.0(postcss@8.5.32)
+      postcss: 8.5.32
       postcss-selector-parser: 7.1.4
       postcss-value-parser: 4.2.0
 
@@ -32825,10 +32858,20 @@ snapshots:
       postcss: 8.5.29
       postcss-selector-parser: 7.1.4
 
+  postcss-modules-scope@3.2.1(postcss@8.5.32):
+    dependencies:
+      postcss: 8.5.32
+      postcss-selector-parser: 7.1.4
+
   postcss-modules-values@4.0.0(postcss@8.5.29):
     dependencies:
       icss-utils: 5.1.0(postcss@8.5.29)
       postcss: 8.5.29
+
+  postcss-modules-values@4.0.0(postcss@8.5.32):
+    dependencies:
+      icss-utils: 5.1.0(postcss@8.5.32)
+      postcss: 8.5.32
 
   postcss-nested@7.0.2(postcss@8.5.19):
     dependencies:
@@ -33735,7 +33778,7 @@ snapshots:
       adjust-sourcemap-loader: 4.0.0
       convert-source-map: 1.9.0
       loader-utils: 2.0.4
-      postcss: 8.5.29
+      postcss: 8.5.32
       source-map: 0.6.1
 
   resolve@1.22.12:
