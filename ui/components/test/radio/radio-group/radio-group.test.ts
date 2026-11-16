@@ -21,6 +21,21 @@ describeTargets("radio/radio-group", () => {
     await expect.element(view.locator).toHaveNoAxeViolations();
   });
 
+  it("checks an option whose value is empty only when the model holds it", async () => {
+    const view = await mountScenario(RadioGroupCase, "none-unset");
+    await view.expectParity("none-unset");
+    await expect.element(view.getByRole("radio", { name: "No vegetable" })).not.toBeChecked();
+    await expect.element(view.getByRole("radio", { name: "None" })).not.toBeChecked();
+    await expect.element(view.getByRole("radio", { name: "Apple" })).toBeChecked();
+  });
+
+  it("checks an option whose value is empty when the model is set to it", async () => {
+    const view = await mountScenario(RadioGroupCase, "none-set");
+    await view.expectParity("none-set");
+    await expect.element(view.getByRole("radio", { name: "None" })).toBeChecked();
+    await expect.element(view.getByRole("radio", { name: "Apple" })).not.toBeChecked();
+  });
+
   it("writes the model on a click and an arrow key", { requires: ["interactivity"] }, async () => {
     const view = await mountScenario(RadioGroupCase, "default");
     await view.expectParity("default-2");

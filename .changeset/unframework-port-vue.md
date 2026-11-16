@@ -7,7 +7,7 @@ Build every component with Unframework, from its `.uf.tsx` source, in place of I
 **Breaking:**
 
 - **Props.** `IRadioFieldBase` loses `checked`, which the `selected` model replaces (below). Bind the group's selected value to every radio's `selected` model instead of passing each its `checked` state.
-- **Models.** `IRadioFieldBase` gains the `selected` model, which holds the value of the radio that's checked, so the radios of a group bind one value, as native radios do.
+- **Models.** `IRadioFieldBase` gains the `selected` model, which holds the value of the radio that's checked, so the radios of a group bind one value, as native radios do. Like `IRadioGroup`'s `value`, it starts `undefined`, so no radio is checked until the model holds a value, and a radio with no `value` starts unchecked. Its type is `string | undefined`, so the state you bind it to takes `undefined` too.
 - **Events.** `IRadioFieldBase` no longer emits `change`: listen to the `selected` model's update instead.
 - **Subpaths.** The `./stories` entry is gone, with the Storybooks that read it. Nothing replaces it: the components' examples live in the repository.
 - **Input types.** `IInput` and `IInputControlBase` take a `type` of `text`, `email`, `password`, `search`, `tel` or `url`, and `IInput` takes `textarea` too, since the bound value needs the input's type before it renders. A `number` input binds a number, not the string the `value` model holds. Use your own input for the other types.

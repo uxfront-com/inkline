@@ -8,6 +8,11 @@
       "props": {
         "disabled": true
       }
+    },
+    "unvalued": {
+      "props": {
+        "unvalued": true
+      }
     }
   }
 }

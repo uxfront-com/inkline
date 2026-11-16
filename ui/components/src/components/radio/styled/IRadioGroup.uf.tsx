@@ -24,7 +24,7 @@ export default function IRadioGroup({
   disabled = false,
   ariaDescribedby,
 }: RadioGroupProps) {
-  const value = defineModel<string>("value", { default: "" });
+  const value = defineModel<string>("value");
 
   return (
     <IRadioGroupBase

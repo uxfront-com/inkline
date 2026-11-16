@@ -16,8 +16,8 @@ export default function RadioGroupBaseCase({
   attributes?: boolean;
   fields?: boolean;
 }) {
-  const emit = defineEmits<{ change: [value: string] }>();
-  const selected = ref("apple");
+  const emit = defineEmits<{ change: [value: string | undefined] }>();
+  const selected = ref<string | undefined>("apple");
   watch(
     () => selected.value,
     (value) => emit("change", value),

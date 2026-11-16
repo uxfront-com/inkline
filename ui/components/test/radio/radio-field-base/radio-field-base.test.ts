@@ -13,6 +13,13 @@ describeTargets("radio/radio-field-base", () => {
     await expect.element(view.locator).toHaveNoAxeViolations();
   });
 
+  it("leaves a radio with no value unchecked", async () => {
+    const view = await mountScenario(RadioFieldCase, "unvalued");
+    await view.expectParity("unvalued");
+    await expect.element(view.getByRole("radio", { name: "Other" })).not.toBeChecked();
+    await expect.element(view.getByRole("radio", { name: "Apple" })).toBeChecked();
+  });
+
   it("writes the model on a click and an arrow key", { requires: ["interactivity"] }, async () => {
     const view = await mountScenario(RadioFieldCase, "default");
     await view.expectParity("default-2");

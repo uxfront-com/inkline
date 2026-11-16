@@ -26,7 +26,7 @@ export default function IRadioFieldBase({
   required = false,
   readonly = false,
 }: RadioFieldBaseProps) {
-  const selected = defineModel<string>("selected", { default: "" });
+  const selected = defineModel<string>("selected");
 
   return (
     <input

@@ -14,7 +14,7 @@ Build every component with Unframework, from its `.uf.tsx` source, in place of I
 - **Props.** `IInput` declares `class`, `prefix$`, `style` and `suffix$`. Its named slots are now the render props `prefix$` and `suffix$`. Pass `prefix$` and `suffix$` where you projected `<div q:slot="prefix">` content.
 - **Events.** On `IInput`, `IInputControlBase`, `IInputTextareaBase` and `IRadioGroup`, `onUpdateValue$` is now `onValueChange$`. Rename the callback.
 - **Props.** `IRadioFieldBase` loses `checked`, which the `selected` model replaces (below), and declares `class` and `style`. Bind the group's selected value to every radio's `selected` model instead of passing each its `checked` state.
-- **Models.** `IRadioFieldBase` gains the `selected` model, which holds the value of the radio that's checked, so the radios of a group bind one value, as native radios do.
+- **Models.** `IRadioFieldBase` gains the `selected` model, which holds the value of the radio that's checked, so the radios of a group bind one value, as native radios do. Like `IRadioGroup`'s `value`, it starts `undefined`, so no radio is checked until the model holds a value, and a radio with no `value` starts unchecked. Its type is `string | undefined`, so the state you bind it to takes `undefined` too.
 - **Events.** On `IRadioFieldBase`, `onChange$` is now `onSelectedChange$`. Rename the callback.
 - **Peer dependency.** `@qwik.dev/core` moves from `>=2.0.0-beta.0` to exactly `2.0.0-beta.47`, the version Unframework generates the components for. Install that version.
 - **Subpaths.** The `./stories` entry is gone, with the Storybooks that read it. Nothing replaces it: the components' examples live in the repository.

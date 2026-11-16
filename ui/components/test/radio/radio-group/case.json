@@ -18,6 +18,17 @@
       "props": {
         "attributes": true
       }
+    },
+    "none-unset": {
+      "props": {
+        "none": true
+      }
+    },
+    "none-set": {
+      "props": {
+        "none": true,
+        "initial": ""
+      }
     }
   }
 }
