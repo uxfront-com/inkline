@@ -76,7 +76,7 @@ These apply everywhere. Package-level `AGENTS.md` files repeat them only when co
 - **Tests**: colocated as `<file>.test.ts`. Vitest. Never in a separate `tests/` folder, with two exceptions: the component cases in `ui/components/test/`, since Unframework compiles every `.uf.tsx` under `src/`, and each framework package's API report in `ui/<framework>/test/`.
 - **Commits**: conventional commits with package scope — `feat(compiler): …`, `fix(ci): …`. See [docs/conventions.md](./docs/conventions.md) → "Commit messages".
 - **Changesets**: every change to a published package needs one (`pnpm changeset`). See [docs/release-process.md](./docs/release-process.md).
-- **Generated directories — never hand-edit**: `ui/components/dist/` (Unframework's output), `ui/components/src/recipes.ts`, `ui/<framework>/.styleframe/`, every other `dist/` and `coverage/`.
+- **Generated directories — never hand-edit**: `ui/components/dist/` (Unframework's output), `ui/components/src/recipes.ts`, `ui/components/.styleframe/`, `ui/<framework>/.styleframe/`, every other `dist/` and `coverage/`.
 - **Archived directory — never touch**: `.old/` is the v0 codebase, kept for reference only.
 - **Doc freshness**: if your change touches public API, build flow, conventions, or the directory shape, update the relevant `AGENTS.md` / `docs/*.md`. See [docs/maintenance.md](./docs/maintenance.md).
 
