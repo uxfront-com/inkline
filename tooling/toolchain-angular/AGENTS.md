@@ -10,7 +10,7 @@ A private package that holds Angular's compiler stack on TypeScript 6, apart fro
 
 The `devDependencies` in [`package.json`](./package.json): the Angular packages, the Analog plugin, `rxjs`, `tslib`, TypeScript through `catalog:ts6`, and Vite through `catalog:unframework`. Every version comes from the catalog in [`pnpm-workspace.yaml`](../../pnpm-workspace.yaml), so a version moves there, not here.
 
-Unframework writes scratch files to `.uf-tmp/` while it runs. The directory is gitignored: never commit it.
+A run of Unframework's Angular toolchain once left scratch files here, in `.uf-tmp/`. The directory is gitignored: never commit it.
 
 ## When to change it
 
