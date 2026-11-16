@@ -1,4 +1,4 @@
-import { defineModel, ref, watch } from "@uxfront/unframework";
+import { defineModel } from "@uxfront/unframework";
 import { radioFieldRecipe, radioGroupRecipe, radioRecipe } from "virtual:styleframe";
 
 import IRadioBase from "../headless/IRadioBase.uf.tsx";
@@ -25,24 +25,6 @@ export default function IRadioGroup({
   ariaDescribedby,
 }: RadioGroupProps) {
   const value = defineModel<string>("value", { default: "" });
-  // Every radio binds this one ref, which writes the model only while the group isn't read-only and
-  // goes back to the model's value otherwise. React fires a radio's `change` from the click itself,
-  // before a read-only radio cancels it, so the radios can't bind the model directly.
-  const current = ref(value.value);
-
-  watch(
-    () => value.value,
-    (next) => {
-      current.value = next;
-    },
-  );
-  watch(
-    () => current.value,
-    (next) => {
-      if (readonly) current.value = value.value;
-      else value.value = next;
-    },
-  );
 
   return (
     <IRadioGroupBase
@@ -60,7 +42,7 @@ export default function IRadioGroup({
             value={option.value}
             disabled={disabled || option.disabled}
             readonly={readonly}
-            v-model:selected={current.value}
+            v-model:selected={value.value}
           />
           <span class="radio-label">{option.label ?? option.value}</span>
         </IRadioBase>

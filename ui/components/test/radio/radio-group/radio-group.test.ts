@@ -52,6 +52,10 @@ describeTargets("radio/radio-group", () => {
       await view.expectParity("readonly-focused");
       await view.user.keyboard("{ArrowRight}");
       await view.expectParity("readonly-arrowed");
+      await view.user.click(apple);
+      await view.expectParity("readonly-clicked-checked");
+      await view.user.keyboard(" ");
+      await view.expectParity("readonly-spaced-checked");
       await expect.element(apple).toBeChecked();
       await expect.element(pear).not.toBeChecked();
       await expect.element(view.getByRole("status")).toHaveTextContent("apple");

@@ -1,11 +1,27 @@
 {
-  "description": "The headless radio group, named by its label, and read-only.",
+  "description": "The headless radio group, named by its label, read-only, described, and holding radio fields that bind a parent's selection, read-only too.",
   "ssr": {
     "default": {
       "props": {}
     },
     "readonly": {
       "props": {
+        "readonly": true
+      }
+    },
+    "attributes": {
+      "props": {
+        "attributes": true
+      }
+    },
+    "fields": {
+      "props": {
+        "fields": true
+      }
+    },
+    "fields-readonly": {
+      "props": {
+        "fields": true,
         "readonly": true
       }
     }
