@@ -1,5 +1,4 @@
 ---
-"@inkline/compiler": minor
 "@inkline/angular": minor
 ---
 

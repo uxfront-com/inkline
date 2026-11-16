@@ -1,7 +1,5 @@
 ---
-"@inkline/compiler": minor
 "@inkline/angular": minor
-"@inkline/test-utils": minor
 ---
 
 feat(compiler): render recipe-based styled components on the Angular target

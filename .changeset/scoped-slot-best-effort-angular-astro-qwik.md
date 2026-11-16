@@ -1,5 +1,4 @@
 ---
-"@inkline/compiler": patch
 "@inkline/angular": patch
 "@inkline/astro": patch
 "@inkline/qwik": patch

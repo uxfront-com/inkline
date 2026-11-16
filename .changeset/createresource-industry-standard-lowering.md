@@ -1,5 +1,4 @@
 ---
-"@inkline/compiler": minor
 "@inkline/react": patch
 "@inkline/vue": patch
 "@inkline/svelte": patch

@@ -1,7 +1,5 @@
 ---
-"@inkline/compiler": minor
 "@inkline/angular": minor
-"@inkline/test-utils": patch
 ---
 
 feat(compiler): collapse styled-over-headless into one zero-wrapper Angular component
