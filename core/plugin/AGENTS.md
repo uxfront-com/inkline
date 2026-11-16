@@ -53,4 +53,4 @@ Because the compiler is mocked, the plugin↔compiler seam (real `GeneratedFile`
 
 - [`core/compiler/AGENTS.md`](../compiler/AGENTS.md) — what the plugin delegates to.
 - [`core/config-loader/AGENTS.md`](../config-loader/AGENTS.md) — for loading `inkline.config.ts` from a plugin consumer.
-- [docs/architecture.md](../../docs/architecture.md) → "Compilation pipeline" — what happens inside the `transform` hook.
+- [`core/compiler/AGENTS.md`](../compiler/AGENTS.md) → "Source map": the compiler's passes, which run inside the `transform` hook.

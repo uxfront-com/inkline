@@ -32,7 +32,7 @@ docs/adrs/   architecture decision records — why the codebase is the way it is
 .old/        archived v0 codebase — read-only reference, do not edit or link into
 ```
 
-Workspace globs live in [`pnpm-workspace.yaml`](./pnpm-workspace.yaml). Dependency layering and the IR-centric architecture are explained in [docs/architecture.md](./docs/architecture.md).
+Workspace globs live in [`pnpm-workspace.yaml`](./pnpm-workspace.yaml). How the packages fit together, and how a component is built and tested, is in [docs/architecture.md](./docs/architecture.md). The retiring compiler's pipeline is in [`core/compiler/AGENTS.md`](./core/compiler/AGENTS.md).
 
 ## Where to look next
 
@@ -71,7 +71,7 @@ For the user-facing language reference (primitives, control flow, options), the 
 These apply everywhere. Package-level `AGENTS.md` files repeat them only when consequential.
 
 - **Tooling**: pnpm 11, Node ≥24, Vite+ (`vp` CLI). OXLint via `vp lint`; Oxfmt via `vp fmt`. **Not ESLint, not Prettier.**
-- **Tests**: colocated as `<file>.test.ts`. Vitest. Never in a separate `tests/` folder.
+- **Tests**: colocated as `<file>.test.ts`. Vitest. Never in a separate `tests/` folder, with two exceptions: the component cases in `ui/components/test/`, since Unframework compiles every `.uf.tsx` under `src/`, and each framework package's API report in `ui/<framework>/test/`.
 - **Commits**: conventional commits with package scope — `feat(compiler): …`, `fix(ci): …`. See [docs/conventions.md](./docs/conventions.md) → "Commit messages".
 - **Changesets**: every change to a published package needs one (`pnpm changeset`). See [docs/release-process.md](./docs/release-process.md).
 - **Generated directories — never hand-edit**: `ui/components/dist/` (Unframework's output), `ui/components/src/recipes.ts`, `ui/<framework>/.styleframe/`, every other `dist/` and `coverage/`.

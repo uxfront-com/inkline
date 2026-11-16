@@ -4,18 +4,18 @@ Repo-wide conventions for code, tests, files, and commits. This document is a po
 
 ## Tooling
 
-| Concern                   | Tool                        | Configured in                                                                                          |
-| ------------------------- | --------------------------- | ------------------------------------------------------------------------------------------------------ |
-| Package manager           | pnpm 11.x                   | [`package.json`](../package.json) `packageManager` field                                               |
-| Node runtime              | Node ≥24                    | [`package.json`](../package.json) `engines.node`                                                       |
-| Workspace layout          | pnpm workspaces             | [`pnpm-workspace.yaml`](../pnpm-workspace.yaml)                                                        |
-| Build / dev / test driver | Vite+ (`vp` CLI)            | per-package [`vite.config.ts`](../vite.config.ts) + root [`vite.config.ts`](../vite.config.ts)         |
-| Linter                    | OXLint (via `vp lint`)      | root [`vite.config.ts`](../vite.config.ts) `lint` section                                              |
-| Formatter                 | Oxfmt (via `vp fmt`)        | root [`vite.config.ts`](../vite.config.ts) `fmt` section                                               |
-| Type checker              | `pnpm run typecheck`        | root [`tsconfig.json`](../tsconfig.json) + per-package extensions — never bare `tsc` from the root     |
-| Test runner               | Vitest                      | per-package `vite.config.ts` `test` section                                                            |
-| Versioning / publishing   | Changesets                  | [`.changeset/config.json`](../.changeset/config.json) — see [release-process.md](./release-process.md) |
-| Doc tooling               | Storybook 10, per framework | [`tooling/storybook/`](../tooling/storybook/) + per-framework Storybook configs                        |
+| Concern                   | Tool                   | Configured in                                                                                          |
+| ------------------------- | ---------------------- | ------------------------------------------------------------------------------------------------------ |
+| Package manager           | pnpm 11.x              | [`package.json`](../package.json) `packageManager` field                                               |
+| Node runtime              | Node ≥24               | [`package.json`](../package.json) `engines.node`                                                       |
+| Workspace layout          | pnpm workspaces        | [`pnpm-workspace.yaml`](../pnpm-workspace.yaml)                                                        |
+| Build / dev / test driver | Vite+ (`vp` CLI)       | per-package [`vite.config.ts`](../vite.config.ts) + root [`vite.config.ts`](../vite.config.ts)         |
+| Linter                    | OXLint (via `vp lint`) | root [`vite.config.ts`](../vite.config.ts) `lint` section                                              |
+| Formatter                 | Oxfmt (via `vp fmt`)   | root [`vite.config.ts`](../vite.config.ts) `fmt` section                                               |
+| Type checker              | `pnpm run typecheck`   | root [`tsconfig.json`](../tsconfig.json) + per-package extensions — never bare `tsc` from the root     |
+| Test runner               | Vitest                 | per-package `vite.config.ts` `test` section                                                            |
+| Versioning / publishing   | Changesets             | [`.changeset/config.json`](../.changeset/config.json) — see [release-process.md](./release-process.md) |
+| Component previews        | `unframework preview`  | [`ui/components/unframework.config.ts`](../ui/components/unframework.config.ts)                        |
 
 ESLint and Prettier are **not** used. Their config schemas appear in the catalog because some framework plugins (Vue, Svelte, Angular, Astro, Solid, Qwik) ship ESLint configs as transitive deps — we do not invoke them.
 
@@ -24,25 +24,24 @@ ESLint and Prettier are **not** used. Their config schemas appear in the catalog
 ```
 core/      authoring primitives, compiler, plugin, config loader, barrel
 tooling/   CLI, Storybook integration, test utilities
-testing/   end-to-end test packages (Playwright cross-framework visual parity)
 ui/        single-source components + 7 generated framework packages
-apps/      docs website + unified Storybook aggregator
+apps/      docs website
 ```
 
 See [`pnpm-workspace.yaml`](../pnpm-workspace.yaml) for the authoritative glob list and [AGENTS.md](../AGENTS.md) for orientation. A `tools/*` slot exists in the workspace globs but has no packages today.
 
 ## File naming
 
-| Pattern          | Where                             | Meaning                                                                                                             |
-| ---------------- | --------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| `*.ink.tsx`      | `ui/components/src/components/**` | Authored Inkline component. Compiles to all framework targets.                                                      |
-| `*.test.ts`      | colocated next to source          | Vitest test for the adjacent module. Tests never live in a separate `tests/` directory.                             |
-| `*.spec.ts`      | `testing/e2e/`                    | Playwright e2e specs (cross-framework visual parity). Not Vitest; run via `test:e2e`.                               |
-| `__fixtures__/`  | `core/compiler/src/__fixtures__/` | Compiler fixtures (`.ink.tsx`) used by scenario tests. Excluded from lint by [`vite.config.ts`](../vite.config.ts). |
-| `__snapshots__/` | colocated                         | Vitest snapshot files.                                                                                              |
-| `.inkline/`      | `ui/<framework>/.inkline/`        | **Auto-generated** by the compiler. Never hand-edit.                                                                |
-| `.styleframe/`   | `ui/<framework>/.styleframe/`     | **Auto-generated** style artifacts. Never hand-edit.                                                                |
-| `dist/`          | per-package                       | Build output. Never hand-edit.                                                                                      |
+| Pattern          | Where                                 | Meaning                                                                                                                                                                                    |
+| ---------------- | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `*.uf.tsx`       | `ui/components/src/components/**`     | Authored Inkline component. Unframework compiles it to all seven framework targets.                                                                                                        |
+| `*.test.ts`      | colocated next to source              | Vitest test for the adjacent module. Tests never live in a separate `tests/` directory, except the component cases in `ui/components/test/` and the API reports in `ui/<framework>/test/`. |
+| `*.test.ts`      | `ui/components/test/<family>/<case>/` | A component case's spec, through `@unframework.dev/testing`. `test:targets` runs it on every target.                                                                                       |
+| `__fixtures__/`  | `core/compiler/src/__fixtures__/`     | Compiler fixtures (`.ink.tsx`) used by scenario tests. Excluded from lint by [`vite.config.ts`](../vite.config.ts).                                                                        |
+| `__snapshots__/` | colocated                             | Vitest snapshot files.                                                                                                                                                                     |
+| `dist/`          | `ui/<framework>/dist/`                | **Auto-generated**: the package's library build of Unframework's output in `ui/components/dist/<framework>/`. Never hand-edit.                                                             |
+| `.styleframe/`   | `ui/<framework>/.styleframe/`         | **Auto-generated** style artifacts. Never hand-edit.                                                                                                                                       |
+| `dist/`          | per-package                           | Build output. Never hand-edit.                                                                                                                                                             |
 
 ## Test layout
 
@@ -54,6 +53,8 @@ Tests live next to their source as `<file>.test.ts`. Examples:
 Run all tests with `vp run -r test` from the repo root; run a single package's tests with `vp test` inside that package. Coverage uses `@vitest/coverage-v8`.
 
 **Exception: the component tests.** `ui/components` runs its tests with Unframework, which runs Vitest in Chromium on every target. Each component's case is a directory under [`ui/components/test/`](../ui/components/test/), with its spec, a harness parent and its expectations, and `test:targets` runs them, not `test`. See [`ui/components/AGENTS.md`](../ui/components/AGENTS.md).
+
+**Exception: the API reports.** Each framework package keeps `test/api.json` and `test/api.test.ts` in [`ui/<framework>/test/`](../ui/react/test/), since they test the package's build, not one module. See [`ui/react/AGENTS.md`](../ui/react/AGENTS.md).
 
 ## Code style
 

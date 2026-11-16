@@ -66,7 +66,7 @@ Run the standard gate from the repo root:
 vp run ready
 ```
 
-This runs `pnpm run build && pnpm run check && pnpm run test` — the same shape as CI. `vp check` covers lint (OXLint) + format (Oxfmt) + typecheck (`tsc`).
+This runs `pnpm run build && pnpm run check && pnpm run test`, then the components' `test:recipes` and `test:targets` (every case on every target, in Chromium and in a server render) — the same shape as CI. `vp check` covers lint (OXLint) + format (Oxfmt) + typecheck (`tsc`). `test:targets` needs Playwright's Chromium: install it once with `pnpm --filter @inkline/components exec playwright install chromium`.
 
 If you only need part of the gate while iterating, use `vp check`, `vp lint`, `vp fmt --check`, or `vp test` independently. CI runs the same commands with stricter flags — see below.
 
@@ -87,7 +87,7 @@ To run the real compiler against a single package, do it from inside that packag
 
 Two workflows live under [`.github/workflows/`](../.github/workflows/):
 
-- [`ci.yml`](../.github/workflows/ci.yml) — runs on every push to `main` and every PR. Granular parallel jobs: `build`, `build-storybook`, `build-framework-storybooks` (one matrix job per framework, each building that framework's Storybook the way its Cloudflare Worker deploys it), `build-website`, `lint`, `typecheck`, `test`, and `visual-parity` (Playwright cross-framework screenshot diffing, sharded ×2). Most downstream jobs depend on `build` and reuse its artifacts. Two build for themselves instead: `typecheck`, so that the job is the same command a contributor runs and cannot check against a stale `dist/`, and `build-framework-storybooks`, because a static Storybook imports its package's `dist/`, which the artifacts don't carry. A final `ci-success` job aggregates the status of every job, `visual-parity` included, and fails when any of them fails or is cancelled. PR runs are cancelled when a new push arrives on the same ref; main runs are not. So a PR commit that a newer push supersedes shows a red `CI Success`, which is expected: branch protection reads only the head commit.
+- [`ci.yml`](../.github/workflows/ci.yml) — runs on every push to `main` and every PR. Granular parallel jobs: `build`, `build-website`, `lint`, `typecheck`, `test`, `component-tests` (the components' `test:recipes` and `test:targets`, every case on every target) and `visual` (`unframework visual`: every example on every target, compared with the reference target's capture). `build-website`, `lint` and `test` depend on `build` and reuse its artifacts. `typecheck` builds for itself, so that the job is the same command a contributor runs and cannot check against a stale `dist/`, and `component-tests` and `visual` compile the components themselves, from source. A final `ci-success` job aggregates the status of every job and fails when any of them fails or is cancelled. PR runs are cancelled when a new push arrives on the same ref; main runs are not. So a PR commit that a newer push supersedes shows a red `CI Success`, which is expected: branch protection reads only the head commit.
 - [`changesets.yml`](../.github/workflows/changesets.yml) — runs on push to `main`. Uses `changesets/action` to maintain a "chore: update versions" PR. See [release-process.md](./release-process.md).
 
 CI uses Node 24. If you see local-only test passes / CI failures, first compare your local Node version against the workflow's `NODE_VERSION`.
@@ -102,7 +102,7 @@ pnpm changeset
 
 Pick the affected packages, bump level (`patch` / `minor` / `major`), and write a one-sentence change description. The CLI writes a markdown file under [`.changeset/`](../.changeset/). Commit it with your code change.
 
-Packages excluded from publishing are listed in [`.changeset/config.json`](../.changeset/config.json) `ignore`: today, `website` and `@inkline/components`. Internal-only packages (e.g. `apps/storybook`, `@inkline/storybook`) are also marked `private` in their `package.json`.
+Packages excluded from publishing are listed in [`.changeset/config.json`](../.changeset/config.json) `ignore`: today, `website` and `@inkline/components`. Internal-only packages (e.g. `@inkline/components`, `@inkline/storybook`) are also marked `private` in their `package.json`.
 
 Full release flow: [release-process.md](./release-process.md).
 
