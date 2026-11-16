@@ -21,6 +21,8 @@ export default function ICheckboxControlBase({
   required = false,
   readonly = false,
   indeterminate = false,
+  ariaLabel,
+  ariaDescribedby,
 }: CheckboxControlBaseProps) {
   const checked = defineModel<boolean>("checked", { default: false });
   const state = ref(checked.value);
@@ -61,6 +63,8 @@ export default function ICheckboxControlBase({
       disabled={disabled}
       required={required}
       aria-readonly={readonly ? "true" : undefined}
+      aria-label={ariaLabel}
+      aria-describedby={ariaDescribedby}
       onClick={(event: MouseEvent) => {
         if ((event.currentTarget as HTMLElement).getAttribute("aria-readonly") === "true") {
           event.preventDefault();

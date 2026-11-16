@@ -25,6 +25,11 @@
       "props": {
         "indeterminate": true
       }
+    },
+    "attributes": {
+      "props": {
+        "attributes": true
+      }
     }
   }
 }

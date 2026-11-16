@@ -1,4 +1,4 @@
-import { defineModel } from "@uxfront/unframework";
+import { defineEmits, defineModel } from "@uxfront/unframework";
 
 import type { InputTextareaBaseProps } from "../types.ts";
 
@@ -10,7 +10,13 @@ export default function IInputTextareaBase({
   placeholder,
   disabled = false,
   readonly = false,
+  required = false,
+  autocomplete,
+  ariaLabel,
+  ariaDescribedby,
 }: InputTextareaBaseProps) {
+  // \`focus\` and \`blur\` fire as the native control gains and loses focus.
+  const emit = defineEmits<{ focus: []; blur: [] }>();
   // The value, a model, so a parent can bind it.
   const value = defineModel<string>("value", { default: "" });
 
@@ -23,6 +29,12 @@ export default function IInputTextareaBase({
       placeholder={placeholder}
       disabled={disabled}
       readonly={readonly}
+      required={required}
+      autocomplete={autocomplete}
+      aria-label={ariaLabel}
+      aria-describedby={ariaDescribedby}
+      onFocus={() => emit("focus")}
+      onBlur={() => emit("blur")}
     />
   );
 }

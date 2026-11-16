@@ -1,5 +1,6 @@
 // A harness parent: it binds the group's `value` model to its own state, shows that state, and emits
-// `change` whenever the model writes it.
+// `change` whenever the model writes it. With `attributes`, it renders a group described by the
+// declared prop.
 import { defineEmits, ref, watch } from "@uxfront/unframework";
 
 import IRadioGroup from "../../../src/components/radio/styled/IRadioGroup.uf.tsx";
@@ -8,10 +9,12 @@ export default function RadioGroupCase({
   initial = "apple",
   readonly = false,
   disabled = false,
+  attributes = false,
 }: {
   initial?: string;
   readonly?: boolean;
   disabled?: boolean;
+  attributes?: boolean;
 }) {
   const emit = defineEmits<{ change: [value: string] }>();
   const value = ref(initial);
@@ -31,6 +34,7 @@ export default function RadioGroupCase({
         orientation="horizontal"
         readonly={readonly}
         disabled={disabled}
+        ariaDescribedby={attributes ? "fruit-hint" : undefined}
         options={[
           { value: "apple", label: "Apple" },
           { value: "pear", label: "Pear" },
@@ -39,6 +43,7 @@ export default function RadioGroupCase({
         ]}
         v-model:value={value.value}
       />
+      {attributes ? <p id="fruit-hint">Pick one.</p> : null}
       <output>{value.value}</output>
     </div>
   );

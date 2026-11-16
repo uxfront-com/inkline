@@ -1,4 +1,4 @@
-import { defineModel, defineSlots } from "@uxfront/unframework";
+import { defineEmits, defineModel, defineSlots } from "@uxfront/unframework";
 import type { Element } from "@uxfront/unframework";
 import { inputPrefixRecipe, inputRecipe, inputSuffixRecipe } from "virtual:styleframe";
 
@@ -26,7 +26,12 @@ export default function IInput({
   variant,
   size,
   invalid,
+  required,
+  autocomplete,
+  ariaLabel,
+  ariaDescribedby,
 }: InputProps) {
+  const emit = defineEmits<{ focus: []; blur: [] }>();
   const value = defineModel<string>("value", { default: "" });
   const slots = defineSlots<{ prefix?(): Element; suffix?(): Element }>();
 
@@ -43,6 +48,12 @@ export default function IInput({
           placeholder={placeholder}
           disabled={disabled}
           readonly={readonly}
+          required={required}
+          autocomplete={autocomplete}
+          ariaLabel={ariaLabel}
+          ariaDescribedby={ariaDescribedby}
+          onFocus={() => emit("focus")}
+          onBlur={() => emit("blur")}
         />
       ) : (
         <IInputControlBase
@@ -53,6 +64,12 @@ export default function IInput({
           placeholder={placeholder}
           disabled={disabled}
           readonly={readonly}
+          required={required}
+          autocomplete={autocomplete}
+          ariaLabel={ariaLabel}
+          ariaDescribedby={ariaDescribedby}
+          onFocus={() => emit("focus")}
+          onBlur={() => emit("blur")}
         />
       )}
       {slots.suffix ? (

@@ -7,11 +7,22 @@ import type { RadioGroupBaseProps } from "../types.ts";
 // `IRadioGroup`, and mutual exclusivity comes from the radios sharing a native `name`. `readonly` is
 // surfaced as `aria-readonly`, the state the `radiogroup` role supports, and each radio field guards
 // its own interaction.
-export default function IRadioGroupBase({ id, label, readonly = false }: RadioGroupBaseProps) {
+export default function IRadioGroupBase({
+  id,
+  label,
+  readonly = false,
+  ariaDescribedby,
+}: RadioGroupBaseProps) {
   const slots = defineSlots<{ default?(): Element }>();
 
   return (
-    <div role="radiogroup" id={id} aria-label={label} aria-readonly={readonly ? "true" : undefined}>
+    <div
+      role="radiogroup"
+      id={id}
+      aria-label={label}
+      aria-readonly={readonly ? "true" : undefined}
+      aria-describedby={ariaDescribedby}
+    >
       {slots.default?.()}
     </div>
   );

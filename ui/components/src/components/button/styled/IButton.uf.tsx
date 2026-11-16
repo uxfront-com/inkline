@@ -1,4 +1,4 @@
-import { defineSlots } from "@uxfront/unframework";
+import { defineEmits, defineSlots } from "@uxfront/unframework";
 import type { Element } from "@uxfront/unframework";
 import { buttonRecipe } from "virtual:styleframe";
 
@@ -14,7 +14,11 @@ export default function IButton({
   variant,
   size,
   block = false,
+  id,
+  ariaLabel,
+  ariaDescribedby,
 }: ButtonProps) {
+  const emit = defineEmits<{ click: [] }>();
   const slots = defineSlots<{ default?(): Element }>();
 
   return (
@@ -23,6 +27,10 @@ export default function IButton({
       type={type}
       disabled={disabled}
       loading={loading}
+      id={id}
+      ariaLabel={ariaLabel}
+      ariaDescribedby={ariaDescribedby}
+      onClick={() => emit("click")}
     >
       {slots.default?.() ?? label}
     </IButtonBase>

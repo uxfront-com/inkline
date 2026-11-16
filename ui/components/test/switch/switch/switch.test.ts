@@ -78,4 +78,14 @@ describeTargets("switch/switch", () => {
     await expect.element(view.getByRole("switch", { name: "From the slot" })).toBeInTheDocument();
     await expect.element(view.getByText("Overridden")).not.toBeInTheDocument();
   });
+
+  it("passes its accessible name and description to the native control", async () => {
+    const view = await mountScenario(SwitchCase, "attributes");
+    await view.expectParity("attributes");
+    await expect.element(view.locator).toHaveNoAxeViolations();
+    const control = view.getByRole("switch", { name: "Wi-Fi" });
+    await expect.element(control).toHaveAttribute("aria-label", "Wi-Fi");
+    await expect.element(control).toHaveAttribute("aria-describedby", "wifi-hint");
+    await expect.element(control).toHaveAccessibleDescription("Joins known networks.");
+  });
 });

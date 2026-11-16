@@ -1,4 +1,4 @@
-import { defineModel } from "@uxfront/unframework";
+import { defineEmits, defineModel } from "@uxfront/unframework";
 
 import type { InputControlBaseProps } from "../types.ts";
 
@@ -12,7 +12,14 @@ export default function IInputControlBase({
   placeholder,
   disabled = false,
   readonly = false,
+  required = false,
+  autocomplete,
+  ariaLabel,
+  ariaDescribedby,
 }: InputControlBaseProps) {
+  // \`focus\` and \`blur\` fire as the native control gains and loses focus. Unframework passes no
+  // listener through to a component's root, so the component declares them.
+  const emit = defineEmits<{ focus: []; blur: [] }>();
   // The value, a model, so a parent can bind it.
   const value = defineModel<string>("value", { default: "" });
 
@@ -28,6 +35,12 @@ export default function IInputControlBase({
           placeholder={placeholder}
           disabled={disabled}
           readonly={readonly}
+          required={required}
+          autocomplete={autocomplete}
+          aria-label={ariaLabel}
+          aria-describedby={ariaDescribedby}
+          onFocus={() => emit("focus")}
+          onBlur={() => emit("blur")}
         />
       ) : type === "password" ? (
         <input
@@ -39,6 +52,12 @@ export default function IInputControlBase({
           placeholder={placeholder}
           disabled={disabled}
           readonly={readonly}
+          required={required}
+          autocomplete={autocomplete}
+          aria-label={ariaLabel}
+          aria-describedby={ariaDescribedby}
+          onFocus={() => emit("focus")}
+          onBlur={() => emit("blur")}
         />
       ) : type === "search" ? (
         <input
@@ -50,6 +69,12 @@ export default function IInputControlBase({
           placeholder={placeholder}
           disabled={disabled}
           readonly={readonly}
+          required={required}
+          autocomplete={autocomplete}
+          aria-label={ariaLabel}
+          aria-describedby={ariaDescribedby}
+          onFocus={() => emit("focus")}
+          onBlur={() => emit("blur")}
         />
       ) : type === "tel" ? (
         <input
@@ -61,6 +86,12 @@ export default function IInputControlBase({
           placeholder={placeholder}
           disabled={disabled}
           readonly={readonly}
+          required={required}
+          autocomplete={autocomplete}
+          aria-label={ariaLabel}
+          aria-describedby={ariaDescribedby}
+          onFocus={() => emit("focus")}
+          onBlur={() => emit("blur")}
         />
       ) : type === "url" ? (
         <input
@@ -72,6 +103,12 @@ export default function IInputControlBase({
           placeholder={placeholder}
           disabled={disabled}
           readonly={readonly}
+          required={required}
+          autocomplete={autocomplete}
+          aria-label={ariaLabel}
+          aria-describedby={ariaDescribedby}
+          onFocus={() => emit("focus")}
+          onBlur={() => emit("blur")}
         />
       ) : (
         <input
@@ -83,6 +120,12 @@ export default function IInputControlBase({
           placeholder={placeholder}
           disabled={disabled}
           readonly={readonly}
+          required={required}
+          autocomplete={autocomplete}
+          aria-label={ariaLabel}
+          aria-describedby={ariaDescribedby}
+          onFocus={() => emit("focus")}
+          onBlur={() => emit("blur")}
         />
       )}
     </>

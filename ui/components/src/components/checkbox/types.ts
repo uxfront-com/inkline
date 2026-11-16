@@ -13,6 +13,10 @@ export interface CheckboxControlBaseProps {
   readonly?: boolean;
   /** Renders the partially-checked ("mixed") state. */
   indeterminate?: boolean;
+  /** Accessible name, exposed as \`aria-label\`, for a control with no visible label. */
+  ariaLabel?: string;
+  /** Id of the element that describes the control, exposed as \`aria-describedby\`. */
+  ariaDescribedby?: string;
 }
 
 // `size` feeds both the wrapper (`checkbox`) and the box (`checkbox-field`) recipes, which share the

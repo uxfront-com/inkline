@@ -12,6 +12,10 @@ export interface SwitchControlBaseProps {
    * focusable and submittable, unlike `disabled`.
    */
   readonly?: boolean;
+  /** Accessible name, exposed as \`aria-label\`, for a control with no visible label. */
+  ariaLabel?: string;
+  /** Id of the element that describes the control, exposed as \`aria-describedby\`. */
+  ariaDescribedby?: string;
 }
 
 // `color` and `size` come from the `switch-field` recipe. The shell `switch` recipe shares its

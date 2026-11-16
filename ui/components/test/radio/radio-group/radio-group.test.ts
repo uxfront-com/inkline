@@ -65,4 +65,13 @@ describeTargets("radio/radio-group", () => {
     await expect.element(view.getByRole("radio", { name: "Apple" })).toBeDisabled();
     await expect.element(view.getByRole("radio", { name: "Pear" })).toBeDisabled();
   });
+
+  it("passes its description to the radiogroup", async () => {
+    const view = await mountScenario(RadioGroupCase, "attributes");
+    await view.expectParity("attributes");
+    await expect.element(view.locator).toHaveNoAxeViolations();
+    const group = view.getByRole("radiogroup", { name: "Fruit" });
+    await expect.element(group).toHaveAttribute("aria-describedby", "fruit-hint");
+    await expect.element(group).toHaveAccessibleDescription("Pick one.");
+  });
 });

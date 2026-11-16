@@ -3,6 +3,11 @@
   "ssr": {
     "default": {
       "props": {}
+    },
+    "attributes": {
+      "props": {
+        "attributes": true
+      }
     }
   }
 }

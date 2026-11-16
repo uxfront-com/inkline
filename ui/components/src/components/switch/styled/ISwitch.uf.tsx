@@ -13,7 +13,17 @@ import type { SwitchProps } from "../types.ts";
  * recipes. `checked` binds through to the control, and the label's text, from the default slot or
  * `label`, names it.
  */
-export default function ISwitch({ id, name, disabled, readonly, color, size, label }: SwitchProps) {
+export default function ISwitch({
+  id,
+  name,
+  disabled,
+  readonly,
+  color,
+  size,
+  label,
+  ariaLabel,
+  ariaDescribedby,
+}: SwitchProps) {
   const checked = defineModel<boolean>("checked", { default: false });
   const slots = defineSlots<{ default?(): Element }>();
 
@@ -26,6 +36,8 @@ export default function ISwitch({ id, name, disabled, readonly, color, size, lab
         v-model:checked={checked.value}
         disabled={disabled}
         readonly={readonly}
+        ariaLabel={ariaLabel}
+        ariaDescribedby={ariaDescribedby}
       />
       <ISwitchLabelBase>{slots.default?.() ?? label}</ISwitchLabelBase>
     </ISwitchBase>

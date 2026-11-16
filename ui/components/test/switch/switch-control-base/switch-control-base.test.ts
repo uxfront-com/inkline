@@ -79,4 +79,14 @@ describeTargets("switch/switch-control-base", () => {
     await expect.element(control).toHaveAttribute("aria-checked", "true");
     await expect.element(control).toHaveAttribute("name", "wifi");
   });
+
+  it("passes its accessible name and description to the native control", async () => {
+    const view = await mountScenario(SwitchControlCase, "attributes");
+    await view.expectParity("attributes");
+    await expect.element(view.locator).toHaveNoAxeViolations();
+    const control = view.getByRole("switch", { name: "Wi-Fi" });
+    await expect.element(control).toHaveAttribute("aria-label", "Wi-Fi");
+    await expect.element(control).toHaveAttribute("aria-describedby", "wifi-hint");
+    await expect.element(control).toHaveAccessibleDescription("Joins known networks.");
+  });
 });

@@ -47,4 +47,42 @@ describeTargets("input/input", () => {
     expect(view.container.querySelectorAll(".input-prefix")).toHaveLength(1);
     expect(view.container.querySelectorAll(".input-suffix")).toHaveLength(1);
   });
+
+  it("passes its required state, autofill hint, accessible name and description to each control", async () => {
+    const view = await mountScenario(InputCase, "attributes");
+    await view.expectParity("attributes");
+    await expect.element(view.locator).toHaveNoAxeViolations();
+    for (const [name, autocomplete, hint, description] of [
+      ["Email", "email", "email-hint", "We never share it."],
+      ["Bio", "off", "bio-hint", "A line or two."],
+    ]) {
+      const field = view.getByRole("textbox", { name });
+      await expect.element(field).toBeRequired();
+      await expect.element(field).toHaveAttribute("autocomplete", autocomplete);
+      await expect.element(field).toHaveAttribute("aria-label", name);
+      await expect.element(field).toHaveAttribute("aria-describedby", hint);
+      await expect.element(field).toHaveAccessibleDescription(description);
+    }
+  });
+
+  it(
+    "emits focus and blur once each as a control gains and loses focus",
+    { requires: ["interactivity"] },
+    async () => {
+      const view = await mountScenario(InputCase, "attributes");
+      await view.expectParity("attributes-2");
+      await view.user.click(view.getByRole("textbox", { name: "Email" }));
+      await view.expectParity("email-focused");
+      await view.user.click(view.getByRole("textbox", { name: "Bio" }));
+      await view.expectParity("bio-focused");
+      await view.user.click(view.getByText("A line or two."));
+      await view.expectParity("blurred");
+      expect(view.events()).toEqual([
+        ["focus", "email"],
+        ["blur", "email"],
+        ["focus", "bio"],
+        ["blur", "bio"],
+      ]);
+    },
+  );
 });

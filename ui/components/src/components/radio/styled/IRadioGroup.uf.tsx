@@ -22,6 +22,7 @@ export default function IRadioGroup({
   size,
   orientation,
   disabled = false,
+  ariaDescribedby,
 }: RadioGroupProps) {
   const value = defineModel<string>("value", { default: "" });
   // Every radio binds this one ref, which writes the model only while the group isn't read-only and
@@ -48,6 +49,7 @@ export default function IRadioGroup({
       id={id}
       label={label}
       readonly={readonly}
+      ariaDescribedby={ariaDescribedby}
       class={radioGroupRecipe({ orientation, size })}
     >
       {options.map((option) => (

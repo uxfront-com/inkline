@@ -17,6 +17,8 @@ export default function ISwitchControlBase({
   name,
   disabled = false,
   readonly = false,
+  ariaLabel,
+  ariaDescribedby,
 }: SwitchControlBaseProps) {
   const checked = defineModel<boolean>("checked", { default: false });
   const state = ref(checked.value);
@@ -44,6 +46,8 @@ export default function ISwitchControlBase({
       v-model={state.value}
       aria-checked={state.value ? "true" : "false"}
       aria-readonly={readonly ? "true" : undefined}
+      aria-label={ariaLabel}
+      aria-describedby={ariaDescribedby}
       disabled={disabled}
       onClick={(event: MouseEvent) => {
         if ((event.currentTarget as HTMLElement).getAttribute("aria-readonly") === "true") {

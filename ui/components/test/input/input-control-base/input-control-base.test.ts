@@ -48,4 +48,30 @@ describeTargets("input/input-control-base", () => {
     await expect.element(control).toHaveAttribute("placeholder", "Your name");
     await expect.element(view.getByPlaceholder("Email")).toHaveAttribute("type", "email");
   });
+
+  it("passes its required state, autofill hint, accessible name and description", async () => {
+    const view = await mountScenario(InputControlCase, "attributes");
+    await view.expectParity("attributes");
+    await expect.element(view.locator).toHaveNoAxeViolations();
+    const field = view.getByRole("textbox", { name: "Email" });
+    await expect.element(field).toBeRequired();
+    await expect.element(field).toHaveAttribute("autocomplete", "email");
+    await expect.element(field).toHaveAttribute("aria-label", "Email");
+    await expect.element(field).toHaveAttribute("aria-describedby", "email-hint");
+    await expect.element(field).toHaveAccessibleDescription("We never share it.");
+  });
+
+  it(
+    "emits focus and blur once each as it gains and loses focus",
+    { requires: ["interactivity"] },
+    async () => {
+      const view = await mountScenario(InputControlCase, "attributes");
+      await view.expectParity("attributes-2");
+      await view.user.click(view.getByRole("textbox", { name: "Email" }));
+      await view.expectParity("focused");
+      await view.user.click(view.getByText("We never share it."));
+      await view.expectParity("blurred");
+      expect(view.events()).toEqual([["focus"], ["blur"]]);
+    },
+  );
 });

@@ -43,4 +43,30 @@ describeTargets("input/input-textarea-base", () => {
     await view.expectParity("empty-2");
     expect(view.getByRole("textbox", { name: "Name" }).element().tagName).toBe("TEXTAREA");
   });
+
+  it("passes its required state, autofill hint, accessible name and description", async () => {
+    const view = await mountScenario(InputTextareaCase, "attributes");
+    await view.expectParity("attributes");
+    await expect.element(view.locator).toHaveNoAxeViolations();
+    const field = view.getByRole("textbox", { name: "Bio" });
+    await expect.element(field).toBeRequired();
+    await expect.element(field).toHaveAttribute("autocomplete", "off");
+    await expect.element(field).toHaveAttribute("aria-label", "Bio");
+    await expect.element(field).toHaveAttribute("aria-describedby", "bio-hint");
+    await expect.element(field).toHaveAccessibleDescription("A line or two.");
+  });
+
+  it(
+    "emits focus and blur once each as it gains and loses focus",
+    { requires: ["interactivity"] },
+    async () => {
+      const view = await mountScenario(InputTextareaCase, "attributes");
+      await view.expectParity("attributes-2");
+      await view.user.click(view.getByRole("textbox", { name: "Bio" }));
+      await view.expectParity("focused");
+      await view.user.click(view.getByText("A line or two."));
+      await view.expectParity("blurred");
+      expect(view.events()).toEqual([["focus"], ["blur"]]);
+    },
+  );
 });

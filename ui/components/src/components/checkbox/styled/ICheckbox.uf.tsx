@@ -22,6 +22,8 @@ export default function ICheckbox({
   color,
   size,
   label,
+  ariaLabel,
+  ariaDescribedby,
 }: CheckboxProps) {
   const checked = defineModel<boolean>("checked", { default: false });
   const slots = defineSlots<{ default?(): Element }>();
@@ -36,6 +38,8 @@ export default function ICheckbox({
         required={required}
         readonly={readonly}
         indeterminate={indeterminate}
+        ariaLabel={ariaLabel}
+        ariaDescribedby={ariaDescribedby}
         v-model:checked={checked.value}
       />
       {slots.default?.() ?? label}

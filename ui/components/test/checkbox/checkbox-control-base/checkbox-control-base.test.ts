@@ -75,4 +75,14 @@ describeTargets("checkbox/checkbox-control-base", () => {
     await expect.element(control).toHaveAttribute("name", "terms");
     await expect.element(control).toBeRequired();
   });
+
+  it("passes its accessible name and description to the native control", async () => {
+    const view = await mountScenario(CheckboxControlCase, "attributes");
+    await view.expectParity("attributes");
+    await expect.element(view.locator).toHaveNoAxeViolations();
+    const control = view.getByRole("checkbox", { name: "Accept the terms" });
+    await expect.element(control).toHaveAttribute("aria-label", "Accept the terms");
+    await expect.element(control).toHaveAttribute("aria-describedby", "terms-hint");
+    await expect.element(control).toHaveAccessibleDescription("You can withdraw at any time.");
+  });
 });

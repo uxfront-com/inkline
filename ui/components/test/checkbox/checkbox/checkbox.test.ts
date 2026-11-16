@@ -73,4 +73,14 @@ describeTargets("checkbox/checkbox", () => {
     await expect.element(view.getByRole("checkbox", { name: "From the slot" })).toBeInTheDocument();
     await expect.element(view.getByText("Overridden")).not.toBeInTheDocument();
   });
+
+  it("passes its accessible name and description to the native control", async () => {
+    const view = await mountScenario(CheckboxCase, "attributes");
+    await view.expectParity("attributes");
+    await expect.element(view.locator).toHaveNoAxeViolations();
+    const control = view.getByRole("checkbox", { name: "Accept the terms" });
+    await expect.element(control).toHaveAttribute("aria-label", "Accept the terms");
+    await expect.element(control).toHaveAttribute("aria-describedby", "terms-hint");
+    await expect.element(control).toHaveAccessibleDescription("You can withdraw at any time.");
+  });
 });
