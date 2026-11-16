@@ -3,4 +3,4 @@
 // the stylesheet into the JS, so importing the package stays style-free.
 import "virtual:styleframe.css";
 
-export * from "../.inkline/index.ts";
+export * from "../../components/dist/svelte/index.ts";

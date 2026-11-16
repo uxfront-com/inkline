@@ -1,6 +1,6 @@
 {
   "extends": "./tsconfig.json",
-  "include": [".inkline/**/*.ts", ".styleframe/**/*.d.ts"],
+  "include": ["src/**/*.ts", "../components/dist/angular/**/*.ts", ".styleframe/**/*.d.ts"],
   "compilerOptions": {
     "noEmit": false
   },

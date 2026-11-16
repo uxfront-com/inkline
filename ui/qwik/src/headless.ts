@@ -1,1 +1,1 @@
-export * from "../.inkline/headless.ts";
+export * from "../../components/dist/qwik/headless.ts";

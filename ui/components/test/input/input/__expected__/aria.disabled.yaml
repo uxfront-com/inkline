@@ -1,0 +1,5 @@
+- text: Name @
+- textbox "Name @ .dev" [disabled]
+- text: .dev
+- textbox "Bio"
+- status

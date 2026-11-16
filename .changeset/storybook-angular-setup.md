@@ -1,7 +1,6 @@
 ---
 "@inkline/compiler": patch
 "@inkline/storybook": patch
-"@inkline/storybook-app": patch
 "@inkline/angular": minor
 "@inkline/react": patch
 "@inkline/solid": patch

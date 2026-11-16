@@ -1,0 +1,16 @@
+{
+  "description": "The styled field group, in each orientation, joining an input and a button.",
+  "ssr": {
+    "horizontal": {
+      "props": {
+        "orientation": "horizontal"
+      }
+    },
+    "vertical": {
+      "props": {
+        "orientation": "vertical",
+        "block": true
+      }
+    }
+  }
+}

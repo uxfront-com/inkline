@@ -1,8 +1,8 @@
 # ADR-004: `inkline check` does not type-check; `tsc` owns types
 
-Date: 2026-07-28 · Status: Accepted
+Date: 2026-07-28 · Status: Superseded
 Deciders: Project owner · Informed by: internal tracker UXF-90 (RFC), UXF-71 (friction audit), UXF-72 (prior-art survey)
-Supersedes: — · Superseded by: —
+Supersedes: — · Superseded by: [ADR-012](./012-components-compile-with-unframework.md)
 
 ## Context
 

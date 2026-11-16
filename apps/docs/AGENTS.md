@@ -19,12 +19,10 @@ apps/docs/
 │   ├── error.vue             # UxErrorPage
 │   ├── pages/index.vue       # the homepage: UxSite, UxHeader, UxHero, UxChapter, UxFinale
 │   ├── components/
-│   │   ├── app/              # AppHeaderCTA, AppHeaderBody: the layer's header with the
-│   │   │                     # version select; VersionSelect (<AppVersionSelect>)
-│   │   └── content/          # StorybookEmbed, BrowserFrame: the embed port
+│   │   └── app/              # AppHeaderCTA, AppHeaderBody: the layer's header with the
+│   │                         # version select; VersionSelect (<AppVersionSelect>)
 │   ├── data/site.ts          # DOCS_URL, GITHUB_URL
-│   ├── data/versions.ts      # VERSIONS: v5 (this site), v4, v3, v2
-│   └── lib/storybookEmbed.ts # the embed's URL and message helpers
+│   └── data/versions.ts      # VERSIONS: v5 (this site), v4, v3, v2
 ├── server/
 │   ├── routes/sitemap.xml.ts # the homepage, then the docs pages
 │   ├── middleware/raw-markdown.ts  # /raw/<path>.md from each page's source
@@ -52,18 +50,26 @@ Docus renders `content/docs/` at `/docs`. The numeric prefixes order the sidebar
 
 The reader picks a framework once, in the Framework select above the sidebar (in the header's menu below 768px), and every `::framework-switcher` on the site shows that framework's slot. The seven frameworks, in Inkline's order, are `docsTheme.frameworks` in `app/app.config.ts`.
 
-The Button page embeds each framework's Storybook story inside its slot, through `StorybookEmbed`:
+The Button page shows a code sample for each framework inside its slot:
 
-```md
+````md
 ::framework-switcher
 #react
-:storybook-embed{framework="react" story="components-actions-button--default" title="React"}
-#vue
-:storybook-embed{framework="vue" story="components-actions-button--default" title="Vue"}
-::
+
+```tsx
+<IButton label="Save" color="primary" />
 ```
 
-`@uxfront/layer-docs` dropped `StorybookEmbed` in 0.5.0, so this app carries a port of the 0.4.1 component: `app/components/content/StorybookEmbed.vue`, its helpers in `app/lib/storybookEmbed.ts`, and `BrowserFrame.vue`, a stand-in for the frame 0.7.1 and Docus no longer ship. The embed builds its iframe `src` from `runtimeConfig.public.storybookBaseUrl`, which `nuxt.config.ts` sets to `https://{framework}.storybook.inkline.io` and `NUXT_PUBLIC_STORYBOOK_BASE_URL` overrides at build time. It mounts the iframe only once it nears the viewport and reserves its height up front, so the page doesn't shift.
+#angular
+
+```html
+<uf-i-button label="Save" color="primary" />
+```
+
+::
+````
+
+The pages show no live component yet. `unframework preview`, which renders the examples on every target, runs on a developer's machine only.
 
 ## Version select
 
@@ -115,12 +121,11 @@ The `/` → `/llms.txt` negotiation is Vercel-only, so on Cloudflare `/` always 
 - The root `"@nuxt/vite-builder>vite"` override gives the Nuxt builder upstream vite rather than vite-plus. Keep its range on the vite line `@nuxt/vite-builder` declares for the Nuxt in the lockfile.
 - `buildDir` is pinned to `.nuxt` in `nuxt.config.ts`. Nuxt 4.6 otherwise moves `build` and `generate` to `node_modules/.cache/nuxt`, where the root type check can't see Nitro's auto-imports.
 - `ui.colors.primary: "purple"` resolves onto the purple scale in `app/app.css`, based on the brand mark's `#863bff`. Keep the two in step.
-- Only document real, shipped components. The Button page mirrors `ui/components`'s `IButton` stories (story ids under `Components/Actions/Button`).
+- Only document real, shipped components. The Button page mirrors `ui/components`'s `IButton` examples, in `src/components/button/examples/`.
 
 ## Known gaps
 
-- **Storybook host:** each framework's Storybook has a Worker config of its own (see Deploy in [`apps/storybook/AGENTS.md`](../storybook/AGENTS.md)), but the `https://{framework}.storybook.inkline.io` domains the embeds point at aren't attached to the framework Workers yet. That's a custom-domain setting in the Cloudflare dashboard. To point the embeds at another host, set `NUXT_PUBLIC_STORYBOOK_BASE_URL` or update `runtimeConfig.public.storybookBaseUrl`.
-- **Storybook bridge:** auto-height and colour-mode sync need the Storybook to answer the messages in `app/lib/storybookEmbed.ts`. The bridge that did that, `@uxfront/layer-docs/storybook`, went away with 0.5.0, and the Storybooks under `ui/*` never installed it, so embeds hold their default height and their own theme.
+- **Live examples:** the component pages show code, not rendered components, since there's no deployed preview to embed.
 - **Agent discovery on a static host:** the lockfile holds Docus 5.13.0. Docus 5.14 adds `nuxt-agent-discovery` and a prerendered `/openapi.json` that describes each page's Markdown twin and the MCP endpoint, which is off here. Only what's prerendered survives on a static host, and its server routes are inert, so check what both claim when Docus is bumped.
 
 ## See also

@@ -3,6 +3,8 @@ name: ink-authoring-api
 description: The .ink.tsx authoring API — defineComponent, the compiler macros (defineProps, defineModel, defineEmits, defineSlot, hasSlot), signals, control flow, slots, two-way binding, events — plus per-target rewrite behavior and the anti-patterns that reviewers reject on sight. Use whenever writing or reviewing .ink.tsx code.
 ---
 
+> **Out of date.** Inkline's components are now `.uf.tsx` sources that Unframework compiles, tested with `@unframework.dev/testing` and shown through `*.example.uf.tsx` files, not Storybook. This guide describes the retired `.ink.tsx` setup. Follow [docs/authoring-components.md](../../../docs/authoring-components.md) and [`ui/components/AGENTS.md`](../../../ui/components/AGENTS.md) instead, and [Unframework's documentation](https://unframework.dev/docs) for the language.
+
 # The `.ink.tsx` authoring API
 
 ## The model

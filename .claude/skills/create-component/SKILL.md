@@ -19,6 +19,8 @@ allowed-tools:
   - WebFetch
 ---
 
+> **Out of date.** Inkline's components are now `.uf.tsx` sources that Unframework compiles, tested with `@unframework.dev/testing` and shown through `*.example.uf.tsx` files, not Storybook. This guide describes the retired `.ink.tsx` setup. Follow [docs/authoring-components.md](../../../docs/authoring-components.md) and [`ui/components/AGENTS.md`](../../../ui/components/AGENTS.md) instead, and [Unframework's documentation](https://unframework.dev/docs) for the language.
+
 # create-component — the full component pipeline
 
 Take a component from idea to release-ready across all 7 Inkline frameworks. This skill **orchestrates** five focused phase skills; it does not duplicate their detail. For each phase you **Read that phase's `SKILL.md` and execute its steps at full depth**, then stop at the gate.

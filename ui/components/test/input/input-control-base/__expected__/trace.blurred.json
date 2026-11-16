@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "steps": [
+    {
+      "action": "click getByText('We never share it.')",
+      "dom": [
+        "<div>",
+        "  <input aria-describedby=\"email-hint\" aria-label=\"Email\" autocomplete=\"email\" class=\"input-field\" required=\"\" type=\"email\" uf:value=\"\">",
+        "  <p id=\"email-hint\">",
+        "    \"We never share it.\"",
+        "  </p>",
+        "</div>"
+      ],
+      "aria": [
+        "- textbox \"Email\"",
+        "- paragraph: We never share it."
+      ],
+      "events": {
+        "blur": [
+          []
+        ]
+      }
+    }
+  ]
+}

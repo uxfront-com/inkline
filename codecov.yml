@@ -1,20 +1,15 @@
 # Codecov configuration.
 #
-# `.ink.tsx` files are compile-only authoring source — they never run as a
-# module. Coverage is attributed to them *indirectly*: `coverInkViaReact`
-# renders each component through the React target, V8 instruments the generated
-# `.mjs`, and inline source maps remap that coverage back onto the authored
-# `.ink.tsx` (see ui/components/vite.config.ts). Nested-component JSX elements
-# compile to child-factory closures the remap can't pin to a single executed
-# line, so those lines read as uncovered even when the component demonstrably
-# renders (asserted by the colocated SSR mount tests). That makes line-level
-# coverage on `.ink.tsx` a source-map remap artifact, not a measure of test
-# quality — the executable surface is validated by the test suites themselves.
+# The `.ink.tsx` files left in the repository are the retiring compiler's fixtures
+# (under `core/compiler/src/` and `tooling/storybook/src/`): compile-only input
+# that never runs as a module, so no test can cover a line of them. The
+# components are `.uf.tsx` files that Unframework compiles and tests on every
+# target (`ui/components`), outside this coverage report.
 #
-# Exclude compiled authoring source from coverage attribution so the gate stops
-# failing on unreachable compile-source lines. The real coverage threshold still
-# applies to normal `.ts`/`.tsx` source and to the local `vp test --coverage`
-# run.
+# Exclude them from coverage attribution so the gate never fails on lines that
+# cannot run. The real coverage threshold still applies to normal `.ts`/`.tsx`
+# source and to the local `vp test --coverage` run.
+#
 # Build/codegen scripts are developer tooling, not shipped source, and they enter the report
 # backwards: a script is only measured once a test imports it, so it is precisely the scripts whose
 # logic *is* unit-tested that drag their untestable `main()` argv dispatch and module-entry guard

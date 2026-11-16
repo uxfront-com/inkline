@@ -16,10 +16,6 @@
       "types": "./dist/.inkline/headless.d.ts",
       "default": "./dist/fesm2022/headless.mjs"
     },
-    "./stories": {
-      "types": "./dist/.inkline/stories.d.ts",
-      "default": "./dist/fesm2022/stories.mjs"
-    },
     "./package.json": "./package.json"
   },
   "publishConfig": {
@@ -28,16 +24,12 @@
   "scripts": {
     "build": "vp build",
     "validate": "vp check",
-    "test": "vp test --passWithNoTests",
-    "storybook": "storybook dev -p 6010",
-    "storybook:build": "storybook build -o storybook-static",
-    "prestorybook": "pnpm --filter @inkline/components exec inkline compile 'src/**/*.ink.tsx' --config inkline.config.ts --target angular"
+    "test": "vp test --passWithNoTests"
   },
   "dependencies": {
     "@styleframe/runtime": "catalog:"
   },
   "devDependencies": {
-    "@analogjs/storybook-angular": "catalog:",
     "@analogjs/vite-plugin-angular": "catalog:",
     "@angular/animations": "catalog:",
     "@angular/build": "catalog:",
@@ -48,10 +40,6 @@
     "@angular/platform-browser": "catalog:",
     "@angular/platform-browser-dynamic": "catalog:",
     "@inkline/components": "workspace:*",
-    "@inkline/storybook": "workspace:*",
-    "@storybook/addon-a11y": "catalog:",
-    "@storybook/addon-docs": "catalog:",
-    "@storybook/angular": "catalog:",
     "@styleframe/cli": "catalog:",
     "@styleframe/core": "catalog:",
     "@styleframe/license": "catalog:",
@@ -59,16 +47,17 @@
     "@styleframe/plugin": "catalog:",
     "@styleframe/theme": "catalog:",
     "@styleframe/transpiler": "catalog:",
+    "@types/node": "catalog:",
     "jsdom": "catalog:",
     "rxjs": "catalog:",
-    "storybook": "catalog:",
     "styleframe": "catalog:",
     "tslib": "catalog:",
     "typescript": "catalog:ts6",
+    "vitest": "catalog:",
     "zone.js": "catalog:"
   },
   "peerDependencies": {
-    "@angular/core": ">=17.3.0"
+    "@angular/core": "^22"
   },
   "prepublishOnly": "vp run build"
 }

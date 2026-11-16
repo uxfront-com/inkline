@@ -1,0 +1,5 @@
+- switch "Accept" [checked]
+- text: Accept
+- switch "From the slot"
+- text: From the slot
+- status: "on"

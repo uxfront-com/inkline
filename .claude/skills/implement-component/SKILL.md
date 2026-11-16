@@ -14,6 +14,8 @@ allowed-tools:
   - Glob
 ---
 
+> **Out of date.** Inkline's components are now `.uf.tsx` sources that Unframework compiles, tested with `@unframework.dev/testing` and shown through `*.example.uf.tsx` files, not Storybook. This guide describes the retired `.ink.tsx` setup. Follow [docs/authoring-components.md](../../../docs/authoring-components.md) and [`ui/components/AGENTS.md`](../../../ui/components/AGENTS.md) instead, and [Unframework's documentation](https://unframework.dev/docs) for the language.
+
 # Component implementation — headless, styled, styleframe, register
 
 Author the `.ink.tsx` source so it compiles cleanly to all 7 targets. Mirror the live exemplar's structure exactly — do not invent new patterns.

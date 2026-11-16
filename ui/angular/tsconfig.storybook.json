@@ -1,7 +1,0 @@
-{
-  "extends": "./tsconfig.json",
-  "include": ["src", ".inkline/**/*.ts", ".storybook/**/*"],
-  "compilerOptions": {
-    "noEmit": false
-  }
-}

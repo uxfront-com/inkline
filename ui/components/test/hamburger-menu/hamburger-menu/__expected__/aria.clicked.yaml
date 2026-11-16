@@ -1,0 +1,4 @@
+- button "Toggle menu" [expanded]
+- navigation "Main":
+  - link "Home":
+    - /url: "#home"

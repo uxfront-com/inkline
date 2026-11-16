@@ -1,0 +1,8 @@
+{
+  "description": "The headless switch text, which names the switch beside it.",
+  "ssr": {
+    "default": {
+      "props": {}
+    }
+  }
+}

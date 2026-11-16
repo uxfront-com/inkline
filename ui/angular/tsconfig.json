@@ -1,14 +1,8 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "types": ["node"]
   },
-  "include": [
-    "src",
-    ".inkline",
-    ".storybook",
-    "stories",
-    "*.styleframe.ts",
-    ".styleframe/**/*.d.ts"
-  ]
+  "include": ["src", "test", "*.styleframe.ts", ".styleframe/**/*.d.ts"]
 }

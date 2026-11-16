@@ -1,7 +1,8 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "types": ["node"]
   },
-  "include": ["src", ".inkline", ".storybook", "*.styleframe.ts", ".styleframe/**/*.d.ts"]
+  "include": ["src", "test", "*.styleframe.ts", ".styleframe/**/*.d.ts"]
 }

@@ -10,7 +10,18 @@ export default defineConfig({
     // header. Formatting it would make every re-sync diff unreadable and fail the integrity check;
     // keeping it byte-identical is what makes re-syncing a plain `diff`. The provenance and the
     // procedure are in that file's own header — see core/core/scripts/generate-jsx.mjs.
-    ignorePatterns: [".context/**", ".old/**", "ui/**/.styleframe/**", "core/core/src/vendor/**"],
+    // Generated files their tests compare byte for byte: `ui/*/test/api.json`, from
+    // `ui/components/scripts/api-report.ts`, one name to a line; `ui/components/src/recipes.ts`, from
+    // `ui/components/scripts/recipes.ts`; and the expectations `unframework test --update` writes.
+    ignorePatterns: [
+      ".context/**",
+      ".old/**",
+      "ui/**/.styleframe/**",
+      "core/core/src/vendor/**",
+      "ui/*/test/api.json",
+      "ui/components/src/recipes.ts",
+      "ui/components/test/**/__expected__/**",
+    ],
   },
   lint: {
     // This list is what CI's Type Check job honours: `vp check --no-fmt --no-lint` skips lint

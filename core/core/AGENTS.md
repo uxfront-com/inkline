@@ -90,5 +90,5 @@ Output: `dist/index.{mjs,d.mts}` + `dist/jsx-runtime.{mjs,d.mts}`.
 ## See also
 
 - [docs/authoring-components.md](../../docs/authoring-components.md) — how contributors use these primitives.
-- [docs/architecture.md](../../docs/architecture.md) → "Compilation pipeline" — what the compiler does with `@inkline/core` references.
+- [`core/compiler/AGENTS.md`](../compiler/AGENTS.md) → "Source map": the compiler's passes, which resolve the `@inkline/core` references.
 - [`core/compiler/AGENTS.md`](../compiler/AGENTS.md) — where the lowering rules live.

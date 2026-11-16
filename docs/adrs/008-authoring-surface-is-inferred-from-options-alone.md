@@ -1,8 +1,8 @@
 # ADR-008: The inferred authoring surface comes from `defineComponent`'s options alone — the setup body contributes nothing
 
-Date: 2026-08-11 · Status: Accepted
+Date: 2026-08-11 · Status: Superseded
 Deciders: Project owner (decision 4, on 2026-08-11) · Informed by: internal tracker UXF-176 (probe + receipts), UXF-162 (delivery RFC), UXF-161 (feasibility spike)
-Supersedes: [ADR-006](./006-inferred-component-authoring-types.md) **in part** — its Decision 1 mechanism claim and its Option D uniqueness claim, only · Superseded by: —
+Supersedes: [ADR-006](./006-inferred-component-authoring-types.md) **in part** — its Decision 1 mechanism claim and its Option D uniqueness claim, only · Superseded by: [ADR-012](./012-components-compile-with-unframework.md)
 
 [ADR-006](./006-inferred-component-authoring-types.md) Decision 1 says:
 

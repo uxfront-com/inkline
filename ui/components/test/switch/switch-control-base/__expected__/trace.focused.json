@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "steps": [
+    {
+      "action": "focus getByRole('switch', { name: 'Accept' })",
+      "dom": [
+        "<div>",
+        "  <label>",
+        "    <input aria-checked=\"false\" id=\"wifi\" name=\"wifi\" role=\"switch\" type=\"checkbox\" uf:checked=\"false\" uf:focused=\"\" uf:indeterminate=\"false\">",
+        "    \"Accept\"",
+        "  </label>",
+        "  <output>",
+        "    \"off\"",
+        "  </output>",
+        "</div>"
+      ],
+      "aria": [
+        "- switch \"Accept\"",
+        "- text: Accept",
+        "- status: \"off\""
+      ],
+      "events": {}
+    }
+  ]
+}

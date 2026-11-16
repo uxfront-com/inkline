@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "steps": [
+    {
+      "action": "fill getByRole('textbox', { name: 'Name' }) \"Grace\"",
+      "dom": [
+        "<div>",
+        "  <label>",
+        "    \"Name\"",
+        "    <input class=\"input-field\" id=\"name\" name=\"name\" placeholder=\"Your name\" type=\"text\" uf:focused=\"\" uf:value=\"Grace\">",
+        "  </label>",
+        "  <input class=\"input-field\" placeholder=\"Email\" type=\"email\" uf:value=\"\">",
+        "  <output>",
+        "    \"Grace\"",
+        "  </output>",
+        "</div>"
+      ],
+      "aria": [
+        "- text: Name",
+        "- textbox \"Name\":",
+        "  - /placeholder: Your name",
+        "  - text: Grace",
+        "- textbox \"Email\"",
+        "- status: Grace"
+      ],
+      "events": {
+        "input": [
+          [
+            "Grace"
+          ]
+        ]
+      }
+    }
+  ]
+}

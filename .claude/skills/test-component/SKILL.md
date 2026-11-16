@@ -14,6 +14,8 @@ allowed-tools:
   - Glob
 ---
 
+> **Out of date.** Inkline's components are now `.uf.tsx` sources that Unframework compiles, tested with `@unframework.dev/testing` and shown through `*.example.uf.tsx` files, not Storybook. This guide describes the retired `.ink.tsx` setup. Follow [docs/authoring-components.md](../../../docs/authoring-components.md) and [`ui/components/AGENTS.md`](../../../ui/components/AGENTS.md) instead, and [Unframework's documentation](https://unframework.dev/docs) for the language.
+
 # Component tests — compile, conform, snapshot, render
 
 Tests are colocated as `<file>.ink.test.ts` (Vitest), next to the source they cover: the headless test in `headless/`, the styled test in `styled/`. They run the real compiler in-memory via `@inkline/test-utils` and assert across all 7 targets, plus real-DOM behavior on Angular SSR. Aim for **~100% line+branch** on the component's own code.

@@ -1,0 +1,13 @@
+{
+  "description": "Two headless radio fields bound to one selection by a parent, in each state.",
+  "ssr": {
+    "default": {
+      "props": {}
+    },
+    "disabled": {
+      "props": {
+        "disabled": true
+      }
+    }
+  }
+}
