@@ -4,7 +4,9 @@ How we keep `AGENTS.md` and `docs/*.md` from drifting away from the code they de
 
 ## Core principle: pointers, not duplicates
 
-Most drift comes from documentation that _restates_ config or code that lives elsewhere. We design against it at the source: docs **point at** canonical locations (`vite.config.ts:lint`, `package.json:scripts`, `ui/components/scripts/...`) rather than re-state their contents. If a reader needs the exact rule, they read the config. If they need the _intent_, they read the doc. Here's the difference:
+Most drift comes from documentation that _restates_ config or code that lives elsewhere. We design against it at the source: docs **point at** canonical locations (`vite.config.ts:lint`, `package.json:scripts`, `ui/components/scripts/...`) rather than re-state their contents. If a reader needs the exact rule, they read the config. If they need the _intent_, they read the doc.
+
+Here's the difference:
 
 - ✅ "Lint config lives in [`vite.config.ts`](../vite.config.ts) `lint`. OXLint with `typeAware: true`."
 - ❌ "Lint ignores `.context/**`, `.old/**`, `ui/**/.styleframe/**`, …" — this re-states config and will drift.
