@@ -44,7 +44,7 @@ pnpm test:targets   # unframework test: every case on every target, in Chromium 
 pnpm visual         # unframework visual: every example on every target, compared with the reference
 ```
 
-`test:targets` and `visual` drive Playwright's Chromium: install it once with `pnpm exec playwright install chromium`. When a component's output changes on purpose, run `pnpm test:targets -- --update`, then review every file it writes under `test/*/*/__expected__/`. Those files are what every target is held to.
+`test:targets` and `visual` drive Playwright's Chromium: install it once with `pnpm exec playwright install chromium`. When a component's output changes on purpose, run `pnpm test:targets --update`, then review every file it writes under `test/*/*/__expected__/`. Those files are what every target is held to.
 
 This package has no `test` script, so the repository's `pnpm run test` doesn't run the browser tests. `pnpm run ready` runs `test:recipes` and `test:targets` after it.
 
