@@ -77,7 +77,6 @@ catalog:
   "@vue/server-renderer": ^3.5.43
   astro: ^7.4.11
   babel-plugin-react-compiler: ^1.0.0
-  concurrently: ^10.0.3
   csstype: ^3.2.3
   docus: ^5.13.0
   eslint: ^9.39.4
