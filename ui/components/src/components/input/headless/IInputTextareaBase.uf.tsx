@@ -15,7 +15,7 @@ export default function IInputTextareaBase({
   ariaLabel,
   ariaDescribedby,
 }: InputTextareaBaseProps) {
-  // \`focus\` and \`blur\` fire as the native control gains and loses focus.
+  // `focus` and `blur` fire as the native control gains and loses focus.
   const emit = defineEmits<{ focus: []; blur: [] }>();
   // The value, a model, so a parent can bind it.
   const value = defineModel<string>("value", { default: "" });

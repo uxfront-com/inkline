@@ -30,7 +30,7 @@ export interface RadioGroupBaseProps {
   label?: string;
   /** Marks the whole group read-only, exposed as `aria-readonly` on the radiogroup. */
   readonly?: boolean;
-  /** Id of the element that describes the group, exposed as \`aria-describedby\`. */
+  /** Id of the element that describes the group, exposed as `aria-describedby`. */
   ariaDescribedby?: string;
 }
 

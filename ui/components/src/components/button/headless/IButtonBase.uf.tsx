@@ -12,7 +12,7 @@ export default function IButtonBase({
   ariaLabel,
   ariaDescribedby,
 }: ButtonBaseProps) {
-  // \`click\` fires on the native button's click. Unframework passes no listener through to a
+  // `click` fires on the native button's click. Unframework passes no listener through to a
   // component's root, so the component declares the one a button exists for.
   const emit = defineEmits<{ click: [] }>();
   const slots = defineSlots<{ default?(): Element }>();
