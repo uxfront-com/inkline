@@ -37,6 +37,7 @@
     "@vitejs/plugin-react": "catalog:",
     "jsdom": "catalog:",
     "react": "catalog:",
+    "react-dom": "catalog:",
     "styleframe": "catalog:",
     "vitest": "catalog:"
   },

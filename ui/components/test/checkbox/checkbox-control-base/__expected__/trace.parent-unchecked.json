@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "steps": [
+    {
+      "action": "click getByRole('button', { name: 'Select all' })",
+      "dom": [
+        "<div>",
+        "  <label>",
+        "    <input id=\"terms\" name=\"terms\" type=\"checkbox\" uf:checked=\"false\" uf:indeterminate=\"false\">",
+        "    \"Accept\"",
+        "  </label>",
+        "  <output>",
+        "    \"off\"",
+        "  </output>",
+        "  <button type=\"button\" uf:focused=\"\">",
+        "    \"Select all\"",
+        "  </button>",
+        "</div>"
+      ],
+      "aria": [
+        "- checkbox \"Accept\"",
+        "- text: Accept",
+        "- status: \"off\"",
+        "- button \"Select all\""
+      ],
+      "events": {
+        "change": [
+          [
+            false
+          ]
+        ]
+      }
+    }
+  ]
+}

@@ -629,6 +629,9 @@ importers:
       react:
         specifier: 'catalog:'
         version: 19.2.7
+      react-dom:
+        specifier: 'catalog:'
+        version: 19.2.7(react@19.2.7)
       styleframe:
         specifier: 'catalog:'
         version: 3.9.1(ba65eef6aca6efac30e45f6516344313)
