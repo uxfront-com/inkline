@@ -37,7 +37,7 @@
     "vitest": "catalog:"
   },
   "peerDependencies": {
-    "@qwik.dev/core": "^2.0.0-beta.47"
+    "@qwik.dev/core": "2.0.0-beta.47"
   },
   "prepublishOnly": "vp run build",
   "qwik": "./dist/index.qwik.mjs"
