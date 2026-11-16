@@ -38,13 +38,13 @@ beforeEach(() => {
 });
 
 afterEach(async () => {
-  await act(() => root.unmount());
+  await act(async () => root.unmount());
   container.remove();
 });
 
 describe.each(controls)("%s", (_name, Control) => {
   const render = (checked: boolean, onCheckedChange: (value: boolean) => void) =>
-    act(() =>
+    act(async () =>
       root.render(createElement(Control, { ariaLabel: "Accept", checked, onCheckedChange })),
     );
   const input = () => container.querySelector("input") as HTMLInputElement;
@@ -62,7 +62,7 @@ describe.each(controls)("%s", (_name, Control) => {
   it("calls onCheckedChange once for a click", async () => {
     const onCheckedChange = vi.fn();
     await render(false, onCheckedChange);
-    await act(() => input().click());
+    await act(async () => input().click());
     expect(onCheckedChange.mock.calls).toEqual([[true]]);
   });
 });
