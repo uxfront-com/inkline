@@ -1,7 +1,9 @@
 # RFC: content scope for the Inkline v5 documentation site
 
-**Status:** proposed · **Owner:** product · **Tracking:** UXF-171 (item 3 of the UXF-158 gap audit)
+**Status:** partly superseded · **Owner:** product · **Tracking:** UXF-171 (item 3 of the UXF-158 gap audit)
 **Scope:** what `apps/docs` documents at launch, and what it deliberately does not. No page is authored by this document.
+
+> **The compiler half no longer applies.** Inkline's compiler was retired, and [Unframework](https://unframework.dev) now compiles the components ([ADR-012](../adrs/012-components-compile-with-unframework.md)). So the site presents the component library only, and the compiler pages stay parked in `apps/docs/content/_compiler/`. Read the compiler rows, the Authoring section and the Reference section below as the record of what was proposed then.
 
 > **Assumption in force — ASSUMED, labelled so it is cheap to reverse.**
 > "Ready for usage" means **public production launch**. The Operator was asked twice (Aug 6, Aug 8) and the question is still open; @trigger's call on Aug 8 was to stop stalling the tree and scope for public launch. If the answer comes back "internal preview", see [If this is a preview](#if-this-is-a-preview) — the honest recommendation collapses to _defer this entire workstream_, and this RFC is 20 minutes of reversal, not a rewrite.
@@ -18,10 +20,10 @@ The framing question — "styleframe has 148 docs pages, inkline has 3, close th
 
 **Inkline v5 is two products sharing a repo** — **VERIFIED** from `docs/scope.md`, `core/compiler/README.md`, and the workspace layout:
 
-|                           | what it is                                                                     | packages                                                                                          | audience                                      |
-| ------------------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------- | --------------------------------------------- |
-| **The compiler**          | Author once in `.ink.tsx`, emit idiomatic output for 7 frameworks. No runtime. | `@inkline/compiler`, `@inkline/core`, `@inkline/cli`, `@inkline/plugin`, `@inkline/config-loader` | people building their own component libraries |
-| **The component library** | 8 components, compiled from one source to 7 targets                            | `@inkline/{react,vue,svelte,solid,angular,qwik,astro}`                                            | people who want a Button                      |
+|                           | what it is                                                                      | packages                                                                                | audience                                      |
+| ------------------------- | ------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------- |
+| **The compiler**          | Author once, emit idiomatic output for 7 frameworks. No runtime. Since retired. | the compiler, primitives, CLI, bundler plugin and config loader packages, since removed | people building their own component libraries |
+| **The component library** | 8 components, compiled from one source to 7 targets                             | `@inkline/{react,vue,svelte,solid,angular,qwik,astro}`                                  | people who want a Button                      |
 
 Inkline has **no theme reference surface at all**. It consumes styleframe for that — **VERIFIED**, `tooling/cli/src/lib/styleframe-config.ts` exists and the CLI reads a styleframe config. Copying styleframe's tree would mean writing 111 pages documenting a surface Inkline does not own.
 
@@ -112,7 +114,7 @@ content/
 │     ├─ 00.index.md
 │     ├─ 01.cli.md                             compile · check · init
 │     ├─ 02.config.md                          inkline.config.ts
-│     ├─ 03.core-api.md                        @inkline/core public API
+│     ├─ 03.core-api.md                        authoring primitives' public API
 │     ├─ 04.compiler-api.md                    programmatic API + plugin hooks
 │     └─ 05.diagnostics.md                     INK0001–INK0100 registry
 │
@@ -145,7 +147,7 @@ This is the thinnest slice that is _honestly_ launchable for a compiler claiming
 | **Getting Started** | **4** — Introduction · Installation · Your first component · **Framework setup & support matrix** (one page, 7-tab switcher)          | split the framework page into 7 dedicated pages; bundler/SSR integration guides |
 | **Authoring**       | **7** — Overview · Components & props (merged) · State & reactivity · Control flow · Slots · Events & binding · Limitations & roadmap | Refs & lifecycle · Styling · "Build your own design system" guide               |
 | **Components**      | **9** — Overview + 8 component pages                                                                                                  | per-component accessibility notes, theming recipes                              |
-| **Reference**       | **3** — CLI · Configuration · Diagnostics                                                                                             | `@inkline/core` API · `@inkline/compiler` programmatic API + plugin hooks       |
+| **Reference**       | **3** — CLI · Configuration · Diagnostics                                                                                             | authoring primitives API · compiler programmatic API + plugin hooks             |
 | **Changelog**       | **1** — `5.0.0`                                                                                                                       | pre-v5 history (never — see §5)                                                 |
 | **Root**            | **1** — `license.md`                                                                                                                  | `terms.md`; `privacy.md` + `cookies.md` **only if analytics ship** (§5)         |
 

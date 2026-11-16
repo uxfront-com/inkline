@@ -1,78 +1,28 @@
 # Scope
 
-The current shape of the Inkline compiler and what's deferred.
-
-This file is the v1 roadmap referenced from [`core/compiler/README.md`](../core/compiler/README.md). It is intentionally short — it lists capability boundaries, not feature backlog. Authoritative roadmap discussion happens in GitHub issues.
+What Inkline ships today, and what it leaves to the projects it builds on. It lists boundaries, not a backlog: roadmap discussion happens in GitHub issues.
 
 ## What ships today
 
-### Compilation targets
+Inkline is a UI library. It ships eight component families in seven frameworks, styled with Styleframe:
 
-The seven built-in targets are registered in [`core/compiler/src/codegen/registry.ts`](../core/compiler/src/codegen/registry.ts) `builtinRegistry`:
+| Package                                                | What it holds                                                                                                                                  |
+| ------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| `@inkline/{react,vue,svelte,solid,angular,qwik,astro}` | One package per framework, each with a styled entry (`.`) and a headless entry (`./headless`), and a `./css` entry on all but Angular and Qwik |
+| `@inkline/components` (private)                        | The `.uf.tsx` sources, their Styleframe recipes, tests and examples                                                                            |
+| `website` ([`apps/docs`](../apps/docs/AGENTS.md))      | The documentation site                                                                                                                         |
 
-| Target    | Output flavor                                      | Notes                                                                                   |
-| --------- | -------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| `react`   | TSX (hooks API)                                    | First-class.                                                                            |
-| `solid`   | TSX (signals)                                      | First-class.                                                                            |
-| `vue`     | `.vue` SFC (`<script setup>` + Composition API)    | First-class.                                                                            |
-| `svelte`  | `.svelte` (runes: `$state`, `$derived`, `$effect`) | First-class.                                                                            |
-| `angular` | Standalone `@Component` + template + style files   | `<Transition>` is unwrapped — animation requires consumer setup. No bundled CSS export. |
-| `qwik`    | Qwik components                                    | First-class.                                                                            |
-| `astro`   | `.astro`                                           | Static-first. `<Transition>` is unwrapped (no runtime animation).                       |
+The families are badge, button, checkbox, field group, hamburger menu, input, radio and switch, under [`ui/components/src/components/`](../ui/components/src/components/). Each framework package depends only on its framework and `@styleframe/runtime` at runtime. [architecture.md](./architecture.md) explains how a component becomes the seven packages.
 
-Those seven names are the whole set: `TargetName` is a closed union and `resolveOptions` rejects anything outside `ALL_TARGETS`, so a new target is an in-repo contribution, not an extension point. The exported `defineTarget` + `createRegistry` let consumers **replace the implementation behind a built-in name** (custom `rewrites`/`emit` for `react`, say) — they do not add new ones. See [adding-a-target.md](./adding-a-target.md).
+## Left to other projects
 
-### Authoring features
+Some requests belong to the projects Inkline builds on, so we route them there:
 
-- Signal-based reactivity: `createSignal`, `createMemo`, `createEffect`, `createRef`.
-- Lifecycle: `onMount`, `onCleanup`.
-- Control flow as JSX: `<Show>`, `<For>`, `<Switch>` / `<Match>`.
-- Slotting: `<Slot>` JSX component + `defineSlot` bindings (named + scoped slots).
-- Transitions: `<Transition>` wrapping a single conditional element.
-- Multiple components per file.
-- Props as TypeScript parameter types **or** options-object form.
-
-See [authoring-components.md](./authoring-components.md) for the practical walkthrough and [`core/compiler/README.md`](../core/compiler/README.md) for the full language reference.
-
-### Compiler infrastructure
-
-- Plugin system with `ir:post` and `code:post` hooks.
-- Diagnostic registry (INK0001–INK0100) — see [`core/compiler/src/core/diagnostics/codes.ts`](../core/compiler/src/core/diagnostics/codes.ts).
-- Source maps (V3) — controlled by `sourceMap: "external" | "inline" | "none"`.
-- Incremental compilation with serializable IR (`compileIncremental`, `IR_VERSION`).
-- Reusable test harnesses ([`@inkline/test-utils`](../tooling/test-utils/) and [`@inkline/compiler/testing`](../core/compiler/src/testing/)).
-
-## Deferred to v1
-
-The following are explicitly out of scope for v0 and tracked for v1:
-
-| Capability                                             | Current behavior                                                                                                                | Why deferred                                                                                                                     |
-| ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| **Component-ref forwarding**                           | Element refs work. Component refs emit `INK0070`.                                                                               | Per-target ref forwarding is target-specific (`React.forwardRef`, Vue `defineExpose`, etc.) and needs design before unification. |
-| **JSX spread attributes**                              | `<button {...props} />` is discarded by the parser and emits `INK0071`.                                                         | Per-target attribute binding needs every attribute name at build time; forwarding an unknown set needs a design first.           |
-| **Scoped CSS / `<style>` blocks in `.ink.tsx`**        | Sibling `.ink.css` / `.ink.scss` files are merged in pass P1, but inline `<style>` blocks are not parsed.                       | Cross-framework scoping semantics (Vue scoped, Svelte CSS-in-component, React unscoped) need a common model.                     |
-| **Server / client boundaries**                         | The `runtime` option on `defineComponent` accepts `"client" \| "server" \| "iso"` but does not yet drive output behavior.       | Awaits per-target server-component conventions stabilizing.                                                                      |
-| **Async components / `<Suspense>` / `createResource`** | `createResource` stub exists in `@inkline/core` but is not lowered.                                                             | Cross-framework Suspense story is still in flux.                                                                                 |
-| **HMR / `--watch` mode**                               | `compileIncremental` exists for cache reuse, but there is no built-in watch loop. Bundler plugin handles HMR for its consumers. | Best left to consuming bundlers via [`@inkline/plugin`](../core/plugin/).                                                        |
-| **Sub-expression source-map granularity**              | Mappings land at statement / element level. Sub-expression positions are approximate.                                           | Adequate for current debugging needs. Tighter mapping is a large project.                                                        |
-
-When any of these moves out of "deferred", the change should:
-
-1. Add the corresponding tests under [`core/compiler/src/__fixtures__/`](../core/compiler/src/__fixtures__/) or [`core/compiler/src/codegen/`](../core/compiler/src/codegen/).
-2. Update the row above to describe the new behavior or remove it.
-3. Update [`core/compiler/README.md`](../core/compiler/README.md) → "v0 Limitations" in the same PR.
-4. Include a changeset, usually `minor` for additive features.
-
-## Out of scope for v1
-
-Anything not listed in the deferred table above is out of scope for the v1 cycle. Things commonly asked about that are intentionally not on the roadmap:
-
-- **A runtime layer.** Inkline is a compiler. There is no plan to ship a runtime that mediates between component definitions and frameworks at execution time — that would defeat the "no `@inkline/core` in output" invariant.
-- **Custom JSX dialects.** The authoring API is TS + JSX with the `@inkline/core` import source. Alternative templating syntaxes (Vue SFC-style, Svelte-style) are not on the roadmap.
-- **Build-tool features that belong to bundlers.** HMR signalling, asset handling, dev overlays — these are bundler concerns. [`@inkline/plugin`](../core/plugin/) is the integration surface; expect feature requests in this area to land there.
+- **The compiler.** [Unframework](https://unframework.dev) compiles every component, so a missing primitive, a new target or a wrong output for one framework is an Unframework change. Inkline's own compiler was removed when the components moved to Unframework, and [ADR-012](./adrs/012-components-compile-with-unframework.md) records why.
+- **The styling engine.** Tokens, recipes and themes come from [Styleframe](https://github.com/styleframe-dev/styleframe). Inkline defines its recipes with it, but a new kind of token or utility is a Styleframe change.
+- **A runtime layer.** No Inkline runtime ships in the output. Each component is plain code for its framework, so a request for shared runtime behaviour across frameworks needs a design first.
 
 ## See also
 
-- [architecture.md](./architecture.md) — how the current compiler works.
-- [adding-a-target.md](./adding-a-target.md) — the contributor path for new compilation targets.
-- [`core/compiler/README.md`](../core/compiler/README.md) → "v0 Limitations" — the user-facing version of the deferred table above.
+- [architecture.md](./architecture.md): how a `.uf.tsx` component becomes seven framework packages.
+- [authoring-components.md](./authoring-components.md): adding or changing a component.

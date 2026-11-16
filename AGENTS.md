@@ -1,6 +1,6 @@
 # Inkline
 
-A UI library in seven frameworks. Each component is written once as a `.uf.tsx` file in `ui/components`, and [Unframework](https://unframework.dev) compiles it to idiomatic React, Vue 3, Svelte 5, Solid, Angular, Qwik and Astro, styled with Styleframe. The compiler packages under `core/` and `tooling/` are retiring, and no component builds with them.
+A UI library in seven frameworks. Each component is written once as a `.uf.tsx` file in `ui/components`, and [Unframework](https://unframework.dev) compiles it to idiomatic React, Vue 3, Svelte 5, Solid, Angular, Qwik and Astro, styled with Styleframe.
 
 This file is the entry point for any LLM agent or new contributor working in the repo. Read it first, then descend to the nearest `AGENTS.md` for the area you're editing.
 
@@ -19,10 +19,7 @@ Run `vp env doctor` if anything about the toolchain looks wrong, and `vp help` f
 ## Repository map
 
 ```
-core/        @inkline/core (authoring primitives), @inkline/compiler,
-             @inkline/plugin (unplugin), @inkline/config-loader, inkline (barrel)
-tooling/     @inkline/cli, @inkline/storybook, @inkline/test-utils,
-             @inkline/agents-check (docs link-integrity test),
+tooling/     @inkline/agents-check (docs link-integrity test),
              @inkline/toolchain-angular (Angular's stack for Unframework's tools)
 ui/          @inkline/components (single source of truth) + 7 framework output packages
 apps/        docs (the docs site)
@@ -33,7 +30,7 @@ docs/adrs/   architecture decision records — why the codebase is the way it is
 .old/        archived v0 codebase — read-only reference, do not edit or link into
 ```
 
-Workspace globs live in [`pnpm-workspace.yaml`](./pnpm-workspace.yaml). How the packages fit together, and how a component is built and tested, is in [docs/architecture.md](./docs/architecture.md). The retiring compiler's pipeline is in [`core/compiler/AGENTS.md`](./core/compiler/AGENTS.md).
+Workspace globs live in [`pnpm-workspace.yaml`](./pnpm-workspace.yaml). How the packages fit together, and how a component is built and tested, is in [docs/architecture.md](./docs/architecture.md).
 
 ## Where to look next
 
@@ -41,14 +38,6 @@ Per package — descend to the `AGENTS.md` nearest the file you're editing (LLM 
 
 | Package                                                                        | When to look                                                                              |
 | ------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- |
-| [`core/core/AGENTS.md`](./core/core/AGENTS.md)                                 | Authoring primitives, JSX runtime                                                         |
-| [`core/compiler/AGENTS.md`](./core/compiler/AGENTS.md)                         | Pipeline, IR, codegen, plugin hooks                                                       |
-| [`core/plugin/AGENTS.md`](./core/plugin/AGENTS.md)                             | Bundler integration (Vite, webpack, Rollup, esbuild, Rspack, Farm)                        |
-| [`core/config-loader/AGENTS.md`](./core/config-loader/AGENTS.md)               | `inkline.config.ts` loading                                                               |
-| [`core/inkline/AGENTS.md`](./core/inkline/AGENTS.md)                           | The public `inkline` barrel package                                                       |
-| [`tooling/cli/AGENTS.md`](./tooling/cli/AGENTS.md)                             | `inkline compile`, `inkline check`, `inkline init`                                        |
-| [`tooling/storybook/AGENTS.md`](./tooling/storybook/AGENTS.md)                 | Story authoring + per-target story generation                                             |
-| [`tooling/test-utils/AGENTS.md`](./tooling/test-utils/AGENTS.md)               | Cross-target test harnesses                                                               |
 | [`tooling/toolchain-angular/AGENTS.md`](./tooling/toolchain-angular/AGENTS.md) | Angular's compiler stack, on TypeScript 6, for `unframework test`, `visual` and `preview` |
 | [`ui/components/AGENTS.md`](./ui/components/AGENTS.md)                         | **Where you author components** — the single source for all 7 frameworks                  |
 | [`ui/react/AGENTS.md`](./ui/react/AGENTS.md) and the six siblings              | Per-framework packages, built from Unframework's output                                   |
@@ -66,15 +55,13 @@ Per topic — read the relevant `docs/`:
 | [docs/maintenance.md](./docs/maintenance.md)                   | How we keep docs from drifting                         |
 | [docs/adrs/README.md](./docs/adrs/README.md)                   | Why the codebase is the way it is — decision records   |
 
-For the user-facing language reference (primitives, control flow, options), the canonical source is [`core/compiler/README.md`](./core/compiler/README.md).
-
 ## Cross-cutting conventions
 
 These apply everywhere. Package-level `AGENTS.md` files repeat them only when consequential.
 
 - **Tooling**: pnpm 11, Node ≥24, Vite+ (`vp` CLI). OXLint via `vp lint`; Oxfmt via `vp fmt`. **Not ESLint, not Prettier.**
 - **Tests**: colocated as `<file>.test.ts`. Vitest. Never in a separate `tests/` folder, with two exceptions: the component cases in `ui/components/test/`, since Unframework compiles every `.uf.tsx` under `src/`, and each framework package's API report in `ui/<framework>/test/`.
-- **Commits**: conventional commits with package scope — `feat(compiler): …`, `fix(ci): …`. See [docs/conventions.md](./docs/conventions.md) → "Commit messages".
+- **Commits**: conventional commits with package scope — `feat(components): …`, `fix(ci): …`. See [docs/conventions.md](./docs/conventions.md) → "Commit messages".
 - **Changesets**: every change to a published package needs one (`pnpm changeset`). See [docs/release-process.md](./docs/release-process.md).
 - **Generated directories — never hand-edit**: `ui/components/dist/` (Unframework's output), `ui/components/src/recipes.ts`, `ui/components/.styleframe/`, `ui/<framework>/.styleframe/`, every other `dist/` and `coverage/`.
 - **Archived directory — never touch**: `.old/` is the v0 codebase, kept for reference only.

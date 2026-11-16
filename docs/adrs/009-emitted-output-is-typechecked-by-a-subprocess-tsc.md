@@ -19,9 +19,9 @@ and how far that check reaches.
 
 ### What was believed, what was true
 
-**Believed.** `typecheckEmittedForTarget` ([`core/compiler/src/testing/typecheck.ts`](../../core/compiler/src/testing/typecheck.ts))
+**Believed.** `typecheckEmittedForTarget` ([`core/compiler/src/testing/typecheck.ts`](https://github.com/uxfront-com/inkline/blob/e57570bc46976b320929a76141cce799402075c5/core/compiler/src/testing/typecheck.ts))
 ran `tsc` over emitted output across four targets in a 420-test sweep.
-[`core/compiler/docs/testing.md`](../../core/compiler/docs/testing.md) said it "verifies that emitted
+[`core/compiler/docs/testing.md`](https://github.com/uxfront-com/inkline/blob/e57570bc46976b320929a76141cce799402075c5/core/compiler/docs/testing.md) said it "verifies that emitted
 code is type-safe." The 2026-08-11 draft recorded the gate as already fixed by an in-process
 `ts.createProgram`, with a `checkedFiles` field on the result, react only, 80 of 105 fixtures, and a
 25-entry exclusion list in `src/testing/typecheck-fixtures.ts` keyed by `EXCLUSIONS.react`.
@@ -83,7 +83,7 @@ react and solid, with every known failure quarantined per `(fixture, target)` pa
    (`typecheck.test.ts:113-114, 166-173`). Angular, qwik and astro declare `tsconfig: ""` and are
    outside the gate entirely.
 6. **Known failures are quarantined, not waived.** `EXCLUSIONS` in
-   [`typecheck-fixtures.ts`](../../core/compiler/src/testing/typecheck-fixtures.ts) names each
+   [`typecheck-fixtures.ts`](https://github.com/uxfront-com/inkline/blob/e57570bc46976b320929a76141cce799402075c5/core/compiler/src/testing/typecheck-fixtures.ts) names each
    excluded fixture with the TypeScript codes it suppresses, grouped by root cause. A staleness test
    compiles every excluded pair and fails when one starts passing, so the list can only shrink. No
    wildcards; no entry without codes.

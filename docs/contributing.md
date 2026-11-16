@@ -32,7 +32,6 @@ Skip it and the editor will be solid red on a freshly cloned tree — several hu
 
 ```
 error TS2307: Cannot find module 'virtual:styleframe' or its corresponding type declarations.
-error TS2307: Cannot find module '@inkline/core' or its corresponding type declarations.
 ```
 
 followed by a long cascade of `TS2339` and `TS7026` on the props of every styled component.
@@ -102,7 +101,7 @@ pnpm changeset
 
 Pick the affected packages, bump level (`patch` / `minor` / `major`), and write a one-sentence change description. The CLI writes a markdown file under [`.changeset/`](../.changeset/). Commit it with your code change.
 
-Packages excluded from publishing are listed in [`.changeset/config.json`](../.changeset/config.json) `ignore`: today, `website` and `@inkline/components`. Internal-only packages (e.g. `@inkline/components`, `@inkline/storybook`) are also marked `private` in their `package.json`.
+Packages excluded from publishing are listed in [`.changeset/config.json`](../.changeset/config.json) `ignore`: today, `website` and `@inkline/components`. Internal-only packages, like `@inkline/components` and `@inkline/agents-check`, are also marked `private` in their `package.json`.
 
 Full release flow: [release-process.md](./release-process.md).
 
@@ -116,8 +115,8 @@ If your change touches public API, build flow, repo conventions, or directory st
 
 Open an issue from the [issue chooser](https://github.com/inkline/inkline/issues/new/choose) — the **Bug report** and **Feature request** forms prompt for everything we need:
 
-- A minimal reproduction (a `.ink.tsx` snippet for compiler bugs).
-- Inkline version (`pnpm list inkline @inkline/compiler`).
+- A minimal reproduction: the component, its props and the steps that trigger the bug.
+- Inkline version (`pnpm list "@inkline/*"`).
 - `vp env doctor` output if the issue looks tooling-related.
 - Expected vs actual behavior.
 

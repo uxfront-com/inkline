@@ -94,7 +94,7 @@ Three results decided the shape:
   reappeared.** V2 widened **`props`**, colliding a declared prop with a model of the same name —
   precisely what INK0044 exists to catch. B2 declares into **`options.models`**, which the compiler
   never reads (verified: `component.models` is assigned from `setupResult.models` alone,
-  [`core/compiler/src/pipeline/passes/02-parse/index.ts:96`](../../core/compiler/src/pipeline/passes/02-parse/index.ts)).
+  [`core/compiler/src/pipeline/passes/02-parse/index.ts:96`](https://github.com/uxfront-com/inkline/blob/e57570bc46976b320929a76141cce799402075c5/core/compiler/src/pipeline/passes/02-parse/index.ts)).
   No lowering change, across zero targets.
 - **Staleness is structurally zero.** ADR-005 listed watch-mode staleness as unpriced. Measured in a
   real language server, a parent's view of a child updated **11 ms after an unsaved edit to the

@@ -27,7 +27,7 @@ back to zero on a question that has already been measured.
 ## Context
 
 `InkComponent` is one alias, in
-[`core/core/src/index.ts:27-29`](../../core/core/src/index.ts):
+[`core/core/src/index.ts:27-29`](https://github.com/uxfront-com/inkline/blob/e57570bc46976b320929a76141cce799402075c5/core/core/src/index.ts):
 
 ```ts
 export type InkComponent<P = {}> = (
@@ -91,7 +91,7 @@ output for `IInput`. Specifically:
 - **The compiler diagnoses the migration as a defect.** `INK0044` (`warning`) —
   _"Model '{name}' collides with a declared prop of the same name… defineModel already declares the
   prop and its update event"_ — fires on both `IInput` and `IHamburgerMenu`
-  ([`core/compiler/src/core/diagnostics/codes.ts`](../../core/compiler/src/core/diagnostics/codes.ts)).
+  ([`core/compiler/src/core/diagnostics/codes.ts`](https://github.com/uxfront-com/inkline/blob/e57570bc46976b320929a76141cce799402075c5/core/compiler/src/core/diagnostics/codes.ts)).
   The only edit that satisfies the type system is the edit the compiler tells authors to undo.
 - **The Svelte target emits code that does not parse.** `let { …, open, …, open = $bindable(), …$props() }`
   — `open` bound twice in one destructuring. Verified: `SyntaxError: Identifier 'open' has already been declared`.
@@ -115,7 +115,7 @@ spelled `open` errors, so the type system is not distinguishing the typo from th
 **The compiler already knows the entire surface.** `component.props`, `component.models`,
 `component.slots` and `component.events` are all in the IR, and every target already composes and
 writes the full type out —
-[`core/compiler/src/codegen/targets/svelte/index.ts:375-395`](../../core/compiler/src/codegen/targets/svelte/index.ts)
+[`core/compiler/src/codegen/targets/svelte/index.ts:375-395`](https://github.com/uxfront-com/inkline/blob/e57570bc46976b320929a76141cce799402075c5/core/compiler/src/codegen/targets/svelte/index.ts)
 is one of seven:
 
 ```ts
