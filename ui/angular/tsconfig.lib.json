@@ -2,6 +2,10 @@
   "extends": "./tsconfig.json",
   "include": ["src/**/*.ts", "../components/dist/angular/**/*.ts", ".styleframe/**/*.d.ts"],
   "compilerOptions": {
+    // Unframework's output imports its siblings without a file extension. Under `nodenext`, Analog
+    // can't resolve them, and the Angular compiler skips every styled component (ui/angular/AGENTS.md).
+    "module": "preserve",
+    "moduleResolution": "bundler",
     "noEmit": false
   },
   "angularCompilerOptions": {

@@ -7,7 +7,7 @@ The Angular package of Inkline's components.
 To change a component, edit its `.uf.tsx` source in [`ui/components/src/components/`](../components/src/components/) and build again, as [`ui/components/AGENTS.md`](../components/AGENTS.md) explains. This package builds from Unframework's Angular output, in three places:
 
 - `ui/components/dist/angular/` is the output `pnpm --filter @inkline/components build` writes: the compiled components, and the `index.ts` and `headless.ts` entries. Never hand-edit it.
-- `src/` holds this package's build entries, which re-export those two files. `src/index.ts` also imports `virtual:styleframe.css`, where the package ships a stylesheet, so Vite extracts it to `dist/index.css`.
+- `src/` holds this package's build entries, `index.ts` and `headless.ts`, which only re-export those two files.
 - `.styleframe/` holds generated Styleframe artefacts. Never hand-edit them.
 
 ## Public surface
@@ -22,11 +22,22 @@ From [`package.json`](./package.json) `exports`:
 
 Peer dependency: `@angular/core` 22.
 
-[`test/api.json`](./test/api.json) records this surface: the names each entry exports and each component's props, models and events, and its selector. `pnpm --filter @inkline/angular test` rebuilds the report from `dist/` and fails when it differs. After an intended change, write it again with `node ui/components/scripts/api-report.ts angular ui/components/dist/angular --write` from the repository's root, and list each changed line in this package's changeset.
+[`test/api.json`](./test/api.json) records this surface: the names each entry exports and each component's props, models and events, and its selector. After an intended change, write it again with `node ui/components/scripts/api-report.ts angular ui/components/dist/angular --write` from the repository's root, and list each changed line in this package's changeset.
+
+`pnpm --filter @inkline/angular test` runs three tests. Build the package first, since two of them read `dist/`:
+
+- `test/api.test.ts` rebuilds the report from Unframework's emitted sources in `ui/components/dist/angular/` and fails when it differs from `api.json`.
+- `test/dist.test.ts` loads `dist/` with Angular's JIT compiler and checks that each component `api.json` lists carries its selector, an input for every prop and model, and an output for every event and model. A component the compiler skipped still gets a definition in JIT, but with no inputs, so the input check is the one that catches it.
+- `test/render.test.ts` server-renders the built `IButton` and `IButtonBase` with `label="Save"` and `[id]="'save'"`, and checks that each `<button>` has both.
 
 ## Build
 
 `vp build`, with Analog's Angular plugin compiling the components in partial mode ([`tsconfig.lib.json`](./tsconfig.lib.json) sets `compilationMode: "partial"`), as Angular libraries ship. The consuming app's Angular compiler links the declarations. The bundles go to `dist/fesm2022/`, because Analog's optimiser links only paths that match `/fesm20/`. Build `@inkline/components` first.
+
+Two settings keep every component compiled:
+
+- `tsconfig.lib.json` resolves modules the way Vite does (`moduleResolution: "bundler"`). Unframework's output imports its siblings without a file extension, like `../headless/i-button-base`. Under the root's `nodenext`, Analog resolves those as ECMAScript imports and fails, so the Angular compiler skips each styled component and Vite ships it as a plain decorator call with no inputs.
+- `vite.config.ts` turns Analog's type checking on (`disableTypeChecking: false`), so an error like that fails the build. With it off, Analog drops the Angular compiler's errors from a build.
 
 ## Notable target behaviour
 
