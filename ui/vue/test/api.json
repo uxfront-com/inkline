@@ -52,9 +52,12 @@
     },
     "IButton": {
       "props": [
+        "ariaDescribedby",
+        "ariaLabel",
         "block",
         "color",
         "disabled",
+        "id",
         "label",
         "loading",
         "size",
@@ -62,22 +65,31 @@
         "variant"
       ],
       "models": [],
-      "events": [],
+      "events": [
+        "click"
+      ],
       "attributes": true
     },
     "IButtonBase": {
       "props": [
+        "ariaDescribedby",
+        "ariaLabel",
         "disabled",
+        "id",
         "label",
         "loading",
         "type"
       ],
       "models": [],
-      "events": [],
+      "events": [
+        "click"
+      ],
       "attributes": true
     },
     "ICheckbox": {
       "props": [
+        "ariaDescribedby",
+        "ariaLabel",
         "color",
         "disabled",
         "id",
@@ -102,6 +114,8 @@
     },
     "ICheckboxControlBase": {
       "props": [
+        "ariaDescribedby",
+        "ariaLabel",
         "disabled",
         "id",
         "indeterminate",
@@ -162,6 +176,9 @@
     },
     "IInput": {
       "props": [
+        "ariaDescribedby",
+        "ariaLabel",
+        "autocomplete",
         "color",
         "disabled",
         "id",
@@ -169,6 +186,7 @@
         "name",
         "placeholder",
         "readonly",
+        "required",
         "size",
         "type",
         "variant"
@@ -176,7 +194,10 @@
       "models": [
         "value"
       ],
-      "events": [],
+      "events": [
+        "blur",
+        "focus"
+      ],
       "attributes": true
     },
     "IInputBase": {
@@ -189,17 +210,24 @@
     },
     "IInputControlBase": {
       "props": [
+        "ariaDescribedby",
+        "ariaLabel",
+        "autocomplete",
         "disabled",
         "id",
         "name",
         "placeholder",
         "readonly",
+        "required",
         "type"
       ],
       "models": [
         "value"
       ],
-      "events": [],
+      "events": [
+        "blur",
+        "focus"
+      ],
       "attributes": true
     },
     "IInputPrefixBase": {
@@ -216,16 +244,23 @@
     },
     "IInputTextareaBase": {
       "props": [
+        "ariaDescribedby",
+        "ariaLabel",
+        "autocomplete",
         "disabled",
         "id",
         "name",
         "placeholder",
-        "readonly"
+        "readonly",
+        "required"
       ],
       "models": [
         "value"
       ],
-      "events": [],
+      "events": [
+        "blur",
+        "focus"
+      ],
       "attributes": true
     },
     "IRadioBase": {
@@ -253,6 +288,7 @@
     },
     "IRadioGroup": {
       "props": [
+        "ariaDescribedby",
         "color",
         "disabled",
         "id",
@@ -271,6 +307,7 @@
     },
     "IRadioGroupBase": {
       "props": [
+        "ariaDescribedby",
         "id",
         "label",
         "readonly"
@@ -281,6 +318,8 @@
     },
     "ISwitch": {
       "props": [
+        "ariaDescribedby",
+        "ariaLabel",
         "color",
         "disabled",
         "id",
@@ -303,6 +342,8 @@
     },
     "ISwitchControlBase": {
       "props": [
+        "ariaDescribedby",
+        "ariaLabel",
         "disabled",
         "id",
         "name",

@@ -56,10 +56,13 @@
     },
     "IButton": {
       "props": [
+        "ariaDescribedby",
+        "ariaLabel",
         "block",
         "class",
         "color",
         "disabled",
+        "id",
         "label",
         "loading",
         "size",
@@ -68,24 +71,33 @@
         "variant"
       ],
       "models": [],
-      "events": [],
+      "events": [
+        "onClick$"
+      ],
       "attributes": false
     },
     "IButtonBase": {
       "props": [
+        "ariaDescribedby",
+        "ariaLabel",
         "class",
         "disabled",
+        "id",
         "label",
         "loading",
         "style",
         "type"
       ],
       "models": [],
-      "events": [],
+      "events": [
+        "onClick$"
+      ],
       "attributes": false
     },
     "ICheckbox": {
       "props": [
+        "ariaDescribedby",
+        "ariaLabel",
         "class",
         "color",
         "disabled",
@@ -117,6 +129,8 @@
     },
     "ICheckboxControlBase": {
       "props": [
+        "ariaDescribedby",
+        "ariaLabel",
         "class",
         "disabled",
         "id",
@@ -193,6 +207,9 @@
     },
     "IInput": {
       "props": [
+        "ariaDescribedby",
+        "ariaLabel",
+        "autocomplete",
         "class",
         "color",
         "disabled",
@@ -202,6 +219,7 @@
         "placeholder",
         "prefix$",
         "readonly",
+        "required",
         "size",
         "style",
         "suffix$",
@@ -212,6 +230,8 @@
         "value"
       ],
       "events": [
+        "onBlur$",
+        "onFocus$",
         "onValueChange$"
       ],
       "attributes": false
@@ -228,17 +248,23 @@
     },
     "IInputControlBase": {
       "props": [
+        "ariaDescribedby",
+        "ariaLabel",
+        "autocomplete",
         "disabled",
         "id",
         "name",
         "placeholder",
         "readonly",
+        "required",
         "type"
       ],
       "models": [
         "value"
       ],
       "events": [
+        "onBlur$",
+        "onFocus$",
         "onValueChange$"
       ],
       "attributes": false
@@ -263,18 +289,24 @@
     },
     "IInputTextareaBase": {
       "props": [
+        "ariaDescribedby",
+        "ariaLabel",
+        "autocomplete",
         "class",
         "disabled",
         "id",
         "name",
         "placeholder",
         "readonly",
+        "required",
         "style"
       ],
       "models": [
         "value"
       ],
       "events": [
+        "onBlur$",
+        "onFocus$",
         "onValueChange$"
       ],
       "attributes": false
@@ -310,6 +342,7 @@
     },
     "IRadioGroup": {
       "props": [
+        "ariaDescribedby",
         "class",
         "color",
         "disabled",
@@ -332,6 +365,7 @@
     },
     "IRadioGroupBase": {
       "props": [
+        "ariaDescribedby",
         "class",
         "id",
         "label",
@@ -344,6 +378,8 @@
     },
     "ISwitch": {
       "props": [
+        "ariaDescribedby",
+        "ariaLabel",
         "class",
         "color",
         "disabled",
@@ -373,6 +409,8 @@
     },
     "ISwitchControlBase": {
       "props": [
+        "ariaDescribedby",
+        "ariaLabel",
         "class",
         "disabled",
         "id",

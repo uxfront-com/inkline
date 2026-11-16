@@ -56,10 +56,13 @@
     },
     "IButton": {
       "props": [
+        "ariaDescribedby",
+        "ariaLabel",
         "block",
         "class",
         "color",
         "disabled",
+        "id",
         "label",
         "loading",
         "size",
@@ -73,8 +76,11 @@
     },
     "IButtonBase": {
       "props": [
+        "ariaDescribedby",
+        "ariaLabel",
         "class",
         "disabled",
+        "id",
         "label",
         "loading",
         "style",
@@ -86,6 +92,8 @@
     },
     "ICheckbox": {
       "props": [
+        "ariaDescribedby",
+        "ariaLabel",
         "checked",
         "class",
         "color",
@@ -114,6 +122,8 @@
     },
     "ICheckboxControlBase": {
       "props": [
+        "ariaDescribedby",
+        "ariaLabel",
         "checked",
         "class",
         "disabled",
@@ -181,6 +191,9 @@
     },
     "IInput": {
       "props": [
+        "ariaDescribedby",
+        "ariaLabel",
+        "autocomplete",
         "class",
         "color",
         "disabled",
@@ -189,6 +202,7 @@
         "name",
         "placeholder",
         "readonly",
+        "required",
         "size",
         "style",
         "type",
@@ -211,11 +225,15 @@
     },
     "IInputControlBase": {
       "props": [
+        "ariaDescribedby",
+        "ariaLabel",
+        "autocomplete",
         "disabled",
         "id",
         "name",
         "placeholder",
         "readonly",
+        "required",
         "type",
         "value"
       ],
@@ -243,12 +261,16 @@
     },
     "IInputTextareaBase": {
       "props": [
+        "ariaDescribedby",
+        "ariaLabel",
+        "autocomplete",
         "class",
         "disabled",
         "id",
         "name",
         "placeholder",
         "readonly",
+        "required",
         "style",
         "value"
       ],
@@ -284,6 +306,7 @@
     },
     "IRadioGroup": {
       "props": [
+        "ariaDescribedby",
         "class",
         "color",
         "disabled",
@@ -303,6 +326,7 @@
     },
     "IRadioGroupBase": {
       "props": [
+        "ariaDescribedby",
         "class",
         "id",
         "label",
@@ -315,6 +339,8 @@
     },
     "ISwitch": {
       "props": [
+        "ariaDescribedby",
+        "ariaLabel",
         "checked",
         "class",
         "color",
@@ -341,6 +367,8 @@
     },
     "ISwitchControlBase": {
       "props": [
+        "ariaDescribedby",
+        "ariaLabel",
         "checked",
         "class",
         "disabled",
