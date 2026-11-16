@@ -5,7 +5,7 @@ description: How design tokens and recipes flow from styleframe into Inkline —
 
 # Design token architecture (the styleframe boundary)
 
-> Inkline's components now compile with Unframework. For how a component is written, built and tested, read [docs/authoring-components.md](../../../docs/authoring-components.md) and [docs/architecture.md](../../../docs/architecture.md); where this guide differs from them, they win.
+> Inkline's components now compile with Unframework. For how a component is written, built and tested, read [docs/authoring-components.md](../../../docs/authoring-components.md) and [docs/architecture.md](../../../docs/architecture.md). Where this guide differs from them, they win.
 
 Inkline does not own a token system — it **consumes styleframe's**. `@styleframe/theme` provides 23 token composables (OKLCH color internals, scale-driven spacing, typography, borders/effects, breakpoints/easing/duration/z-index), ~300 utilities, modifiers, element/state/sanitize layers, and the component recipe catalog (~39 families). Inkline's job is to consume them consistently and report gaps upstream, not to fork them.
 

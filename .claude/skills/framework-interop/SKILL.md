@@ -5,7 +5,7 @@ description: The seven framework output packages and the boundaries Inkline live
 
 # Framework interop
 
-> Inkline's components now compile with Unframework. For how a component is written, built and tested, read [docs/authoring-components.md](../../../docs/authoring-components.md) and [docs/architecture.md](../../../docs/architecture.md); where this guide differs from them, they win.
+> Inkline's components now compile with Unframework. For how a component is written, built and tested, read [docs/authoring-components.md](../../../docs/authoring-components.md) and [docs/architecture.md](../../../docs/architecture.md). Where this guide differs from them, they win.
 
 Inkline sits on two borders. **Downstream**: one compiled component must feel native in seven framework ecosystems. **Upstream**: every styled component consumes styleframe recipes. Both borders are trust surfaces — nothing crosses them silently degraded.
 
@@ -21,7 +21,9 @@ Inkline sits on two borders. **Downstream**: one compiled component must feel na
 | `@inkline/qwik`    | @qwik.dev/core 2.0.0-beta.47 | pinned to the beta Unframework's release supports |
 | `@inkline/astro`   | astro ^7                     | server render only: models and events are inert   |
 
-Anatomy is identical everywhere: each package's Vite library build re-exports Unframework's output in `ui/components/dist/<framework>` ([docs/architecture.md](../../../docs/architecture.md)). `dist/` and `.styleframe/` are machine output: **nobody edits them**. The hand-maintained surface is `package.json`, `vite.config.ts`, `tsconfig.json` and `test/api.json`. Exports map: `.` (styled), `./headless`, `./css` where the package has one, and `./package.json`. This map is the public contract, and `test/api.json` records it: changing it is semver-major territory.
+Anatomy is identical everywhere: each package's Vite library build re-exports Unframework's output in `ui/components/dist/<framework>` ([docs/architecture.md](../../../docs/architecture.md)). `dist/` and `.styleframe/` are machine output: **nobody edits them**. The hand-maintained surface is `package.json`, `vite.config.ts`, `tsconfig.json` and `test/api.json`.
+
+Exports map: `.` (styled), `./headless`, `./css` where the package has one, and `./package.json`. This map is the public contract, and `test/api.json` records it: changing it is semver-major territory.
 
 Framework versions are pinned in the `pnpm-workspace.yaml` catalog (React 19.2, Vue 3.5, Svelte 5.5x, Solid 1.9, Angular 22.2, Astro 7 at snapshot). **Framework upgrades are deliberate migrations**: bump catalog → rebuild → conformance + visual parity → note behavior changes; when a new framework version changes the idiomatic output shape, that's a codegen change (coordinate with @atlas).
 

@@ -14,7 +14,7 @@ allowed-tools:
 
 # Component documentation & release prep
 
-> Inkline's components now compile with Unframework. For how a component is written, built and tested, read [docs/authoring-components.md](../../../docs/authoring-components.md) and [docs/architecture.md](../../../docs/architecture.md); where this guide differs from them, they win.
+> Inkline's components now compile with Unframework. For how a component is written, built and tested, read [docs/authoring-components.md](../../../docs/authoring-components.md) and [docs/architecture.md](../../../docs/architecture.md). Where this guide differs from them, they win.
 
 The public docs website **does not exist yet** — so the "document" phase today means: make the API self-documenting (TSDoc), prepare the release (changeset), keep the repo's own docs honest, and stage the future docs-site content without shipping anything speculative.
 

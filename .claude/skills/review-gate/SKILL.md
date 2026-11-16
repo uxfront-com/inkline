@@ -5,7 +5,7 @@ description: The Inkline Guild's PR review checklist — correctness, simplicity
 
 # The review gate
 
-> Inkline's components now compile with Unframework. For how a component is written, built and tested, read [docs/authoring-components.md](../../../docs/authoring-components.md) and [docs/architecture.md](../../../docs/architecture.md); where this guide differs from them, they win.
+> Inkline's components now compile with Unframework. For how a component is written, built and tested, read [docs/authoring-components.md](../../../docs/authoring-components.md) and [docs/architecture.md](../../../docs/architecture.md). Where this guide differs from them, they win.
 
 Every PR passes this gate. The gate exists to keep `main` releasable and the public surface trustworthy — not to display cleverness. Verdicts: **approve** · **approve with nits** (≤2 nits, prefixed `nit:`, author may defer) · **request changes** (only with evidence: failing case, violated rule, broken contract).
 
@@ -14,7 +14,7 @@ Every PR passes this gate. The gate exists to keep `main` releasable and the pub
 1. **Correctness & tests.** Logic sound; edge cases considered; colocated `*.test.ts` / `*.ink.test.ts` updated/added; tests actually assert the change (would fail without it). Compiler behavior changes need scenario or per-target fixture coverage, not just unit; component changes need real-DOM evidence (Angular SSR mount) where behavior is visible.
 2. **Simplicity.** "Would a senior engineer call this overcomplicated?" No speculative abstractions, no unrequested configurability, no error handling for impossible states. 200 lines that could be 50 → request changes.
 3. **Surgical diff.** Every changed line traces to the issue. No adjacent "improvements", no drive-by reformatting, no pre-existing dead-code deletion. Orphans created by the change ARE cleaned up.
-4. **Conventions.** Conventional commit with package scope; oxlint/oxfmt clean (`vp check`); tests colocated; no hand-edits under `.styleframe/`, `dist/`, or `.old/`.
+4. **Conventions.** Conventional commit with package scope; oxlint/oxfmt clean (`vp check`); tests colocated; no hand-edits under `.styleframe/`, `dist/` or `.old/`.
 5. **Changeset.** Present for published packages; correct bump level. Ignore-listed (`website`, `@inkline/components`) are exempt — but a component change ships through the framework packages: **each affected `@inkline/<framework>` needs its changeset**. Semver sanity: new API = minor; observable output change = judge carefully; breaking (removed exports/subpaths, IR schema affecting serialized caches, prop/axis renames) = major + Alex approval + migration note.
 6. **Doc freshness — this repo's disease.** API/behavior change without its AGENTS.md / docs / compiler-README update = **request changes**. The link-integrity test (`tooling/agents-check`) catches dead paths; you catch semantic drift. This is the structural cure for docs that drift from the code.
 7. **Inkline contract risks** (the expensive ones):
