@@ -5,9 +5,9 @@ import IRadioGroup from "../styled/IRadioGroup.uf.tsx";
 // Each group owns a ref for `value`, two-way bound via `v-model:value`, so a click actually
 // moves the selection. Distinct `name`s keep the groups mutually independent.
 export default function RadioColors() {
-  const light = ref("apple");
-  const dark = ref("apple");
-  const neutral = ref("apple");
+  const light = ref<string | undefined>("apple");
+  const dark = ref<string | undefined>("apple");
+  const neutral = ref<string | undefined>("apple");
   return (
     <div>
       <IRadioGroup

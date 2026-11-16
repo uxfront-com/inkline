@@ -5,7 +5,7 @@ import IRadioGroup from "../styled/IRadioGroup.uf.tsx";
 // A horizontally-laid-out group with a ref for `value`, two-way bound via `v-model:value`,
 // defaulting to "apple" so one option is selected on load and clicks move the selection.
 export default function RadioHorizontal() {
-  const value = ref("apple");
+  const value = ref<string | undefined>("apple");
   return (
     <div>
       <IRadioGroup

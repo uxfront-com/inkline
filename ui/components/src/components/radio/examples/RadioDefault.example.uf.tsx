@@ -5,7 +5,7 @@ import IRadioGroup from "../styled/IRadioGroup.uf.tsx";
 // The group owns a ref for `value`, two-way bound via `v-model:value`, so a click actually
 // moves the selection. It defaults to "apple" so one option is selected on load.
 export default function RadioDefault() {
-  const value = ref("apple");
+  const value = ref<string | undefined>("apple");
   return (
     <div>
       <IRadioGroup

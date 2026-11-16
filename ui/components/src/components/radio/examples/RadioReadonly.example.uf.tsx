@@ -5,7 +5,7 @@ import IRadioGroup from "../styled/IRadioGroup.uf.tsx";
 // `readonly` freezes the selection ("banana") while keeping the controls focusable, unlike disabled.
 // The ref backs `value` so the default selection renders; clicks can't change it, by design.
 export default function RadioReadonly() {
-  const value = ref("banana");
+  const value = ref<string | undefined>("banana");
   return (
     <div>
       <IRadioGroup
