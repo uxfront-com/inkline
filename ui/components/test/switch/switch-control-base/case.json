@@ -24,6 +24,11 @@
       "props": {
         "attributes": true
       }
+    },
+    "parent": {
+      "props": {
+        "parent": true
+      }
     }
   }
 }

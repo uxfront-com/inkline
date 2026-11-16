@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "steps": [
+    {
+      "action": "keyboard \"{Enter}\"",
+      "dom": [
+        "<div>",
+        "  <button aria-controls=\"menu\" aria-expanded=\"false\" aria-label=\"Toggle menu\" disabled=\"\" type=\"button\">",
+        "    <span aria-hidden=\"true\" class=\"hamburger-menu-inner\"></span>",
+        "  </button>",
+        "</div>"
+      ],
+      "aria": [
+        "- button \"Toggle menu\" [disabled]"
+      ],
+      "events": {}
+    }
+  ]
+}

@@ -17,8 +17,10 @@ allowBuilds:
 # pnpm 11 enforces a default minimumReleaseAge (24h) supply-chain guard.
 # Exclude the styleframe first-party ecosystem (intentionally fresh, trusted),
 # the uxfront packages the website builds on (freshly published,
-# first-party), and pin the exact versions of unrelated transitive deps caught
-# as collateral so the guard still applies to any future releases of those.
+# first-party), Unframework's test and visual tools under @unframework.dev
+# (first-party, published by the owner and consumed the day they ship), and pin
+# the exact versions of unrelated transitive deps caught as collateral so the
+# guard still applies to any future releases of those.
 minimumReleaseAgeExclude:
   - "@styleframe/*"
   - styleframe

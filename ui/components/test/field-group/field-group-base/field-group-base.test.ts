@@ -13,6 +13,7 @@ describeTargets("field-group/field-group-base", () => {
     `);
     await expect.element(view.locator).toHaveNoAxeViolations();
     const group = view.container.querySelector("#search");
+    expect(group).not.toBeNull();
     expect(group?.querySelector("input")).not.toBeNull();
     expect(group?.querySelector("button")).not.toBeNull();
   });

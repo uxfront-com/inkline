@@ -27,4 +27,8 @@ export default defineConfig({
       external: [/^@inkline\//, "solid-js", /^solid-js\//],
     },
   },
+  // `test/model-echo.test.ts` renders the build in jsdom, which needs Solid's browser build, not the
+  // server build Node resolves by default.
+  resolve: process.env.VITEST ? { conditions: ["browser", "development"] } : undefined,
+  test: { server: { deps: { inline: [/solid-js/] } } },
 });

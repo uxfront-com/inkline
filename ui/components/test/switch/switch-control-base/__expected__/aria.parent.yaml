@@ -1,0 +1,4 @@
+- switch "Accept"
+- text: Accept
+- status: "off"
+- button "Select all"

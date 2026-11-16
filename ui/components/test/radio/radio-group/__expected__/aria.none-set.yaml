@@ -1,0 +1,17 @@
+- radiogroup "Fruit":
+  - radio "Apple"
+  - text: Apple
+  - radio "Pear"
+  - text: Pear
+  - radio "Plum" [disabled]
+  - text: Plum
+  - radio "fig"
+  - text: fig
+  - radio "None" [checked]
+  - text: None
+- radiogroup "Vegetable":
+  - radio "Leek"
+  - text: Leek
+  - radio "No vegetable"
+  - text: No vegetable
+- status

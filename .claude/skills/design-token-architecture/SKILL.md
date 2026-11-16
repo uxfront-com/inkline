@@ -5,6 +5,8 @@ description: How design tokens and recipes flow from styleframe into Inkline —
 
 # Design token architecture (the styleframe boundary)
 
+> Inkline's components now compile with Unframework. For how a component is written, built and tested, read [docs/authoring-components.md](../../../docs/authoring-components.md) and [docs/architecture.md](../../../docs/architecture.md). Where this guide differs from them, they win.
+
 Inkline does not own a token system — it **consumes styleframe's**. `@styleframe/theme` provides 23 token composables (OKLCH color internals, scale-driven spacing, typography, borders/effects, breakpoints/easing/duration/z-index), ~300 utilities, modifiers, element/state/sanitize layers, and the component recipe catalog (~39 families). Inkline's job is to consume them consistently and report gaps upstream, not to fork them.
 
 ## The wiring
@@ -26,7 +28,7 @@ styled/I<Name>.ink.tsx                    # consumer face of virtual:styleframe:
   import { xRecipe, type XRecipeProps }   #   compiled recipe fn + typed axis props
   class = createMemo(() => xRecipe({ color, variant, size }))
         ▼
-inkline compile → ui/<framework>/.inkline/  +  .styleframe/ artifacts
+unframework build → ui/components/dist/<framework>/, then each package's vp build
   each framework package exports the compiled CSS bundle as  @inkline/<framework>/css
 ```
 

@@ -115,7 +115,7 @@ Each component has a case under `ui/components/test/<name>/<case>/`, which `pnpm
 - One spec, `<case>.test.ts`.
 - A harness parent, `<Case>.uf.tsx`, where the component needs a slot filled or a model bound. Never give it a component's file name.
 - `case.json`, with the scenarios a server render renders too.
-- `__expected__/`, what Vue rendered, which every target must match. `pnpm test:targets -- --update` writes it, and you review it as code.
+- `__expected__/`, what Vue rendered, which every target must match. `pnpm test:targets --update` writes it, and you review it as code.
 
 A spec checks the component's ARIA tree with `toHaveAriaTree`, axe-core with `toHaveNoAxeViolations`, each documented prop and state, its models and its keyboard paths. Act through `view.user`, and follow every action with `view.expectParity(name)`. Give a test that clicks or types `{ requires: ["interactivity"] }`, since Astro runs no client code. [Unframework's testing page](https://unframework.dev/docs/tooling/testing) covers the API.
 

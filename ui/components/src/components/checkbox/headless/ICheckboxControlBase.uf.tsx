@@ -13,7 +13,9 @@ import type { CheckboxControlBaseProps } from "../types.ts";
 // and fires no `change`. The handler reads only the element, so Qwik can run it synchronously,
 // before the browser toggles the box. React fires its `change` from the click itself, though, before
 // the click is cancelled, so the box binds a local `state`, which writes the model only while the
-// control isn't read-only, and goes back to the model's value otherwise.
+// control isn't read-only, and goes back to the model's value otherwise. It writes the model only
+// when the two differ, so a parent's own change, which the first watcher copies into `state`, doesn't
+// come back to the parent as a change the control made.
 export default function ICheckboxControlBase({
   id,
   name,
@@ -38,7 +40,7 @@ export default function ICheckboxControlBase({
     () => state.value,
     (value) => {
       if (readonly) state.value = checked.value;
-      else checked.value = value;
+      else if (value !== checked.value) checked.value = value;
     },
   );
 

@@ -5,8 +5,8 @@ import IRadioGroup from "../styled/IRadioGroup.uf.tsx";
 // Each group owns a ref for `value`, two-way bound via `v-model:value`, so a click actually
 // moves the selection. Distinct `name`s keep the groups mutually independent.
 export default function RadioOrientations() {
-  const vertical = ref("apple");
-  const horizontal = ref("apple");
+  const vertical = ref<string | undefined>("apple");
+  const horizontal = ref<string | undefined>("apple");
   return (
     <div>
       <IRadioGroup

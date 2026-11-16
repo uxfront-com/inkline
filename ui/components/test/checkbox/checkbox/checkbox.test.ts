@@ -19,6 +19,27 @@ describeTargets("checkbox/checkbox", () => {
     await expect.element(view.getByRole("status")).toHaveTextContent("on");
   });
 
+  it(
+    "follows its parent's change of the model and writes nothing back",
+    { requires: ["interactivity"] },
+    async () => {
+      const view = await mountScenario(CheckboxCase, "parent");
+      await view.expectParity("parent");
+      const control = view.getByRole("checkbox", { name: "Accept" });
+      await view.user.click(view.getByRole("button", { name: "Select all" }));
+      await view.expectParity("parent-checked");
+      await expect.element(control).toBeChecked();
+      await expect.element(view.getByRole("status")).toHaveTextContent("on");
+      await view.user.click(view.getByRole("button", { name: "Select all" }));
+      await view.expectParity("parent-unchecked");
+      await expect.element(control).not.toBeChecked();
+      await expect.element(view.getByRole("status")).toHaveTextContent("off");
+      // Only the parent's own two changes. A write back of the same value is invisible here, since
+      // the parent's setter ignores it: `ui/react` and `ui/solid` test the change callback itself.
+      expect(view.emitted("change")).toEqual([[true], [false]]);
+    },
+  );
+
   it("writes the model on a click and on Space", { requires: ["interactivity"] }, async () => {
     const view = await mountScenario(CheckboxCase, "unchecked");
     await view.expectParity("unchecked-2");

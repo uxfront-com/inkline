@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "steps": [
+    {
+      "action": "click getByRole('button', { name: 'Select all' })",
+      "dom": [
+        "<div>",
+        "  <label>",
+        "    <input aria-checked=\"false\" id=\"wifi\" name=\"wifi\" role=\"switch\" type=\"checkbox\" uf:checked=\"false\" uf:indeterminate=\"false\">",
+        "    \"Accept\"",
+        "  </label>",
+        "  <output>",
+        "    \"off\"",
+        "  </output>",
+        "  <button type=\"button\" uf:focused=\"\">",
+        "    \"Select all\"",
+        "  </button>",
+        "</div>"
+      ],
+      "aria": [
+        "- switch \"Accept\"",
+        "- text: Accept",
+        "- status: \"off\"",
+        "- button \"Select all\""
+      ],
+      "events": {
+        "change": [
+          [
+            false
+          ]
+        ]
+      }
+    }
+  ]
+}
