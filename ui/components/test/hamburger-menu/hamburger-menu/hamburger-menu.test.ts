@@ -47,6 +47,16 @@ describeTargets("hamburger-menu/hamburger-menu", () => {
     await view.expectParity("disabled");
     const toggle = view.getByRole("button", { name: "Toggle menu" });
     await expect.element(toggle).toBeDisabled();
+    // A disabled toggle takes no click, so the test tabs to where it would be focusable and presses
+    // Enter and Space, which would toggle it if it weren't disabled.
+    await view.user.tab();
+    await view.expectParity("disabled-tabbed");
+    await expect.element(toggle).not.toHaveFocus();
+    await view.user.keyboard("{Enter}");
+    await view.expectParity("disabled-entered");
+    await view.user.keyboard(" ");
+    await view.expectParity("disabled-spaced");
+    await expect.element(toggle).toHaveAttribute("aria-expanded", "false");
     expect(view.emitted("toggle")).toEqual([]);
   });
 });
