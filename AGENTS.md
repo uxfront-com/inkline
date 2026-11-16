@@ -22,7 +22,8 @@ Run `vp env doctor` if anything about the toolchain looks wrong, and `vp help` f
 core/        @inkline/core (authoring primitives), @inkline/compiler,
              @inkline/plugin (unplugin), @inkline/config-loader, inkline (barrel)
 tooling/     @inkline/cli, @inkline/storybook, @inkline/test-utils,
-             @inkline/agents-check (docs link-integrity test)
+             @inkline/agents-check (docs link-integrity test),
+             @inkline/toolchain-angular (Angular's stack for Unframework's tools)
 ui/          @inkline/components (single source of truth) + 7 framework output packages
 apps/        docs (the docs site)
 docs/        architecture, conventions, contributing, release-process, authoring, maintenance
@@ -38,19 +39,20 @@ Workspace globs live in [`pnpm-workspace.yaml`](./pnpm-workspace.yaml). How the 
 
 Per package — descend to the `AGENTS.md` nearest the file you're editing (LLM tools resolve nearest-wins):
 
-| Package                                                           | When to look                                                             |
-| ----------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| [`core/core/AGENTS.md`](./core/core/AGENTS.md)                    | Authoring primitives, JSX runtime                                        |
-| [`core/compiler/AGENTS.md`](./core/compiler/AGENTS.md)            | Pipeline, IR, codegen, plugin hooks                                      |
-| [`core/plugin/AGENTS.md`](./core/plugin/AGENTS.md)                | Bundler integration (Vite, webpack, Rollup, esbuild, Rspack, Farm)       |
-| [`core/config-loader/AGENTS.md`](./core/config-loader/AGENTS.md)  | `inkline.config.ts` loading                                              |
-| [`core/inkline/AGENTS.md`](./core/inkline/AGENTS.md)              | The public `inkline` barrel package                                      |
-| [`tooling/cli/AGENTS.md`](./tooling/cli/AGENTS.md)                | `inkline compile`, `inkline check`, `inkline init`                       |
-| [`tooling/storybook/AGENTS.md`](./tooling/storybook/AGENTS.md)    | Story authoring + per-target story generation                            |
-| [`tooling/test-utils/AGENTS.md`](./tooling/test-utils/AGENTS.md)  | Cross-target test harnesses                                              |
-| [`ui/components/AGENTS.md`](./ui/components/AGENTS.md)            | **Where you author components** — the single source for all 7 frameworks |
-| [`ui/react/AGENTS.md`](./ui/react/AGENTS.md) and the six siblings | Per-framework packages, built from Unframework's output                  |
-| [`apps/docs/AGENTS.md`](./apps/docs/AGENTS.md)                    | The docs site                                                            |
+| Package                                                                        | When to look                                                                              |
+| ------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- |
+| [`core/core/AGENTS.md`](./core/core/AGENTS.md)                                 | Authoring primitives, JSX runtime                                                         |
+| [`core/compiler/AGENTS.md`](./core/compiler/AGENTS.md)                         | Pipeline, IR, codegen, plugin hooks                                                       |
+| [`core/plugin/AGENTS.md`](./core/plugin/AGENTS.md)                             | Bundler integration (Vite, webpack, Rollup, esbuild, Rspack, Farm)                        |
+| [`core/config-loader/AGENTS.md`](./core/config-loader/AGENTS.md)               | `inkline.config.ts` loading                                                               |
+| [`core/inkline/AGENTS.md`](./core/inkline/AGENTS.md)                           | The public `inkline` barrel package                                                       |
+| [`tooling/cli/AGENTS.md`](./tooling/cli/AGENTS.md)                             | `inkline compile`, `inkline check`, `inkline init`                                        |
+| [`tooling/storybook/AGENTS.md`](./tooling/storybook/AGENTS.md)                 | Story authoring + per-target story generation                                             |
+| [`tooling/test-utils/AGENTS.md`](./tooling/test-utils/AGENTS.md)               | Cross-target test harnesses                                                               |
+| [`tooling/toolchain-angular/AGENTS.md`](./tooling/toolchain-angular/AGENTS.md) | Angular's compiler stack, on TypeScript 6, for `unframework test`, `visual` and `preview` |
+| [`ui/components/AGENTS.md`](./ui/components/AGENTS.md)                         | **Where you author components** — the single source for all 7 frameworks                  |
+| [`ui/react/AGENTS.md`](./ui/react/AGENTS.md) and the six siblings              | Per-framework packages, built from Unframework's output                                   |
+| [`apps/docs/AGENTS.md`](./apps/docs/AGENTS.md)                                 | The docs site                                                                             |
 
 Per topic — read the relevant `docs/`:
 

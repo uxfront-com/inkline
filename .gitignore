@@ -37,3 +37,6 @@ core/core/.jsx-probe-*/
 
 # Wrangler local state (wrangler deploy --dry-run, wrangler dev)
 .wrangler/
+
+# Unframework's scratch files, like the Angular toolchain's tsconfig.analog.json
+.uf-tmp/

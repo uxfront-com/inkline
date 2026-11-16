@@ -9,7 +9,7 @@
     "typecheck": "pnpm run build && vp check --no-fmt --no-lint",
     "validate": "vp validate",
     "test": "vp run -r test",
-    "clean": "pnpm -r exec rm -rf dist .inkline",
+    "clean": "pnpm -r exec rm -rf dist",
     "build": "vp run -r build",
     "dev": "vp run website#dev",
     "prepare": "vp config",
