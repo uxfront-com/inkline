@@ -8,7 +8,7 @@ How to teach `@inkline/compiler` to emit a new framework's component code.
 > for the two constraints that block it, and [What you _can_ do from outside](#what-you-can-do-from-outside)
 > for the consumer-side customization that does work.
 
-This is a deep-end contributor task. Read [architecture.md](./architecture.md) first — especially "Cross-framework strategy" and "Code IR" — so the vocabulary below is familiar.
+This is a deep-end contributor task, for the retiring compiler. Read [`core/compiler/AGENTS.md`](../core/compiler/AGENTS.md) first, especially its "Source map" and "Add a new target", so the vocabulary below is familiar. Inkline's components no longer build with the compiler: a new framework for them is a target in [Unframework](https://unframework.dev).
 
 ## Why you cannot add a target from outside
 
