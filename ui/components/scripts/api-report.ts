@@ -234,8 +234,9 @@ class SourceReader {
           continue;
         }
         const name = property.getName();
-        if (/^on[A-Z]/.test(name)) events.add(name);
-        else props.add(name);
+        if (/^on[A-Z]/.test(name) || this.isSvelteListener(name, property, node, checker)) {
+          events.add(name);
+        } else props.add(name);
       }
       if (this.framework === "svelte") for (const name of svelteBindables(node)) models.add(name);
     }
@@ -257,6 +258,21 @@ class SourceReader {
       events: [...events].sort(),
       attributes,
     };
+  }
+
+  /**
+   * Svelte 5 takes a listener as a callback prop named with the event's lower-case name, like
+   * `onclick`, where the other targets write `onClick`.
+   */
+  private isSvelteListener(
+    name: string,
+    property: ts.Symbol,
+    node: ts.Node,
+    checker: ts.TypeChecker,
+  ): boolean {
+    if (this.framework !== "svelte" || !/^on[a-z]/.test(name)) return false;
+    const type = checker.getNonNullableType(checker.getTypeOfSymbolAtLocation(property, node));
+    return type.getCallSignatures().length > 0;
   }
 
   /** The node whose type is the component's props. */

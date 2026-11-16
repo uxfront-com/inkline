@@ -68,14 +68,15 @@
         "id",
         "label",
         "loading",
-        "onclick",
         "size",
         "style",
         "type",
         "variant"
       ],
       "models": [],
-      "events": [],
+      "events": [
+        "onclick"
+      ],
       "attributes": false
     },
     "IButtonBase": {
@@ -88,12 +89,13 @@
         "id",
         "label",
         "loading",
-        "onclick",
         "style",
         "type"
       ],
       "models": [],
-      "events": [],
+      "events": [
+        "onclick"
+      ],
       "attributes": false
     },
     "ICheckbox": {
@@ -214,8 +216,6 @@
         "id",
         "invalid",
         "name",
-        "onblur",
-        "onfocus",
         "placeholder",
         "prefix",
         "readonly",
@@ -229,7 +229,10 @@
       "models": [
         "value"
       ],
-      "events": [],
+      "events": [
+        "onblur",
+        "onfocus"
+      ],
       "attributes": false
     },
     "IInputBase": {
@@ -251,8 +254,6 @@
         "disabled",
         "id",
         "name",
-        "onblur",
-        "onfocus",
         "placeholder",
         "readonly",
         "required",
@@ -261,7 +262,10 @@
       "models": [
         "value"
       ],
-      "events": [],
+      "events": [
+        "onblur",
+        "onfocus"
+      ],
       "attributes": false
     },
     "IInputPrefixBase": {
@@ -293,8 +297,6 @@
         "disabled",
         "id",
         "name",
-        "onblur",
-        "onfocus",
         "placeholder",
         "readonly",
         "required",
@@ -303,7 +305,10 @@
       "models": [
         "value"
       ],
-      "events": [],
+      "events": [
+        "onblur",
+        "onfocus"
+      ],
       "attributes": false
     },
     "IRadioBase": {
