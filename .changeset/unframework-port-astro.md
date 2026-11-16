@@ -23,3 +23,4 @@ Build every component with Unframework, from its `.uf.tsx` source, in place of I
 - **Props.** `ICheckbox`, `ICheckboxControlBase`, `ISwitch` and `ISwitchControlBase` take `ariaLabel` and `ariaDescribedby`, which set the native control's `aria-label` and `aria-describedby`.
 - **Props.** `IRadioGroup` and `IRadioGroupBase` take `ariaDescribedby`, which sets the radiogroup's `aria-describedby`.
 - **Events.** Astro renders on the server only, so the `click`, `focus` and `blur` events the other packages declare don't apply here.
+- **Attributes.** `IHamburgerMenu` and `IHamburgerMenuBase` no longer render an empty `aria-controls=""` when `ariaControls` isn't set, since an empty reference names no element.

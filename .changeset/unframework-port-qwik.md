@@ -31,3 +31,4 @@ Build every component with Unframework, from its `.uf.tsx` source, in place of I
 - **Props.** `IRadioGroup` and `IRadioGroupBase` take `ariaDescribedby`, which sets the radiogroup's `aria-describedby`.
 - **Events.** `IButton` and `IButtonBase` emit `click` as the native button is clicked, which you listen to with `onClick$`. It carries no event object.
 - **Events.** `IInput`, `IInputControlBase` and `IInputTextareaBase` emit `focus` and `blur` as the native control gains and loses focus, which you listen to with `onFocus$` and `onBlur$`. They carry no event object.
+- **Attributes.** `IHamburgerMenu` and `IHamburgerMenuBase` no longer render an empty `aria-controls=""` when `ariaControls` isn't set, since an empty reference names no element.

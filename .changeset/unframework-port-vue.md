@@ -25,3 +25,4 @@ Build every component with Unframework, from its `.uf.tsx` source, in place of I
 - **Events.** `IButton` and `IButtonBase` emit `click` as the native button is clicked, which you listen to with `@click`. It carries no event object.
 - **Events.** `IInput`, `IInputControlBase` and `IInputTextareaBase` emit `focus` and `blur` as the native control gains and loses focus, which you listen to with `@focus` and `@blur`. They carry no event object.
 - **Events.** A `@focus` or `@blur` on `IInput` used to fall through to its wrapper, which never takes focus. It now hears the native control.
+- **Attributes.** `IHamburgerMenu` and `IHamburgerMenuBase` no longer render an empty `aria-controls=""` when `ariaControls` isn't set, since an empty reference names no element.
