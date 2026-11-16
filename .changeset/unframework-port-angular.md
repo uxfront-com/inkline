@@ -20,9 +20,11 @@ Build every component with Unframework, from its `.uf.tsx` source, in place of I
 **New:**
 
 - **Props.** `IButton` and `IButtonBase` take `id`, `ariaLabel` and `ariaDescribedby`, which set the native button's `id`, `aria-label` and `aria-describedby`. An icon-only button takes its accessible name from `ariaLabel`.
-- **Props.** `IInput`, `IInputControlBase` and `IInputTextareaBase` take `required`, `autocomplete`, `ariaLabel` and `ariaDescribedby`, which set the native control's attributes of those names. `autocomplete` takes one autofill token, like `email` or `current-password`.
+- **Props.** `IInput`, `IInputControlBase` and `IInputTextareaBase` take `required`, `autocomplete`, `ariaLabel` and `ariaDescribedby`, which set the native control's attributes of those names.
+- **Props.** `autocomplete` takes one autofill token, like `email` or `current-password`, from the set that every framework's types accept. That set leaves out `nickname`, `organization-title`, `cc-additional-name`, `language`, `bday`, `sex`, `url`, `photo` and `impp`, and every compound value: a `section-*` name, a `shipping` or `billing` group, a `home`, `work`, `mobile`, `fax` or `pager` contact type, and the `webauthn` hint. Use your own input where a field needs one of those.
 - **Props.** `ICheckbox`, `ICheckboxControlBase`, `ISwitch` and `ISwitchControlBase` take `ariaLabel` and `ariaDescribedby`, which set the native control's `aria-label` and `aria-describedby`.
 - **Props.** `IRadioGroup` and `IRadioGroupBase` take `ariaDescribedby`, which sets the radiogroup's `aria-describedby`.
-- **Events.** `IButton` and `IButtonBase` emit `click` as the native button is clicked, which you listen to with `(ufClick)`.
-- **Events.** `IInput`, `IInputControlBase` and `IInputTextareaBase` emit `focus` and `blur` as the native control gains and loses focus, which you listen to with `(ufFocus)` and `(ufBlur)`.
-- **Events.** A `(click)` on the host still hears the native click as it bubbles out of the button, so a template that binds both `(click)` and `(ufClick)` runs its handler twice. Bind `(ufClick)` alone.
+- **Props.** A static `id`, like `<uf-i-button-base id="save">`, stays on the component's host element as well as reaching the native element, so two elements share it. Bind it instead, as `[id]="'save'"`, and only the native element takes it.
+- **Events.** `IButton` and `IButtonBase` emit `click` as the native button is clicked, which you listen to with `(ufClick)`. `(ufClick)` carries no event object: to read the native event, bind `(click)` on the host instead, where the click still bubbles.
+- **Events.** `IInput`, `IInputControlBase` and `IInputTextareaBase` emit `focus` and `blur` as the native control gains and loses focus, which you listen to with `(ufFocus)` and `(ufBlur)`. They carry no event object: for the native event, bind `(focusin)` and `(focusout)` on the host instead.
+- **Events.** A `(click)` on the host hears the native click as it bubbles out of the button, so a template that binds both `(click)` and `(ufClick)` runs its handler twice. Bind one of them.
