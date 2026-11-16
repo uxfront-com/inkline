@@ -1,5 +1,4 @@
 ---
-"@inkline/compiler": patch
 "@inkline/astro": patch
 ---
 

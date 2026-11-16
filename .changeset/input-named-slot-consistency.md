@@ -1,5 +1,4 @@
 ---
-"@inkline/compiler": patch
 "@inkline/react": patch
 "@inkline/solid": patch
 "@inkline/qwik": patch

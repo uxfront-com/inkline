@@ -1,5 +1,4 @@
 ---
-"@inkline/compiler": patch
 "@inkline/react": patch
 "@inkline/vue": patch
 "@inkline/svelte": patch

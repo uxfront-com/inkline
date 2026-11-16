@@ -29,9 +29,10 @@ The components' outputs import `virtual:styleframe` as written. Unframework pass
 | `@inkline/components` (private)                        | The `.uf.tsx` sources, their recipes, tests and examples                           |
 | `@inkline/{react,vue,svelte,solid,angular,qwik,astro}` | The published packages, built from Unframework's output                            |
 | `@inkline/toolchain-angular` (private)                 | Angular's compiler stack on TypeScript 6, where the test and preview tools load it |
+| `@inkline/agents-check` (private)                      | Checks that every relative link in the contributor docs resolves                   |
 | `website` (`apps/docs`)                                | The documentation site                                                             |
 
-The compiler packages under `core/` and `tooling/` (`@inkline/compiler`, `core`, `plugin`, `config-loader`, `cli` and `test-utils`) are retiring. Nothing in `ui/` or `apps/` depends on them, and they'll be removed.
+Inkline's own compiler packages were removed once the components moved to Unframework.
 
 ## Testing
 

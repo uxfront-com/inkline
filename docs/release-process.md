@@ -4,9 +4,9 @@ Inkline uses [Changesets](https://github.com/changesets/changesets) for versioni
 
 ## What gets published
 
-All packages in `core/*`, `tooling/*`, and `ui/*` are published to npm under the `@inkline/` org (and the unscoped `inkline` barrel), except:
+The packages in `ui/*` are published to npm under the `@inkline/` org, except:
 
-- Packages with `"private": true` in `package.json` (e.g. `apps/*`, `@inkline/storybook`, `@inkline/components`).
+- Packages with `"private": true` in `package.json` (like `@inkline/components`). The `apps/*` and `tooling/*` packages are all private.
 - Packages explicitly listed in [`.changeset/config.json`](../.changeset/config.json) `ignore` — today: `website`, `@inkline/components`.
 
 Access is `public` (also configured in [`.changeset/config.json`](../.changeset/config.json)).

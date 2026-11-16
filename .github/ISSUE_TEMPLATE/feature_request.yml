@@ -20,18 +20,10 @@ body:
     id: area
     attributes:
       label: Affected area / package
-      description: Which part of the toolchain would this touch?
+      description: Which part of Inkline would this touch?
       options:
-        - Compiler (@inkline/compiler)
-        - Authoring primitives (@inkline/core)
-        - Bundler plugin (@inkline/plugin)
-        - CLI (@inkline/cli)
-        - Config loader (@inkline/config-loader)
-        - Barrel package (inkline)
-        - Components (Badge / Button / Input)
-        - A framework output package (@inkline/react, vue, …)
-        - Storybook integration (@inkline/storybook)
-        - Test utils (@inkline/test-utils)
+        - A component (Badge, Button, Checkbox, …)
+        - A framework package (@inkline/react, vue, …)
         - Docs / website
         - Other / not sure
     validations:
@@ -47,7 +39,7 @@ body:
     id: solution
     attributes:
       label: Proposed solution
-      description: Describe the API, behavior, or change you'd like. Include example `.ink.tsx` usage if relevant.
+      description: Describe the API, behavior, or change you'd like. Include example usage if relevant.
     validations:
       required: true
   - type: textarea

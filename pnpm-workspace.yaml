@@ -1,6 +1,5 @@
 packages:
   - apps/*
-  - core/*
   - tooling/*
   - ui/*
   - tools/*
@@ -30,10 +29,7 @@ minimumReleaseAgeExclude:
   - launch-editor@2.14.1
 
 catalog:
-  "@ampproject/remapping": ^2.3.0
   "@analogjs/vite-plugin-angular": 2.9.7
-  "@angular-eslint/eslint-plugin": ^22.6.0
-  "@angular-eslint/template-parser": ^22.6.0
   "@angular/animations": 22.2.6
   "@angular/build": 22.2.7
   "@angular/cli": ^22.2.7
@@ -45,7 +41,6 @@ catalog:
   "@angular/platform-browser-dynamic": ^22.2.6
   "@angular/platform-server": 22.2.6
   "@babel/core": ^7.29.7
-  "@jridgewell/trace-mapping": ^0.3.31
   "@qwik.dev/core": 2.0.0-beta.47
   "@styleframe/cli": ^4.1.2
   "@styleframe/core": ^3.6.2
@@ -59,8 +54,6 @@ catalog:
   "@tsdown/css": ^0.22.0
   "@types/node": ^24.13.2
   "@types/react": ^19.2.17
-  "@types/react-dom": ^19.2.3
-  "@typescript-eslint/parser": ^8.61.0
   "@typescript/typescript6": ^6.0.2
   "@unframework.dev/testing": 0.2.1
   "@unframework.dev/visual": 0.2.1
@@ -72,21 +65,11 @@ catalog:
   "@vitejs/plugin-react": ^6.1.1
   "@vitejs/plugin-vue": ^6.0.7
   "@vitest/browser-playwright": 5.0.3
-  "@vitest/coverage-v8": ^4.1.8
   "@vueuse/core": ^14.4.0
-  "@vue/server-renderer": ^3.5.43
   astro: ^7.4.11
   babel-plugin-react-compiler: ^1.0.0
-  csstype: ^3.2.3
   docus: ^5.13.0
-  eslint: ^9.39.4
-  eslint-plugin-astro: ^1.7.0
-  eslint-plugin-qwik: ^1.20.0
-  eslint-plugin-solid: ^0.14.5
-  eslint-plugin-svelte: ^3.19.0
-  eslint-plugin-vue: ^10.9.2
   jsdom: ^29.1.1
-  oxlint: ^1.69.0
   playwright: ^1.63.0
   react: ^19.2.7
   react-dom: ^19.2.7
@@ -96,15 +79,12 @@ catalog:
   styleframe: ^3.9.1
   svelte: ^5.56.3
   tslib: ^2.8.1
-  tsx: ^4.22.4
   typescript: ^7.0.2
   vite: npm:@voidzero-dev/vite-plus-core@latest
   vite-plugin-solid: ^2.11.12
   vite-plus: ^0.1.24
   vitest: npm:@voidzero-dev/vite-plus-test@^0.1.24
   vue: ^3.5.43
-  vue-eslint-parser: ^10.4.1
-  zod: ^4.4.3
   zone.js: ^0.16.2
 
 # TS6 holdout catalog. TypeScript 7's native compiler drops the classic
@@ -112,13 +92,6 @@ catalog:
 # the reshaped `typescript/unstable/*` surface). Packages that consume that
 # API — directly or through a toolchain that does — stay on the aliased TS6
 # release via `catalog:ts6` until their dependency ports to TS7:
-#   - core/compiler       — the compile pipeline calls the programmatic API.
-#   - tooling/test-utils  — the coverage reader uses the value-side TS API.
-#   - core/plugin         — its unbuild/rollup-plugin-dts dts emit reads
-#                           `ts.sys`, undefined on TS7's reshaped entry.
-#   - tooling/storybook   — rolldown-plugin-dts' default (tsc) dts emit needs
-#                           the classic API; storybook's `as const` RegExp
-#                           parameters can't go through the oxc path.
 #   - ui/vue              — @vue/compiler-sfc resolves tsconfig `paths` (the
 #                           `virtual:styleframe` alias behind `defineProps`
 #                           `extends`) through TS's classic config API, which
@@ -129,6 +102,8 @@ catalog:
 #                           "typescript"`, so it needs a peer to honor this pin.)
 #   - tooling/toolchain-angular — the same Angular compiler stack, where
 #                           `unframework test`, `visual` and `preview` load it.
+#   - apps/docs           — the website's Vue SFCs go through the same
+#                           @vue/compiler-sfc as ui/vue, and break on TS7.
 catalogs:
   ts6:
     typescript: npm:@typescript/typescript6@^6.0.2

@@ -1,5 +1,4 @@
 ---
-"@inkline/compiler": patch
 "@inkline/react": patch
 "@inkline/angular": patch
 "@inkline/qwik": patch

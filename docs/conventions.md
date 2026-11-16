@@ -22,8 +22,7 @@ ESLint and Prettier are **not** used. Their config schemas appear in the catalog
 ## Workspace layout
 
 ```
-core/      authoring primitives, compiler, plugin, config loader, barrel
-tooling/   CLI, Storybook integration, test utilities
+tooling/   docs link check, Angular's toolchain for Unframework's tools
 ui/        single-source components + 7 generated framework packages
 apps/      docs website
 ```
@@ -37,7 +36,6 @@ See [`pnpm-workspace.yaml`](../pnpm-workspace.yaml) for the authoritative glob l
 | `*.uf.tsx`       | `ui/components/src/components/**`     | Authored Inkline component. Unframework compiles it to all seven framework targets.                                                                                                        |
 | `*.test.ts`      | colocated next to source              | Vitest test for the adjacent module. Tests never live in a separate `tests/` directory, except the component cases in `ui/components/test/` and the API reports in `ui/<framework>/test/`. |
 | `*.test.ts`      | `ui/components/test/<family>/<case>/` | A component case's spec, through `@unframework.dev/testing`. `test:targets` runs it on every target.                                                                                       |
-| `__fixtures__/`  | `core/compiler/src/__fixtures__/`     | Compiler fixtures (`.ink.tsx`) used by scenario tests. Excluded from lint by [`vite.config.ts`](../vite.config.ts).                                                                        |
 | `__snapshots__/` | colocated                             | Vitest snapshot files.                                                                                                                                                                     |
 | `dist/`          | `ui/<framework>/dist/`                | **Auto-generated**: the package's library build of Unframework's output in `ui/components/dist/<framework>/`. Never hand-edit.                                                             |
 | `.styleframe/`   | `ui/<framework>/.styleframe/`         | **Auto-generated** style artifacts. Never hand-edit.                                                                                                                                       |
@@ -47,8 +45,8 @@ See [`pnpm-workspace.yaml`](../pnpm-workspace.yaml) for the authoritative glob l
 
 Tests live next to their source as `<file>.test.ts`. Examples:
 
-- [`core/compiler/src/pipeline/passes/03-lower/control-flow.test.ts`](../core/compiler/src/pipeline/passes/03-lower/) is colocated with `control-flow.ts`.
-- [`core/compiler/src/codegen/targets/react/index.test.ts`](../core/compiler/src/codegen/targets/react/) is colocated with the React target's `index.ts` (each target owns its tests; cross-target codegen fixtures live in per-target `__tests__/` folders).
+- [`ui/components/scripts/recipes.test.ts`](../ui/components/scripts/recipes.test.ts) is colocated with `recipes.ts`.
+- [`ui/components/scripts/barrels.test.ts`](../ui/components/scripts/barrels.test.ts) is colocated with `barrels.ts`.
 
 Run all tests with `vp run -r test` from the repo root; run a single package's tests with `vp test` inside that package. Coverage uses `@vitest/coverage-v8`.
 
@@ -61,7 +59,7 @@ Run all tests with `vp run -r test` from the repo root; run a single package's t
 - TypeScript everywhere. No JavaScript source.
 - `vp fmt` is authoritative — do not configure editor formatters that disagree. The `staged` hook ([`vite.config.ts`](../vite.config.ts)) runs `vp check --fix` on staged files.
 - The lint config in [`vite.config.ts:lint`](../vite.config.ts) enables `typeAware: true, typeCheck: true`. Lint failures are CI-blocking.
-- No `console.log` in shipped code (lint will catch it). Compiler diagnostics use the diagnostics pipeline ([`core/compiler/src/core/diagnostics/`](../core/compiler/src/core/diagnostics/)).
+- No `console.log` in shipped code (lint will catch it).
 - Public APIs are explicitly typed at the boundary (no inferred return types on exported functions).
 
 ## Commit messages
@@ -82,11 +80,11 @@ Conventional commits with package-scoped names. Format:
 | `chore`    | Tooling, configs, dependencies                    |
 | `ci`       | CI workflow changes                               |
 
-Common scopes: `compiler`, `core`, `cli`, `storybook`, `plugin`, `test-utils`, `components`, `react`, `vue`, `svelte`, `solid`, `angular`, `qwik`, `astro`, `ci`.
+Common scopes: `components`, `react`, `vue`, `svelte`, `solid`, `angular`, `qwik`, `astro`, `ci`.
 
 Recent examples to follow:
 
-- `feat(compiler): add <Slot> JSX component and defineSlot for slot rendering`
+- `fix(components): write styleframe's type declarations in the build`
 - `feat(ci): expand CI workflow with granular jobs and app builds`
 - `fix(ci): ignore auto-generated .styleframe files`
 
