@@ -4,6 +4,7 @@ import ISwitch from "../styled/ISwitch.uf.tsx";
 
 // Each colour switch is live and seeded off so its off-state track colour shows; toggle any of them
 // and the bound ref flips.
+/** @category Components/Forms/Switch */
 export default function SwitchColors() {
   const light = ref(false);
   const dark = ref(false);

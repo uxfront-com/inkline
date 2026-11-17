@@ -4,6 +4,7 @@ import IRadioGroup from "../styled/IRadioGroup.uf.tsx";
 
 // One option is disabled at the option level while the group stays interactive: the enabled options
 // ("apple", "cherry") are clickable, "banana" isn't. The ref defaults to "apple".
+/** @category Components/Forms/Radio */
 export default function RadioWithDisabledOption() {
   const value = ref<string | undefined>("apple");
   return (

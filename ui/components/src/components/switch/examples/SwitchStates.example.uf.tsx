@@ -4,6 +4,7 @@ import ISwitch from "../styled/ISwitch.uf.tsx";
 
 // The two enabled switches are live; the disabled pair keep their seeded state (disabled controls
 // don't take input) to show the off/on disabled appearance.
+/** @category Components/Forms/Switch */
 export default function SwitchStates() {
   const off = ref(false);
   const on = ref(true);

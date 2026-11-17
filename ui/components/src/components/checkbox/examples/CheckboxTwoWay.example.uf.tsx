@@ -3,6 +3,7 @@ import "virtual:styleframe.css";
 import ICheckbox from "../styled/ICheckbox.uf.tsx";
 
 // Two-way binding: toggling the box updates `agreed`, reflected live below.
+/** @category Components/Forms/Checkbox */
 export default function CheckboxTwoWay() {
   const agreed = ref(false);
   return (

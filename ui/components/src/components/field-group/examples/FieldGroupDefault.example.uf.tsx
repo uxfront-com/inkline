@@ -4,6 +4,7 @@ import IInput from "../../input/styled/IInput.uf.tsx";
 import IFieldGroup from "../styled/IFieldGroup.uf.tsx";
 
 // The story's Default variant renders the horizontal group, with the recipe's default orientation.
+/** @category Components/Forms/FieldGroup */
 export default function FieldGroupDefault() {
   return (
     <div>

@@ -3,6 +3,7 @@ import "virtual:styleframe.css";
 import IHamburgerMenu from "../styled/IHamburgerMenu.uf.tsx";
 
 // Each toggle starts open, so its morph target, the `animation` axis, shows.
+/** @category Components/Navigation/HamburgerMenu */
 export default function HamburgerMenuAnimations() {
   const close = ref(true);
   const arrowUp = ref(true);

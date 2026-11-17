@@ -94,10 +94,13 @@ export interface BadgeProps
 
 An example is a `*.example.uf.tsx` file whose default export takes no props. It renders the component the way a page would, with the props, slots and models it shows written into it, and imports `virtual:styleframe.css`. `pnpm visual` renders every example on every target and compares each with Vue's, and `pnpm dev` shows them all side by side.
 
+The doc comment on the default export gives the family's category, `Components/<Group>/<Family>`, which the preview groups the examples by. The preview takes the title from the file name without the family's name, so `BadgeSizes` is `Sizes`.
+
 ```tsx [badge/examples/BadgeSizes.example.uf.tsx]
 import "virtual:styleframe.css";
 import IBadge from "../styled/IBadge.uf.tsx";
 
+/** @category Components/Feedback/Badge */
 export default function BadgeSizes() {
   return (
     <div>

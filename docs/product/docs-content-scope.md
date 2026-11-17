@@ -5,6 +5,8 @@
 
 > **The compiler half no longer applies.** Inkline's compiler was retired, and [Unframework](https://unframework.dev) now compiles the components ([ADR-012](../adrs/012-components-compile-with-unframework.md)). So the site presents the component library only, and the compiler pages stay parked in `apps/docs/content/_compiler/`. Read the compiler rows, the Authoring section and the Reference section below as the record of what was proposed then.
 
+> **The Storybooks are gone too.** The seven per-framework Storybooks and their deployments were removed, and the component preview that Unframework builds from `ui/components` replaces them ([`ui/components/AGENTS.md`](../../ui/components/AGENTS.md)). Read the Storybook rows and kill criteria below as the record of what was proposed then.
+
 > **Assumption in force — ASSUMED, labelled so it is cheap to reverse.**
 > "Ready for usage" means **public production launch**. The Operator was asked twice (Aug 6, Aug 8) and the question is still open; @trigger's call on Aug 8 was to stop stalling the tree and scope for public launch. If the answer comes back "internal preview", see [If this is a preview](#if-this-is-a-preview) — the honest recommendation collapses to _defer this entire workstream_, and this RFC is 20 minutes of reversal, not a rewrite.
 

@@ -7,6 +7,7 @@ import ICheckbox from "../styled/ICheckbox.uf.tsx";
 // the seeded state renders the same on all seven targets. The story's mixed box is left out:
 // `indeterminate` is a DOM property that only client code sets, so Astro can't show it, and the
 // browser tests in `test/checkbox` cover it instead.
+/** @category Components/Forms/Checkbox */
 export default function CheckboxStates() {
   const unchecked = ref(false);
   const checked = ref(true);

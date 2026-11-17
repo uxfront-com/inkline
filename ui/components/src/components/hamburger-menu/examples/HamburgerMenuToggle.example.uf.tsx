@@ -4,6 +4,7 @@ import IHamburgerMenu from "../styled/IHamburgerMenu.uf.tsx";
 
 // The full disclosure pattern: clicking the toggle flips `open` (morphing the icon) and shows/hides
 // the navigation it controls, linked via `aria-controls`.
+/** @category Components/Navigation/HamburgerMenu */
 export default function HamburgerMenuToggle() {
   const open = ref(false);
   return (

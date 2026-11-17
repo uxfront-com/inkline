@@ -6,6 +6,7 @@
   "scripts": {
     "build": "node scripts/styleframe-types.ts && unframework build && node scripts/barrels.ts",
     "dev": "unframework preview",
+    "preview:build": "unframework preview build --out preview",
     "test:recipes": "node --test scripts/recipes.test.ts scripts/barrels.test.ts scripts/styleframe-types.test.ts",
     "test:targets": "unframework test",
     "visual": "unframework visual"
