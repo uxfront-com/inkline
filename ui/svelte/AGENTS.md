@@ -29,6 +29,10 @@ Peer dependency: `svelte` 5 or newer.
 
 `vp build`. Output goes to `dist/`: `index.js`, `headless.js` and `index.css`. Build `@inkline/components` first.
 
+## Preview
+
+[`wrangler.json`](./wrangler.json) is the `inkline-unframework-svelte` Worker, which Cloudflare Workers Builds deploys with this directory as its root. It serves the Svelte preview that `pnpm --filter @inkline/components preview:build:svelte` writes to `ui/components/preview-svelte/`: every example and component on the svelte target only. [`ui/components/AGENTS.md`](../components/AGENTS.md) lists all eight preview Workers.
+
 ## See also
 
 - [`ui/components/AGENTS.md`](../components/AGENTS.md): where to edit the components.

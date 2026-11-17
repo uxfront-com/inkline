@@ -29,6 +29,10 @@ Peer dependency: `react` 18 or newer.
 
 `vp build`. Output goes to `dist/`: `index.js`, `headless.js` and `index.css`. Build `@inkline/components` first.
 
+## Preview
+
+[`wrangler.json`](./wrangler.json) is the `inkline-unframework-react` Worker, which Cloudflare Workers Builds deploys with this directory as its root. It serves the React preview that `pnpm --filter @inkline/components preview:build:react` writes to `ui/components/preview-react/`: every example and component on the react target only. [`ui/components/AGENTS.md`](../components/AGENTS.md) lists all eight preview Workers.
+
 ## Notable target behaviour
 
 - `vite.config.ts` sets React's JSX import source itself, since the outputs sit under `ui/components`, whose `tsconfig.json` sets Unframework's for the `.uf.tsx` sources.

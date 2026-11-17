@@ -7,6 +7,13 @@
     "build": "node scripts/styleframe-types.ts && unframework build && node scripts/barrels.ts",
     "dev": "unframework preview",
     "preview:build": "unframework preview build --out preview",
+    "preview:build:react": "unframework preview build --target react --out preview-react",
+    "preview:build:vue": "unframework preview build --target vue --out preview-vue",
+    "preview:build:svelte": "unframework preview build --target svelte --out preview-svelte",
+    "preview:build:solid": "unframework preview build --target solid --out preview-solid",
+    "preview:build:angular": "unframework preview build --target angular --out preview-angular",
+    "preview:build:qwik": "unframework preview build --target qwik --out preview-qwik",
+    "preview:build:astro": "unframework preview build --target astro --out preview-astro",
     "test:recipes": "node --test scripts/recipes.test.ts scripts/barrels.test.ts scripts/styleframe-types.test.ts",
     "test:targets": "unframework test",
     "visual": "unframework visual"

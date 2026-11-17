@@ -29,6 +29,10 @@ Peer dependency: `astro` 7.
 
 `vp build && vp pack`. `vp pack` never runs Vite plugins, so `vp build` first extracts the stylesheet from a CSS-only entry, `src/css.ts`. `vp pack` then bundles the two entries and copies the `.astro` components, with the type modules their frontmatter imports, into `dist/`. Build `@inkline/components` first.
 
+## Preview
+
+[`wrangler.json`](./wrangler.json) is the `inkline-unframework-astro` Worker, which Cloudflare Workers Builds deploys with this directory as its root. It serves the Astro preview that `pnpm --filter @inkline/components preview:build:astro` writes to `ui/components/preview-astro/`: every example and component on the astro target only. [`ui/components/AGENTS.md`](../components/AGENTS.md) lists all eight preview Workers.
+
 ## Notable target behaviour
 
 - Astro renders on the server only, so a component's event handlers, watchers and models do nothing in the browser. `unframework test` skips the specs that need interactivity on Astro.
