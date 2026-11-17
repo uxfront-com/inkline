@@ -69,7 +69,7 @@ The Button page shows a code sample for each framework inside its slot:
 ::
 ````
 
-The pages show no live component yet. `unframework preview`, which renders the examples on every target, runs on a developer's machine only.
+The pages show no live component yet. `unframework preview`, which renders the examples on every target, deploys as a static site of its own from `ui/components` ([its `AGENTS.md`](../../ui/components/AGENTS.md)), and no page embeds it.
 
 ## Version select
 
@@ -125,7 +125,7 @@ The `/` → `/llms.txt` negotiation is Vercel-only, so on Cloudflare `/` always 
 
 ## Known gaps
 
-- **Live examples:** the component pages show code, not rendered components, since there's no deployed preview to embed.
+- **Live examples:** the component pages show code, not rendered components, and don't embed the deployed preview.
 - **Agent discovery on a static host:** the lockfile holds Docus 5.13.0. Docus 5.14 adds `nuxt-agent-discovery` and a prerendered `/openapi.json` that describes each page's Markdown twin and the MCP endpoint, which is off here. Only what's prerendered survives on a static host, and its server routes are inert, so check what both claim when Docus is bumped.
 
 ## See also

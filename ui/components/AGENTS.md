@@ -14,6 +14,7 @@ ui/components/
 ├── vitest.config.ts       # `unframework test`'s cases: everything under test/
 ├── styleframe.config.ts   # Styleframe (design tokens) config
 ├── tsconfig.json          # Type-checks the sources with Unframework's JSX types
+├── wrangler.json          # The inkline-storybook Worker, which serves preview/ as static assets
 ├── scripts/
 │   ├── recipes.ts         # Writes src/recipes.ts from the *.styleframe.ts files
 │   ├── styleframe-types.ts # Writes .styleframe/, the types of virtual:styleframe
@@ -29,7 +30,8 @@ ui/components/
 │       └── examples/<Example>.example.uf.tsx # What `unframework visual` and `preview` render
 ├── test/<name>/<case>/    # One case per component: its spec, a harness parent, case.json, __expected__/
 ├── .styleframe/           # Generated: Styleframe's declarations, which type virtual:styleframe
-└── dist/<target>/         # Generated: Unframework's output for each target
+├── dist/<target>/         # Generated: Unframework's output for each target
+└── preview/               # Generated: the static preview that `pnpm preview:build` writes
 ```
 
 `pnpm build` writes each target's tree to `dist/<target>`, and each `ui/<framework>` package builds from it. Never hand-edit `dist/`.
@@ -39,12 +41,19 @@ ui/components/
 ```bash
 pnpm build          # scripts/styleframe-types.ts, then unframework build and scripts/barrels.ts
 pnpm dev            # unframework preview: every example and component on every target
+pnpm preview:build  # unframework preview build: the same preview as a static site in preview/
 pnpm test:recipes   # node --test: src/recipes.ts is current, .styleframe/ declares virtual:styleframe, and the barrel split works
 pnpm test:targets   # unframework test: every case on every target, in Chromium and on the server
 pnpm visual         # unframework visual: every example on every target, compared with the reference
 ```
 
 `test:targets` and `visual` drive Playwright's Chromium: install it once with `pnpm exec playwright install chromium`. When a component's output changes on purpose, run `pnpm test:targets --update`, then review every file it writes under `test/*/*/__expected__/`. Those files are what every target is held to.
+
+## Examples and the preview
+
+Each `examples/<Example>.example.uf.tsx` takes no props, and its default export carries a doc comment with the family's category, like `/** @category Components/Actions/Button */`. The preview groups the examples by it, and takes each title from the file name without the family's name, so `ButtonColors` is `Colors`. The comment's text, if any, is the description the preview shows, and `@title` and `@order` override the title and the place in the list. Unframework's [preview page](https://unframework.dev/docs/tooling/preview) has the rules.
+
+`pnpm preview:build` writes the preview as a static site to `preview/`, which git ignores. Cloudflare Workers Builds deploys it with [`wrangler.json`](./wrangler.json) and gives each pull request a preview URL. CI's `Build Preview` job builds it the same way on every pull request.
 
 This package has no `test` script, so the repository's `pnpm run test` doesn't run the browser tests. `pnpm run ready` runs `test:recipes` and `test:targets` after it.
 

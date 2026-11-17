@@ -43,7 +43,7 @@ Four checks cover the components:
 - **`pnpm --filter @inkline/components test:recipes`** checks that `src/recipes.ts` is current and that the barrel split works.
 - **`pnpm --filter @inkline/<framework> test`** rebuilds that package's API report from its build, the names each entry exports and each component's props, models and events, with its selector on Angular, and compares it with the committed [`test/api.json`](../ui/react/test/api.json). On Angular, it also loads the built `dist/` and checks that every exported component is compiled with all its inputs, and server-renders a styled and a headless button from it, since a component Analog's plugin skips still builds ([`ui/angular/AGENTS.md`](../ui/angular/AGENTS.md)).
 
-`pnpm --filter @inkline/components dev` runs `unframework preview`, which shows every example and component on every target side by side.
+`pnpm --filter @inkline/components dev` runs `unframework preview`, which shows every example and component on every target side by side. `pnpm --filter @inkline/components preview:build` writes the same preview as a static site, which Cloudflare Workers Builds deploys ([`ui/components/AGENTS.md`](../ui/components/AGENTS.md)).
 
 ## See also
 
