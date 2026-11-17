@@ -308,8 +308,10 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
-  # Builds the component explorer the way the `inkline-storybook` Worker's Workers Builds does
-  # (ui/components/wrangler.json), so a change that breaks it can't merge.
+  # Builds every preview the way Workers Builds does for its Worker: the full preview for
+  # `inkline-unframework` (ui/components/wrangler.json), and one framework's preview for each
+  # `inkline-unframework-<framework>` (ui/<framework>/wrangler.json). So a change that breaks
+  # any of them can't merge.
   build-preview:
     name: Build Preview
     runs-on: ubuntu-latest
@@ -339,11 +341,20 @@ jobs:
       - name: Build the preview
         run: pnpm --filter @inkline/components run preview:build
 
-      - name: Upload the preview
+      # One target's examples and components each, in ui/components/preview-<framework>.
+      - name: Build the per-framework previews
+        run: |
+          for framework in react vue svelte solid angular qwik astro; do
+            pnpm --filter @inkline/components run "preview:build:$framework"
+          done
+
+      - name: Upload the previews
         uses: actions/upload-artifact@v4
         with:
           name: preview
-          path: ui/components/preview
+          path: |
+            ui/components/preview
+            ui/components/preview-*
           include-hidden-files: true
           if-no-files-found: error
           retention-days: 7

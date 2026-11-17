@@ -5,5 +5,7 @@ dist/
 .live/
 .vitest/
 .unframework/
-# The static preview `preview:build` writes, which `wrangler.json` deploys.
+# The static previews `preview:build` and `preview:build:<framework>` write, which `wrangler.json` and
+# `ui/<framework>/wrangler.json` deploy.
 preview/
+preview-*/
