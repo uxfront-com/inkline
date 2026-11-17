@@ -14,7 +14,7 @@ ui/components/
 ├── vitest.config.ts       # `unframework test`'s cases: everything under test/
 ├── styleframe.config.ts   # Styleframe (design tokens) config
 ├── tsconfig.json          # Type-checks the sources with Unframework's JSX types
-├── wrangler.json          # The inkline-storybook Worker, which serves preview/ as static assets
+├── wrangler.json          # The inkline-unframework Worker, which serves preview/ as static assets
 ├── scripts/
 │   ├── recipes.ts         # Writes src/recipes.ts from the *.styleframe.ts files
 │   ├── styleframe-types.ts # Writes .styleframe/, the types of virtual:styleframe
@@ -31,7 +31,8 @@ ui/components/
 ├── test/<name>/<case>/    # One case per component: its spec, a harness parent, case.json, __expected__/
 ├── .styleframe/           # Generated: Styleframe's declarations, which type virtual:styleframe
 ├── dist/<target>/         # Generated: Unframework's output for each target
-└── preview/               # Generated: the static preview that `pnpm preview:build` writes
+├── preview/               # Generated: the static preview that `pnpm preview:build` writes
+└── preview-<framework>/   # Generated: one framework's static preview, from `pnpm preview:build:<framework>`
 ```
 
 `pnpm build` writes each target's tree to `dist/<target>`, and each `ui/<framework>` package builds from it. Never hand-edit `dist/`.
@@ -42,6 +43,7 @@ ui/components/
 pnpm build          # scripts/styleframe-types.ts, then unframework build and scripts/barrels.ts
 pnpm dev            # unframework preview: every example and component on every target
 pnpm preview:build  # unframework preview build: the same preview as a static site in preview/
+pnpm preview:build:<framework>  # the same, for one target only, in preview-<framework>/
 pnpm test:recipes   # node --test: src/recipes.ts is current, .styleframe/ declares virtual:styleframe, and the barrel split works
 pnpm test:targets   # unframework test: every case on every target, in Chromium and on the server
 pnpm visual         # unframework visual: every example on every target, compared with the reference
@@ -53,7 +55,14 @@ pnpm visual         # unframework visual: every example on every target, compare
 
 Each `examples/<Example>.example.uf.tsx` takes no props, and its default export carries a doc comment with the family's category, like `/** @category Components/Actions/Button */`. The preview groups the examples by it, and takes each title from the file name without the family's name, so `ButtonColors` is `Colors`. The comment's text, if any, is the description the preview shows, and `@title` and `@order` override the title and the place in the list. Unframework's [preview page](https://unframework.dev/docs/tooling/preview) has the rules.
 
-`pnpm preview:build` writes the preview as a static site to `preview/`, which git ignores. Cloudflare Workers Builds deploys it with [`wrangler.json`](./wrangler.json) and gives each pull request a preview URL. CI's `Build Preview` job builds it the same way on every pull request.
+`pnpm preview:build` writes the preview as a static site to `preview/`, and `pnpm preview:build:<framework>` writes one framework's preview, built with `--target <framework>`, to `preview-<framework>/`. Git ignores both. Cloudflare Workers Builds deploys each to a Worker of its own, from the Git repository, and gives each pull request a preview URL on every Worker:
+
+| Worker                            | Serves                    | Wrangler config                                                        | Build                            |
+| --------------------------------- | ------------------------- | ---------------------------------------------------------------------- | -------------------------------- |
+| `inkline-unframework`             | Every target side by side | [`wrangler.json`](./wrangler.json)                                     | `pnpm preview:build`             |
+| `inkline-unframework-<framework>` | One target                | `ui/<framework>/wrangler.json`, like [React's](../react/wrangler.json) | `pnpm preview:build:<framework>` |
+
+The seven framework Workers are `inkline-unframework-react`, `inkline-unframework-vue`, `inkline-unframework-svelte`, `inkline-unframework-solid`, `inkline-unframework-angular`, `inkline-unframework-qwik` and `inkline-unframework-astro`. Each Worker serves `main` at `https://<worker>.<subdomain>.workers.dev`, on the Cloudflare account's `workers.dev` subdomain, so React's preview is at `https://inkline-unframework-react.<subdomain>.workers.dev`. Each config lives in its framework's package so that its Workers Builds project needs no `--config`: its root directory is `ui/<framework>`, and its `assets.directory` points back to `ui/components/preview-<framework>`. CI's `Build Preview` job builds all eight sites the same way on every pull request.
 
 This package has no `test` script, so the repository's `pnpm run test` doesn't run the browser tests. `pnpm run ready` runs `test:recipes` and `test:targets` after it.
 

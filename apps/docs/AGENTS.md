@@ -69,7 +69,7 @@ The Button page shows a code sample for each framework inside its slot:
 ::
 ````
 
-The pages show no live component yet. `unframework preview`, which renders the examples on every target, deploys as a static site of its own from `ui/components` ([its `AGENTS.md`](../../ui/components/AGENTS.md)), and no page embeds it.
+The pages show no live component yet. `unframework preview`, which renders the examples on every target, deploys as static sites of its own from `ui/components`, one with every target and one per framework ([its `AGENTS.md`](../../ui/components/AGENTS.md)), and no page embeds them.
 
 ## Version select
 

@@ -29,6 +29,10 @@ Peer dependency: `solid-js` 1 or newer.
 
 `vp build`. Output goes to `dist/`: `index.js`, `headless.js` and `index.css`. Build `@inkline/components` first.
 
+## Preview
+
+[`wrangler.json`](./wrangler.json) is the `inkline-unframework-solid` Worker, which Cloudflare Workers Builds deploys with this directory as its root. It serves the Solid preview that `pnpm --filter @inkline/components preview:build:solid` writes to `ui/components/preview-solid/`: every example and component on the solid target only. [`ui/components/AGENTS.md`](../components/AGENTS.md) lists all eight preview Workers.
+
 ## Notable target behaviour
 
 - `vite.config.ts` leaves out the Solid plugin under Vitest. The package's tests read its build in Node, and the plugin would add a jest-dom setup file that doesn't resolve here.

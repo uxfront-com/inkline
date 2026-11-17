@@ -39,6 +39,10 @@ Two settings keep every component compiled:
 - `tsconfig.lib.json` resolves modules the way Vite does (`moduleResolution: "bundler"`). Unframework's output imports its siblings without a file extension, like `../headless/i-button-base`. Under the root's `nodenext`, Analog resolves those as ECMAScript imports and fails, so the Angular compiler skips each styled component and Vite ships it as a plain decorator call with no inputs.
 - `vite.config.ts` turns Analog's type checking on (`disableTypeChecking: false`), so an error like that fails the build. With it off, Analog drops the Angular compiler's errors from a build.
 
+## Preview
+
+[`wrangler.json`](./wrangler.json) is the `inkline-unframework-angular` Worker, which Cloudflare Workers Builds deploys with this directory as its root. It serves the Angular preview that `pnpm --filter @inkline/components preview:build:angular` writes to `ui/components/preview-angular/`: every example and component on the angular target only. [`ui/components/AGENTS.md`](../components/AGENTS.md) lists all eight preview Workers.
+
 ## Notable target behaviour
 
 - Each component is a standalone component whose selector is its name in kebab case with Unframework's `uf-` prefix: `uf-i-button`, `uf-i-button-base`. Its host is `display: contents`, and a `class` or `style` on the host lands on its root element.

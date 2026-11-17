@@ -13,6 +13,7 @@ pnpm run typecheck      # types only — build + type-check. Never `tsc` from th
 vp run dev              # start the docs website (alias for `vp run website#dev`)
 pnpm --filter @inkline/components dev   # unframework preview: every example on all 7 targets
 pnpm --filter @inkline/components preview:build   # the same preview as a static site, which Cloudflare deploys
+pnpm --filter @inkline/components preview:build:react   # one framework's preview (vue, svelte, solid, angular, qwik, astro alike)
 ```
 
 Run `vp env doctor` if anything about the toolchain looks wrong, and `vp help` for the full command list. Vite+ docs: [viteplus.dev/guide/](https://viteplus.dev/guide/).
