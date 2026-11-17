@@ -1,0 +1,4 @@
+- text: Name
+- textbox "Name":
+  - /placeholder: Your name
+- status

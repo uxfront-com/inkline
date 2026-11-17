@@ -1,10 +1,21 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "jsx": "react-jsx",
-    "jsxImportSource": "@inkline/core",
+    "jsx": "preserve",
+    "jsxImportSource": "@uxfront/unframework",
     "module": "esnext",
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
+    "strict": true
   },
-  "include": ["src", "stories", "styleframe.config.ts", "*.styleframe.ts", ".styleframe/**/*.d.ts"]
+  // Only the sources and what reads them: the outputs Unframework compiles from a `.uf.tsx`, like
+  // `IButton.uf.tsx.tsx`, stay outside, so React's and Solid's JSX keeps its own import source.
+  "include": [
+    "src/**/*.uf.tsx",
+    "src/**/*.ts",
+    "test/**/*.uf.tsx",
+    "test/**/*.ts",
+    "scripts/**/*.ts",
+    "*.config.ts",
+    ".styleframe/**/*.d.ts"
+  ]
 }

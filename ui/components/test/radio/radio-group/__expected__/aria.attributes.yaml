@@ -1,0 +1,11 @@
+- radiogroup "Fruit":
+  - radio "Apple" [checked]
+  - text: Apple
+  - radio "Pear"
+  - text: Pear
+  - radio "Plum" [disabled]
+  - text: Plum
+  - radio "fig"
+  - text: fig
+- paragraph: Pick one.
+- status: apple

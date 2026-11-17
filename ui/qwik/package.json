@@ -9,7 +9,6 @@
   "exports": {
     ".": "./dist/index.qwik.mjs",
     "./headless": "./dist/headless.qwik.mjs",
-    "./stories": "./dist/stories.qwik.mjs",
     "./package.json": "./package.json"
   },
   "publishConfig": {
@@ -18,21 +17,14 @@
   "scripts": {
     "build": "vp build --mode lib",
     "validate": "vp check",
-    "test": "vp test --passWithNoTests",
-    "storybook": "storybook dev -p 6011",
-    "storybook:build": "storybook build -o storybook-static",
-    "prestorybook": "pnpm --filter @inkline/components exec inkline compile 'src/**/*.ink.tsx' --config inkline.config.ts --target qwik"
+    "test": "vp test --passWithNoTests"
   },
   "dependencies": {
     "@styleframe/runtime": "catalog:"
   },
   "devDependencies": {
-    "@inkline/compiler": "workspace:*",
     "@inkline/components": "workspace:*",
-    "@inkline/storybook": "workspace:*",
-    "@qwik.dev/core": "2.0.0-beta.36",
-    "@storybook/addon-a11y": "catalog:",
-    "@storybook/addon-docs": "catalog:",
+    "@qwik.dev/core": "catalog:",
     "@styleframe/cli": "catalog:",
     "@styleframe/core": "catalog:",
     "@styleframe/license": "catalog:",
@@ -41,14 +33,11 @@
     "@styleframe/theme": "catalog:",
     "@styleframe/transpiler": "catalog:",
     "jsdom": "catalog:",
-    "storybook": "catalog:",
-    "storybook-framework-qwik": "catalog:",
     "styleframe": "catalog:",
-    "typescript": "catalog:ts6",
     "vitest": "catalog:"
   },
   "peerDependencies": {
-    "@qwik.dev/core": ">=2.0.0-beta.0"
+    "@qwik.dev/core": "2.0.0-beta.47"
   },
   "prepublishOnly": "vp run build",
   "qwik": "./dist/index.qwik.mjs"

@@ -1,0 +1,6 @@
+- radiogroup "Fruit":
+  - radio "Apple"
+  - text: Apple
+  - radio "Pear"
+  - text: Pear
+- paragraph: Pick one.

@@ -1,39 +1,38 @@
 # @inkline/qwik
 
-The Qwik output of Inkline's component compilation.
+The Qwik package of Inkline's components.
 
-## STOP — do not edit `src/` or `.inkline/` here
+## Don't edit the components here
 
-This package is **auto-generated**. To change a component, edit the corresponding `.ink.tsx` file in [`ui/components/src/components/`](../components/) and rebuild. See [`ui/components/AGENTS.md`](../components/AGENTS.md).
+To change a component, edit its `.uf.tsx` source in [`ui/components/src/components/`](../components/src/components/) and build again, as [`ui/components/AGENTS.md`](../components/AGENTS.md) explains. This package builds from Unframework's Qwik output, in three places:
 
-- `.inkline/` — compiled Qwik components + `index.ts`/`headless.ts`/`stories.ts` barrels written by [`inkline compile`](../../tooling/cli/AGENTS.md). Never hand-edit.
-- `src/index.ts` — re-exports `.inkline/index.ts` (with sibling `src/headless.ts` and `src/stories.ts`).
-- `.styleframe/` — auto-generated styleframe artifacts. Never hand-edit.
+- `ui/components/dist/qwik/` is the output `pnpm --filter @inkline/components build` writes: the compiled components, and the `index.ts` and `headless.ts` entries. Never hand-edit it.
+- `src/` holds this package's build entries, which re-export those two files. `src/index.ts` also imports `virtual:styleframe.css`, where the package ships a stylesheet, so Vite extracts it to `dist/index.css`.
+- `.styleframe/` holds generated Styleframe artefacts. Never hand-edit them.
 
 ## Public surface
 
 From [`package.json`](./package.json) `exports`:
 
-| Subpath          | Contents                                                        |
-| ---------------- | --------------------------------------------------------------- |
-| `.`              | All compiled styled components. Entry is `dist/index.qwik.mjs`. |
-| `./headless`     | The headless parts barrel (`dist/headless.qwik.mjs`).           |
-| `./stories`      | The compiled stories barrel (`dist/stories.qwik.mjs`).          |
-| `./package.json` | The manifest.                                                   |
+| Subpath          | Contents                 |
+| ---------------- | ------------------------ |
+| `.`              | The 8 styled components. |
+| `./headless`     | The 17 headless parts.   |
+| `./package.json` | The manifest.            |
 
-[`package.json`](./package.json) also declares a top-level `"qwik": "./dist/index.qwik.mjs"` field, picked up by Qwik tooling for lazy resumability.
+Peer dependency: `@qwik.dev/core` 2.0.0-beta.47 exactly, the version Unframework generates the components for. Move it with the catalog when Inkline moves to a newer Unframework.
 
-Peer dep: `@qwik.dev/core >= 2.0.0-beta.0`.
-
-## Storybook
-
-Runs on **port 6011**. `pnpm storybook` here or `pnpm run storybook:qwik` from the repo root. Uses [`storybook-framework-qwik`](https://www.npmjs.com/package/storybook-framework-qwik) (a canary build pinned via the catalog in [`pnpm-workspace.yaml`](../../pnpm-workspace.yaml)).
+[`test/api.json`](./test/api.json) records this surface: the names each entry exports and each component's props, models and events. `pnpm --filter @inkline/qwik test` rebuilds the report from `dist/` and fails when it differs. After an intended change, write it again with `node ui/components/scripts/api-report.ts qwik ui/components/dist/qwik --write` from the repository's root, and list each changed line in this package's changeset.
 
 ## Build
 
-`vp build --mode lib`. Output goes to `dist/` (`index.qwik.mjs`, `headless.qwik.mjs`, `stories.qwik.mjs`). Without `--mode lib`, Qwik's Vite plugin runs an app build, which writes none of these entries.
+`vp build --mode lib`. Output goes to `dist/`: `index.qwik.mjs` and `headless.qwik.mjs`. Without `--mode lib`, Qwik's Vite plugin runs an app build, which writes neither entry. Build `@inkline/components` first.
+
+## Notable target behaviour
+
+- [`package.json`](./package.json) also declares a top-level `"qwik": "./dist/index.qwik.mjs"` field, which Qwik's tooling reads.
 
 ## See also
 
-- [`ui/components/AGENTS.md`](../components/AGENTS.md) — where to edit components.
-- [docs/architecture.md](../../docs/architecture.md) → "Cross-framework strategy".
+- [`ui/components/AGENTS.md`](../components/AGENTS.md): where to edit the components.
+- [docs/architecture.md](../../docs/architecture.md): how a component becomes seven packages.

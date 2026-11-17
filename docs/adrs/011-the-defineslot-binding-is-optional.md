@@ -1,8 +1,8 @@
 # ADR-011: The `defineSlot` binding is optional
 
-Date: 2026-09-07 · Status: Accepted
+Date: 2026-09-07 · Status: Superseded
 Deciders: Project owner (2026-09-07) · Informed by: [ADR-010](./010-defineprops-joins-the-macro-family.md), internal tracker UXF-251 (the decision thread), UXF-254 (the implementation), UXF-255 (this record)
-Supersedes: — · Superseded by: —
+Supersedes: — · Superseded by: [ADR-012](./012-components-compile-with-unframework.md)
 
 Code claims below are **verified** against `main` @ `69bf779a5`. Component-corpus claims are
 **verified** against the UXF-251 migration branch on

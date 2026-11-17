@@ -1,0 +1,5 @@
+- radio "Apple" [checked] [disabled]
+- text: Apple
+- radio "Pear" [disabled]
+- text: Pear
+- status: apple

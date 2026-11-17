@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "steps": [
+    {
+      "action": "keyboard \" \"",
+      "dom": [
+        "<div>",
+        "  <label>",
+        "    <input aria-checked=\"true\" aria-readonly=\"true\" id=\"wifi\" name=\"wifi\" role=\"switch\" type=\"checkbox\" uf:checked=\"true\" uf:focused=\"\" uf:indeterminate=\"false\">",
+        "    \"Accept\"",
+        "  </label>",
+        "  <output>",
+        "    \"on\"",
+        "  </output>",
+        "</div>"
+      ],
+      "aria": [
+        "- switch \"Accept\" [checked]",
+        "- text: Accept",
+        "- status: \"on\""
+      ],
+      "events": {}
+    }
+  ]
+}

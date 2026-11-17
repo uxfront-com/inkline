@@ -32,10 +32,6 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       siteUrl: SITE_URL,
-      // Where `StorybookEmbed` (app/components/content/) points. `{framework}` is
-      // replaced per embed. No Storybook is deployed there yet (AGENTS.md, Known
-      // gaps); NUXT_PUBLIC_STORYBOOK_BASE_URL overrides it at build time.
-      storybookBaseUrl: "https://{framework}.storybook.inkline.io",
     },
   },
 

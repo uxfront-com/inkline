@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "steps": [
+    {
+      "action": "click getByText('Accept the terms')",
+      "dom": [
+        "<label>",
+        "  <input name=\"terms\" type=\"checkbox\" uf:checked=\"true\" uf:focused=\"\" uf:indeterminate=\"false\">",
+        "  \"Accept the terms\"",
+        "</label>"
+      ],
+      "aria": [
+        "- checkbox \"Accept the terms\" [checked]",
+        "- text: Accept the terms"
+      ],
+      "events": {}
+    }
+  ]
+}

@@ -14,6 +14,8 @@ allowed-tools:
   - Glob
 ---
 
+> **Out of date.** Inkline's components are now `.uf.tsx` sources that Unframework compiles, tested with `@unframework.dev/testing` and shown through `*.example.uf.tsx` files, not Storybook. This guide describes the retired `.ink.tsx` setup. Follow [docs/authoring-components.md](../../../docs/authoring-components.md) and [`ui/components/AGENTS.md`](../../../ui/components/AGENTS.md) instead, and [Unframework's documentation](https://unframework.dev/docs) for the language.
+
 # Component stories — one source, seven frameworks
 
 Stories are authored once in `.ink.tsx` and the CLI generates CSF3 per framework into `ui/<framework>/.inkline/.../stories/` (generated — never hand-edit). Good stories double as living documentation and a manual a11y/visual check across targets.

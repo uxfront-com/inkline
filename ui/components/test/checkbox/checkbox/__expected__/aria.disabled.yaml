@@ -1,0 +1,5 @@
+- checkbox "Accept" [disabled]
+- text: Accept
+- checkbox "From the slot"
+- text: From the slot
+- status: "off"

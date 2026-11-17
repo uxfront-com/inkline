@@ -11,12 +11,14 @@ export default defineConfig({
       include: [resolve(__dirname, "../components/src/**/*.styleframe.ts")],
     }),
   ],
+  // The components' outputs sit under `ui/components`, whose `tsconfig.json` sets Unframework's JSX
+  // import source for the `.uf.tsx` sources. Vite would apply it to React's output too.
+  oxc: { jsx: { runtime: "automatic", importSource: "react" } },
   build: {
     lib: {
       entry: {
         index: "./src/index.ts",
-        headless: "./.inkline/headless.ts",
-        stories: "./.inkline/stories.ts",
+        headless: "../components/dist/react/headless.ts",
       },
       formats: ["es"],
       fileName: (_format, entryName) => `${entryName}.js`,

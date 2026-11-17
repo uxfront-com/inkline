@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "steps": [
+    {
+      "action": "click getByText('A line or two.')",
+      "dom": [
+        "<div>",
+        "  <textarea aria-describedby=\"bio-hint\" aria-label=\"Bio\" autocomplete=\"off\" class=\"input-field\" required=\"\" uf:value=\"\"></textarea>",
+        "  <p id=\"bio-hint\">",
+        "    \"A line or two.\"",
+        "  </p>",
+        "</div>"
+      ],
+      "aria": [
+        "- textbox \"Bio\"",
+        "- paragraph: A line or two."
+      ],
+      "events": {
+        "blur": [
+          []
+        ]
+      }
+    }
+  ]
+}

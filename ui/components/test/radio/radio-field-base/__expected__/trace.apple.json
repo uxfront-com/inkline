@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "steps": [
+    {
+      "action": "keyboard \"{ArrowUp}\"",
+      "dom": [
+        "<div>",
+        "  <label>",
+        "    <input name=\"fruit\" required=\"\" type=\"radio\" uf:checked=\"true\" uf:focused=\"\" value=\"apple\">",
+        "    \"Apple\"",
+        "  </label>",
+        "  <label>",
+        "    <input name=\"fruit\" type=\"radio\" uf:checked=\"false\" value=\"pear\">",
+        "    \"Pear\"",
+        "  </label>",
+        "  <output>",
+        "    \"apple\"",
+        "  </output>",
+        "</div>"
+      ],
+      "aria": [
+        "- radio \"Apple\" [checked]",
+        "- text: Apple",
+        "- radio \"Pear\"",
+        "- text: Pear",
+        "- status: apple"
+      ],
+      "events": {
+        "select": [
+          [
+            "apple"
+          ]
+        ]
+      }
+    }
+  ]
+}

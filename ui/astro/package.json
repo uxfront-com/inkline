@@ -15,10 +15,6 @@
       "types": "./dist/headless.d.mts",
       "default": "./dist/headless.mjs"
     },
-    "./stories": {
-      "types": "./dist/stories.d.mts",
-      "default": "./dist/stories.mjs"
-    },
     "./css": "./dist/index.css",
     "./package.json": "./package.json"
   },
@@ -28,20 +24,13 @@
   "scripts": {
     "build": "vp build && vp pack",
     "validate": "vp check",
-    "test": "vp test --passWithNoTests",
-    "storybook": "storybook dev -p 6012",
-    "storybook:build": "storybook build -o storybook-static",
-    "prestorybook": "pnpm --filter @inkline/components exec inkline compile 'src/**/*.ink.tsx' --config inkline.config.ts --target astro"
+    "test": "vp test --passWithNoTests"
   },
   "dependencies": {
     "@styleframe/runtime": "catalog:"
   },
   "devDependencies": {
     "@inkline/components": "workspace:*",
-    "@inkline/storybook": "workspace:*",
-    "@storybook-astro/framework": "catalog:",
-    "@storybook/addon-a11y": "catalog:",
-    "@storybook/addon-docs": "catalog:",
     "@styleframe/cli": "catalog:",
     "@styleframe/core": "catalog:",
     "@styleframe/license": "catalog:",
@@ -49,13 +38,14 @@
     "@styleframe/plugin": "catalog:",
     "@styleframe/theme": "catalog:",
     "@styleframe/transpiler": "catalog:",
+    "@types/node": "catalog:",
     "astro": "catalog:",
     "jsdom": "catalog:",
-    "storybook": "catalog:",
-    "styleframe": "catalog:"
+    "styleframe": "catalog:",
+    "vitest": "catalog:"
   },
   "peerDependencies": {
-    "astro": ">=4"
+    "astro": "^7"
   },
   "prepublishOnly": "vp run build"
 }

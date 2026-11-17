@@ -1,8 +1,8 @@
 # ADR-010: `defineProps` joins the macro family; the macro registry is formalized
 
-Date: 2026-08-31 · Status: Accepted
+Date: 2026-08-31 · Status: Superseded
 Deciders: Project owner (2026-08-31) · Informed by: [RFC-0001](../rfcs/0001-compiler-macros-for-the-authoring-surface.md), internal tracker UXF-241 (`design-uxf-241.md`, verified against `main` @ `24df22c1f`), UXF-244 (this record)
-Supersedes: — · Superseded by: —
+Supersedes: — · Superseded by: [ADR-012](./012-components-compile-with-unframework.md)
 
 ## Context
 

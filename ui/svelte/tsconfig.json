@@ -1,4 +1,7 @@
 {
   "extends": "../../tsconfig.json",
-  "include": ["src", ".inkline", ".storybook", "*.styleframe.ts", ".styleframe/**/*.d.ts"]
+  "include": ["src", "test", "*.styleframe.ts", ".styleframe/**/*.d.ts"],
+  "compilerOptions": {
+    "types": ["node"]
+  }
 }

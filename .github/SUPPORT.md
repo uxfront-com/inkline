@@ -4,9 +4,9 @@ Thanks for using Inkline! Here's how to get help.
 
 ## 📚 Read the docs first
 
-- [Architecture](../docs/architecture.md) — how `.ink.tsx` becomes 7 framework outputs.
+- [Architecture](../docs/architecture.md) — how a `.uf.tsx` component becomes 7 framework packages.
 - [Authoring components](../docs/authoring-components.md) — adding or modifying a component.
-- [Language reference](../core/compiler/README.md) — primitives, control flow, and options.
+- [Unframework](https://unframework.dev) — the language the components are written in, and its primitives.
 
 ## 💬 Questions & ideas
 

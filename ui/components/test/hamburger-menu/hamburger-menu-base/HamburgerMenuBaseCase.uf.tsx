@@ -1,0 +1,38 @@
+// A harness parent: it binds the toggle's `open` model to its own state, shows the menu it controls
+// while open, and emits `toggle` whenever the model writes it.
+import { defineEmits, ref, watch } from "@uxfront/unframework";
+
+import IHamburgerMenuBase from "../../../src/components/hamburger-menu/headless/IHamburgerMenuBase.uf.tsx";
+
+export default function HamburgerMenuBaseCase({
+  initial = false,
+  disabled = false,
+  ariaLabel,
+}: {
+  initial?: boolean;
+  disabled?: boolean;
+  ariaLabel?: string;
+}) {
+  const emit = defineEmits<{ toggle: [open: boolean] }>();
+  const open = ref(initial);
+  watch(
+    () => open.value,
+    (value) => emit("toggle", value),
+  );
+
+  return (
+    <div>
+      <IHamburgerMenuBase
+        ariaControls="menu"
+        ariaLabel={ariaLabel}
+        disabled={disabled}
+        v-model:open={open.value}
+      />
+      {open.value ? (
+        <nav id="menu" aria-label="Main">
+          <a href="#home">Home</a>
+        </nav>
+      ) : null}
+    </div>
+  );
+}

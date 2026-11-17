@@ -1,38 +1,39 @@
 # @inkline/solid
 
-The Solid.js output of Inkline's component compilation.
+The Solid package of Inkline's components.
 
-## STOP — do not edit `src/` or `.inkline/` here
+## Don't edit the components here
 
-This package is **auto-generated**. To change a component, edit the corresponding `.ink.tsx` file in [`ui/components/src/components/`](../components/) and rebuild. See [`ui/components/AGENTS.md`](../components/AGENTS.md).
+To change a component, edit its `.uf.tsx` source in [`ui/components/src/components/`](../components/src/components/) and build again, as [`ui/components/AGENTS.md`](../components/AGENTS.md) explains. This package builds from Unframework's Solid output, in three places:
 
-- `.inkline/` — compiled Solid components (signals, fine-grained reactivity) + `index.ts`/`headless.ts`/`stories.ts` barrels written by [`inkline compile`](../../tooling/cli/AGENTS.md). Never hand-edit.
-- `src/index.ts` — the build's `index` entry. Re-exports `.inkline/index.ts` and imports `virtual:styleframe.css` so Vite extracts the stylesheet to `dist/index.css` (what `./css` resolves to).
-- `.styleframe/` — auto-generated styleframe artifacts. Never hand-edit.
+- `ui/components/dist/solid/` is the output `pnpm --filter @inkline/components build` writes: the compiled components, and the `index.ts` and `headless.ts` entries. Never hand-edit it.
+- `src/` holds this package's build entries, which re-export those two files. `src/index.ts` also imports `virtual:styleframe.css`, where the package ships a stylesheet, so Vite extracts it to `dist/index.css`.
+- `.styleframe/` holds generated Styleframe artefacts. Never hand-edit them.
 
 ## Public surface
 
 From [`package.json`](./package.json) `exports`:
 
-| Subpath          | Contents                        |
-| ---------------- | ------------------------------- |
-| `.`              | All compiled styled components. |
-| `./headless`     | The headless parts barrel.      |
-| `./stories`      | The compiled stories barrel.    |
-| `./css`          | Compiled CSS bundle.            |
-| `./package.json` | The manifest.                   |
+| Subpath          | Contents                 |
+| ---------------- | ------------------------ |
+| `.`              | The 8 styled components. |
+| `./headless`     | The 17 headless parts.   |
+| `./css`          | The compiled stylesheet. |
+| `./package.json` | The manifest.            |
 
-Peer dep: `solid-js >= 1`.
+Peer dependency: `solid-js` 1 or newer.
 
-## Storybook
-
-Runs on **port 6009**. `pnpm storybook` here or `pnpm run storybook:solid` from the repo root. Uses the [`storybook-solidjs-vite`](https://www.npmjs.com/package/storybook-solidjs-vite) framework, pinned via the catalog in [`pnpm-workspace.yaml`](../../pnpm-workspace.yaml).
+[`test/api.json`](./test/api.json) records this surface: the names each entry exports and each component's props, models and events. `pnpm --filter @inkline/solid test` rebuilds the report from `dist/` and fails when it differs. After an intended change, write it again with `node ui/components/scripts/api-report.ts solid ui/components/dist/solid --write` from the repository's root, and list each changed line in this package's changeset.
 
 ## Build
 
-`vp build`. Output goes to `dist/`.
+`vp build`. Output goes to `dist/`: `index.js`, `headless.js` and `index.css`. Build `@inkline/components` first.
+
+## Notable target behaviour
+
+- `vite.config.ts` leaves out the Solid plugin under Vitest. The package's tests read its build in Node, and the plugin would add a jest-dom setup file that doesn't resolve here.
 
 ## See also
 
-- [`ui/components/AGENTS.md`](../components/AGENTS.md) — where to edit components.
-- [docs/architecture.md](../../docs/architecture.md) → "Cross-framework strategy".
+- [`ui/components/AGENTS.md`](../components/AGENTS.md): where to edit the components.
+- [docs/architecture.md](../../docs/architecture.md): how a component becomes seven packages.

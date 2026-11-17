@@ -19,7 +19,6 @@ export default defineConfig(() => {
         entry: {
           index: "./src/index.ts",
           headless: "./src/headless.ts",
-          stories: "./src/stories.ts",
         },
         formats: ["es"],
         fileName: (format, entryName) => `${entryName}.qwik.${format === "es" ? "mjs" : "cjs"}`,
@@ -27,12 +26,6 @@ export default defineConfig(() => {
       rollupOptions: {
         external: [/^@inkline\//, /^@qwik\.dev\/core/],
       },
-    },
-    test: {
-      // `test/generate-fixtures.ts` compiles the headless controls to their Qwik output on disk before
-      // the suite runs; the behaviour tests import those generated components so qwikVite extracts
-      // their `$()` handlers into real QRLs (INK-31).
-      globalSetup: ["./test/generate-fixtures.ts"],
     },
   };
 });

@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "steps": [
+    {
+      "action": "keyboard \" \"",
+      "dom": [
+        "<div>",
+        "  <button aria-controls=\"menu\" aria-expanded=\"false\" aria-label=\"Toggle menu\" class=\"-arrow-up -lg _align-items:[center] _background:[transparent] _border-color:[transparent] _border-style:[none] _border-width:[0] _color:white _cursor:[pointer] _dark:color:white _disabled:cursor:[not-allowed] _disabled:opacity:[0.5] _disabled:pointer-events:[none] _display:[inline-flex] _focus-visible:border-radius:sm _focus-visible:outline-color:primary _focus-visible:outline-offset:[2px] _focus-visible:outline-style:[solid] _focus-visible:outline-width:[2px] _hover:opacity:[0.8] _justify-content:[center] _outline:[none] _padding-bottom:0.625 _padding-left:0.625 _padding-right:0.625 _padding-top:0.625 _position:[relative] _transition-duration:[150ms] _transition-property:[opacity] _transition-timing-function:ease-in-out _user-select:[none] hamburger-menu\" disabled=\"\" type=\"button\">",
+        "    <span aria-hidden=\"true\" class=\"hamburger-menu-inner\"></span>",
+        "  </button>",
+        "</div>"
+      ],
+      "aria": [
+        "- button \"Toggle menu\" [disabled]"
+      ],
+      "events": {}
+    }
+  ]
+}

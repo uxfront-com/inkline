@@ -9,7 +9,6 @@
   "exports": {
     ".": "./dist/index.js",
     "./headless": "./dist/headless.js",
-    "./stories": "./dist/stories.js",
     "./css": "./dist/index.css",
     "./package.json": "./package.json"
   },
@@ -19,20 +18,13 @@
   "scripts": {
     "build": "vp build",
     "validate": "vp check",
-    "test": "vp test --passWithNoTests",
-    "storybook": "storybook dev -p 6006",
-    "storybook:build": "storybook build -o storybook-static",
-    "prestorybook": "pnpm --filter @inkline/components exec inkline compile 'src/**/*.ink.tsx' --config inkline.config.ts --target react"
+    "test": "vp test --passWithNoTests"
   },
   "dependencies": {
     "@styleframe/runtime": "catalog:"
   },
   "devDependencies": {
     "@inkline/components": "workspace:*",
-    "@inkline/storybook": "workspace:*",
-    "@storybook/addon-a11y": "catalog:",
-    "@storybook/addon-docs": "catalog:",
-    "@storybook/react-vite": "catalog:",
     "@styleframe/cli": "catalog:",
     "@styleframe/core": "catalog:",
     "@styleframe/license": "catalog:",
@@ -40,15 +32,17 @@
     "@styleframe/plugin": "catalog:",
     "@styleframe/theme": "catalog:",
     "@styleframe/transpiler": "catalog:",
+    "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@vitejs/plugin-react": "catalog:",
     "jsdom": "catalog:",
     "react": "catalog:",
-    "storybook": "catalog:",
-    "styleframe": "catalog:"
+    "react-dom": "catalog:",
+    "styleframe": "catalog:",
+    "vitest": "catalog:"
   },
   "peerDependencies": {
-    "react": ">=18"
+    "react": ">=19.2"
   },
   "prepublishOnly": "vp run build"
 }

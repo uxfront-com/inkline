@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "steps": [
+    {
+      "action": "click getByRole('radio', { name: 'Pear' })",
+      "dom": [
+        "<div>",
+        "  <label>",
+        "    <input name=\"fruit\" required=\"\" type=\"radio\" uf:checked=\"false\" value=\"apple\">",
+        "    \"Apple\"",
+        "  </label>",
+        "  <label>",
+        "    <input name=\"fruit\" type=\"radio\" uf:checked=\"true\" uf:focused=\"\" value=\"pear\">",
+        "    \"Pear\"",
+        "  </label>",
+        "  <output>",
+        "    \"pear\"",
+        "  </output>",
+        "</div>"
+      ],
+      "aria": [
+        "- radio \"Apple\"",
+        "- text: Apple",
+        "- radio \"Pear\" [checked]",
+        "- text: Pear",
+        "- status: pear"
+      ],
+      "events": {
+        "select": [
+          [
+            "pear"
+          ]
+        ]
+      }
+    }
+  ]
+}

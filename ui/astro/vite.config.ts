@@ -24,13 +24,14 @@ export default defineConfig({
   },
   pack: {
     entry: {
-      index: "./.inkline/index.ts",
-      headless: "./.inkline/headless.ts",
-      stories: "./.inkline/stories.ts",
+      index: "../components/dist/astro/index.ts",
+      headless: "../components/dist/astro/headless.ts",
     },
-    deps: { neverBundle: [/\.astro$/, /^@inkline\//, /^@storybook-astro\//] },
+    deps: { neverBundle: [/\.astro$/, /^@inkline\//] },
     copy: [
-      { from: "./.inkline/components/**/*.astro", to: "dist", flatten: false },
+      // The `.astro` components, with the type modules their frontmatter imports.
+      { from: "../components/dist/astro/components", to: "dist" },
+      { from: "../components/dist/astro/recipes.ts", to: "dist" },
       { from: "./.styleframe/css/index.css", to: "dist/" },
     ],
   },

@@ -1,0 +1,3 @@
+- checkbox "Accept" [checked=mixed]
+- text: Accept
+- status: "off"

@@ -1,46 +1,51 @@
 # @inkline/angular
 
-The Angular output of Inkline's component compilation (standalone components).
+The Angular package of Inkline's components.
 
-## STOP — do not edit `src/` or `.inkline/` here
+## Don't edit the components here
 
-This package is **auto-generated**. To change a component, edit the corresponding `.ink.tsx` file in [`ui/components/src/components/`](../components/) and rebuild. See [`ui/components/AGENTS.md`](../components/AGENTS.md).
+To change a component, edit its `.uf.tsx` source in [`ui/components/src/components/`](../components/src/components/) and build again, as [`ui/components/AGENTS.md`](../components/AGENTS.md) explains. This package builds from Unframework's Angular output, in three places:
 
-- `.inkline/` — compiled Angular standalone components (`@Component` with inline template + a per-component `.css` file imported as a side effect) + `index.ts`/`headless.ts`/`stories.ts` barrels written by [`inkline compile`](../../tooling/cli/AGENTS.md). Never hand-edit.
-- `src/index.ts` — re-exports `.inkline/index.ts`.
-- `.styleframe/` — auto-generated styleframe artifacts. Never hand-edit.
+- `ui/components/dist/angular/` is the output `pnpm --filter @inkline/components build` writes: the compiled components, and the `index.ts` and `headless.ts` entries. Never hand-edit it.
+- `src/` holds this package's build entries, `index.ts` and `headless.ts`, which only re-export those two files.
+- `.styleframe/` holds generated Styleframe artefacts. Never hand-edit them.
 
 ## Public surface
 
 From [`package.json`](./package.json) `exports`:
 
-| Subpath          | Contents                        |
-| ---------------- | ------------------------------- |
-| `.`              | All compiled styled components. |
-| `./headless`     | The headless parts barrel.      |
-| `./stories`      | The compiled stories barrel.    |
-| `./package.json` | The manifest.                   |
+| Subpath          | Contents                 |
+| ---------------- | ------------------------ |
+| `.`              | The 8 styled components. |
+| `./headless`     | The 17 headless parts.   |
+| `./package.json` | The manifest.            |
 
-**No `./css` export.** Each compiled component imports its own `.css` file as a side effect (`import "./IButton.css";`), so styles travel with the components through the consumer's bundler. If a downstream tool needs an aggregated CSS file, it must build one from the per-component artifacts.
+Peer dependency: `@angular/core` 22.
 
-Peer dep: `@angular/core >= 17.3.0`.
+[`test/api.json`](./test/api.json) records this surface: the names each entry exports and each component's props, models and events, and its selector. After an intended change, write it again with `node ui/components/scripts/api-report.ts angular ui/components/dist/angular --write` from the repository's root, and list each changed line in this package's changeset.
 
-## Storybook
+`pnpm --filter @inkline/angular test` runs three tests. Build the package first, since two of them read `dist/`:
 
-Runs on **port 6010**. `pnpm storybook` here or `pnpm run storybook:angular` from the repo root. Uses `@analogjs/storybook-angular` (the leftover `patches/@analogjs__storybook-angular@2.5.1.patch` is no longer applied since the 2.6.x bump).
-
-In dev, the preset aliases `@inkline/angular` to `.inkline/index.ts`, so component edits reload without a build. A static build renders the package's `dist`, so build it first. [`.storybook/main.ts`](./.storybook/main.ts) removes Analog's build optimizer from that build: it would link the partial declarations and drop their class metadata, which `@storybook/angular` reads to build a story's template from its component. The JIT compiler the Storybook already loads compiles them at runtime instead.
+- `test/api.test.ts` rebuilds the report from Unframework's emitted sources in `ui/components/dist/angular/` and fails when it differs from `api.json`.
+- `test/dist.test.ts` loads `dist/` with Angular's JIT compiler and checks that each component `api.json` lists carries its selector, an input for every prop and model, and an output for every event and model. A component the compiler skipped still gets a definition in JIT, but with no inputs, so the input check is the one that catches it.
+- `test/render.test.ts` server-renders the built `IButton` and `IButtonBase` with `label="Save"` and `[id]="'save'"`, and checks that each `<button>` has both.
 
 ## Build
 
-`vp build`, with Analog's Angular plugin compiling the components in partial mode ([`tsconfig.lib.json`](./tsconfig.lib.json) sets `compilationMode: "partial"`), as Angular libraries ship. The consuming app's Angular compiler links the declarations. The bundles go to `dist/fesm2022/`, because Analog's optimizer links only paths that match `/fesm20/`. The declarations go to `dist/.inkline/`, which the `types` conditions point at. `src/` stays out of `tsconfig.lib.json`, since the declarations of its `../.inkline` re-exports would point outside the package. The `@angular/core` peer range starts at the first release that exports every API the components import (`output()` came in 17.3.0), which is never below the highest `minVersion` in `dist`.
+`vp build`, with Analog's Angular plugin compiling the components in partial mode ([`tsconfig.lib.json`](./tsconfig.lib.json) sets `compilationMode: "partial"`), as Angular libraries ship. The consuming app's Angular compiler links the declarations. The bundles go to `dist/fesm2022/`, because Analog's optimiser links only paths that match `/fesm20/`. Build `@inkline/components` first.
 
-## Notable target behavior
+Two settings keep every component compiled:
 
-- **Attribute-selector headless parts + zero-wrapper collapse.** A component whose source declares `meta: { headless: true }` (all current components do) emits a second, attribute-selector `@Component` whose host is the root element itself — `button[ink-button-base]` renders the native element with no wrapper. A styled component whose root is a single headless part collapses onto that host, merging the recipe class. The element-selector `<ink-*>` wrapper (with `host: { style: 'display: contents' }`) is still emitted alongside (dual selector).
-- The `<Transition>` IR node is **unwrapped** by the Angular target — the child element is emitted directly, with the transition class names left as `class="…"` attributes. Animation must be set up manually by the consumer. See [docs/architecture.md](../../docs/architecture.md) → "Where `<Slot>` and `<Transition>` live".
+- `tsconfig.lib.json` resolves modules the way Vite does (`moduleResolution: "bundler"`). Unframework's output imports its siblings without a file extension, like `../headless/i-button-base`. Under the root's `nodenext`, Analog resolves those as ECMAScript imports and fails, so the Angular compiler skips each styled component and Vite ships it as a plain decorator call with no inputs.
+- `vite.config.ts` turns Analog's type checking on (`disableTypeChecking: false`), so an error like that fails the build. With it off, Analog drops the Angular compiler's errors from a build.
+
+## Notable target behaviour
+
+- Each component is a standalone component whose selector is its name in kebab case with Unframework's `uf-` prefix: `uf-i-button`, `uf-i-button-base`. Its host is `display: contents`, and a `class` or `style` on the host lands on its root element.
+- The package ships no `./css` entry. Each component imports the stylesheet it needs.
+- The `types` conditions in `package.json` point at `dist/.inkline/`, which no build writes, as they did before the port. Shipping the Angular declarations is a known gap.
 
 ## See also
 
-- [`ui/components/AGENTS.md`](../components/AGENTS.md) — where to edit components.
-- [docs/architecture.md](../../docs/architecture.md) → "Cross-framework strategy".
+- [`ui/components/AGENTS.md`](../components/AGENTS.md): where to edit the components.
+- [docs/architecture.md](../../docs/architecture.md): how a component becomes seven packages.

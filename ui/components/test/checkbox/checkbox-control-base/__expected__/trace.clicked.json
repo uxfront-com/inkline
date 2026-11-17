@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "steps": [
+    {
+      "action": "click getByRole('checkbox', { name: 'Accept' })",
+      "dom": [
+        "<div>",
+        "  <label>",
+        "    <input id=\"terms\" name=\"terms\" type=\"checkbox\" uf:checked=\"true\" uf:focused=\"\" uf:indeterminate=\"false\">",
+        "    \"Accept\"",
+        "  </label>",
+        "  <output>",
+        "    \"on\"",
+        "  </output>",
+        "</div>"
+      ],
+      "aria": [
+        "- checkbox \"Accept\" [checked]",
+        "- text: Accept",
+        "- status: \"on\""
+      ],
+      "events": {
+        "change": [
+          [
+            true
+          ]
+        ]
+      }
+    }
+  ]
+}
