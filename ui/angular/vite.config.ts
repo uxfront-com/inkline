@@ -5,7 +5,9 @@ import styleframe from "styleframe/plugin/vite";
 
 export default defineConfig({
   plugins: [
-    angular({ tsconfig: "tsconfig.lib.json" }) as any,
+    // Type checking makes a component the Angular compiler can't analyse fail the build. With it
+    // off, Analog drops that error and ships the class uncompiled, with no inputs.
+    angular({ tsconfig: "tsconfig.lib.json", disableTypeChecking: false }) as any,
     styleframe({
       entry: resolve(__dirname, "../components/styleframe.config.ts"),
       include: [resolve(__dirname, "../components/src/**/*.styleframe.ts")],
@@ -17,7 +19,6 @@ export default defineConfig({
       entry: {
         index: "src/index.ts",
         headless: "src/headless.ts",
-        stories: "src/stories.ts",
       },
       formats: ["es"],
       fileName: (_format, entryName) => `fesm2022/${entryName}.mjs`,

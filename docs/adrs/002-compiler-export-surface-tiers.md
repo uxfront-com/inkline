@@ -1,15 +1,15 @@
 # ADR-002: Tier the `@inkline/compiler` export surface via subpath exports
 
-Date: 2026-07-29 · Status: Accepted
+Date: 2026-07-29 · Status: Superseded
 Deciders: Project owner · Informed by: internal tracker UXF-91 (RFC), UXF-71 finding #15 (friction audit), UXF-144 (this record)
-Supersedes: — · Superseded by: —
+Supersedes: — · Superseded by: [ADR-012](./012-components-compile-with-unframework.md)
 
 Resolves one of the two items [ADR-001](./001-compiler-dx-invests-in-diagnostics.md) left explicitly
 undecided ("Narrowing the compiler's public export surface").
 
 ## Context
 
-[`core/compiler/src/index.ts`](../../core/compiler/src/index.ts) re-exports essentially the whole
+[`core/compiler/src/index.ts`](https://github.com/uxfront-com/inkline/blob/e57570bc46976b320929a76141cce799402075c5/core/compiler/src/index.ts) re-exports essentially the whole
 compiler. Alongside the handful of names a normal consumer needs — `compile`, `defineConfig`,
 `Diagnostic`, the target registry — it re-exports the full render IR, the full Code IR, the symbol
 table, the transform and serialization entry points, and every built-in target. Autocompleting
@@ -49,10 +49,10 @@ edit to that file.
 
 **The "advanced authors need this" justification did not survive reading the extension points.**
 `TargetName` is a closed string-literal union of the seven built-ins
-([`core/compiler/src/codegen/context.ts`](../../core/compiler/src/codegen/context.ts)), and
+([`core/compiler/src/codegen/context.ts`](https://github.com/uxfront-com/inkline/blob/e57570bc46976b320929a76141cce799402075c5/core/compiler/src/codegen/context.ts)), and
 `Target.name: TargetName`, so an external `defineTarget({ name: "lit" })` cannot typecheck. It also
 cannot run: `resolveOptions` rejects any target absent from `ALL_TARGETS` (diagnostic `INK0085`,
-[`core/compiler/src/core/options.ts`](../../core/compiler/src/core/options.ts)) _before_ consulting a
+[`core/compiler/src/core/options.ts`](https://github.com/uxfront-com/inkline/blob/e57570bc46976b320929a76141cce799402075c5/core/compiler/src/core/options.ts)) _before_ consulting a
 custom registry, so supplying your own registry does not open the door. Roughly 50 exports therefore
 serve an audience that cannot exist today.
 
@@ -160,6 +160,6 @@ Written now, before any of it ships:
 ## Note
 
 The RFC also surfaced a defect independent of this decision:
-[`docs/adding-a-target.md`](../adding-a-target.md) documents an extension path that can neither
+[`docs/adding-a-target.md`](https://github.com/uxfront-com/inkline/blob/e57570bc46976b320929a76141cce799402075c5/docs/adding-a-target.md) documents an extension path that can neither
 typecheck nor run from outside the repository. Tracked separately as a docs correction, explicitly
 scoped to fixing the documentation rather than opening the extension point.

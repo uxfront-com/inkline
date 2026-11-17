@@ -1,0 +1,16 @@
+import "virtual:styleframe.css";
+import IFieldGroup from "../styled/IFieldGroup.uf.tsx";
+import IButton from "../../button/styled/IButton.uf.tsx";
+
+// A vertical group stacks its direct children, collapsing the seams between them.
+export default function FieldGroupVertical() {
+  return (
+    <div>
+      <IFieldGroup orientation="vertical">
+        <IButton label="Top" />
+        <IButton label="Middle" />
+        <IButton label="Bottom" />
+      </IFieldGroup>
+    </div>
+  );
+}

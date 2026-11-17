@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "steps": [
+    {
+      "action": "keyboard \"{ArrowRight}\"",
+      "dom": [
+        "<div>",
+        "  <div aria-label=\"Fruit\" aria-readonly=\"true\" id=\"fruit\" role=\"radiogroup\">",
+        "    <label>",
+        "      <input data-readonly=\"true\" data-selected=\"true\" name=\"fruit\" type=\"radio\" uf:checked=\"true\" value=\"apple\">",
+        "      \"Apple\"",
+        "    </label>",
+        "    <label>",
+        "      <input data-readonly=\"true\" name=\"fruit\" type=\"radio\" uf:checked=\"false\" uf:focused=\"\" value=\"pear\">",
+        "      \"Pear\"",
+        "    </label>",
+        "    <label>",
+        "      <input data-readonly=\"true\" name=\"fruit\" type=\"radio\" uf:checked=\"false\" value=\"fig\">",
+        "      \"Fig\"",
+        "    </label>",
+        "  </div>",
+        "  <output>",
+        "    \"apple\"",
+        "  </output>",
+        "</div>"
+      ],
+      "aria": [
+        "- radiogroup \"Fruit\":",
+        "  - radio \"Apple\" [checked]",
+        "  - text: Apple",
+        "  - radio \"Pear\"",
+        "  - text: Pear",
+        "  - radio \"Fig\"",
+        "  - text: Fig",
+        "- status: apple"
+      ],
+      "events": {}
+    }
+  ]
+}

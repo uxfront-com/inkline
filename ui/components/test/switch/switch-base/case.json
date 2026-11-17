@@ -1,0 +1,8 @@
+{
+  "description": "The headless switch shell, a label that names the control it wraps.",
+  "ssr": {
+    "default": {
+      "props": {}
+    }
+  }
+}

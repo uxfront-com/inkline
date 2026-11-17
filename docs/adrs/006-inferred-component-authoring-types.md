@@ -1,9 +1,9 @@
 # ADR-006: The component authoring surface is _inferred_ from `defineComponent`, not _generated_ by the compiler
 
-Date: 2026-08-08 · Status: Accepted
+Date: 2026-08-08 · Status: Superseded
 Deciders: Project owner · Informed by: internal tracker UXF-162 (delivery RFC + measurements), UXF-161 (feasibility spike), UXF-135 (blast-radius RFC)
 Supersedes: [ADR-005](./005-generated-component-authoring-types.md) · Superseded by:
-[ADR-008](./008-authoring-surface-is-inferred-from-options-alone.md) **in part**
+[ADR-008](./008-authoring-surface-is-inferred-from-options-alone.md) **in part**, then [ADR-012](./012-components-compile-with-unframework.md)
 
 > **Correction — see [ADR-008](./008-authoring-surface-is-inferred-from-options-alone.md).**
 > Decision 1 below, and the matching phrasing in Context, say the authoring type is derived from
@@ -94,7 +94,7 @@ Three results decided the shape:
   reappeared.** V2 widened **`props`**, colliding a declared prop with a model of the same name —
   precisely what INK0044 exists to catch. B2 declares into **`options.models`**, which the compiler
   never reads (verified: `component.models` is assigned from `setupResult.models` alone,
-  [`core/compiler/src/pipeline/passes/02-parse/index.ts:96`](../../core/compiler/src/pipeline/passes/02-parse/index.ts)).
+  [`core/compiler/src/pipeline/passes/02-parse/index.ts:96`](https://github.com/uxfront-com/inkline/blob/e57570bc46976b320929a76141cce799402075c5/core/compiler/src/pipeline/passes/02-parse/index.ts)).
   No lowering change, across zero targets.
 - **Staleness is structurally zero.** ADR-005 listed watch-mode staleness as unpriced. Measured in a
   real language server, a parent's view of a child updated **11 ms after an unsaved edit to the

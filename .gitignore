@@ -32,8 +32,8 @@ coverage
 # Playwright MCP
 .playwright-mcp/
 
-# JSX probe scratch dirs (created by core/core/src/jsx-runtime.probes.test.ts)
-core/core/.jsx-probe-*/
-
 # Wrangler local state (wrangler deploy --dry-run, wrangler dev)
 .wrangler/
+
+# Unframework's scratch files, like the Angular toolchain's tsconfig.analog.json
+.uf-tmp/

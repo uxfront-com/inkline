@@ -1,8 +1,8 @@
 # ADR-004: `inkline check` does not type-check; `tsc` owns types
 
-Date: 2026-07-28 · Status: Accepted
+Date: 2026-07-28 · Status: Superseded
 Deciders: Project owner · Informed by: internal tracker UXF-90 (RFC), UXF-71 (friction audit), UXF-72 (prior-art survey)
-Supersedes: — · Superseded by: —
+Supersedes: — · Superseded by: [ADR-012](./012-components-compile-with-unframework.md)
 
 ## Context
 
@@ -14,7 +14,7 @@ is its own one-way commitment to a maintenance surface.
 **`inkline check` has never type-checked. Not partially — not at all.** `getSemanticDiagnostics`
 appears exactly once in the repository, in `core/compiler/plan.md:818`, a planning document. It is
 never called in shipped code. The `TypeChecker` built in
-[`core/compiler/src/pipeline/passes/01-program.ts`](../../core/compiler/src/pipeline/passes/01-program.ts)
+[`core/compiler/src/pipeline/passes/01-program.ts`](https://github.com/uxfront-com/inkline/blob/e57570bc46976b320929a76141cce799402075c5/core/compiler/src/pipeline/passes/01-program.ts)
 is used for six things total: five `getSymbolAtLocation` calls and one `getTypeAtLocation`.
 
 Receipt, run 2026-07-28 against a file containing `notARealAttribute`, `e.nope.deep()`,

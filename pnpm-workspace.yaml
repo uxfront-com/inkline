@@ -1,7 +1,5 @@
 packages:
   - apps/*
-  - core/*
-  - testing/*
   - tooling/*
   - ui/*
   - tools/*
@@ -19,39 +17,33 @@ allowBuilds:
 # pnpm 11 enforces a default minimumReleaseAge (24h) supply-chain guard.
 # Exclude the styleframe first-party ecosystem (intentionally fresh, trusted),
 # the uxfront packages the website builds on (freshly published,
-# first-party), and pin the exact versions of unrelated transitive deps caught
-# as collateral so the guard still applies to any future releases of those.
+# first-party), Unframework's test and visual tools under @unframework.dev
+# (first-party, published by the owner and consumed the day they ship), and pin
+# the exact versions of unrelated transitive deps caught as collateral so the
+# guard still applies to any future releases of those.
 minimumReleaseAgeExclude:
   - "@styleframe/*"
   - styleframe
   - "@uxfront/*"
+  - "@unframework.dev/*"
   - ansis@4.3.1
   - js-yaml@4.2.0
   - launch-editor@2.14.1
 
 catalog:
-  "@ampproject/remapping": ^2.3.0
-  "@analogjs/storybook-angular": ^2.6.1
-  "@analogjs/vite-plugin-angular": ^2.6.1
-  "@angular-eslint/eslint-plugin": ^21.4.0
-  "@angular-eslint/template-parser": ^21.4.0
-  "@angular/animations": 21.2.17
-  "@angular/build": ^21.2.15
-  "@angular/cli": ^21.2.15
-  "@angular/compiler": ^21.2.17
-  "@angular/compiler-cli": ^21.2.17
-  "@angular/core": ^21.2.17
-  "@angular/platform-browser": ^21.2.17
-  "@angular/platform-browser-dynamic": ^21.2.17
-  "@angular/platform-server": ^21.2.17
-  "@jridgewell/trace-mapping": ^0.3.31
-  "@storybook-astro/framework": ^1.5.0
-  "@storybook/addon-a11y": ^10.4.4
-  "@storybook/addon-docs": ^10.4.4
-  "@storybook/angular": ^10.4.4
-  "@storybook/react-vite": ^10.4.4
-  "@storybook/svelte-vite": ^10.4.4
-  "@storybook/vue3-vite": ^10.4.4
+  "@analogjs/vite-plugin-angular": 2.9.7
+  "@angular/animations": 22.2.6
+  "@angular/build": 22.2.7
+  "@angular/cli": ^22.2.7
+  "@angular/common": 22.2.6
+  "@angular/compiler": 22.2.6
+  "@angular/compiler-cli": 22.2.6
+  "@angular/core": 22.2.6
+  "@angular/platform-browser": 22.2.6
+  "@angular/platform-browser-dynamic": ^22.2.6
+  "@angular/platform-server": 22.2.6
+  "@babel/core": ^7.29.7
+  "@qwik.dev/core": 2.0.0-beta.47
   "@styleframe/cli": ^4.1.2
   "@styleframe/core": ^3.6.2
   "@styleframe/license": ^2.0.2
@@ -64,49 +56,37 @@ catalog:
   "@tsdown/css": ^0.22.0
   "@types/node": ^24.13.2
   "@types/react": ^19.2.17
-  "@types/react-dom": ^19.2.3
-  "@typescript-eslint/parser": ^8.61.0
+  "@typescript/typescript6": ^6.0.2
+  "@unframework.dev/testing": 0.2.1
+  "@unframework.dev/visual": 0.2.1
   "@uxfront/layer-docs": ^0.8.4
   "@uxfront/layer-ui": ^0.1.7
   "@uxfront/scene": ^0.5.0
   "@uxfront/ui": ^0.6.0
-  "@vitejs/plugin-react": ^6.0.2
+  "@uxfront/unframework": 0.2.1
+  "@vitejs/plugin-react": ^6.1.1
   "@vitejs/plugin-vue": ^6.0.7
-  "@vitest/coverage-v8": ^4.1.8
+  "@vitest/browser-playwright": 5.0.3
   "@vueuse/core": ^14.4.0
-  "@vue/server-renderer": ^3.5.43
-  astro: ^6.4.6
-  concurrently: ^10.0.3
-  csstype: ^3.2.3
+  astro: ^7.4.11
+  babel-plugin-react-compiler: ^1.0.0
   docus: ^5.13.0
-  eslint: ^9.39.4
-  eslint-plugin-astro: ^1.7.0
-  eslint-plugin-qwik: ^1.20.0
-  eslint-plugin-solid: ^0.14.5
-  eslint-plugin-svelte: ^3.19.0
-  eslint-plugin-vue: ^10.9.2
   jsdom: ^29.1.1
-  oxlint: ^1.69.0
+  playwright: ^1.63.0
   react: ^19.2.7
   react-dom: ^19.2.7
   rollup-plugin-svelte: ^7.2.3
   rxjs: ^7.8.2
   solid-js: ^1.9.13
-  storybook: ^10.4.4
-  storybook-framework-qwik: 0.6.2--canary.95.25602496384.0
-  storybook-solidjs-vite: ^10.1.1
   styleframe: ^3.9.1
   svelte: ^5.56.3
   tslib: ^2.8.1
-  tsx: ^4.22.4
   typescript: ^7.0.2
   vite: npm:@voidzero-dev/vite-plus-core@latest
   vite-plugin-solid: ^2.11.12
   vite-plus: ^0.1.24
   vitest: npm:@voidzero-dev/vite-plus-test@^0.1.24
   vue: ^3.5.43
-  vue-eslint-parser: ^10.4.1
-  zod: ^4.4.3
   zone.js: ^0.16.2
 
 # TS6 holdout catalog. TypeScript 7's native compiler drops the classic
@@ -114,31 +94,26 @@ catalog:
 # the reshaped `typescript/unstable/*` surface). Packages that consume that
 # API — directly or through a toolchain that does — stay on the aliased TS6
 # release via `catalog:ts6` until their dependency ports to TS7:
-#   - core/compiler       — the compile pipeline calls the programmatic API.
-#   - tooling/test-utils  — the coverage reader uses the value-side TS API.
-#   - core/plugin         — its unbuild/rollup-plugin-dts dts emit reads
-#                           `ts.sys`, undefined on TS7's reshaped entry.
-#   - tooling/storybook   — rolldown-plugin-dts' default (tsc) dts emit needs
-#                           the classic API; storybook's `as const` RegExp
-#                           parameters can't go through the oxc path.
 #   - ui/vue              — @vue/compiler-sfc resolves tsconfig `paths` (the
 #                           `virtual:styleframe` alias behind `defineProps`
 #                           `extends`) through TS's classic config API, which
 #                           TS7 no longer exposes; SFC compile fails on TS7.
 #   - ui/angular          — @analogjs/vite-plugin-angular's js-emitter calls
-#                           `ts.createPrinter`; @storybook/angular's docgen needs
-#                           the classic API. (See packageExtensions below — the
+#                           `ts.createPrinter`. (See packageExtensions below — the
 #                           analog plugin does a bare undeclared `import
 #                           "typescript"`, so it needs a peer to honor this pin.)
-#   - ui/qwik             — @storybook/addon-docs pulls react-docgen-typescript,
-#                           which reads the classic `ts.*` API at module load.
-#   - ui/solid            — @joshwooding/vite-plugin-react-docgen-typescript (via
-#                           storybook-solidjs-vite) pulls react-docgen-typescript,
-#                           which calls `ts.sys.fileExists` at story-transform time,
-#                           undefined on TS7's reshaped entry.
+#   - tooling/toolchain-angular — the same Angular compiler stack, where
+#                           `unframework test`, `visual` and `preview` load it.
+#   - apps/docs           — the website's Vue SFCs go through the same
+#                           @vue/compiler-sfc as ui/vue, and break on TS7.
 catalogs:
   ts6:
     typescript: npm:@typescript/typescript6@^6.0.2
+  # Unframework's test, visual and preview tools peer on these exact versions, so `ui/components`
+  # takes them from here instead of the vite-plus aliases in `catalog:` (see `overrides` below).
+  unframework:
+    vite: 8.3.1
+    vitest: 5.0.3
 
 catalogMode: prefer
 # @analogjs/vite-plugin-angular consumes `typescript` via a bare, undeclared
@@ -162,6 +137,16 @@ packageExtensions:
 overrides:
   vite: "catalog:"
   vitest: "catalog:"
+  # `ui/components` tests, renders and previews through Unframework, whose tools peer on the real
+  # Vite and Vitest, at the versions of the `unframework` catalog. So do its Angular toolchain and
+  # the Vitest packages they load.
+  "@inkline/components>vite": "catalog:unframework"
+  "@inkline/components>vitest": "catalog:unframework"
+  "@inkline/toolchain-angular>vite": "catalog:unframework"
+  # vite-plugin-solid adds jest-dom as a setup file of every non-browser Vitest project when it can
+  # resolve it, and it resolves it from its own directory, where the project can't. No package here
+  # uses jest-dom, so its optional peer stays uninstalled, as in Unframework's own workspace.
+  "vite-plugin-solid>@testing-library/jest-dom": "-"
   "@nuxt/vite-builder>vite": "^8.3.2"
 peerDependencyRules:
   allowAny:

@@ -12,7 +12,7 @@ concurrency:
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 env:
-  NODE_VERSION: 22
+  NODE_VERSION: 24
 
 permissions:
   contents: read
@@ -54,56 +54,8 @@ jobs:
           retention-days: 1
           include-hidden-files: true
           path: |
-            core/core/dist
-            core/compiler/dist
-            core/config-loader/dist
-            core/inkline/dist
-            core/plugin/dist
-            tooling/cli/dist
-            tooling/storybook/dist
-            tooling/test-utils/dist
-            ui/*/.inkline
+            ui/*/dist
             ui/*/.styleframe
-
-  build-storybook:
-    name: Build Storybook
-    runs-on: ubuntu-latest
-    needs: build
-    timeout-minutes: 15
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: build-artifacts
-
-      - name: Build storybook
-        run: pnpm --filter @inkline/storybook-app run storybook:build
-        env:
-          NODE_ENV: production
-
-      - name: Upload storybook build
-        uses: actions/upload-artifact@v4
-        with:
-          name: storybook-build
-          path: apps/storybook/dist
-          retention-days: 1
 
   build-website:
     name: Build Website
@@ -132,6 +84,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build-artifacts
+          path: ui
 
       # `generate`, not `build`: the site ships as a fully prerendered static
       # bundle (docs/adrs/007-website-ships-as-a-static-site.md). Only `generate`
@@ -191,6 +144,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build-artifacts
+          path: ui
 
       - name: Run oxlint
         run: npx vp lint
@@ -260,6 +214,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: build-artifacts
+          path: ui
 
       - name: Run tests
         # Each shard runs only part of the suite, so per-package coverage is partial. Disable the
@@ -281,21 +236,10 @@ jobs:
           fail_ci_if_error: false
           flags: shard-${{ matrix.shard }}
 
-  visual-parity:
-    name: Visual Parity (shard ${{ matrix.shard }})
-    # Playwright 1.60 (the locked @playwright/test) can't install Chromium on ubuntu-26.04, which
-    # ubuntu-latest became in October 2026. Playwright 1.61 adds it: move back to ubuntu-latest when
-    # testing/e2e upgrades.
-    runs-on: ubuntu-24.04
-    needs: build
-    # Blocking: listed in `ci-success.needs` below. Parity is green and deterministic across all seven
-    # targets, so a diff here is a real regression and fails the pipeline. The uploaded Playwright report
-    # + diff images remain available as artifacts for triage.
+  component-tests:
+    name: Component Tests
+    runs-on: ubuntu-latest
     timeout-minutes: 30
-    strategy:
-      fail-fast: false
-      matrix:
-        shard: [1, 2]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -314,84 +258,60 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      # The composition Storybook runs in dev mode, where each framework package is aliased to its
-      # generated `.inkline` source (tooling/storybook preset) — so the build artifact's `ui/*/.inkline`
-      # + `.styleframe` is all that's needed; `ui/*/dist` is not.
-      - name: Download build artifacts
-        uses: actions/download-artifact@v4
+      - name: Install Playwright Chromium
+        run: pnpm --filter @inkline/components exec playwright install --with-deps chromium
+
+      - name: Check the recipe types and the barrel split
+        run: pnpm --filter @inkline/components run test:recipes
+
+      # Every case on every target, in Chromium and in a server render, compared with the
+      # expectations under ui/components/test/*/*/__expected__.
+      - name: Run the component tests on every target
+        run: pnpm --filter @inkline/components run test:targets
+
+  visual:
+    name: Visual
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
-          name: build-artifacts
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
       - name: Install Playwright Chromium
-        run: pnpm --filter @inkline/e2e exec playwright install --with-deps chromium
+        run: pnpm --filter @inkline/components exec playwright install --with-deps chromium
 
-      # No NODE_ENV=production: the per-framework dev servers must keep the source alias active.
-      - name: Run visual parity tests
-        run: pnpm --filter @inkline/e2e run test:e2e
-        env:
-          STORY_SHARD: ${{ matrix.shard }}/2
+      # Every example on every target, compared with the reference's capture in the same run.
+      - name: Render the examples on every target
+        run: pnpm --filter @inkline/components run visual
 
-      - name: Upload Playwright report
+      - name: Upload the visual report
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v4
         with:
-          name: visual-parity-report-shard-${{ matrix.shard }}
-          path: |
-            testing/e2e/playwright-report
-            testing/e2e/test-results
+          name: visual-report
+          path: ui/components/.unframework/visual
+          include-hidden-files: true
+          if-no-files-found: error
           retention-days: 7
-
-  # Builds each framework Storybook the way its Cloudflare Worker deploys it, so a broken one fails
-  # the PR instead of the deploy. It does not reuse the `build` artifacts: a static Storybook imports
-  # the package's real `dist/` (tooling/storybook preset), which the artifact does not carry, so each
-  # job builds its own package and the packages it depends on.
-  build-framework-storybooks:
-    name: Build Storybook (${{ matrix.framework }})
-    runs-on: ubuntu-latest
-    needs: build
-    timeout-minutes: 15
-    strategy:
-      fail-fast: false
-      matrix:
-        framework: [react, vue, svelte, solid, angular, qwik, astro]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-
-      - name: Build package
-        run: pnpm --filter "@inkline/${{ matrix.framework }}..." build
-
-      - name: Build storybook
-        run: pnpm --filter "@inkline/${{ matrix.framework }}" run storybook:build
 
   ci-success:
     name: CI Success
     runs-on: ubuntu-latest
-    needs:
-      [
-        build,
-        build-storybook,
-        build-website,
-        lint,
-        typecheck,
-        test,
-        visual-parity,
-        build-framework-storybooks,
-      ]
+    needs: [build, build-website, lint, typecheck, test, component-tests, visual]
     if: always()
     steps:
       # `skipped` stays allowed, so a needed job that gains a job-level `if:` later

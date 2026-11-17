@@ -1,235 +1,135 @@
 # Authoring components
 
-How to add or modify an Inkline component. All components are authored in `.ink.tsx` files inside [`ui/components/`](../ui/components/) and compile to every framework target on rebuild.
+How to add or change an Inkline component. Every component is a `.uf.tsx` file in [`ui/components/`](../ui/components/), which [Unframework](https://unframework.dev) compiles to all seven frameworks.
 
-For the user-facing language reference (primitives, control flow, lifecycle), the canonical source is [`core/compiler/README.md`](../core/compiler/README.md) — this document is the **contributor-facing** companion: where files live, how to wire a new component into the build, how to add stories and tests.
-
-For the compiler's internals, see [architecture.md](./architecture.md).
+This page covers where the files live, how a component is put together and how to test it. For the language itself, its props, state, models, slots and events, read [Unframework's documentation](https://unframework.dev/docs). For how the packages are built, read [architecture.md](./architecture.md).
 
 ## Where components live
 
 ```
-ui/components/src/components/<name>/
-├── headless/
-│   ├── I<Name>Base.ink.tsx        ← behavior only, no styling
-│   └── I<Name>Base.ink.test.ts    ← colocated cross-target tests
-├── styled/
-│   ├── I<Name>.ink.tsx            ← composes headless + styleframe recipe class
-│   ├── I<Name>.styleframe.ts      ← registers the component's styleframe recipe
-│   └── I<Name>.ink.test.ts
-└── stories/
-    ├── I<Name>.ink.stories.ts     ← defineStories meta (title, args, story exports)
-    └── <Variant>.ink.tsx          ← per-variant render helpers, authored in .ink.tsx
+ui/components/
+├── src/components/<name>/
+│   ├── types.ts                           ← the family's props types
+│   ├── headless/I<Name>Base.uf.tsx        ← behaviour, with no styling
+│   ├── styled/I<Name>.uf.tsx              ← composes the headless parts, with the recipes
+│   ├── styled/I<Name>.styleframe.ts       ← registers the family's Styleframe recipes
+│   └── examples/<Example>.example.uf.tsx  ← one per variant, rendered on every target
+└── test/<name>/<case>/                    ← one case per component
 ```
 
-Example: [`ui/components/src/components/badge/`](../ui/components/src/components/badge/) — the canonical pattern to copy.
+[`ui/components/src/components/badge/`](../ui/components/src/components/badge/) is the pattern to copy.
 
 The split between `headless/` and `styled/` is deliberate:
 
-- **Headless** components define structure, slots, props, events. No design tokens, no class names from `styleframe`. They are the testable, themable behavioral primitives.
-- **Styled** components wrap the headless one and apply `styleframe`-generated classes from `virtual:styleframe`.
+- **Headless** components define structure, slots, props, models and events, with no design tokens and no recipe classes. They're the behaviour and accessibility a consumer can style their own way.
+- **Styled** components compose the headless ones and give each the class its recipe returns.
 
-Consumers of `@inkline/{react,vue,…}` import the styled variant by default. The headless variants are available for users who want to ship custom styling.
+Consumers of `@inkline/{react,vue,…}` import the styled components from the package's root, and the headless ones from `/headless`.
 
 ## A minimal component
 
-From [`ui/components/src/components/badge/headless/IBadgeBase.ink.tsx`](../ui/components/src/components/badge/headless/IBadgeBase.ink.tsx):
+A headless badge renders its default slot, or its `label` when the slot is empty:
 
-```tsx
-import { defineComponent, defineProps, defineSlot, Slot } from "@inkline/core";
+```tsx [badge/headless/IBadgeBase.uf.tsx]
+import { defineSlots } from "@uxfront/unframework";
+import type { Element } from "@uxfront/unframework";
 
-export interface BadgeBaseProps {
-  label?: string;
+import type { BadgeBaseProps } from "../types.ts";
+
+export default function IBadgeBase({ label }: BadgeBaseProps) {
+  const slots = defineSlots<{ default?(): Element }>();
+
+  return <div>{slots.default?.() ?? label}</div>;
 }
-
-export default defineComponent(
-  {
-    meta: { headless: true },
-  },
-  () => {
-    const props = defineProps<BadgeBaseProps>();
-    defineSlot();
-
-    return (
-      <div class="badge">
-        <Slot>{props.label}</Slot>
-      </div>
-    );
-  },
-);
 ```
 
-Four things to notice:
+The styled badge passes its recipe's class to the headless root, where it falls through:
 
-1. **`defineComponent` is the sole entry point.** It accepts either `(setup)` or `(options, setup)`. Use the options form for the keys the macros do not cover — `meta` here.
-2. **`defineProps<T>()` declares the props.** That is one of three supported channels, and the primary one — see "Declaring props" below.
-3. **`defineSlot` declares a slot; `<Slot>` renders it.** Both are imported from `@inkline/core`. `defineSlot()` declares the default slot, which an unnamed `<Slot>` renders; `defineSlot("prefix")` declares a named one, which `<Slot name="prefix" />` renders. The options object's `slots` map is the alternative channel — reach for it when a slot needs `required` or `scoped`, which `defineSlot` does not carry. See [`core/compiler/README.md`](../core/compiler/README.md) → "Slots".
-4. **`meta: { headless: true }` marks a behavior-only component.** On Angular this makes the compiler emit an attribute-selector host component (and lets a styled wrapper collapse onto it) so no wrapper element ships — see [architecture.md](./architecture.md) → "Cross-framework strategy". The other six targets are unaffected. The headless root must be a single static element; a fragment or conditional root keeps the element-selector wrapper and emits `INK0111`.
+```tsx [badge/styled/IBadge.uf.tsx]
+import { defineSlots } from "@uxfront/unframework";
+import type { Element } from "@uxfront/unframework";
+import { badgeRecipe } from "virtual:styleframe";
 
-The styled variant ([`IBadge.ink.tsx`](../ui/components/src/components/badge/styled/IBadge.ink.tsx)) composes the headless one:
+import IBadgeBase from "../headless/IBadgeBase.uf.tsx";
+import type { BadgeProps } from "../types.ts";
 
-```tsx
-import { defineComponent, defineProps, defineSlot, Slot, createMemo } from "@inkline/core";
-import IBadgeBase, { type BadgeBaseProps } from "../headless/IBadgeBase.ink.tsx";
-import { badgeRecipe, type BadgeRecipeProps as BadgeStylingProps } from "virtual:styleframe";
+export default function IBadge({ label, color, variant, size }: BadgeProps) {
+  const slots = defineSlots<{ default?(): Element }>();
 
-export interface BadgeProps extends BadgeBaseProps, BadgeStylingProps {}
-
-export default defineComponent({ meta: { headless: true } }, () => {
-  const props = defineProps<BadgeProps>();
-  defineSlot();
-
-  const className = createMemo(() =>
-    badgeRecipe({ color: props.color, variant: props.variant, size: props.size }),
-  );
   return (
-    <IBadgeBase class={className()}>
-      <Slot>{props.label}</Slot>
+    <IBadgeBase class={badgeRecipe({ color, variant, size })}>
+      {slots.default?.() ?? label}
     </IBadgeBase>
   );
-});
+}
 ```
 
-`badgeRecipe` is imported from `virtual:styleframe`; it maps the styling props (`color`, `variant`, `size`) to a class name. The recipe is registered in [`IBadge.styleframe.ts`](../ui/components/src/components/badge/styled/IBadge.styleframe.ts). `virtual:styleframe` is provided by the `styleframe` integration; the resolved classnames live in each framework's `.styleframe/` directory (auto-generated — never hand-edit).
+A headless root carries no class of its own when a styled component passes it a recipe, since the recipe's class already includes the component's name.
 
-### Attribute fallthrough
+## Props types
 
-This composition relies on **attribute fallthrough** (Vue-style attribute inheritance): when a parent passes attributes to a component, the compiler forwards them onto that component's root element. `class` is **merged** with the root's own class; every other non-prop attribute (`id`, `aria-*`, `data-*`, event handlers) is spread onto the root. That is how the styled variant's `badge(props)` classes reach the headless `<div class="badge">`.
+Each family declares its props in its `types.ts`, a plain module every output copies. Vue's compiler can't read a props type from another component's file, so don't export a props type from a `.uf.tsx` file.
 
-Fallthrough requires a **single host-element (or component-instance) root**. A component whose root is a fragment, control-flow block, or multiple elements cannot inherit attributes — the compiler emits diagnostic `INK0120` if a parent passes a class to such a component.
+A recipe's props come from [`ui/components/src/recipes.ts`](../ui/components/src/recipes.ts), with `Pick`:
 
-Per-target notes:
+```ts [badge/types.ts]
+import type { BadgeRecipeProps } from "../../recipes.ts";
 
-- **React / Solid / Svelte / Qwik / Astro** — the inherited attributes are spread onto the rendered root element and `class` is merged there.
-- **Vue** — handled natively by Vue's default `inheritAttrs`.
-- **Angular** — a `class`/`[class]` passed to a plain component is applied natively to its **host element** (the component selector), which the compiler renders with `display: contents` so it lays out transparently. For `meta: { headless: true }` components the compiler instead emits attribute-selector hosts and collapses the styled-over-headless pair, so classes merge onto the real root element with zero wrapper — see [architecture.md](./architecture.md) → "Cross-framework strategy".
+export interface BadgeProps
+  extends BadgeBaseProps, Pick<BadgeRecipeProps, "color" | "variant" | "size"> {}
+```
 
-### Markup is type-checked
+`src/recipes.ts` is generated. When you change a `*.styleframe.ts` file, write it again with `node scripts/recipes.ts` from `ui/components`, or `pnpm test:recipes` fails.
 
-Intrinsic elements carry real attribute types, so `<div className="x">`, `<button onClik={…}>`, `<input disabled="yes-please">` and `<notatag />` are all compile errors, and event handlers get real event objects (`e.currentTarget` is the element, not `any`). Write HTML attribute names — `class`, `for` — not React's DOM-property names.
+## Adding a component
 
-Four things it deliberately does **not** catch, so you know where you are on your own:
+1. Create `ui/components/src/components/<name>/` with its `types.ts`, `headless/`, `styled/` and `examples/`. The build ships a component only from a `styled/` or `headless/` directory.
+2. Author the headless parts, then the styled component that composes them, and register its recipes in a `*.styleframe.ts` file. Run `node scripts/recipes.ts`.
+3. Add an example for each variant (below), and a test case for each component (below).
+4. Run `pnpm build`, `pnpm test:targets` and `pnpm visual` in `ui/components`, and `unframework check` to see every diagnostic.
+5. Add the new exports to each framework package's `test/api.json`, with the command in that package's `AGENTS.md`.
+6. Add a changeset for each framework package before you open a PR. See [release-process.md](./release-process.md).
 
-- Misspelled props on Inkline components (`<IButton colr="light" />`) — component props are untyped.
-- Misspelled hyphenated attributes (`aria-hiddenn`) — TypeScript exempts every non-identifier JSX attribute name, which is also what makes `data-*` work.
-- Invalid members of open string unions (`<input type="nonsense" />`).
-- Unknown `$`-prefixed directives — those are the compiler's vocabulary, and the compiler diagnoses them.
+## Examples
 
-The full rationale, including why the surface is borrowed rather than written by hand and why it is vendored rather than depended on, is [ADR-003](./adrs/003-typed-jsx-intrinsic-elements-from-a-vendored-upstream.md).
+An example is a `*.example.uf.tsx` file whose default export takes no props. It renders the component the way a page would, with the props, slots and models it shows written into it, and imports `virtual:styleframe.css`. `pnpm visual` renders every example on every target and compares each with Vue's, and `pnpm dev` shows them all side by side.
 
-## Declaring props
+```tsx [badge/examples/BadgeSizes.example.uf.tsx]
+import "virtual:styleframe.css";
+import IBadge from "../styled/IBadge.uf.tsx";
 
-A component declares its props through exactly **one** of three channels:
-
-| Channel                                   | Use it when                                                                               |
-| ----------------------------------------- | ----------------------------------------------------------------------------------------- |
-| `defineProps<T>()` / `defineProps({ … })` | Default. The declaration sits at the call site, with nothing to register anywhere else.   |
-| The setup parameter's type annotation     | A tool outside the compiler has to read the props type off the setup signature.           |
-| The options object's `props` map          | You are already passing an options object and want its per-prop defaults in the same map. |
-
-Declaring through two of them is `INK0047`, an error. A mismatched pair compiles clean and emits props the body never reads, so the compiler refuses the pair instead of picking a winner.
-
-`defineProps` is the documented primary style ([ADR-010](./adrs/010-defineprops-joins-the-macro-family.md), decision 5):
-
-```tsx
-import { defineComponent, defineProps, defineSlot, Slot } from "@inkline/core";
-
-export interface BadgeProps {
-  label?: string;
-}
-
-export default defineComponent({ meta: { headless: true } }, () => {
-  const props = defineProps<BadgeProps>();
-  defineSlot();
+export default function BadgeSizes() {
   return (
-    <div class="badge">
-      <Slot>{props.label}</Slot>
+    <div>
+      <IBadge size="sm">Small</IBadge>
+      <IBadge size="lg">Large</IBadge>
     </div>
   );
-});
+}
 ```
-
-The type argument may be an inline object type, or an `interface` / `type`, including one imported from another module. `defineProps({ … })` takes the same declaration map the options object's `props` key takes, which is the form to use when a prop needs a declared default.
-
-Two rules apply to the binding:
-
-- **Name it `props`.** Every target emits and rewrites the props object under that fixed name, so a read through a binding under any other name is copied to the output unrewritten — the emitted component then references an identifier it never declares. That is `INK0074`, an error, on the macro channel and the setup parameter alike. The rule fires on a **read** of the binding, matched on its symbol and not on its name: a binding nothing reads is erased with its declaration and stays legal, and a same-named local in a sibling component never triggers it.
-- **Never destructure it.** Solid passes props as a reactive proxy; destructuring snapshots the value once and freezes it. The Solid target enforces this with the `requirePropsNotDestructured` conformance invariant.
-
-**`defineProps` does not improve parent-side typing.** A consumer still gets no checking on `<IButton colr="light" />` — the same limitation listed under "Markup is type-checked" above. The road to typed parent props is Option D in [ADR-010](./adrs/010-defineprops-joins-the-macro-family.md), and it is uncosted.
-
-**The corpus declares props and slots at the call site.** Every component under `ui/components/` uses `defineProps` (UXF-250) and `defineSlot` (UXF-251) — no options `props` or `slots` key remains. The other channels are still legal and still tested; write new components in the macro form.
-
-### Macro grammar
-
-`defineProps`, `defineModel`, `defineEmits`, `defineSlot` and `hasSlot` are macros: the compiler reads them at build time and erases them. Four rules an author can hit:
-
-- **Call a macro at the top level of the setup body** — never in a condition, a loop, or a nested function. A macro is erased, so a nested call still declares unconditionally while reading as if it did not (`INK0049`). `hasSlot` is exempt: it is a query, not a declaration, so it is legal anywhere in the setup body.
-- **Bind the result** — `const props = defineProps<P>()`, `const emit = defineEmits(…)`, `const [value, setValue] = defineModel()`. The binding is the only way to reach what the macro declares, and the call itself is erased, so a bare `defineProps();` reads as a declaration while being none (`INK0075`). `defineSlot` is the exception: the call declares the slot on its own, and the binding only names it for the render tree. Write `defineSlot();` when the component renders the slot as `<Slot>`, and bind it when the render tree places the slot by name.
-- **Pass statically analyzable arguments** — a string literal, an array of string literals, or an object literal (`INK0048`). `defineModel` reports its own argument rule under `INK0043`.
-- **One declaration channel per concern** — props are `INK0047`, an error; an event name declared in both `defineEmits` and the options `events` map is `INK0046`, a warning. A slot name declared twice — in both `defineSlot` and the options `slots` map, or twice on one of them — is `INK0076`, a warning; the first declaration wins, so across channels the options entry survives. Declare each slot in one place.
-
-## Authoring primitives
-
-The full primitive set is documented in [`core/compiler/README.md`](../core/compiler/README.md). Quick reference:
-
-| Need                   | Primitive                       | From            |
-| ---------------------- | ------------------------------- | --------------- |
-| Props                  | `defineProps<T>()`              | `@inkline/core` |
-| Reactive state         | `createSignal(initial)`         | `@inkline/core` |
-| Two-way model          | `defineModel("value")`          | `@inkline/core` |
-| Custom events          | `defineEmits([...]) → emit`     | `@inkline/core` |
-| Derived value          | `createMemo(() => expr)`        | `@inkline/core` |
-| Side effect            | `createEffect(() => { … })`     | `@inkline/core` |
-| Element ref            | `createRef()`                   | `@inkline/core` |
-| Lifecycle              | `onMount`, `onCleanup`          | `@inkline/core` |
-| Conditional            | `<Show when={…} fallback={…}>`  | `@inkline/core` |
-| List                   | `<For each={…} key={…}>`        | `@inkline/core` |
-| Switch / Match         | `<Switch>` + `<Match when={…}>` | `@inkline/core` |
-| Named / scoped slot    | `<Slot>` + `defineSlot`         | `@inkline/core` |
-| Slot-presence check    | `hasSlot("name")`               | `@inkline/core` |
-| Conditional transition | `<Transition name="…" appear?>` | `@inkline/core` |
-
-All primitives are authoring-time — the compiler removes them from emitted output. No `@inkline/core` runtime dependency is shipped to consumers.
-
-## Adding a new component
-
-1. Create the directory: `ui/components/src/components/<name>/{headless,styled,stories}/`.
-2. Author `headless/I<Name>Base.ink.tsx` with behavior only.
-3. Author `styled/I<Name>.ink.tsx` that composes the headless one.
-4. Re-export from [`ui/components/src/components/index.ts`](../ui/components/src/components/index.ts) so it picks up in the compile step.
-5. Add at least one story per variant under `stories/` (see "Stories" below).
-6. Add fixture-based scenarios under [`core/compiler/src/__fixtures__/`](../core/compiler/src/__fixtures__/) if the component exercises a compiler feature not already covered (rarely needed for normal components).
-7. Run `pnpm run storybook` and verify the component works across all seven targets.
-8. Every story is automatically pixel-diffed across the 7 frameworks by the visual-parity suite ([`testing/e2e/`](../testing/e2e/), `pnpm run test:e2e`). If the component has stateful visuals (hover, press, typing), add interaction steps in [`testing/e2e/scenarios.ts`](../testing/e2e/scenarios.ts).
-9. Add a changeset (`pnpm changeset`) before opening a PR — see [release-process.md](./release-process.md).
-
-## Stories
-
-Stories are also authored in `.ink.tsx` and compiled per-framework into [`ui/<framework>/.inkline/`](../ui/) by the CLI's story generator. Use the `defineStories` helper from [`@inkline/storybook`](../tooling/storybook/) to keep types tight.
-
-Set `title` to `Components/<Category>/<Component>` — the `title` is the Storybook sidebar path, and the category segment groups the component in the sidebar. Current buckets: `Actions`, `Feedback`, `Forms`, `Navigation` (add a new one when no existing category fits). Don't fall back to a flat `Components/<Component>`, or the component lands ungrouped.
-
-Each story file represents a single variant (colors, sizes, states). See [`ui/components/src/components/badge/stories/`](../ui/components/src/components/badge/stories/) for the canonical layout. The unified Storybook aggregator ([`apps/storybook/`](../apps/storybook/)) consumes the compiled output and displays variants for every framework side-by-side.
 
 ## Testing
 
-Component-level tests use [`@inkline/test-utils`](../tooling/test-utils/) and Vitest, colocated as `I<Name>.ink.test.ts` per [conventions.md](./conventions.md). They assert compilation to all 7 targets (`compileComponent`, `expectCompilationSuccess`, `assertConformance`, `snapshotOutput`, …) and real-DOM behavior via Angular SSR — `mountStyledOnAngular` from the shared [`angular-ssr-helper.ts`](../ui/components/src/components/angular-ssr-helper.ts). During coverage runs, the SSR helper also drives the component through the React target (`coverInkViaReact`), so V8 line/branch coverage is remapped back onto the authored `.ink.tsx`.
+Each component has a case under `ui/components/test/<name>/<case>/`, which `pnpm test:targets` runs on every target with `@unframework.dev/testing`. A case holds:
 
-For compiler-level coverage (does the IR represent your construct correctly across all targets?), add a fixture under [`core/compiler/src/__fixtures__/`](../core/compiler/src/__fixtures__/) and extend [`scenarios.ts`](../core/compiler/src/__fixtures__/) with DOM assertions. This is rare in normal component work — only needed when you exercise an untested compiler path.
+- One spec, `<case>.test.ts`.
+- A harness parent, `<Case>.uf.tsx`, where the component needs a slot filled or a model bound. Never give it a component's file name.
+- `case.json`, with the scenarios a server render renders too.
+- `__expected__/`, what Vue rendered, which every target must match. `pnpm test:targets --update` writes it, and you review it as code.
+
+A spec checks the component's ARIA tree with `toHaveAriaTree`, axe-core with `toHaveNoAxeViolations`, each documented prop and state, its models and its keyboard paths. Act through `view.user`, and follow every action with `view.expectParity(name)`. Give a test that clicks or types `{ requires: ["interactivity"] }`, since Astro runs no client code. [Unframework's testing page](https://unframework.dev/docs/tooling/testing) covers the API.
 
 ## Common gotchas
 
-- **`<For>` without `key`** emits `INK0050` (warning). Always supply a key.
-- **`<Show>` without `when`** is a hard error (`INK0060`). Conditional rendering must specify its condition.
-- **`<Transition>` must wrap a single conditional element.** Multiple children or wrapping `<For>` is rejected (`INK0065`-style diagnostics) — see [architecture.md](./architecture.md) → "Where `<Slot>` and `<Transition>` live".
-- **Component refs are deferred to v1.** Element refs work; component refs emit `INK0070`. See [scope.md](./scope.md) → "Deferred to v1".
-- **Dynamic reactive reads** (e.g. `obj[key()]`) prevent static dependency tracking and emit `INK0020`. Prefer destructuring or computed signals.
+- **Only `class` and `style` fall through.** Every other attribute a parent passes must be a prop the component declares.
+- **Form state is a model, not an attribute.** Bind a control's `value` or `checked` with `v-model`, never as an attribute.
+- **React fires a checkbox's or a radio's `change` from the click itself,** before a click handler can cancel it. A read-only control that cancels its click must also put back any value the change writes, as `ICheckboxControlBase` and `IRadioGroup` do.
+- **Default-slot presence doesn't work on Angular and Qwik.** Render a default slot, or give it a fallback, but don't test whether it's filled. A named slot works everywhere.
 
-The full diagnostic table is in [`core/compiler/src/core/diagnostics/codes.ts`](../core/compiler/src/core/diagnostics/codes.ts) — that's the canonical source if docs drift.
+`pnpm exec unframework explain <code>` explains a diagnostic.
 
 ## See also
 
-- [architecture.md](./architecture.md) — how the compiler turns your `.ink.tsx` into seven framework outputs.
-- [`core/compiler/README.md`](../core/compiler/README.md) — full language reference for `.ink.tsx`.
-- [conventions.md](./conventions.md) — file naming, tests, commits.
+- [architecture.md](./architecture.md): how a component becomes seven packages.
+- [Unframework's documentation](https://unframework.dev/docs): the language reference.
+- [conventions.md](./conventions.md): file naming, tests and commits.

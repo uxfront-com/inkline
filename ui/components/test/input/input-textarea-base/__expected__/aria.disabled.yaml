@@ -1,0 +1,4 @@
+- text: Name
+- textbox "Name" [disabled]:
+  - /placeholder: Your name
+- status

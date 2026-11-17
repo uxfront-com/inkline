@@ -1,0 +1,8 @@
+{
+  "description": "The headless checkbox label, which names the control it wraps.",
+  "ssr": {
+    "default": {
+      "props": {}
+    }
+  }
+}

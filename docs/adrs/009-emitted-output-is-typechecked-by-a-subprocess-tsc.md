@@ -1,8 +1,8 @@
 # ADR-009: Emitted output is typechecked by a subprocess `tsc`, on react and solid only
 
-Date: 2026-08-27 · Status: Accepted
+Date: 2026-08-27 · Status: Superseded
 Deciders: Project owner (landed as [#589](https://github.com/inkline/inkline/pull/589), `d6e9ad7`, 2026-08-27) · Informed by: internal tracker UXF-205 (harness verdict and receipts), UXF-206 (this record), parent UXF-204
-Supersedes: — · Superseded by: —
+Supersedes: — · Superseded by: [ADR-012](./012-components-compile-with-unframework.md)
 
 > **Replaces a draft that never landed.** A `Proposed` ADR written 2026-08-11 — _"ADR-008: Emitted
 > output is typechecked in the unit suite, in-process, behind a poison test"_ — described this gate
@@ -19,9 +19,9 @@ and how far that check reaches.
 
 ### What was believed, what was true
 
-**Believed.** `typecheckEmittedForTarget` ([`core/compiler/src/testing/typecheck.ts`](../../core/compiler/src/testing/typecheck.ts))
+**Believed.** `typecheckEmittedForTarget` ([`core/compiler/src/testing/typecheck.ts`](https://github.com/uxfront-com/inkline/blob/e57570bc46976b320929a76141cce799402075c5/core/compiler/src/testing/typecheck.ts))
 ran `tsc` over emitted output across four targets in a 420-test sweep.
-[`core/compiler/docs/testing.md`](../../core/compiler/docs/testing.md) said it "verifies that emitted
+[`core/compiler/docs/testing.md`](https://github.com/uxfront-com/inkline/blob/e57570bc46976b320929a76141cce799402075c5/core/compiler/docs/testing.md) said it "verifies that emitted
 code is type-safe." The 2026-08-11 draft recorded the gate as already fixed by an in-process
 `ts.createProgram`, with a `checkedFiles` field on the result, react only, 80 of 105 fixtures, and a
 25-entry exclusion list in `src/testing/typecheck-fixtures.ts` keyed by `EXCLUSIONS.react`.
@@ -83,7 +83,7 @@ react and solid, with every known failure quarantined per `(fixture, target)` pa
    (`typecheck.test.ts:113-114, 166-173`). Angular, qwik and astro declare `tsconfig: ""` and are
    outside the gate entirely.
 6. **Known failures are quarantined, not waived.** `EXCLUSIONS` in
-   [`typecheck-fixtures.ts`](../../core/compiler/src/testing/typecheck-fixtures.ts) names each
+   [`typecheck-fixtures.ts`](https://github.com/uxfront-com/inkline/blob/e57570bc46976b320929a76141cce799402075c5/core/compiler/src/testing/typecheck-fixtures.ts) names each
    excluded fixture with the TypeScript codes it suppresses, grouped by root cause. A staleness test
    compiles every excluded pair and fails when one starts passing, so the list can only shrink. No
    wildcards; no entry without codes.

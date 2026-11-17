@@ -1,0 +1,4 @@
+- checkbox "Accept" [checked]
+- text: Accept
+- status: "on"
+- button "Select all"

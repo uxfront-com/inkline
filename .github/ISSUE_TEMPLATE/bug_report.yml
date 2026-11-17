@@ -1,5 +1,5 @@
 name: 🐛 Bug report
-description: Report a defect in the compiler, a primitive, the tooling, or a generated framework output.
+description: Report a defect in a component, a framework package or the website.
 title: "[Bug]: "
 labels: ["bug", "triage"]
 body:
@@ -33,16 +33,13 @@ body:
     attributes:
       label: Minimal reproduction
       description: >
-        The smallest input that triggers the bug. For compiler bugs, include the authored `.ink.tsx`
-        snippet and the steps to reproduce. A link to a repository or playground is ideal.
+        The smallest input that triggers the bug: the component, its props and the steps to
+        reproduce. A link to a repository or playground is ideal.
       placeholder: |
-        Steps / repro link, plus the authored source:
+        Steps / repro link, plus the code that renders the component:
 
         ```tsx
-        // Button.ink.tsx
-        export const Button = component(() => {
-          // …
-        });
+        <IButton label="Save changes" />
         ```
     validations:
       required: true
@@ -57,7 +54,7 @@ body:
     id: actual
     attributes:
       label: Actual behavior
-      description: What actually happened? Include any compiler diagnostics or the problematic generated output.
+      description: What actually happened? Include any console errors or the rendered HTML.
     validations:
       required: true
   - type: dropdown
@@ -74,7 +71,7 @@ body:
         - Angular
         - Qwik
         - Astro
-        - All / framework-agnostic (compiler/core)
+        - All frameworks
         - Not applicable
     validations:
       required: true
@@ -82,18 +79,10 @@ body:
     id: area
     attributes:
       label: Affected area / package
-      description: Which part of the toolchain is involved?
+      description: Which part of Inkline is involved?
       options:
-        - Compiler (@inkline/compiler)
-        - Authoring primitives (@inkline/core)
-        - Bundler plugin (@inkline/plugin)
-        - CLI (@inkline/cli)
-        - Config loader (@inkline/config-loader)
-        - Barrel package (inkline)
-        - Components (Badge / Button / Input)
-        - A framework output package (@inkline/react, vue, …)
-        - Storybook integration (@inkline/storybook)
-        - Test utils (@inkline/test-utils)
+        - A component (Badge, Button, Checkbox, …)
+        - A framework package (@inkline/react, vue, …)
         - Docs / website
         - Other / not sure
     validations:
@@ -104,7 +93,7 @@ body:
       label: Environment
       description: Run the commands below and paste the output. Include `vp env doctor` if the issue looks tooling-related.
       value: |
-        - Inkline: # pnpm list inkline @inkline/compiler
+        - Inkline: # pnpm list "@inkline/*"
         - Node:    # node -v
         - pnpm:    # pnpm -v
         - OS:

@@ -1,8 +1,8 @@
 # ADR-001: Invest compiler DX in diagnostics, ordered coverage → rendering → prose
 
-Date: 2026-07-27 · Status: Accepted
+Date: 2026-07-27 · Status: Superseded
 Deciders: Project owner · Informed by: internal tracker UXF-70 (goal), UXF-71 (friction audit), UXF-72 (prior-art survey)
-Supersedes: — · Superseded by: —
+Supersedes: — · Superseded by: [ADR-012](./012-components-compile-with-unframework.md)
 
 ## Context
 
@@ -11,7 +11,7 @@ experience. Two investigations ran in parallel and independently: a survey of pr
 compiler and toolchain developer experience, and a hands-on friction audit of this repository.
 
 **Scope note.** The compiler in `core/compiler` is a _component_ compiler — `.ink.tsx` with signal
-primitives to per-target component output via a typed IR ([`core/compiler/package.json`](../../core/compiler/package.json)).
+primitives to per-target component output via a typed IR ([`core/compiler/package.json`](https://github.com/uxfront-com/inkline/blob/e57570bc46976b320929a76141cce799402075c5/core/compiler/package.json)).
 It is not a styling engine. Styling belongs to the upstream `styleframe` project, so
 token-authoring prior art (Tailwind v4 `@theme`, UnoCSS) was routed there and is out of scope here.
 
@@ -21,13 +21,13 @@ for build-architecture work ahead of everything else.
 
 **The diagnostic data model is mostly right; the renderer is not.** Today the compiler has 29 stable
 codes with severity, an optional `help` channel, and a canonical docs URL
-([`core/compiler/src/core/diagnostics/codes.ts`](../../core/compiler/src/core/diagnostics/codes.ts)),
+([`core/compiler/src/core/diagnostics/codes.ts`](https://github.com/uxfront-com/inkline/blob/e57570bc46976b320929a76141cce799402075c5/core/compiler/src/core/diagnostics/codes.ts)),
 typed placeholder parameters, an auto-generated reference
-([`core/compiler/scripts/gen-diagnostics.ts`](../../core/compiler/scripts/gen-diagnostics.ts)), and a
+([`core/compiler/scripts/gen-diagnostics.ts`](https://github.com/uxfront-com/inkline/blob/e57570bc46976b320929a76141cce799402075c5/core/compiler/scripts/gen-diagnostics.ts)), and a
 `SourceLocation` that carries `offset` and `length`
-([`core/compiler/src/ir/types.ts`](../../core/compiler/src/ir/types.ts)). The CLI formatter is ten
+([`core/compiler/src/ir/types.ts`](https://github.com/uxfront-com/inkline/blob/e57570bc46976b320929a76141cce799402075c5/core/compiler/src/ir/types.ts)). The CLI formatter is ten
 lines and prints `file:line:col severity code title` plus `help` and `docs`
-([`tooling/cli/src/lib/diagnostics.ts`](../../tooling/cli/src/lib/diagnostics.ts)). It never prints
+([`tooling/cli/src/lib/diagnostics.ts`](https://github.com/uxfront-com/inkline/blob/e57570bc46976b320929a76141cce799402075c5/tooling/cli/src/lib/diagnostics.ts)). It never prints
 the user's source. The span data needed to draw a code frame is carried the whole way through the
 pipeline and discarded at the last step. The survey and the audit reached this conclusion
 separately and cited the same file.
@@ -42,7 +42,7 @@ a diagnostic that never fires is worth nothing, so coverage has to precede rende
 **Prose quality is measurably incomplete.** 7 of the 29 codes carry `help: undefined` (`INK0060`,
 `INK0061`, `INK0062`, `INK0065`, `INK0066`, `INK0080`, `INK0090`). Separately, `DiagnosticParams`
 extracts placeholders from `title` only, and the collector interpolates `title` but assigns `help`
-verbatim ([`core/compiler/src/core/diagnostics/collector.ts`](../../core/compiler/src/core/diagnostics/collector.ts)),
+verbatim ([`core/compiler/src/core/diagnostics/collector.ts`](https://github.com/uxfront-com/inkline/blob/e57570bc46976b320929a76141cce799402075c5/core/compiler/src/core/diagnostics/collector.ts)),
 so `help` strings containing `{name}` reach the terminal with the braces intact — `INK0121` does this
 three times in one sentence.
 

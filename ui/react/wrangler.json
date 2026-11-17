@@ -1,8 +1,0 @@
-{
-  "name": "inkline-storybook-react",
-  "compatibility_date": "2026-09-21",
-  "assets": {
-    "directory": "./storybook-static"
-  },
-  "previews": {}
-}
