@@ -308,10 +308,50 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
+  # Builds the component explorer the way the `inkline-storybook` Worker's Workers Builds does
+  # (ui/components/wrangler.json), so a change that breaks it can't merge.
+  build-preview:
+    name: Build Preview
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build the components
+        run: pnpm --filter "@inkline/components..." build
+
+      # Every example and component on every target, as a static site in ui/components/preview.
+      - name: Build the preview
+        run: pnpm --filter @inkline/components run preview:build
+
+      - name: Upload the preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: preview
+          path: ui/components/preview
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
+
   ci-success:
     name: CI Success
     runs-on: ubuntu-latest
-    needs: [build, build-website, lint, typecheck, test, component-tests, visual]
+    needs: [build, build-website, lint, typecheck, test, component-tests, visual, build-preview]
     if: always()
     steps:
       # `skipped` stays allowed, so a needed job that gains a job-level `if:` later

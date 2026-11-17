@@ -12,7 +12,6 @@ const EXCLUDED_DIRS = new Set([
   "generated",
   ".styleframe",
   "coverage",
-  "storybook-static",
   ".context",
   ".turbo",
   ".vite-hooks",

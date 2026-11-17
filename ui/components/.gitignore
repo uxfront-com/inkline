@@ -5,3 +5,5 @@ dist/
 .live/
 .vitest/
 .unframework/
+# The static preview `preview:build` writes, which `wrangler.json` deploys.
+preview/
