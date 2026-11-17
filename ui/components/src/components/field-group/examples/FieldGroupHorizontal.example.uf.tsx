@@ -5,6 +5,7 @@ import IButton from "../../button/styled/IButton.uf.tsx";
 
 // Join a control and a button into one unit by making them direct children of the field group, the
 // supported replacement for the Input's removed prepend/append addons.
+/** @category Components/Forms/FieldGroup */
 export default function FieldGroupHorizontal() {
   return (
     <div>

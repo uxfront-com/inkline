@@ -3,6 +3,7 @@ import "virtual:styleframe.css";
 import ICheckbox from "../styled/ICheckbox.uf.tsx";
 
 // Each box owns its own ref via `v-model:checked`, so every one toggles independently.
+/** @category Components/Forms/Checkbox */
 export default function CheckboxSizes() {
   const small = ref(true);
   const medium = ref(true);

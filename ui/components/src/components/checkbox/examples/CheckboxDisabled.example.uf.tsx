@@ -4,6 +4,7 @@ import ICheckbox from "../styled/ICheckbox.uf.tsx";
 
 // Disabled demonstrates the non-interactive state: the box keeps its bound value but a disabled
 // checkbox takes no input, so it does not toggle, that is the point of this example.
+/** @category Components/Forms/Checkbox */
 export default function CheckboxDisabled() {
   const checked = ref(false);
   return (

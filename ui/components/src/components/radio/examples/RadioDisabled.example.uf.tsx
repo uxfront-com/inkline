@@ -4,6 +4,7 @@ import IRadioGroup from "../styled/IRadioGroup.uf.tsx";
 
 // Group-level `disabled`: the selection ("apple") stays visible but nothing can be clicked, that's
 // the point of the example. The ref still backs `value` so the default selection renders.
+/** @category Components/Forms/Radio */
 export default function RadioDisabled() {
   const value = ref<string | undefined>("apple");
   return (

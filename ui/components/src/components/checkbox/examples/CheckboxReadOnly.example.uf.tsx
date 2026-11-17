@@ -4,6 +4,7 @@ import ICheckbox from "../styled/ICheckbox.uf.tsx";
 
 // `readonly` freezes the value while keeping the box focusable and announcing `aria-readonly`, unlike
 // disabled. The ref backs `checked` so the seeded state renders; clicks can't change it, by design.
+/** @category Components/Forms/Checkbox */
 export default function CheckboxReadOnly() {
   const checked = ref(true);
   const unchecked = ref(false);

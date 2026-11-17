@@ -2,6 +2,7 @@ import { ref } from "@uxfront/unframework";
 import "virtual:styleframe.css";
 import IHamburgerMenu from "../styled/IHamburgerMenu.uf.tsx";
 
+/** @category Components/Navigation/HamburgerMenu */
 export default function HamburgerMenuDisabled() {
   const open = ref(false);
   return (

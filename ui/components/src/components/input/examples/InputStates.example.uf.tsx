@@ -2,6 +2,7 @@ import { ref } from "@uxfront/unframework";
 import "virtual:styleframe.css";
 import IInput from "../styled/IInput.uf.tsx";
 
+/** @category Components/Forms/Input */
 export default function InputStates() {
   const readOnly = ref("Read only");
   return (

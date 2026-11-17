@@ -1,6 +1,7 @@
 import "virtual:styleframe.css";
 import IHamburgerMenu from "../styled/IHamburgerMenu.uf.tsx";
 
+/** @category Components/Navigation/HamburgerMenu */
 export default function HamburgerMenuColors() {
   return (
     <div>

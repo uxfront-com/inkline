@@ -3,6 +3,7 @@ import "virtual:styleframe.css";
 import ISwitch from "../styled/ISwitch.uf.tsx";
 
 // Two-way binding: toggling the switch updates `on`, reflected live below.
+/** @category Components/Forms/Switch */
 export default function SwitchTwoWay() {
   const on = ref(false);
   return (
