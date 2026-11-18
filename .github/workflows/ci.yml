@@ -309,8 +309,8 @@ jobs:
           retention-days: 7
 
   # Builds every preview the way Workers Builds does for its Worker: the full preview for
-  # `inkline-unframework` (ui/components/wrangler.json), and one framework's preview for each
-  # `inkline-unframework-<framework>` (ui/<framework>/wrangler.json). So a change that breaks
+  # `inkline-preview` (ui/components/wrangler.json), and one framework's preview for each
+  # `inkline-preview-<framework>` (ui/<framework>/wrangler.json). So a change that breaks
   # any of them can't merge.
   build-preview:
     name: Build Preview

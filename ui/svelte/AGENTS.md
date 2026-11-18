@@ -31,7 +31,7 @@ Peer dependency: `svelte` 5 or newer.
 
 ## Preview
 
-[`wrangler.json`](./wrangler.json) is the `inkline-unframework-svelte` Worker, which Cloudflare Workers Builds deploys with this directory as its root. It serves the Svelte preview that `pnpm --filter @inkline/components preview:build:svelte` writes to `ui/components/preview-svelte/`: every example and component on the svelte target only. [`ui/components/AGENTS.md`](../components/AGENTS.md) lists all eight preview Workers.
+[`wrangler.json`](./wrangler.json) is the `inkline-preview-svelte` Worker, which Cloudflare Workers Builds deploys with this directory as its root. It serves the Svelte preview that `pnpm --filter @inkline/components preview:build:svelte` writes to `ui/components/preview-svelte/`: every example and component on the svelte target only. [`ui/components/AGENTS.md`](../components/AGENTS.md) lists all eight preview Workers.
 
 ## See also
 

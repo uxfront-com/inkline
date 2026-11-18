@@ -1,5 +1,5 @@
 {
-  "name": "inkline-unframework-qwik",
+  "name": "inkline-preview-qwik",
   "compatibility_date": "2026-09-21",
   "assets": {
     "directory": "../components/preview-qwik"

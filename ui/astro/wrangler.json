@@ -1,5 +1,5 @@
 {
-  "name": "inkline-unframework-astro",
+  "name": "inkline-preview-astro",
   "compatibility_date": "2026-09-21",
   "assets": {
     "directory": "../components/preview-astro"

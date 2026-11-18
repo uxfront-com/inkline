@@ -14,7 +14,7 @@ ui/components/
 ├── vitest.config.ts       # `unframework test`'s cases: everything under test/
 ├── styleframe.config.ts   # Styleframe (design tokens) config
 ├── tsconfig.json          # Type-checks the sources with Unframework's JSX types
-├── wrangler.json          # The inkline-unframework Worker, which serves preview/ as static assets
+├── wrangler.json          # The inkline-preview Worker, which serves preview/ as static assets
 ├── scripts/
 │   ├── recipes.ts         # Writes src/recipes.ts from the *.styleframe.ts files
 │   ├── styleframe-types.ts # Writes .styleframe/, the types of virtual:styleframe
@@ -57,12 +57,12 @@ Each `examples/<Example>.example.uf.tsx` takes no props, and its default export 
 
 `pnpm preview:build` writes the preview as a static site to `preview/`, and `pnpm preview:build:<framework>` writes one framework's preview, built with `--target <framework>`, to `preview-<framework>/`. Git ignores both. Cloudflare Workers Builds deploys each to a Worker of its own, from the Git repository, and gives each pull request a preview URL on every Worker:
 
-| Worker                            | Serves                    | Wrangler config                                                        | Build                            |
-| --------------------------------- | ------------------------- | ---------------------------------------------------------------------- | -------------------------------- |
-| `inkline-unframework`             | Every target side by side | [`wrangler.json`](./wrangler.json)                                     | `pnpm preview:build`             |
-| `inkline-unframework-<framework>` | One target                | `ui/<framework>/wrangler.json`, like [React's](../react/wrangler.json) | `pnpm preview:build:<framework>` |
+| Worker                        | Serves                    | Wrangler config                                                        | Build                            |
+| ----------------------------- | ------------------------- | ---------------------------------------------------------------------- | -------------------------------- |
+| `inkline-preview`             | Every target side by side | [`wrangler.json`](./wrangler.json)                                     | `pnpm preview:build`             |
+| `inkline-preview-<framework>` | One target                | `ui/<framework>/wrangler.json`, like [React's](../react/wrangler.json) | `pnpm preview:build:<framework>` |
 
-The seven framework Workers are `inkline-unframework-react`, `inkline-unframework-vue`, `inkline-unframework-svelte`, `inkline-unframework-solid`, `inkline-unframework-angular`, `inkline-unframework-qwik` and `inkline-unframework-astro`. Each Worker serves `main` at `https://<worker>.<subdomain>.workers.dev`, on the Cloudflare account's `workers.dev` subdomain, so React's preview is at `https://inkline-unframework-react.<subdomain>.workers.dev`. Each config lives in its framework's package so that its Workers Builds project needs no `--config`: its root directory is `ui/<framework>`, and its `assets.directory` points back to `ui/components/preview-<framework>`. CI's `Build Preview` job builds all eight sites the same way on every pull request.
+The seven framework Workers are `inkline-preview-react`, `inkline-preview-vue`, `inkline-preview-svelte`, `inkline-preview-solid`, `inkline-preview-angular`, `inkline-preview-qwik` and `inkline-preview-astro`. Each Worker serves `main` at `https://<worker>.<subdomain>.workers.dev`, on the Cloudflare account's `workers.dev` subdomain, so React's preview is at `https://inkline-preview-react.<subdomain>.workers.dev`. Each config lives in its framework's package so that its Workers Builds project needs no `--config`: its root directory is `ui/<framework>`, and its `assets.directory` points back to `ui/components/preview-<framework>`. CI's `Build Preview` job builds all eight sites the same way on every pull request.
 
 This package has no `test` script, so the repository's `pnpm run test` doesn't run the browser tests. `pnpm run ready` runs `test:recipes` and `test:targets` after it.
 
