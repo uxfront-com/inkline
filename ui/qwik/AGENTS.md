@@ -20,7 +20,7 @@ From [`package.json`](./package.json) `exports`:
 | `./headless`     | The 17 headless parts.   |
 | `./package.json` | The manifest.            |
 
-Peer dependency: `@qwik.dev/core` 2.0.0-beta.47 exactly, the version Unframework generates the components for. Move it with the catalog when Inkline moves to a newer Unframework.
+Peer dependency: `@qwik.dev/core` 2.0.0-rc.5 exactly, the version Unframework generates the components for. Move it with the catalog when Inkline moves to a newer Unframework.
 
 [`test/api.json`](./test/api.json) records this surface: the names each entry exports and each component's props, models and events. `pnpm --filter @inkline/qwik test` rebuilds the report from `dist/` and fails when it differs. After an intended change, write it again with `node ui/components/scripts/api-report.ts qwik ui/components/dist/qwik --write` from the repository's root, and list each changed line in this package's changeset.
 
