@@ -1,5 +1,5 @@
 {
-  "name": "inkline-unframework-react",
+  "name": "inkline-preview-react",
   "compatibility_date": "2026-09-21",
   "assets": {
     "directory": "../components/preview-react"

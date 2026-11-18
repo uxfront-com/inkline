@@ -31,7 +31,7 @@ Peer dependency: `astro` 7.
 
 ## Preview
 
-[`wrangler.json`](./wrangler.json) is the `inkline-unframework-astro` Worker, which Cloudflare Workers Builds deploys with this directory as its root. It serves the Astro preview that `pnpm --filter @inkline/components preview:build:astro` writes to `ui/components/preview-astro/`: every example and component on the astro target only. [`ui/components/AGENTS.md`](../components/AGENTS.md) lists all eight preview Workers.
+[`wrangler.json`](./wrangler.json) is the `inkline-preview-astro` Worker, which Cloudflare Workers Builds deploys with this directory as its root. It serves the Astro preview that `pnpm --filter @inkline/components preview:build:astro` writes to `ui/components/preview-astro/`: every example and component on the astro target only. [`ui/components/AGENTS.md`](../components/AGENTS.md) lists all eight preview Workers.
 
 ## Notable target behaviour
 

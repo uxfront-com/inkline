@@ -31,7 +31,7 @@ Peer dependency: `vue` 3 or newer.
 
 ## Preview
 
-[`wrangler.json`](./wrangler.json) is the `inkline-unframework-vue` Worker, which Cloudflare Workers Builds deploys with this directory as its root. It serves the Vue preview that `pnpm --filter @inkline/components preview:build:vue` writes to `ui/components/preview-vue/`: every example and component on the vue target only. [`ui/components/AGENTS.md`](../components/AGENTS.md) lists all eight preview Workers.
+[`wrangler.json`](./wrangler.json) is the `inkline-preview-vue` Worker, which Cloudflare Workers Builds deploys with this directory as its root. It serves the Vue preview that `pnpm --filter @inkline/components preview:build:vue` writes to `ui/components/preview-vue/`: every example and component on the vue target only. [`ui/components/AGENTS.md`](../components/AGENTS.md) lists all eight preview Workers.
 
 ## See also
 

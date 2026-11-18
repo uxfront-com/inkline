@@ -1,5 +1,5 @@
 {
-  "name": "inkline-unframework-angular",
+  "name": "inkline-preview-angular",
   "compatibility_date": "2026-09-21",
   "assets": {
     "directory": "../components/preview-angular"

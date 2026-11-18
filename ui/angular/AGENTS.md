@@ -41,7 +41,7 @@ Two settings keep every component compiled:
 
 ## Preview
 
-[`wrangler.json`](./wrangler.json) is the `inkline-unframework-angular` Worker, which Cloudflare Workers Builds deploys with this directory as its root. It serves the Angular preview that `pnpm --filter @inkline/components preview:build:angular` writes to `ui/components/preview-angular/`: every example and component on the angular target only. [`ui/components/AGENTS.md`](../components/AGENTS.md) lists all eight preview Workers.
+[`wrangler.json`](./wrangler.json) is the `inkline-preview-angular` Worker, which Cloudflare Workers Builds deploys with this directory as its root. It serves the Angular preview that `pnpm --filter @inkline/components preview:build:angular` writes to `ui/components/preview-angular/`: every example and component on the angular target only. [`ui/components/AGENTS.md`](../components/AGENTS.md) lists all eight preview Workers.
 
 ## Notable target behaviour
 
