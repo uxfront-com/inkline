@@ -1,6 +1,7 @@
 import { existsSync } from "node:fs";
 import { readFile, rm, writeFile } from "node:fs/promises";
 import { join } from "node:path";
+import { LANDING_PATHS } from "./app/data/frameworks";
 import { SECURITY_HEADERS } from "./server/lib/headers";
 
 const SITE_URL = "https://inkline.io";
@@ -106,8 +107,9 @@ export default defineNuxtConfig({
       crawlLinks: true,
       // The layer adds every docs page under each framework, with the markdown
       // twin each one links to. llms.txt adds the framework-neutral twins it
-      // lists. /docs only redirects.
-      routes: ["/", "/docs"],
+      // lists. /docs only redirects. Nothing links to the framework landing
+      // pages (/react to /astro, app/data/frameworks.ts), so they're listed here.
+      routes: ["/", "/docs", ...LANDING_PATHS],
       failOnError: true,
     },
     vercel: {

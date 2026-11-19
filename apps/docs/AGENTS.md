@@ -17,18 +17,22 @@ apps/docs/
 │   │                         # headerLinks), ui colours
 │   ├── app.css               # Inkline's purple scale and --ui-primary, Tailwind @source lines
 │   ├── error.vue             # UxErrorPage
-│   ├── pages/index.vue       # the homepage: UxSite, UxHeader, UxHero, UxChapter, UxFinale
+│   ├── pages/index.vue       # the homepage: UxSite, SiteHeader, UxHero, UxChapter, UxFinale
+│   ├── pages/[framework].vue # the framework landing pages, /react to /astro
 │   ├── components/
-│   │   └── app/              # AppHeaderCTA, AppHeaderBody: the layer's header with the
-│   │                         # version select; VersionSelect (<AppVersionSelect>)
+│   │   ├── app/              # AppHeaderCTA, AppHeaderBody: the layer's header with the
+│   │   │                     # version select; VersionSelect (<AppVersionSelect>)
+│   │   └── site/             # SiteHeader: the homepage's and landing pages' header
+│   ├── data/frameworks.ts    # LANDING_FRAMEWORKS: one entry per landing page
 │   ├── data/site.ts          # DOCS_URL, GITHUB_URL
 │   └── data/versions.ts      # VERSIONS: v5 (this site), v4, v3, v2
 ├── server/
-│   ├── routes/sitemap.xml.ts # the homepage, then getDocsSitemapEntries()
+│   ├── routes/sitemap.xml.ts # the homepage, the landing pages, then getDocsSitemapEntries()
 │   ├── middleware/raw-markdown.ts  # /raw/<path>.md from each page's source; the layer
 │   │                               # serves the /raw/docs/<framework>/… twins from it
 │   └── lib/                  # headers, docs, raw
-├── test/                     # brand palette, embed helpers, versions; site.build.test.ts after generate
+├── test/                     # brand palette, embed helpers, versions, frameworks;
+│                             # site.build.test.ts after generate
 └── content/
     ├── _compiler/            # parked, unrouted: compiler pages awaiting /compiler
     └── docs/
@@ -41,7 +45,7 @@ apps/docs/
 
 - **From the packages (don't copy or edit here):** Docus's header, sidebar, search, table of contents, colour mode, llms.txt, robots.txt and OG images; the layer's `FrameworkSwitcher`, Framework select, header wordmark and header links (`AppHeaderLinks`, from `docsTheme.headerLinks`), its framework URLs, `docsPath()` and the sitemap's docs entries (`getDocsSitemapEntries()`); the homepage components and the scene. If a build needs a package change, flag it upstream rather than forking the package into this app.
 - **Copied from Open Components:** `app/app.vue`, `app/error.vue`, `server/`, and the generic parts of `nuxt.config.ts` and `app/app.config.ts`. Keep them close to the source, so a fix there carries over. Framework URLs moved three of them away from that copy: the framework title template in `app/app.vue`, the `/docs` redirect in `nuxt.config.ts` and `server/routes/sitemap.xml.ts`, which lists the layer's entries in place of its own query.
-- **Local to this app:** the brand (`app/app.config.ts`, `app/app.css`), the header overrides in `app/components/app/`, which compose the layer's `AppHeaderLinks` and `AppHeaderFramework` around the Version select, the homepage, the embed port, the Vercel rules, the Cloudflare config and all markdown under `content/`.
+- **Local to this app:** the brand (`app/app.config.ts`, `app/app.css`), the header overrides in `app/components/app/`, which compose the layer's `AppHeaderLinks` and `AppHeaderFramework` around the Version select, the homepage and the framework landing pages, the embed port, the Vercel rules, the Cloudflare config and all markdown under `content/`.
 
 ## Docs content
 
@@ -49,7 +53,7 @@ Docus renders `content/docs/` under `/docs`, once for each framework: framework 
 
 Each section folder has a `.navigation.yml` with its sidebar title and icon. There is no section registry: a section shows once its folder holds a page.
 
-Write links between pages without a framework, like `[Theming](/docs/getting-started/theming)`: the layer puts them under the page's framework, and so does `DOCS_URL` in `docsTheme.headerLinks`. Links outside the docs shell, like the homepage's, take their URL from `docsPath("/getting-started")`, which gives the first framework there. Keep content folders from sharing a name with a framework.
+Write links between pages without a framework, like `[Theming](/docs/getting-started/theming)`: the layer puts them under the page's framework, and so does `DOCS_URL` in `docsTheme.headerLinks`. Links outside the docs shell, like the homepage's, take their URL from `docsPath("/getting-started")`, which gives the first framework there. Keep content folders from sharing a name with a framework, and keep every other top-level page off a framework's name, since `/<framework>` is its landing page.
 
 Each page's markdown is served at `/raw/docs/<page>.md`, which `llms.txt` lists and which holds every framework's examples, and at `/raw/docs/<framework>/<page>.md`, the same file, which Docus's "Copy page" fetches.
 
@@ -78,13 +82,21 @@ The Button page shows a code sample for each framework inside its slot:
 
 The pages show no live component yet. `unframework preview`, which renders the examples on every target, deploys as static sites of its own from `ui/components`, one with every target and one per framework ([its `AGENTS.md`](../../ui/components/AGENTS.md)), and no page embeds them.
 
+## Framework landing pages
+
+Each framework has a landing page at its own URL, `/react` to `/astro`, for readers who search for one framework's components. One template, `app/pages/[framework].vue`, renders them all from one entry each in `app/data/frameworks.ts`: the install command, the peer dependency, the stylesheet import and the example come from the installation page, and the meta-framework and the other libraries named in the copy are the entry's own. `frameworks.test.ts` fails when the entries and `docsTheme.frameworks` differ, or when an entry no longer matches the installation page, so a new framework needs an entry there too.
+
+The page validates its segment against the entries, so every other one-segment path stays a 404. It reads the framework from the URL only, never from `useFramework()`, which follows the reader's stored pick once mounted. Each page shows only its own `@inkline/<framework>`, and every docs link on it is `docsPath(…, framework)`, so it lands on that framework's docs. Nothing links to the landing pages yet, so `nuxt.config.ts` adds them to the prerendered routes, and `server/routes/sitemap.xml.ts` lists them after the homepage.
+
+The landing pages' copy is a draft until Alex approves it, before the site goes live on `inkline.io`.
+
 ## Version select
 
-Both headers have a Version select that shows v5, this site, and lists the older docs sites: v4, v3 and v2, each at `https://v<n>.inkline.io/`. The list is `app/data/versions.ts`, and `app/components/app/VersionSelect.vue` renders it on Nuxt UI's `USelect`. Nuxt names it `AppVersionSelect`, after its folder. It sits before the GitHub link in the homepage's `UxHeader` actions and in the docs header (`AppHeaderCTA`), and in the docs header's menu below 768px, under the Framework select (`AppHeaderBody`).
+Both headers have a Version select that shows v5, this site, and lists the older docs sites: v4, v3 and v2, each at `https://v<n>.inkline.io/`. The list is `app/data/versions.ts`, and `app/components/app/VersionSelect.vue` renders it on Nuxt UI's `USelect`. Nuxt names it `AppVersionSelect`, after its folder. It sits before the GitHub link in `SiteHeader`'s actions, on the homepage and the landing pages, and in the docs header (`AppHeaderCTA`), and in the docs header's menu below 768px, under the Framework select (`AppHeaderBody`).
 
 Picking a version opens its site in the same tab. Only a click, or Enter or Space on an option, picks one: the arrow keys move through the open list without leaving the page. Keep it off a native `<select>`, which fires `change` on each arrow key on Windows and Linux.
 
-The homepage paints before Tailwind loads, so `app/pages/index.vue` styles the trigger like its header links. Those rules are unlayered and win over Nuxt UI's, whose text colour follows the docs' colour mode. The open list follows that colour mode, light or dark.
+The homepage and the landing pages paint before Tailwind loads, so `SiteHeader` styles the trigger like its header links. Those rules are unlayered and win over Nuxt UI's, whose text colour follows the docs' colour mode. The open list follows that colour mode, light or dark.
 
 ## Running
 
@@ -96,9 +108,11 @@ pnpm --filter website dev   # nuxt dev with HMR
 
 ```bash
 pnpm --filter website generate     # static prerender → .output/public
-pnpm --filter website test         # source tests: the brand palette, the embed helpers, the versions
+pnpm --filter website test         # source tests: the brand palette, the embed helpers, the versions,
+                                   # the landing pages' entries
 pnpm --filter website test:build   # after generate: the files the deploy needs, the Version select, no assistant,
-                                   # framework URLs, titles, links, the sitemap and the markdown twins
+                                   # framework URLs, titles, links, the sitemap, the markdown twins
+                                   # and the landing pages
 ```
 
 `generate` is the build that ships, and it fails on any page that doesn't prerender (`nitro.prerender.failOnError`). `build` (node-server) is a local convenience only: it emits no `robots.txt`, `200.html` or `404.html`, all of which the deploy needs.
