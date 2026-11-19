@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "ready": "pnpm run build && pnpm run check && pnpm run test && pnpm --filter @inkline/components test:recipes && pnpm --filter @inkline/components test:targets",
+    "ready": "pnpm run build && pnpm run check && pnpm run test && pnpm --filter @inkline/components test:recipes && pnpm --filter @inkline/components test:targets && pnpm --filter @inkline/components api:check",
     "check": "vp check",
     "typecheck": "pnpm run build && vp check --no-fmt --no-lint",
     "validate": "vp validate",

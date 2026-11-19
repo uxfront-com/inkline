@@ -23,8 +23,7 @@
   },
   "scripts": {
     "build": "vp build && vp pack",
-    "validate": "vp check",
-    "test": "vp test"
+    "validate": "vp check"
   },
   "dependencies": {
     "@styleframe/runtime": "catalog:"

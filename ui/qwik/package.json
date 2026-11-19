@@ -16,8 +16,7 @@
   },
   "scripts": {
     "build": "vp build --mode lib",
-    "validate": "vp check",
-    "test": "vp test"
+    "validate": "vp check"
   },
   "dependencies": {
     "@styleframe/runtime": "catalog:"
