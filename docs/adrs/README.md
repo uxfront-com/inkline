@@ -20,9 +20,13 @@ pays for the same lesson twice.
 | [010](./010-defineprops-joins-the-macro-family.md)                    | `defineProps` joins the macro family; the macro registry is formalized  | 2026-08-31 | Superseded | core, compiler, authoring |
 | [011](./011-the-defineslot-binding-is-optional.md)                    | The `defineSlot` binding is optional                                    | 2026-09-07 | Superseded | core, compiler, authoring |
 | [012](./012-components-compile-with-unframework.md)                   | Components compile with Unframework                                     | 2026-11-15 | Accepted   | components, build, tests  |
+| [013](./013-api-reports-are-checked-once.md)                          | The API reports are checked once, by a script                           | 2026-11-19 | Accepted   | components, ci, tests     |
 
 ADR-006 was superseded **in part** by ADR-008, for its Decision 1 mechanism claim and its Option D
 uniqueness claim only, and then in whole by ADR-012, with every other compiler record.
+
+ADR-012 was superseded **in part** by ADR-013, for the check in its Decision 5 only. The reports it
+describes stay, and a script checks them once per CI run instead of a test in each package.
 
 If you arrived here from a link to `008-emitted-output-is-typechecked-in-the-unit-suite.md`: that
 draft was never merged, its number was subsequently taken by ADR-008 above, and the decision it

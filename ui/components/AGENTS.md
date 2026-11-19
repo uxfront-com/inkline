@@ -19,7 +19,7 @@ ui/components/
 │   ├── recipes.ts         # Writes src/recipes.ts from the *.styleframe.ts files
 │   ├── styleframe-types.ts # Writes .styleframe/, the types of virtual:styleframe
 │   ├── barrels.ts         # Splits each target's barrel into index.ts and headless.ts
-│   └── api-report.ts      # The framework packages' API report (ui/<framework>/test/api.json)
+│   └── api-report.ts      # Checks and writes each framework package's API report (ui/<framework>/test/api.json)
 ├── src/
 │   ├── recipes.ts         # Generated: each recipe's props type
 │   └── components/<name>/
@@ -44,9 +44,11 @@ pnpm build          # scripts/styleframe-types.ts, then unframework build and sc
 pnpm dev            # unframework preview: every example and component on every target
 pnpm preview:build  # unframework preview build: the same preview as a static site in preview/
 pnpm preview:build:<framework>  # the same, for one target only, in preview-<framework>/
-pnpm test:recipes   # node --test: src/recipes.ts is current, .styleframe/ declares virtual:styleframe, and the barrel split works
+pnpm test:recipes   # node --test: src/recipes.ts is current, .styleframe/ declares virtual:styleframe, and the barrel split and the API report diff work
 pnpm test:targets   # unframework test: every case on every target, in Chromium and on the server
 pnpm visual         # unframework visual: every example on every target, compared with the reference
+pnpm api:check      # each framework package's API, from its build, compared with its test/api.json
+pnpm api:update     # writes each framework package's test/api.json from its build
 ```
 
 `test:targets` and `visual` drive Playwright's Chromium: install it once with `pnpm exec playwright install chromium`. When a component's output changes on purpose, run `pnpm test:targets --update`, then review every file it writes under `test/*/*/__expected__/`. Those files are what every target is held to.
@@ -64,7 +66,7 @@ Each `examples/<Example>.example.uf.tsx` takes no props, and its default export 
 
 The seven framework Workers are `inkline-preview-react`, `inkline-preview-vue`, `inkline-preview-svelte`, `inkline-preview-solid`, `inkline-preview-angular`, `inkline-preview-qwik` and `inkline-preview-astro`. Each Worker serves `main` at `https://<worker>.<subdomain>.workers.dev`, on the Cloudflare account's `workers.dev` subdomain, so React's preview is at `https://inkline-preview-react.<subdomain>.workers.dev`. Each config lives in its framework's package so that its Workers Builds project needs no `--config`: its root directory is `ui/<framework>`, and its `assets.directory` points back to `ui/components/preview-<framework>`. CI's `Build Preview` job builds all eight sites the same way on every pull request.
 
-This package has no `test` script, so the repository's `pnpm run test` doesn't run the browser tests. `pnpm run ready` runs `test:recipes` and `test:targets` after it.
+This package has no `test` script, so the repository's `pnpm run test` doesn't run the browser tests. `pnpm run ready` runs `test:recipes`, `test:targets` and `api:check` after it.
 
 ## Headless and styled
 
@@ -81,14 +83,14 @@ Props types live in each family's `types.ts`, a plain module every output copies
 
 1. Edit `src/components/<name>/**/*.uf.tsx`. If you changed a `*.styleframe.ts` file, run `node scripts/recipes.ts`.
 2. Run `pnpm build`, `pnpm test:recipes`, `pnpm test:targets` and `pnpm visual`.
-3. Build the framework packages and run their tests, which compare each one's API with its `test/api.json`.
+3. Build the framework packages with `pnpm run build` from the repository's root, then run `pnpm api:check`, which compares each one's API with its `test/api.json`. After an intended API change, run `pnpm api:update` and read the diff.
 4. Add a changeset for **each affected framework package**. The change ships through them, not through this private package.
 
 ## When you add a component
 
 1. Create `src/components/<name>/` with its `types.ts`, `headless/`, `styled/` and `examples/`. The barrel split ships a component only from a `styled/` or `headless/` directory.
 2. Add a case under `test/<name>/` for each component, with a harness parent where a slot or a model needs one. A harness parent never takes a component's file name.
-3. Add the component to each framework package's `test/api.json`, with the command in that package's `AGENTS.md`, and add a changeset for the seven packages.
+3. Add the component to each framework package's `test/api.json` with `pnpm api:update`, after a build, and add a changeset for the seven packages.
 
 ## Pitfalls
 

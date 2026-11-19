@@ -17,8 +17,7 @@
   },
   "scripts": {
     "build": "vp build",
-    "validate": "vp check",
-    "test": "vp test --passWithNoTests"
+    "validate": "vp check"
   },
   "dependencies": {
     "@styleframe/runtime": "catalog:"

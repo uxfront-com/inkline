@@ -22,11 +22,10 @@ From [`package.json`](./package.json) `exports`:
 
 Peer dependency: `@angular/core` 22.
 
-[`test/api.json`](./test/api.json) records this surface: the names each entry exports and each component's props, models and events, and its selector. After an intended change, write it again with `node ui/components/scripts/api-report.ts angular ui/components/dist/angular --write` from the repository's root, and list each changed line in this package's changeset.
+[`test/api.json`](./test/api.json) records this surface: the names each entry exports and each component's props, models and events, and its selector. `pnpm --filter @inkline/components run api:check` builds the report of every framework package and fails when one differs from its `api.json`. CI runs it once, in the API Report job, and `pnpm run ready` runs it too. After an intended change, write the reports again with `pnpm --filter @inkline/components run api:update`, and list each changed line in this package's changeset.
 
-`pnpm --filter @inkline/angular test` runs three tests. Build the package first, since two of them read `dist/`:
+`pnpm --filter @inkline/angular test` runs two tests. Build the package first, since both read `dist/`:
 
-- `test/api.test.ts` rebuilds the report from Unframework's emitted sources in `ui/components/dist/angular/` and fails when it differs from `api.json`.
 - `test/dist.test.ts` loads `dist/` with Angular's JIT compiler and checks that each component `api.json` lists carries its selector, an input for every prop and model, and an output for every event and model. A component the compiler skipped still gets a definition in JIT, but with no inputs, so the input check is the one that catches it.
 - `test/render.test.ts` server-renders the built `IButton` and `IButtonBase` with `label="Save"` and `[id]="'save'"`, and checks that each `<button>` has both.
 
