@@ -53,7 +53,7 @@ Docus renders `content/docs/` under `/docs`, once for each framework: framework 
 
 Each section folder has a `.navigation.yml` with its sidebar title and icon. There is no section registry: a section shows once its folder holds a page.
 
-Write links between pages without a framework, like `[Theming](/docs/getting-started/theming)`: the layer puts them under the page's framework, and so does `DOCS_URL` in `docsTheme.headerLinks`. Links outside the docs shell, like the homepage's, take their URL from `docsPath("/getting-started")`, which gives the first framework there. Keep content folders from sharing a name with a framework, and keep every other top-level page off a framework's name, since `/<framework>` is its landing page.
+Give links between pages a path without a framework, like `/docs/getting-started/theming`: the layer puts them under the page's framework, and so does `DOCS_URL` in `docsTheme.headerLinks`. Links outside the docs shell, like the homepage's, take their URL from `docsPath("/getting-started")`, which gives the first framework there. Keep content folders from sharing a name with a framework, and keep every other top-level page off a framework's name, since `/<framework>` is its landing page.
 
 Each page's markdown is served at `/raw/docs/<page>.md`, which `llms.txt` lists and which holds every framework's examples, and at `/raw/docs/<framework>/<page>.md`, the same file, which Docus's "Copy page" fetches.
 
