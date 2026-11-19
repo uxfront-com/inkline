@@ -31,15 +31,15 @@ See [`pnpm-workspace.yaml`](../pnpm-workspace.yaml) for the authoritative glob l
 
 ## File naming
 
-| Pattern          | Where                                 | Meaning                                                                                                                                                                                    |
-| ---------------- | ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `*.uf.tsx`       | `ui/components/src/components/**`     | Authored Inkline component. Unframework compiles it to all seven framework targets.                                                                                                        |
-| `*.test.ts`      | colocated next to source              | Vitest test for the adjacent module. Tests never live in a separate `tests/` directory, except the component cases in `ui/components/test/` and the API reports in `ui/<framework>/test/`. |
-| `*.test.ts`      | `ui/components/test/<family>/<case>/` | A component case's spec, through `@unframework.dev/testing`. `test:targets` runs it on every target.                                                                                       |
-| `__snapshots__/` | colocated                             | Vitest snapshot files.                                                                                                                                                                     |
-| `dist/`          | `ui/<framework>/dist/`                | **Auto-generated**: the package's library build of Unframework's output in `ui/components/dist/<framework>/`. Never hand-edit.                                                             |
-| `.styleframe/`   | `ui/<framework>/.styleframe/`         | **Auto-generated** style artifacts. Never hand-edit.                                                                                                                                       |
-| `dist/`          | per-package                           | Build output. Never hand-edit.                                                                                                                                                             |
+| Pattern          | Where                                 | Meaning                                                                                                                                                                                                                |
+| ---------------- | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `*.uf.tsx`       | `ui/components/src/components/**`     | Authored Inkline component. Unframework compiles it to all seven framework targets.                                                                                                                                    |
+| `*.test.ts`      | colocated next to source              | Vitest test for the adjacent module. Tests never live in a separate `tests/` directory, except the component cases in `ui/components/test/` and the tests of each framework package's build in `ui/<framework>/test/`. |
+| `*.test.ts`      | `ui/components/test/<family>/<case>/` | A component case's spec, through `@unframework.dev/testing`. `test:targets` runs it on every target.                                                                                                                   |
+| `__snapshots__/` | colocated                             | Vitest snapshot files.                                                                                                                                                                                                 |
+| `dist/`          | `ui/<framework>/dist/`                | **Auto-generated**: the package's library build of Unframework's output in `ui/components/dist/<framework>/`. Never hand-edit.                                                                                         |
+| `.styleframe/`   | `ui/<framework>/.styleframe/`         | **Auto-generated** style artifacts. Never hand-edit.                                                                                                                                                                   |
+| `dist/`          | per-package                           | Build output. Never hand-edit.                                                                                                                                                                                         |
 
 ## Test layout
 
@@ -52,7 +52,7 @@ Run all tests with `vp run -r test` from the repo root; run a single package's t
 
 **Exception: the component tests.** `ui/components` runs its tests with Unframework, which runs Vitest in Chromium on every target. Each component's case is a directory under [`ui/components/test/`](../ui/components/test/), with its spec, a harness parent and its expectations, and `test:targets` runs them, not `test`. See [`ui/components/AGENTS.md`](../ui/components/AGENTS.md).
 
-**Exception: the API reports.** Each framework package keeps `test/api.json` and `test/api.test.ts` in [`ui/<framework>/test/`](../ui/react/test/), since they test the package's build, not one module. See [`ui/react/AGENTS.md`](../ui/react/AGENTS.md).
+**Exception: the framework packages.** Each framework package keeps its API report (`test/api.json`) and the tests of its build in [`ui/<framework>/test/`](../ui/react/test/), since they test the package's build, not one module. `pnpm --filter @inkline/components api:check` checks the reports. See [`ui/react/AGENTS.md`](../ui/react/AGENTS.md).
 
 ## Code style
 

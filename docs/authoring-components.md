@@ -87,7 +87,7 @@ export interface BadgeProps
 2. Author the headless parts, then the styled component that composes them, and register its recipes in a `*.styleframe.ts` file. Run `node scripts/recipes.ts`.
 3. Add an example for each variant (below), and a test case for each component (below).
 4. Run `pnpm build`, `pnpm test:targets` and `pnpm visual` in `ui/components`, and `unframework check` to see every diagnostic.
-5. Add the new exports to each framework package's `test/api.json`, with the command in that package's `AGENTS.md`.
+5. Add the new exports to each framework package's `test/api.json`: run `pnpm run build` from the repository's root, then `pnpm api:update` in `ui/components`, and read the diff.
 6. Add a changeset for each framework package before you open a PR. See [release-process.md](./release-process.md).
 
 ## Examples
