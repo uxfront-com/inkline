@@ -22,7 +22,7 @@ From [`package.json`](./package.json) `exports`:
 
 Peer dependency: `@qwik.dev/core` 2.0.0-rc.5 exactly, the version Unframework generates the components for. Move it with the catalog when Inkline moves to a newer Unframework.
 
-[`test/api.json`](./test/api.json) records this surface: the names each entry exports and each component's props, models and events. `pnpm --filter @inkline/qwik test` rebuilds the report from `dist/` and fails when it differs. After an intended change, write it again with `node ui/components/scripts/api-report.ts qwik ui/components/dist/qwik --write` from the repository's root, and list each changed line in this package's changeset.
+[`test/api.json`](./test/api.json) records this surface: the names each entry exports and each component's props, models and events. `pnpm --filter @inkline/components run api:check` builds the report of every framework package and fails when one differs from its `api.json`. CI runs it once, in the API Report job, and `pnpm run ready` runs it too. After an intended change, write the reports again with `pnpm --filter @inkline/components run api:update`, and list each changed line in this package's changeset.
 
 ## Build
 

@@ -2,7 +2,7 @@
 
 Date: 2026-11-15 · Status: Accepted
 Deciders: Project owner
-Supersedes: [ADR-001](./001-compiler-dx-invests-in-diagnostics.md), [ADR-002](./002-compiler-export-surface-tiers.md), [ADR-003](./003-typed-jsx-intrinsic-elements-from-a-vendored-upstream.md), [ADR-004](./004-inkline-check-does-not-type-check.md), [ADR-006](./006-inferred-component-authoring-types.md), [ADR-008](./008-authoring-surface-is-inferred-from-options-alone.md), [ADR-009](./009-emitted-output-is-typechecked-by-a-subprocess-tsc.md), [ADR-010](./010-defineprops-joins-the-macro-family.md), [ADR-011](./011-the-defineslot-binding-is-optional.md) · Superseded by: none
+Supersedes: [ADR-001](./001-compiler-dx-invests-in-diagnostics.md), [ADR-002](./002-compiler-export-surface-tiers.md), [ADR-003](./003-typed-jsx-intrinsic-elements-from-a-vendored-upstream.md), [ADR-004](./004-inkline-check-does-not-type-check.md), [ADR-006](./006-inferred-component-authoring-types.md), [ADR-008](./008-authoring-surface-is-inferred-from-options-alone.md), [ADR-009](./009-emitted-output-is-typechecked-by-a-subprocess-tsc.md), [ADR-010](./010-defineprops-joins-the-macro-family.md), [ADR-011](./011-the-defineslot-binding-is-optional.md) · Superseded by: [ADR-013](./013-api-reports-are-checked-once.md) **in part**: the check in Decision 5, only
 
 ## Context
 

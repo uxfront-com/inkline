@@ -1,7 +1,10 @@
 /**
  * The API report of a framework package: what a consumer of `@inkline/<framework>` can import and
- * write. Each `ui/<framework>/test/api.test.ts` rebuilds it from the package's build and compares it
- * with the committed `test/api.json`, so an API change shows up as a diff of that file.
+ * write. It's committed as `ui/<framework>/test/api.json`, so an API change shows up as a diff of
+ * that file. `pnpm --filter @inkline/components run api:check` builds the report of each of the seven
+ * packages and compares it with the committed file. When one differs, it prints the lines that differ
+ * and exits with 1. CI runs it once, in the API Report job, and `pnpm run ready` runs it too.
+ * `pnpm --filter @inkline/components run api:update` writes the reports again. Both need a build.
  *
  * It reads two things:
  *
@@ -15,12 +18,13 @@
  * A member that only a framework's own types declare, like React's `HTMLAttributes`, is an attribute,
  * not a prop: the report says only whether the component takes attributes.
  *
- * Run it with `node ui/components/scripts/api-report.ts <framework> <emitted dir> [--write]`, from the
- * repository's root, to print the report or write it to `ui/<framework>/test/api.json`.
+ * The command line is `node scripts/api-report.ts <check|update> [<framework>...]`, from
+ * `ui/components`. With no framework named, it handles all seven.
  */
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname, join, resolve } from "node:path";
+import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { diff } from "node:util";
 
 import ts from "@typescript/typescript6";
 
@@ -572,17 +576,110 @@ async function vueComponentApi(packageDir: string, name: string): Promise<Compon
 }
 
 // ---------------------------------------------------------------------------------------------------
+// Check and update
+
+/** The command that writes the reports again, which the check prints when one differs. */
+export const UPDATE_COMMAND = "pnpm --filter @inkline/components run api:update";
+
+/**
+ * A line diff from the committed report to the built one: `- ` before a committed line the build
+ * doesn't have, `+ ` before a line the build adds, and up to `context` unchanged lines around each
+ * change, with `…` between changes that are further apart. Empty when the two are equal.
+ */
+export function diffReports(committed: string, built: string, context = 2): string {
+  if (committed === built) return "";
+  // `diff(actual, expected)` marks a line only `actual` has with 1, and one only `expected` has with -1.
+  const operations = diff(lines(built), lines(committed));
+  const visible = operations.map((_, index) =>
+    operations
+      .slice(Math.max(0, index - context), index + context + 1)
+      .some(([operation]) => operation !== 0),
+  );
+  const out: string[] = [];
+  let last = -1;
+  for (let index = 0; index < operations.length; ) {
+    if (!visible[index]) {
+      index++;
+      continue;
+    }
+    if (last >= 0 && index > last + 1) out.push("…");
+    if (operations[index][0] === 0) {
+      out.push(`  ${operations[index][1]}`);
+      last = index++;
+      continue;
+    }
+    // A run of changed lines: the committed ones first, then the ones the build has instead.
+    let end = index;
+    while (end < operations.length && operations[end][0] !== 0) end++;
+    const run = operations.slice(index, end);
+    for (const [operation, line] of run) if (operation === -1) out.push(`- ${line}`);
+    for (const [operation, line] of run) if (operation === 1) out.push(`+ ${line}`);
+    last = end - 1;
+    index = end;
+  }
+  if (out.length === 0) out.push("(only the final newline differs)");
+  return `${out.join("\n")}\n`;
+}
+
+function lines(text: string): string[] {
+  if (text === "") return [];
+  return (text.endsWith("\n") ? text.slice(0, -1) : text).split("\n");
+}
+
+/** The committed report of `@inkline/<framework>`. */
+export function reportFile(framework: Framework): string {
+  return join(UI, framework, "test/api.json");
+}
+
+// ---------------------------------------------------------------------------------------------------
 // Command line
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  const [framework, emittedDir, flag] = process.argv.slice(2);
-  if (!FRAMEWORKS.includes(framework as Framework) || !emittedDir) {
-    console.error(
-      "usage: node ui/components/scripts/api-report.ts <framework> <emitted dir> [--write]",
-    );
+  const [mode, ...names] = process.argv.slice(2);
+  const unknown = names.filter((name) => !FRAMEWORKS.includes(name as Framework));
+  if ((mode !== "check" && mode !== "update") || unknown.length > 0) {
+    console.error(`usage: node scripts/api-report.ts <check|update> [${FRAMEWORKS.join("|")}]...`);
+    if (unknown.length > 0) console.error(`unknown framework: ${unknown.join(", ")}`);
     process.exit(2);
   }
-  const report = formatApiReport(await buildApiReport(framework as Framework, resolve(emittedDir)));
-  if (flag === "--write") writeFileSync(join(UI, framework, "test/api.json"), report);
-  else process.stdout.write(report);
+  const frameworks = names.length > 0 ? (names as Framework[]) : FRAMEWORKS;
+  let differ = 0;
+  let broken = 0;
+  for (const framework of frameworks) {
+    const file = reportFile(framework);
+    const shown = relative(join(UI, ".."), file);
+    let built: string;
+    try {
+      built = formatApiReport(
+        await buildApiReport(framework, join(UI, "components/dist", framework)),
+      );
+    } catch (error) {
+      console.error(`✗ ${framework}: ${error instanceof Error ? error.message : String(error)}`);
+      broken++;
+      continue;
+    }
+    const committed = existsSync(file) ? readFileSync(file, "utf8") : "";
+    const changes = diffReports(committed, built);
+    if (mode === "update") {
+      if (changes) writeFileSync(file, built);
+      console.log(`${changes ? "updated" : "unchanged"} ${shown}`);
+    } else if (changes) {
+      console.error(`✗ ${framework}: the build's API differs from ${shown}`);
+      process.stderr.write(changes);
+      differ++;
+    } else {
+      console.log(`✓ ${framework} matches ${shown}`);
+    }
+  }
+  if (broken > 0) {
+    console.error(
+      `\n${broken} of ${frameworks.length} API reports couldn't be built. Run \`pnpm run build\` first.`,
+    );
+  }
+  if (differ > 0) {
+    console.error(
+      `\n${differ} of ${frameworks.length} API reports differ from the build. If the change is intended, run \`${UPDATE_COMMAND}\` and list each changed line in the package's changeset.`,
+    );
+  }
+  if (broken > 0 || differ > 0) process.exit(1);
 }

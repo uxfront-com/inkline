@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/styleframe-types.ts && unframework build && node scripts/barrels.ts",
+    "api:check": "node scripts/api-report.ts check",
+    "api:update": "node scripts/api-report.ts update",
     "dev": "unframework preview",
     "preview:build": "unframework preview build --out preview",
     "preview:build:react": "unframework preview build --target react --out preview-react",
@@ -14,7 +16,7 @@
     "preview:build:angular": "unframework preview build --target angular --out preview-angular",
     "preview:build:qwik": "unframework preview build --target qwik --out preview-qwik",
     "preview:build:astro": "unframework preview build --target astro --out preview-astro",
-    "test:recipes": "node --test scripts/recipes.test.ts scripts/barrels.test.ts scripts/styleframe-types.test.ts",
+    "test:recipes": "node --test scripts/recipes.test.ts scripts/barrels.test.ts scripts/styleframe-types.test.ts scripts/api-report.test.ts",
     "test:targets": "unframework test",
     "visual": "unframework visual"
   },

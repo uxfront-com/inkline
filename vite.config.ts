@@ -5,9 +5,10 @@ export default defineConfig({
     "*": "vp check --fix",
   },
   fmt: {
-    // Generated files their tests compare byte for byte: `ui/*/test/api.json`, from
-    // `ui/components/scripts/api-report.ts`, one name to a line; `ui/components/src/recipes.ts`, from
-    // `ui/components/scripts/recipes.ts`; and the expectations `unframework test --update` writes.
+    // Generated files their checks compare byte for byte: `ui/*/test/api.json`, which
+    // `ui/components/scripts/api-report.ts` writes one name to a line and `api:check` compares;
+    // `ui/components/src/recipes.ts`, from `ui/components/scripts/recipes.ts`; and the expectations
+    // `unframework test --update` writes.
     ignorePatterns: [
       ".context/**",
       ".old/**",
