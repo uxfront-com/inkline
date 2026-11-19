@@ -11,8 +11,8 @@ import { expect, it } from "vitest";
 // slower in the test worker and measures nothing here.
 //
 // The report type-checks the package's emitted sources. In CI, the test runs beside other
-// packages' tests on a shared runner. There, Qwik's test took up to 4.9 s, and four of fourteen
-// runs were cut off at the 5 s default, against 0.9 s on a developer machine. So it gets a timeout
+// packages' tests on a shared runner. There, Qwik's test took up to 6.5 s, against 0.9 s on a
+// developer machine, and four of sixteen runs were cut off at the 5 s default. So it gets a timeout
 // of 30 s.
 it("ships the API that api.json records", async ({ signal }) => {
   const script = fileURLToPath(new URL("../../components/scripts/api-report.ts", import.meta.url));
