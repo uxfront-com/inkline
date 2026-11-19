@@ -2,7 +2,7 @@
 import { FRAMEWORKS } from "@uxfront/ui";
 import { corridor, ink, prism, stack, tokens } from "@uxfront/scene/formations";
 
-import { DOCS_URL, GITHUB_URL } from "~/data/site";
+import { GITHUB_URL } from "~/data/site";
 
 useUxHead({
   title: "UI components for seven frameworks - Inkline",
@@ -11,6 +11,9 @@ useUxHead({
   siteName: "Inkline",
   sameAs: [GITHUB_URL],
 });
+
+// The first framework's introduction: the homepage isn't under a framework.
+const docsUrl = docsPath("/getting-started");
 
 // The hero pours ink, then each chapter has a formation of its own: the prism's
 // seven rails are the seven framework packages, the token matrix is the
@@ -104,7 +107,7 @@ const accessibility = [
           </a>
         </template>
         <template #actions>
-          <NuxtLink class="header-link header-page" :to="DOCS_URL">Documentation</NuxtLink>
+          <NuxtLink class="header-link header-page" :to="docsUrl">Documentation</NuxtLink>
           <span class="header-version"><AppVersionSelect /></span>
           <a class="header-link" :href="GITHUB_URL" aria-label="GitHub">
             <UxGithubIcon class="header-icon" />
@@ -129,7 +132,7 @@ const accessibility = [
         Accessible components with one API in React, Vue, Svelte, Solid, Angular, Qwik and Astro,
         each a native package for its framework, all themed from one Styleframe config.
         <br />
-        <UxPillLink class="mt-8" :href="DOCS_URL" label="Read the documentation" />
+        <UxPillLink class="mt-8" :href="docsUrl" label="Read the documentation" />
       </template>
     </UxHero>
 
@@ -185,7 +188,7 @@ const accessibility = [
         Pick your framework, install its package and render your first component.
       </template>
       <template #actions>
-        <UxPillLink :href="DOCS_URL" label="Read the documentation" />
+        <UxPillLink :href="docsUrl" label="Read the documentation" />
       </template>
       <template #footer>
         <span>© 2026 Inkline</span>

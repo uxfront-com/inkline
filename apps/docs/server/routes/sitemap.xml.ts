@@ -1,31 +1,19 @@
-import { queryCollection } from "@nuxt/content/server";
-
-// The fields read below. Nitro's types don't see the collections Docus defines.
-interface DocsPage {
-  path: string;
-  meta: { sitemap?: boolean; modifiedAt?: string };
-}
-
 /**
- * Serves `/sitemap.xml` in place of Docus's route, which robots.txt points
- * crawlers at. Docus lists its docs and landing pages, and skips the landing
- * collection when the app has its own app/pages/index.vue, so the homepage
- * never made it in. This lists the homepage first, then the docs pages by
- * Docus's rules: `sitemap: false` in a page's frontmatter leaves it out, and
- * `modifiedAt` sets its `<lastmod>`.
+ * Serves `/sitemap.xml`, which robots.txt points crawlers at, in place of the
+ * layer's route. The layer lists the docs pages, and leaves `/` out when the
+ * app has its own app/pages/index.vue, so this lists the homepage first, then
+ * the layer's entries: each docs page once for each framework it covers, by
+ * Docus's rules (`sitemap: false` in a page's frontmatter leaves it out, and
+ * `modifiedAt` sets its `<lastmod>`).
  *
- * Nitro keeps the first handler for a route, and it scans the app's server/
- * before the layers'. Docus still adds the route to the prerendered ones.
+ * The layer drops its own handler when the app has this one. Docus still adds
+ * the route to the prerendered ones.
  */
 export default defineEventHandler(async (event) => {
   const { siteUrl } = useRuntimeConfig(event).public;
-  const pages = (await queryCollection(event, "docs" as never).all()) as DocsPage[];
-
-  const urls = [
-    { loc: "/", lastmod: undefined },
-    ...pages
-      .filter((page) => page.meta.sitemap !== false && !isNavigationPath(page.path))
-      .map((page) => ({ loc: page.path, lastmod: page.meta.modifiedAt?.split("T")[0] })),
+  const urls: { loc: string; lastmod?: string }[] = [
+    { loc: "/" },
+    ...(await getDocsSitemapEntries(event)),
   ];
 
   setHeader(event, "Content-Type", "application/xml");

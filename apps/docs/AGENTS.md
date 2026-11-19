@@ -8,11 +8,11 @@ The site is a copy of the [Open Components](https://github.com/uxfront-com/open-
 
 ```
 apps/docs/
-├── nuxt.config.ts            # extends layer-ui + layer-docs, site URL, redirects, Vercel edge rules,
-│                             # the Cloudflare preset under WORKERS_CI
+├── nuxt.config.ts            # extends layer-ui + layer-docs, framework URLs, site URL, redirects,
+│                             # Vercel edge rules, the Cloudflare preset under WORKERS_CI
 ├── wrangler.json             # the inkline Worker: dist/ as static assets
 ├── app/
-│   ├── app.vue               # mounts Docus under /docs, the homepage everywhere else
+│   ├── app.vue               # mounts Docus under /docs, the homepage everywhere else; title template
 │   ├── app.config.ts         # GitHub links, docsTheme (frameworks, wordmark, byline,
 │   │                         # headerLinks), ui colours
 │   ├── app.css               # Inkline's purple scale and --ui-primary, Tailwind @source lines
@@ -24,8 +24,9 @@ apps/docs/
 │   ├── data/site.ts          # DOCS_URL, GITHUB_URL
 │   └── data/versions.ts      # VERSIONS: v5 (this site), v4, v3, v2
 ├── server/
-│   ├── routes/sitemap.xml.ts # the homepage, then the docs pages
-│   ├── middleware/raw-markdown.ts  # /raw/<path>.md from each page's source
+│   ├── routes/sitemap.xml.ts # the homepage, then getDocsSitemapEntries()
+│   ├── middleware/raw-markdown.ts  # /raw/<path>.md from each page's source; the layer
+│   │                               # serves the /raw/docs/<framework>/… twins from it
 │   └── lib/                  # headers, docs, raw
 ├── test/                     # brand palette, embed helpers, versions; site.build.test.ts after generate
 └── content/
@@ -38,17 +39,21 @@ apps/docs/
 
 ## Shared and local
 
-- **From the packages (don't copy or edit here):** Docus's header, sidebar, search, table of contents, colour mode, llms.txt, robots.txt and OG images; the layer's `FrameworkSwitcher`, Framework select, header wordmark and header links (`AppHeaderLinks`, from `docsTheme.headerLinks`); the homepage components and the scene. If a build needs a package change, flag it upstream rather than forking the package into this app.
-- **Copied from Open Components:** `app/app.vue`, `app/error.vue`, `server/`, and the generic parts of `nuxt.config.ts` and `app/app.config.ts`. Keep them close to the source, so a fix there carries over.
+- **From the packages (don't copy or edit here):** Docus's header, sidebar, search, table of contents, colour mode, llms.txt, robots.txt and OG images; the layer's `FrameworkSwitcher`, Framework select, header wordmark and header links (`AppHeaderLinks`, from `docsTheme.headerLinks`), its framework URLs, `docsPath()` and the sitemap's docs entries (`getDocsSitemapEntries()`); the homepage components and the scene. If a build needs a package change, flag it upstream rather than forking the package into this app.
+- **Copied from Open Components:** `app/app.vue`, `app/error.vue`, `server/`, and the generic parts of `nuxt.config.ts` and `app/app.config.ts`. Keep them close to the source, so a fix there carries over. Framework URLs moved three of them away from that copy: the framework title template in `app/app.vue`, the `/docs` redirect in `nuxt.config.ts`, and `server/routes/sitemap.xml.ts`, which lists the layer's entries in place of its own query.
 - **Local to this app:** the brand (`app/app.config.ts`, `app/app.css`), the header overrides in `app/components/app/`, which compose the layer's `AppHeaderLinks` and `AppHeaderFramework` around the Version select, the homepage, the embed port, the Vercel rules, the Cloudflare config and all markdown under `content/`.
 
 ## Docs content
 
-Docus renders `content/docs/` at `/docs`. The numeric prefixes order the sidebar and are stripped from the URL: `01.getting-started/01.installation.md` is served at `/docs/getting-started/installation`, and `00.index.md` at `/docs/getting-started`. Each section folder has a `.navigation.yml` with its sidebar title and icon. There is no section registry: a section shows once its folder holds a page.
+Docus renders `content/docs/` under `/docs`, once for each framework: framework URLs are on (`frameworkUrls` in `nuxt.config.ts`, and "Framework URLs" in the [`@uxfront/layer-docs` README](https://www.npmjs.com/package/@uxfront/layer-docs)). The numeric prefixes order the sidebar and are stripped from the URL: `01.getting-started/01.installation.md` is served at `/docs/react/getting-started/installation`, `/docs/vue/getting-started/installation` and so on, and `00.index.md` at `/docs/<framework>/getting-started`. The unprefixed `/docs/getting-started/installation` isn't built, and `/docs` redirects to the first framework's introduction. Each section folder has a `.navigation.yml` with its sidebar title and icon. There is no section registry: a section shows once its folder holds a page.
+
+Write links between pages without a framework, like `[Theming](/docs/getting-started/theming)`: the layer puts them under the page's framework, and so does `DOCS_URL` in `docsTheme.headerLinks`. Links outside the docs shell, like the homepage's, take their URL from `docsPath("/getting-started")`, which gives the first framework there. Keep content folders from sharing a name with a framework.
+
+Each page's markdown is served at `/raw/docs/<page>.md`, which `llms.txt` lists and which holds every framework's examples, and at `/raw/docs/<framework>/<page>.md`, the same file, which Docus's "Copy page" fetches.
 
 ## Multi-framework examples
 
-The reader picks a framework once, in the Framework select above the sidebar (in the header's menu below 768px), and every `::framework-switcher` on the site shows that framework's slot. The seven frameworks, in Inkline's order, are `docsTheme.frameworks` in `app/app.config.ts`.
+The URL decides the framework: `/docs/vue/components/button` shows the Vue slot of every `::framework-switcher` on the page, before any script runs, and its title reads "Button - Inkline Vue". The Framework select above the sidebar (in the header's menu below 768px) goes to the same page under the framework the reader picks. localStorage only remembers the last pick. Each built page carries only its framework's slot. The seven frameworks, in Inkline's order, are `docsTheme.frameworks` in `app/app.config.ts`, and the first one, React, is the one `/docs` and the homepage link to: reorder the list, and change the `/docs` redirect in `nuxt.config.ts` with it.
 
 The Button page shows a code sample for each framework inside its slot:
 
@@ -90,7 +95,8 @@ pnpm --filter website dev   # nuxt dev with HMR
 ```bash
 pnpm --filter website generate     # static prerender → .output/public
 pnpm --filter website test         # source tests: the brand palette, the embed helpers, the versions
-pnpm --filter website test:build   # after generate: the files the deploy needs, the Version select, no assistant
+pnpm --filter website test:build   # after generate: the files the deploy needs, the Version select, no assistant,
+                                   # framework URLs, titles, links, the sitemap and the markdown twins
 ```
 
 `generate` is the build that ships, and it fails on any page that doesn't prerender (`nitro.prerender.failOnError`). `build` (node-server) is a local convenience only: it emits no `robots.txt`, `200.html` or `404.html`, all of which the deploy needs.
