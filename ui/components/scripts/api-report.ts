@@ -1,7 +1,8 @@
 /**
  * The API report of a framework package: what a consumer of `@inkline/<framework>` can import and
- * write. Each `ui/<framework>/test/api.test.ts` rebuilds it from the package's build and compares it
- * with the committed `test/api.json`, so an API change shows up as a diff of that file.
+ * write. Each `ui/<framework>/test/api.test.ts` rebuilds it from the package's build, by running this
+ * script's command line in a child process, and compares it with the committed `test/api.json`, so
+ * an API change shows up as a diff of that file.
  *
  * It reads two things:
  *
