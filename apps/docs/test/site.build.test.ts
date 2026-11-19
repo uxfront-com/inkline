@@ -2,6 +2,7 @@ import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
+import { LANDING_FRAMEWORKS } from "../app/data/frameworks.ts";
 
 /**
  * Checks the static site `nuxt generate` wrote to `.output/public`.
@@ -43,6 +44,7 @@ const files = [
   "robots.txt",
   "200.html",
   "404.html",
+  ...FRAMEWORKS.map((framework) => `${framework}.html`),
 ];
 
 function* walk(dir: string): Generator<string> {
@@ -65,6 +67,9 @@ const htmlFiles = () =>
 const frameworkOf = (file: string) =>
   FRAMEWORKS.find((framework) => file.startsWith(`docs/${framework}/`));
 
+/** The framework of a landing page, `<framework>.html` at the top level. */
+const landingOf = (file: string) => FRAMEWORKS.find((framework) => file === `${framework}.html`);
+
 const isNoindex = (html: string) => /<meta[^>]*name="robots"[^>]*content="[^"]*noindex/.test(html);
 
 describe("the generated site", () => {
@@ -80,7 +85,7 @@ describe("the generated site", () => {
 
   // A closed select prerenders its trigger only, so the options and their URLs
   // are checked in versions.test.ts.
-  it.each(["index.html", "docs/react/getting-started.html"])(
+  it.each(["index.html", "docs/react/getting-started.html", "vue.html"])(
     "renders the Version select on %s, showing v5",
     (file) => {
       const html = readFileSync(join(output, file), "utf8");
@@ -90,12 +95,16 @@ describe("the generated site", () => {
     },
   );
 
-  it.each(["index.html", "docs/react/getting-started.html"])(
+  it.each([
+    ["index.html", "react"],
+    ["docs/react/getting-started.html", "react"],
+    ...FRAMEWORKS.map((framework) => [`${framework}.html`, framework]),
+  ])(
     "places the Version select between the Documentation and GitHub links on %s",
-    (file) => {
+    (file, framework) => {
       const header =
         readFileSync(join(output, file), "utf8").match(/<header.*?<\/header>/s)?.[0] ?? "";
-      const docs = header.indexOf('href="/docs/react/getting-started"');
+      const docs = header.indexOf(`href="/docs/${framework}/getting-started"`);
       const version = header.indexOf('aria-label="Version"');
       const github = header.indexOf('href="https://github.com/inkline/inkline"');
       expect(docs).toBeGreaterThan(-1);
@@ -154,7 +163,7 @@ describe("framework URLs", () => {
     const offenders: string[] = [];
     for (const file of htmlFiles()) {
       const html = read(file);
-      const own = frameworkOf(file);
+      const own = frameworkOf(file) ?? landingOf(file);
       const prefix = own ? `/docs/${own}/` : new RegExp(`^/docs/(${FRAMEWORKS.join("|")})/`);
       // Canonical and alternate links are absolute, so this skips them.
       const hrefs = [...html.matchAll(/href="(\/docs[^"]*)"/g)].map((match) => match[1]!);
@@ -229,10 +238,15 @@ describe("the sitemap", () => {
     const expected = [
       "/",
       ...htmlFiles()
+        .filter(landingOf)
+        .map((file) => `/${file.replace(/\.html$/, "")}`),
+      ...htmlFiles()
         .filter((file) => frameworkOf(file) && !isNoindex(read(file)))
         .map((file) => `/${file.replace(/\.html$/, "")}`),
     ];
     expect([...locs].sort()).toEqual(expected.sort());
+    // `/`, six pages under each of the seven frameworks, and the seven landing pages.
+    expect(locs).toHaveLength(50);
   });
 });
 
@@ -260,6 +274,47 @@ describe("markdown twins", () => {
     expect(neutral).toContain("@inkline/astro");
     for (const framework of FRAMEWORKS) {
       expect(read(`raw/docs/${framework}/components/button.md`)).toBe(neutral);
+    }
+  });
+});
+
+// D13: a landing page for each framework, at /<framework>, built from
+// app/data/frameworks.ts, and no other one-segment page.
+describe("the framework landing pages", () => {
+  it("builds only the homepage, the redirect, the error pages and the seven at the top level", () => {
+    const top = htmlFiles().filter((file) => !file.includes("/"));
+    expect(top.sort()).toEqual(
+      [
+        "index.html",
+        "200.html",
+        "404.html",
+        "docs.html",
+        ...FRAMEWORKS.map((f) => `${f}.html`),
+      ].sort(),
+    );
+  });
+
+  it.each(LANDING_FRAMEWORKS)("builds $value.html for $label", ({ value, label, install }) => {
+    const html = read(`${value}.html`);
+    expect(html.match(/<h1[\s>]/g)).toHaveLength(1);
+    const title = html.match(/<title>([^<]*)<\/title>/)?.[1] ?? "";
+    expect(title).toContain(label);
+    expect(title.match(/Inkline/g)).toHaveLength(1);
+    expect(html).toMatch(/<meta name="description" content="[^"]+"/);
+    const canonical = [...html.matchAll(/<link rel="canonical" href="([^"]*)"/g)].map(
+      (match) => match[1],
+    );
+    expect(canonical).toEqual([`${SITE_URL}/${value}`]);
+    expect(html).toContain(install);
+    expect(html).toContain(`href="/docs/${value}/getting-started"`);
+  });
+
+  // D13a: each page shows its own package only.
+  it.each(FRAMEWORKS)("shows only @inkline/%s on its landing page", (framework) => {
+    const html = read(`${framework}.html`);
+    expect(html).toContain(`@inkline/${framework}`);
+    for (const other of FRAMEWORKS.filter((value) => value !== framework)) {
+      expect(html).not.toMatch(new RegExp(`@inkline/${other}(?![a-z])`));
     }
   });
 });

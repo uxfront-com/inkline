@@ -1,8 +1,11 @@
+import { LANDING_PATHS } from "~/data/frameworks";
+
 /**
  * Serves `/sitemap.xml`, which robots.txt points crawlers at, in place of the
  * layer's route. The layer lists the docs pages, and leaves `/` out when the
  * app has its own app/pages/index.vue, so this lists the homepage first, then
- * the layer's entries: each docs page once for each framework it covers, by
+ * the framework landing pages (app/data/frameworks.ts), then the layer's
+ * entries: each docs page once for each framework it covers, by
  * Docus's rules (`sitemap: false` in a page's frontmatter leaves it out, and
  * `modifiedAt` sets its `<lastmod>`).
  *
@@ -13,6 +16,7 @@ export default defineEventHandler(async (event) => {
   const { siteUrl } = useRuntimeConfig(event).public;
   const urls: { loc: string; lastmod?: string }[] = [
     { loc: "/" },
+    ...LANDING_PATHS.map((loc) => ({ loc })),
     ...(await getDocsSitemapEntries(event)),
   ];
 
