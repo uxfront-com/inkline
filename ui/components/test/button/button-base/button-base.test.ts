@@ -11,7 +11,6 @@ describeTargets("button/button-base", () => {
       - button "Save"
       - button "Send"
       - button "Off" [disabled]
-      - button "Wait" [disabled]
       - button "Slotted"
     `);
     await expect.element(view.locator).toHaveNoAxeViolations();
@@ -23,19 +22,52 @@ describeTargets("button/button-base", () => {
       .toHaveAttribute("type", "submit");
   });
 
-  it("marks a loading button busy, disables it and shows its spinner", async () => {
+  it("renders no data attributes or state until they're set", async () => {
     const view = await mountScenario(ButtonBaseCase, "default");
     await view.expectParity("default-2");
-    const loading = view.getByRole("button", { name: "Wait" });
-    await expect.element(loading).toHaveAttribute("aria-busy", "true");
-    await expect.element(loading).toBeDisabled();
-    expect(loading.element().querySelector(".button-spinner")?.getAttribute("aria-hidden")).toBe(
-      "true",
-    );
-    const idle = view.getByRole("button", { name: "Save" });
-    await expect.element(idle).toHaveAttribute("aria-busy", "false");
-    expect(idle.element().querySelector(".button-spinner")).toBeNull();
+    const save = view.getByRole("button", { name: "Save" });
+    for (const name of [
+      "data-variant",
+      "data-color",
+      "data-size",
+      "data-icon-only",
+      "data-loading",
+      "aria-disabled",
+      "aria-pressed",
+      "aria-expanded",
+      "aria-busy",
+    ]) {
+      await expect.element(save).not.toHaveAttribute(name);
+    }
+    expect(save.element().querySelector('[data-slot="label"]')?.textContent).toBe("Save");
+    expect(save.element().querySelector('[data-slot="spinner"]')).toBeNull();
   });
+
+  it(
+    "keeps a loading button focusable, marks it and shows its spinner last",
+    { requires: ["interactivity"] },
+    async () => {
+      const view = await mountScenario(ButtonBaseCase, "loading");
+      await view.expectParity("loading");
+      const loading = view.getByRole("button", { name: "Wait" });
+      await expect.element(loading).toHaveAttribute("aria-disabled", "true");
+      await expect.element(loading).toHaveAttribute("data-loading", "");
+      await expect.element(loading).not.toHaveAttribute("disabled");
+      await expect.element(view.locator).toHaveNoAxeViolations();
+      const element = loading.element();
+      expect([...element.children].map((child) => child.getAttribute("data-slot"))).toEqual([
+        "leading",
+        "label",
+        "trailing",
+        "spinner",
+      ]);
+      for (const part of ["leading", "trailing", "spinner"]) {
+        expect(element.querySelector(`[data-slot="${part}"]`)?.getAttribute("aria-hidden")).toBe(
+          "true",
+        );
+      }
+    },
+  );
 
   it("passes its id, accessible name and description to the native button", async () => {
     const view = await mountScenario(ButtonBaseCase, "attributes");
@@ -56,7 +88,7 @@ describeTargets("button/button-base", () => {
   });
 
   it(
-    "emits click once for each click and each Enter",
+    "emits click once for each click, each Enter and each Space",
     { requires: ["interactivity"] },
     async () => {
       const view = await mountScenario(ButtonBaseCase, "attributes");
@@ -65,9 +97,11 @@ describeTargets("button/button-base", () => {
       await view.expectParity("clicked");
       await view.user.keyboard("{Enter}");
       await view.expectParity("entered");
+      await view.user.keyboard("{Space}");
+      await view.expectParity("spaced");
       await view.user.click(view.getByRole("button", { name: "Close" }));
       await view.expectParity("closed");
-      expect(view.emitted("click")).toEqual([["save"], ["save"], ["close"]]);
+      expect(view.emitted("click")).toEqual([["save"], ["save"], ["save"], ["close"]]);
     },
   );
 });

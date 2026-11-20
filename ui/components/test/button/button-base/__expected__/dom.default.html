@@ -1,18 +1,22 @@
 <div>
-  <button aria-busy="false" type="button">
-    "Save"
+  <button type="button">
+    <span data-slot="label">
+      "Save"
+    </span>
   </button>
-  <button aria-busy="false" type="submit">
-    "Send"
+  <button type="submit">
+    <span data-slot="label">
+      "Send"
+    </span>
   </button>
-  <button aria-busy="false" disabled="" type="button">
-    "Off"
+  <button disabled="" type="button">
+    <span data-slot="label">
+      "Off"
+    </span>
   </button>
-  <button aria-busy="true" disabled="" type="button">
-    <span aria-hidden="true" class="button-spinner"></span>
-    "Wait"
-  </button>
-  <button aria-busy="false" type="button">
-    "Slotted"
+  <button type="button">
+    <span data-slot="label">
+      "Slotted"
+    </span>
   </button>
 </div>

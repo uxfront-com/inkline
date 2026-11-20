@@ -1,10 +1,14 @@
 <div>
-  <button aria-busy="false" aria-describedby="save-hint" id="save" type="button">
-    "Save"
+  <button aria-describedby="save-hint" id="save" type="button">
+    <span data-slot="label">
+      "Save"
+    </span>
   </button>
-  <button aria-busy="false" aria-label="Close" type="button">
-    <span aria-hidden="true">
-      "×"
+  <button aria-label="Close" type="button">
+    <span data-slot="label">
+      <span aria-hidden="true">
+        "×"
+      </span>
     </span>
   </button>
   <p id="save-hint">

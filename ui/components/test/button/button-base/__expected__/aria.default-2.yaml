@@ -1,5 +1,4 @@
 - button "Save"
 - button "Send"
 - button "Off" [disabled]
-- button "Wait" [disabled]
 - button "Slotted"

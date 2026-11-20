@@ -1,0 +1,20 @@
+<div>
+  <button aria-describedby="save-hint" id="save" type="button" uf:focused="">
+    <span data-slot="label">
+      "Save"
+    </span>
+  </button>
+  <button aria-label="Close" type="button">
+    <span data-slot="label">
+      <span aria-hidden="true">
+        "×"
+      </span>
+    </span>
+  </button>
+  <p id="save-hint">
+    "Saves the draft."
+  </p>
+</div>
+<uf:teleported>
+  <div data-inkline-announcer="1" role="status" style="clip-path: inset(50%); height: 1px; margin: -1px; overflow: hidden; position: absolute; white-space: nowrap; width: 1px;"></div>
+</uf:teleported>

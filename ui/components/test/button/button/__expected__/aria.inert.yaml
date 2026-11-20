@@ -1,0 +1,3 @@
+- form "Post":
+  - button "Publish" [disabled]
+  - button "Delete" [disabled]

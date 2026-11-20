@@ -5,23 +5,31 @@
       "action": "click getByRole('button', { name: 'Close' })",
       "dom": [
         "<div>",
-        "  <button aria-busy=\"false\" aria-describedby=\"save-hint\" id=\"save\" type=\"button\">",
-        "    \"Save\"",
+        "  <button aria-describedby=\"save-hint\" id=\"save\" type=\"button\">",
+        "    <span data-slot=\"label\">",
+        "      \"Save\"",
+        "    </span>",
         "  </button>",
-        "  <button aria-busy=\"false\" aria-label=\"Close\" type=\"button\" uf:focused=\"\">",
-        "    <span aria-hidden=\"true\">",
-        "      \"×\"",
+        "  <button aria-label=\"Close\" type=\"button\" uf:focused=\"\">",
+        "    <span data-slot=\"label\">",
+        "      <span aria-hidden=\"true\">",
+        "        \"×\"",
+        "      </span>",
         "    </span>",
         "  </button>",
         "  <p id=\"save-hint\">",
         "    \"Saves the draft.\"",
         "  </p>",
-        "</div>"
+        "</div>",
+        "<uf:teleported>",
+        "  <div data-inkline-announcer=\"2\" role=\"status\" style=\"clip-path: inset(50%); height: 1px; margin: -1px; overflow: hidden; position: absolute; white-space: nowrap; width: 1px;\"></div>",
+        "</uf:teleported>"
       ],
       "aria": [
         "- button \"Save\"",
         "- button \"Close\"",
-        "- paragraph: Saves the draft."
+        "- paragraph: Saves the draft.",
+        "- status"
       ],
       "events": {
         "click": [
