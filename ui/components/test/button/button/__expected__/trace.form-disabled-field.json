@@ -30,16 +30,12 @@
         "      \"Publish\"",
         "    </span>",
         "  </button>",
-        "</form>",
-        "<uf:teleported>",
-        "  <div data-inkline-announcer=\"1\" role=\"status\" style=\"clip-path: inset(50%); height: 1px; margin: -1px; overflow: hidden; position: absolute; white-space: nowrap; width: 1px;\"></div>",
-        "</uf:teleported>"
+        "</form>"
       ],
       "aria": [
         "- form \"Post\":",
         "  - textbox \"Title\"",
-        "  - button \"Publish\" [disabled]",
-        "- status"
+        "  - button \"Publish\" [disabled]"
       ],
       "events": {}
     }

@@ -7,9 +7,10 @@
 // - `toggles`: a toggle button, and a menu button with the list it controls.
 // - `form`: a submit button in a form with one text field. The form emits `submit` and cancels it.
 // - `inert`: two submit buttons that can't be activated, one loading and one focusable disabled.
+// - `saving`: a button whose own click starts loading, as a Save button's does.
 //
 // It emits `click` with the button's id whenever one of them does.
-import { defineEmits } from "@uxfront/unframework";
+import { defineEmits, ref } from "@uxfront/unframework";
 
 import IButton from "../../../src/components/button/styled/IButton.uf.tsx";
 import type { ButtonProps } from "../../../src/components/button/types.ts";
@@ -31,9 +32,10 @@ export default function ButtonCase({
   ButtonProps,
   "label" | "id" | "ariaLabel" | "ariaDescribedby" | "ariaHaspopup" | "ariaControls" | "iconOnly"
 > & {
-  scenario?: "default" | "attributes" | "icons" | "toggles" | "form" | "inert";
+  scenario?: "default" | "attributes" | "icons" | "toggles" | "form" | "inert" | "saving";
 }) {
   const emit = defineEmits<{ click: [button: string]; submit: [] }>();
+  const saving = ref(false);
 
   return (
     <>
@@ -132,6 +134,19 @@ export default function ButtonCase({
             onClick={() => emit("click", "publish")}
           />
         </form>
+      ) : scenario === "saving" ? (
+        <div>
+          <IButton
+            label="Save"
+            color="primary"
+            loading={saving.value}
+            loadingLabel="Saving"
+            onClick={() => {
+              saving.value = true;
+              emit("click", "save");
+            }}
+          />
+        </div>
       ) : scenario === "inert" ? (
         <form aria-label="Post">
           <IButton type="submit" label="Publish" color="primary" loading={true} />

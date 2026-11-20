@@ -1,6 +1,8 @@
 import type { ButtonRecipeProps } from "../../recipes.ts";
 
-export interface ButtonBaseProps {
+// `color`, `variant` and `size` take the recipe's values. The headless button shows them as
+// `data-color`, `data-variant` and `data-size`, and renders nothing for one that's unset.
+export interface ButtonBaseProps extends Pick<ButtonRecipeProps, "color" | "variant" | "size"> {
   /** Label text; the default slot overrides it. */
   label?: string;
   /** The native button type. */
@@ -35,18 +37,9 @@ export interface ButtonBaseProps {
   ariaHaspopup?: "true" | "menu" | "listbox" | "tree" | "grid" | "dialog";
   /** Id of the element the button controls, exposed as `aria-controls`. */
   ariaControls?: string;
-  /** The variant in effect, exposed as `data-variant`. The styled Button sets it. */
-  variant?: string;
-  /** The colour in effect, exposed as `data-color`. The styled Button sets it. */
-  color?: string;
-  /** The size in effect, exposed as `data-size`. The styled Button sets it. */
-  size?: string;
 }
 
-export interface ButtonProps
-  extends
-    Omit<ButtonBaseProps, "variant" | "color" | "size">,
-    Pick<ButtonRecipeProps, "color" | "variant" | "size"> {
+export interface ButtonProps extends ButtonBaseProps {
   /** Stretches the button to the full width of its container. */
   block?: boolean;
 }

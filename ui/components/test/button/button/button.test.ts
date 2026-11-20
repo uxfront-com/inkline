@@ -236,6 +236,47 @@ describeTargets("button/button", () => {
   );
 
   it(
+    "prepares its live region before the click that starts loading",
+    { requires: ["interactivity"] },
+    async () => {
+      for (const via of ["pointer", "keyboard"] as const) {
+        const view = await mount(ButtonCase, { props: { scenario: "saving" } });
+        const save = view.getByRole("button", { name: "Save" });
+        // What the live region holds at the event just before the click: the pointer's release, or
+        // the Enter key's press, which dispatches the click. A region the click itself creates
+        // isn't there yet. Qwik runs the click's handlers from the document, so the click's own
+        // capture phase can't tell.
+        const seen: string[] = [];
+        const record = () => {
+          const region = document.querySelector("[data-inkline-announcer]");
+          seen.push(region ? `ready: "${region.textContent}"` : "absent");
+        };
+        const before = via === "pointer" ? "pointerup" : "keydown";
+        try {
+          if (via === "pointer") {
+            document.addEventListener(before, record, true);
+            await view.user.click(save);
+            await view.expectParity("saving-clicked");
+          } else {
+            await view.user.tab();
+            await view.expectParity("saving-tabbed");
+            document.addEventListener(before, record, true);
+            await view.user.keyboard("{Enter}");
+            await view.expectParity("saving-entered");
+          }
+        } finally {
+          document.removeEventListener(before, record, true);
+        }
+        expect(seen).toEqual(['ready: ""']);
+        await expect.element(view.getByRole("status")).toHaveTextContent("Saving");
+        await expect.element(save).toHaveAttribute("data-loading", "");
+        expect(view.emitted("click")).toEqual([["save"]]);
+        await view.unmount();
+      }
+    },
+  );
+
+  it(
     "doesn't submit its form while loading or disabled",
     { requires: ["interactivity"] },
     async () => {

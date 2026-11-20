@@ -14,8 +14,9 @@ import type { ButtonBaseProps } from "../types.ts";
 //
 // When loading starts, the button announces its `loadingLabel` in a polite live region outside it,
 // since a region inside the button would change its name. Screen readers announce only changes to
-// a region that's already in the page, and loading usually follows a click, so a click prepares the
-// region. A button that starts loading without one prepares it then.
+// a region that's already in the page, and loading usually starts from a click, so the button
+// prepares the region when it gets focus or a pointer press, in a task before the click. A button
+// that starts loading with neither prepares it then, and that first message may go unannounced.
 export default function IButtonBase({
   label,
   type = "button",
@@ -115,10 +116,11 @@ export default function IButtonBase({
       data-size={size}
       data-icon-only={iconOnly ? "" : undefined}
       data-loading={loading ? "" : undefined}
+      onFocus={() => announcer()}
+      onPointerdown={() => announcer()}
       onClick={(event: MouseEvent) => {
         if ((event.currentTarget as HTMLElement).getAttribute("aria-disabled") === "true")
           event.preventDefault();
-        announcer();
         if ((event.currentTarget as HTMLElement).getAttribute("aria-disabled") !== "true")
           emit("click");
       }}
