@@ -1,6 +1,7 @@
 import { existsSync } from "node:fs";
 import { readFile, rm, writeFile } from "node:fs/promises";
 import { join } from "node:path";
+import { LANDING_PATHS } from "./app/data/frameworks";
 import { SECURITY_HEADERS } from "./server/lib/headers";
 
 const SITE_URL = "https://inkline.io";
@@ -28,6 +29,13 @@ export default defineNuxtConfig({
     // plus the framework switcher (`docsTheme.frameworks` in app/app.config.ts).
     "@uxfront/layer-docs",
   ],
+
+  // Every docs page at /docs/<framework>/<page>, once for each framework in
+  // `docsTheme.frameworks`, and built for each ("Framework URLs" in the
+  // @uxfront/layer-docs README).
+  frameworkUrls: {
+    enabled: true,
+  },
 
   runtimeConfig: {
     public: {
@@ -72,17 +80,10 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
+    // The first framework's introduction. `react` is the first value in
+    // `docsTheme.frameworks` (app/app.config.ts): reorder that list, change this.
     "/docs": {
-      redirect: "/docs/getting-started",
-    },
-    // The Guide section held one page, about the compiler — not what /docs
-    // documents. Both URLs shipped, so they redirect rather than 404 until the
-    // compiler tree exists to own the page (parked in content/_compiler/).
-    "/docs/guide": {
-      redirect: { to: "/docs/getting-started", statusCode: 301 },
-    },
-    "/docs/guide/architecture": {
-      redirect: { to: "/docs/getting-started", statusCode: 301 },
+      redirect: "/docs/react/getting-started",
     },
     // Hashed build assets never change, so cache them forever.
     "/_nuxt/**": {
@@ -104,8 +105,11 @@ export default defineNuxtConfig({
     preset: process.env.WORKERS_CI ? "cloudflare_pages_static" : undefined,
     prerender: {
       crawlLinks: true,
-      // /docs only redirects, so crawling the docs starts from the introduction.
-      routes: ["/", "/docs", "/docs/getting-started"],
+      // The layer adds every docs page under each framework, with the markdown
+      // twin each one links to. llms.txt adds the framework-neutral twins it
+      // lists. /docs only redirects. Nothing links to the framework landing
+      // pages (/react to /astro, app/data/frameworks.ts), so they're listed here.
+      routes: ["/", "/docs", ...LANDING_PATHS],
       failOnError: true,
     },
     vercel: {
