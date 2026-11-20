@@ -8,7 +8,7 @@ import IButton from "../styled/IButton.uf.tsx";
  */
 export default function ButtonIcon() {
   return (
-    <div>
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing--xs)">
       <IButton color="primary" label="New project">
         {{
           leading: () => (

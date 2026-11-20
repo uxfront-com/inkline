@@ -8,8 +8,8 @@ import IButton from "../styled/IButton.uf.tsx";
  */
 export default function ButtonColors() {
   return (
-    <div>
-      <div>
+    <div style="display: flex; flex-direction: column; gap: var(--spacing--sm)">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing--xs)">
         <IButton variant="solid" color="primary" label="Primary" />
         <IButton variant="solid" color="secondary" label="Secondary" />
         <IButton variant="solid" color="success" label="Success" />
@@ -20,7 +20,7 @@ export default function ButtonColors() {
         <IButton variant="solid" color="dark" label="Dark" />
         <IButton variant="solid" color="neutral" label="Neutral" />
       </div>
-      <div>
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing--xs)">
         <IButton variant="outline" color="primary" label="Primary" />
         <IButton variant="outline" color="secondary" label="Secondary" />
         <IButton variant="outline" color="success" label="Success" />
@@ -31,7 +31,7 @@ export default function ButtonColors() {
         <IButton variant="outline" color="dark" label="Dark" />
         <IButton variant="outline" color="neutral" label="Neutral" />
       </div>
-      <div>
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing--xs)">
         <IButton variant="soft" color="primary" label="Primary" />
         <IButton variant="soft" color="secondary" label="Secondary" />
         <IButton variant="soft" color="success" label="Success" />
@@ -42,7 +42,7 @@ export default function ButtonColors() {
         <IButton variant="soft" color="dark" label="Dark" />
         <IButton variant="soft" color="neutral" label="Neutral" />
       </div>
-      <div>
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing--xs)">
         <IButton variant="subtle" color="primary" label="Primary" />
         <IButton variant="subtle" color="secondary" label="Secondary" />
         <IButton variant="subtle" color="success" label="Success" />
@@ -53,7 +53,7 @@ export default function ButtonColors() {
         <IButton variant="subtle" color="dark" label="Dark" />
         <IButton variant="subtle" color="neutral" label="Neutral" />
       </div>
-      <div>
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing--xs)">
         <IButton variant="ghost" color="primary" label="Primary" />
         <IButton variant="ghost" color="secondary" label="Secondary" />
         <IButton variant="ghost" color="success" label="Success" />
@@ -64,7 +64,7 @@ export default function ButtonColors() {
         <IButton variant="ghost" color="dark" label="Dark" />
         <IButton variant="ghost" color="neutral" label="Neutral" />
       </div>
-      <div>
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing--xs)">
         <IButton variant="link" color="primary" label="Primary" />
         <IButton variant="link" color="secondary" label="Secondary" />
         <IButton variant="link" color="success" label="Success" />

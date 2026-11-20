@@ -4,7 +4,7 @@ import IButton from "../styled/IButton.uf.tsx";
 /** @category Components/Actions/Button */
 export default function ButtonVariants() {
   return (
-    <div>
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing--xs)">
       <IButton color="primary" variant="solid" label="Solid" />
       <IButton color="primary" variant="outline" label="Outline" />
       <IButton color="primary" variant="soft" label="Soft" />
