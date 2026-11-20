@@ -8,7 +8,7 @@ import IButton from "../styled/IButton.uf.tsx";
  */
 export default function ButtonLanguages() {
   return (
-    <div>
+    <div style="display: flex; flex-direction: column; gap: var(--spacing--sm)">
       <div lang="de" style="width: 10rem">
         <IButton color="primary" label="Alle Änderungen speichern" />
       </div>

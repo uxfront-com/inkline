@@ -8,7 +8,7 @@ import IButton from "../styled/IButton.uf.tsx";
  */
 export default function ButtonStates() {
   return (
-    <div>
+    <div style="display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing--xs)">
       <IButton color="primary" label="Save" />
       <IButton color="primary" disabled={true} label="Save" />
       <IButton color="primary" disabled={true} focusableWhenDisabled={true} label="Save" />

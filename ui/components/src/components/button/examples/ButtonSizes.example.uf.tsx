@@ -8,8 +8,8 @@ import IButton from "../styled/IButton.uf.tsx";
  */
 export default function ButtonSizes() {
   return (
-    <div>
-      <div>
+    <div style="display: flex; flex-direction: column; gap: var(--spacing--sm)">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing--xs)">
         <IButton size="xs" color="primary" variant="soft" label="Add xs">
           {{
             leading: () => (
@@ -106,7 +106,7 @@ export default function ButtonSizes() {
           }}
         </IButton>
       </div>
-      <div>
+      <div style="display: flex; flex-wrap: wrap; align-items: center; gap: var(--spacing--xs)">
         <IButton size="xs" variant="outline" iconOnly={true} label="Settings (xs)">
           {{
             leading: () => (
