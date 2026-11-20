@@ -1,0 +1,13 @@
+{
+  "description": "The styled button: its recipe and data attributes, its icons and parts, its toggle and popup states, and the states that can't be activated, which the server renders natively disabled.",
+  "ssr": {
+    "default": {
+      "props": {}
+    },
+    "inert": {
+      "props": {
+        "scenario": "inert"
+      }
+    }
+  }
+}

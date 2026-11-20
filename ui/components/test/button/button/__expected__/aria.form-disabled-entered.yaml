@@ -1,0 +1,4 @@
+- form "Post":
+  - textbox "Title"
+  - button "Publish" [disabled]
+- status

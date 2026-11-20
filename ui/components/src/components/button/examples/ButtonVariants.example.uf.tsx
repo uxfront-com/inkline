@@ -5,12 +5,12 @@ import IButton from "../styled/IButton.uf.tsx";
 export default function ButtonVariants() {
   return (
     <div>
-      <IButton variant="solid">Solid</IButton>
-      <IButton variant="outline">Outline</IButton>
-      <IButton variant="soft">Soft</IButton>
-      <IButton variant="subtle">Subtle</IButton>
-      <IButton variant="ghost">Ghost</IButton>
-      <IButton variant="link">Link</IButton>
+      <IButton color="primary" variant="solid" label="Solid" />
+      <IButton color="primary" variant="outline" label="Outline" />
+      <IButton color="primary" variant="soft" label="Soft" />
+      <IButton color="primary" variant="subtle" label="Subtle" />
+      <IButton color="primary" variant="ghost" label="Ghost" />
+      <IButton color="primary" variant="link" label="Link" />
     </div>
   );
 }

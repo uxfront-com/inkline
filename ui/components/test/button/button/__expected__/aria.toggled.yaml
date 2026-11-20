@@ -1,0 +1,4 @@
+- button "Mute"
+- button "Options" [expanded]
+- list "Options":
+  - listitem: Rename
