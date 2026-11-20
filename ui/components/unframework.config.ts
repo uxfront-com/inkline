@@ -48,5 +48,7 @@ export default defineConfig({
   }),
   // Inkline's typeface is the system font stack, so the family Chromium draws with depends on the
   // platform: San Francisco on macOS, and DejaVu Sans or Liberation Sans on Linux, CI included.
-  liveFonts: [".SF NS", "DejaVu Sans", "Liberation Sans"],
+  // Arabic text, like the Button's languages example, falls back to SF Arabic on macOS, and DejaVu
+  // Sans has Arabic letters on Linux.
+  liveFonts: [".SF NS", ".SF Arabic", "DejaVu Sans", "Liberation Sans"],
 });
