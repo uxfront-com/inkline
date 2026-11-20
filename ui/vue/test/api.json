@@ -52,14 +52,21 @@
     },
     "IButton": {
       "props": [
+        "ariaControls",
         "ariaDescribedby",
+        "ariaExpanded",
+        "ariaHaspopup",
         "ariaLabel",
+        "ariaPressed",
         "block",
         "color",
         "disabled",
+        "focusableWhenDisabled",
+        "iconOnly",
         "id",
         "label",
         "loading",
+        "loadingLabel",
         "size",
         "type",
         "variant"
@@ -72,13 +79,23 @@
     },
     "IButtonBase": {
       "props": [
+        "ariaControls",
         "ariaDescribedby",
+        "ariaExpanded",
+        "ariaHaspopup",
         "ariaLabel",
+        "ariaPressed",
+        "color",
         "disabled",
+        "focusableWhenDisabled",
+        "iconOnly",
         "id",
         "label",
         "loading",
-        "type"
+        "loadingLabel",
+        "size",
+        "type",
+        "variant"
       ],
       "models": [],
       "events": [
