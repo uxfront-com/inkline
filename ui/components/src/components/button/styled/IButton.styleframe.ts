@@ -7,13 +7,14 @@ export const buttonRecipe = useButtonRecipe(s);
 export const spinnerRecipe = useSpinnerRecipe(s);
 export const spinnerCircleRecipe = useSpinnerCircleRecipe(s);
 
-// Each rule below fills a gap in the theme's recipes. The PR lists them.
+// The rules below add what the theme's recipes leave to Inkline.
 
 // `block` is Inkline's prop, and the theme has no full-width style.
 s.selector(".button--block", { width: "100%" });
 
 // An icon-only button is square: its inline padding matches its block padding at each size, and the
-// icon takes the line's height as its width. The theme has no icon-only style yet.
+// icon takes the line's height as its width. The theme has its own icon-only style since 3.11.0, so
+// these rules and the label rule below duplicate it until a follow-up removes them.
 s.selector('.button[data-icon-only] > [data-slot="leading"]', {
   display: "inline-flex",
   alignItems: "center",
@@ -46,24 +47,4 @@ s.selector('.button[data-icon-only] > [data-slot="label"]', {
   clipPath: "inset(50%)",
   whiteSpace: "nowrap",
   borderWidth: "0",
-});
-
-// Temporary: copies the theme's rules on Styleframe `main`, until Inkline takes the theme release
-// that has them. The spinner takes the size and colour of the text, which 3.8.1's spinner has no
-// size for.
-s.selector(".button[data-loading] > .spinner", {
-  width: "1em",
-  height: "1em",
-  color: "currentColor",
-});
-
-// Temporary, as above: 3.8.1 styles only native `:disabled`, so a focusable disabled or loading
-// button gets the same look from `aria-disabled`, and a loading button keeps its full opacity,
-// since the spinner shows why it can't be used.
-s.selector('.button[aria-disabled="true"]', {
-  cursor: "not-allowed",
-  opacity: "0.75",
-});
-s.selector('.button[data-loading]:is(:disabled, [aria-disabled="true"])', {
-  opacity: "1",
 });

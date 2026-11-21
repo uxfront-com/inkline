@@ -50,7 +50,7 @@ catalog:
   "@styleframe/loader": ^3.0.4
   "@styleframe/plugin": ^3.4.1
   "@styleframe/runtime": ^3.2.2
-  "@styleframe/theme": ^3.8.1
+  "@styleframe/theme": ^3.11.0
   "@styleframe/transpiler": ^3.4.2
   "@sveltejs/vite-plugin-svelte": ^7.1.2
   "@tsdown/css": ^0.22.0

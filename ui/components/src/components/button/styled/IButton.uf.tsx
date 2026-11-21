@@ -59,8 +59,8 @@ export default function IButton({
         leading: slots.leading,
         trailing: slots.trailing,
         spinner: () => (
-          <span data-slot="spinner" aria-hidden="true" class={spinnerRecipe({ size: "auto" })}>
-            <svg class={spinnerCircleRecipe({ size: "auto" })} viewBox="0 0 50 50">
+          <span data-slot="spinner" aria-hidden="true" class={spinnerRecipe({ size: "inherit" })}>
+            <svg class={spinnerCircleRecipe({ size: "inherit" })} viewBox="0 0 50 50">
               <circle cx="25" cy="25" r="20" />
             </svg>
           </span>
