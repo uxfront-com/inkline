@@ -21,11 +21,13 @@ updates:
           - minor
           - patch
 
-  # GitHub Actions used in workflows.
+  # Keeps the SHA-pinned actions in .github/workflows current.
   - package-ecosystem: github-actions
-    directory: "/"
+    directory: /
     schedule:
-      interval: weekly
+      interval: monthly
+    groups:
+      actions:
+        patterns: ["*"]
     commit-message:
       prefix: ci
-      include: scope
