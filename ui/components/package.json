@@ -2,6 +2,7 @@
   "name": "@inkline/components",
   "version": "0.0.0",
   "private": true,
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "build": "node scripts/styleframe-types.ts && unframework build && node scripts/barrels.ts",
