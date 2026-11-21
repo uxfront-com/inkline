@@ -77,7 +77,7 @@ catalog:
   react-dom: ^19.2.7
   rollup-plugin-svelte: ^7.2.3
   rxjs: ^7.8.2
-  solid-js: ^1.9.13
+  solid-js: ^2.0.1
   styleframe: ^3.9.1
   svelte: ^5.56.3
   tslib: ^2.8.1
