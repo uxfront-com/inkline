@@ -195,7 +195,7 @@ describe("framework URLs", () => {
     );
     expect(canonical).toEqual([`${SITE_URL}/docs/vue/components/button`]);
     const alternates = [...html.matchAll(/<link rel="alternate" href="([^"]*)"/g)].map(
-      (match) => match[1],
+      (match) => match[1] ?? "",
     );
     expect(alternates.sort()).toEqual(
       FRAMEWORKS.filter((value) => value !== "vue")

@@ -96,6 +96,9 @@ catalogs:
     '@uxfront/scene':
       specifier: ^0.5.0
       version: 0.5.0
+    '@uxfront/typescript-config':
+      specifier: ^0.2.0
+      version: 0.2.0
     '@uxfront/ui':
       specifier: ^0.6.0
       version: 0.6.0
@@ -188,6 +191,9 @@ importers:
       '@changesets/cli':
         specifier: ^2.31.0
         version: 2.31.0(@types/node@26.1.1)
+      '@uxfront/typescript-config':
+        specifier: 'catalog:'
+        version: 0.2.0
       vite-plus:
         specifier: 'catalog:'
         version: 0.1.24(@types/node@26.1.1)(@vitest/coverage-v8@4.1.8)(esbuild@0.28.2)(happy-dom@20.10.3)(jiti@2.7.0)(jsdom@29.1.1(@noble/hashes@2.4.0))(less@4.9.1)(sass-embedded@1.104.1)(sass@1.104.1)(svelte@5.56.3(@typescript-eslint/types@8.71.0))(terser@5.51.2)(tsx@4.22.4)(typescript@6.0.3)(vite@8.3.4(@types/node@26.1.1)(esbuild@0.28.2)(jiti@2.7.0)(less@4.9.1)(sass-embedded@1.104.1)(sass@1.104.1)(terser@5.51.2)(tsx@4.22.4)(yaml@2.9.1))(yaml@2.9.1)
@@ -7681,6 +7687,9 @@ packages:
 
   '@uxfront/scene@0.5.1':
     resolution: {integrity: sha512-SCbqe1f/8TQ5+dcEC8cvxw0sSF1kPojdKop1rTme7FCrjuOAOukhdLbJVrQBi5QB1N+sHMCa1Y+Sl8+GE8ZkvQ==}
+
+  '@uxfront/typescript-config@0.2.0':
+    resolution: {integrity: sha512-gEg9Sk82x60DYmHS/D1EXJ8lx6nMo27Pz2ptEh5kg/zu7Q9OfdOsKdFCk/2ncZSVyS8vUYFQ7hgJY0b6ikP3pg==}
 
   '@uxfront/ui@0.6.0':
     resolution: {integrity: sha512-lkWo9OucP9drwIxWwLWrod5e5aR/zXjk4EyDkqiFEiCGMx3XyBBaEzLTz/lqe69Y3rW/bS5yN7eN54GM8kuiYQ==}
@@ -22411,6 +22420,8 @@ snapshots:
   '@uxfront/scene@0.5.0': {}
 
   '@uxfront/scene@0.5.1': {}
+
+  '@uxfront/typescript-config@0.2.0': {}
 
   '@uxfront/ui@0.6.0(vue@3.5.43(@typescript/typescript6@6.0.2))':
     dependencies:

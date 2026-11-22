@@ -252,7 +252,7 @@ class SourceReader {
     // `onCheckedChange` or, on Qwik, `onCheckedChange$`.
     for (const event of events) {
       const name = /^onUpdate(\w+?)\$?$/.exec(event)?.[1] ?? /^on(\w+?)Change\$?$/.exec(event)?.[1];
-      const model = name && name[0].toLowerCase() + name.slice(1);
+      const model = name && name.charAt(0).toLowerCase() + name.slice(1);
       if (model && props.has(model)) models.add(model);
     }
     for (const model of models) props.delete(model);
@@ -603,14 +603,15 @@ export function diffReports(committed: string, built: string, context = 2): stri
       continue;
     }
     if (last >= 0 && index > last + 1) out.push("…");
-    if (operations[index][0] === 0) {
-      out.push(`  ${operations[index][1]}`);
+    const operation = operations[index];
+    if (operation?.[0] === 0) {
+      out.push(`  ${operation[1]}`);
       last = index++;
       continue;
     }
     // A run of changed lines: the committed ones first, then the ones the build has instead.
     let end = index;
-    while (end < operations.length && operations[end][0] !== 0) end++;
+    while (end < operations.length && operations[end]?.[0] !== 0) end++;
     const run = operations.slice(index, end);
     for (const [operation, line] of run) if (operation === -1) out.push(`- ${line}`);
     for (const [operation, line] of run) if (operation === 1) out.push(`+ ${line}`);
