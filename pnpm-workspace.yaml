@@ -85,7 +85,7 @@ catalog:
   typescript: ^7.0.2
   vite: npm:@voidzero-dev/vite-plus-core@latest
   vite-plugin-solid: ^2.11.12
-  vite-plus: ^0.1.24
+  vite-plus: ^1.7.0
   vitest: npm:@voidzero-dev/vite-plus-test@^0.1.24
   vue: ^3.5.43
   zone.js: ^0.16.2
