@@ -21,11 +21,17 @@ const load = (entry: string): Promise<Record<string, Control>> =>
 const headless = await load("headless");
 const styled = await load("index");
 
+function exported(module: Record<string, Control>, name: string): [string, Control] {
+  const control = module[name];
+  if (!control) throw new Error(`the build doesn't export ${name}`);
+  return [name, control];
+}
+
 const controls: [string, Control][] = [
-  ["ICheckboxControlBase", headless.ICheckboxControlBase],
-  ["ISwitchControlBase", headless.ISwitchControlBase],
-  ["ICheckbox", styled.ICheckbox],
-  ["ISwitch", styled.ISwitch],
+  exported(headless, "ICheckboxControlBase"),
+  exported(headless, "ISwitchControlBase"),
+  exported(styled, "ICheckbox"),
+  exported(styled, "ISwitch"),
 ];
 
 let container: HTMLElement;

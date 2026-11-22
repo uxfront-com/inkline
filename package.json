@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.0",
+    "@uxfront/typescript-config": "catalog:",
     "vite-plus": "catalog:"
   },
   "engines": {
