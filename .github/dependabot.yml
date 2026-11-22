@@ -1,25 +1,22 @@
 version: 2
 updates:
-  # JavaScript/TypeScript dependencies across the pnpm workspace.
+  # npm packages across the pnpm workspace, catalogs included. A new release waits 3 days
+  # before an update PR proposes it.
   - package-ecosystem: npm
-    directory: "/"
+    directory: /
     schedule:
       interval: weekly
-    open-pull-requests-limit: 10
+    cooldown:
+      default-days: 3
+    groups:
+      first-party:
+        patterns: ["@uxfront/*", "@styleframe/*", "styleframe"]
+      third-party:
+        patterns: ["*"]
+        update-types: [minor, patch]
     commit-message:
       prefix: chore
       include: scope
-    groups:
-      production-dependencies:
-        dependency-type: production
-        update-types:
-          - minor
-          - patch
-      development-dependencies:
-        dependency-type: development
-        update-types:
-          - minor
-          - patch
 
   # Keeps the SHA-pinned actions in .github/workflows current.
   - package-ecosystem: github-actions
