@@ -9,6 +9,8 @@ The packages in `ui/*` are published to npm under the `@inkline/` org, except:
 - Packages with `"private": true` in `package.json` (like `@inkline/components`). The `apps/*` and `tooling/*` packages are all private.
 - Packages explicitly listed in [`.changeset/config.json`](../.changeset/config.json) `ignore` — today: `website`, `@inkline/components`.
 
+Changesets versions private packages too, but never tags them in git (`privatePackages` in the same file), as Changesets 2 did.
+
 Access is `public` (also configured in [`.changeset/config.json`](../.changeset/config.json)).
 
 The framework output packages (`@inkline/react`, `@inkline/vue`, …) hold generated code; releasing them releases the latest compilation of `@inkline/components`. There is no separate "publish the source" step.
@@ -37,7 +39,7 @@ The release runs in two phases via [`.github/workflows/changesets.yml`](../.gith
 
 ### Phase A — collect changesets
 
-On every push to `main`, the workflow invokes [`changesets/action`](https://github.com/changesets/action). The action either:
+On every push to `main`, `changesets.yml` calls the shared release workflow, [`release.yml` in `uxfront-com/.github`](https://github.com/uxfront-com/.github/blob/main/.github/workflows/release.yml), pinned to a commit SHA. While changesets are pending, its version job runs [`changesets/action`](https://github.com/changesets/action), which:
 
 - Opens (or updates) a PR titled `chore: update versions` that:
   - Applies all pending `.changeset/*.md` files to `package.json` versions.
@@ -49,20 +51,16 @@ This PR accumulates until a maintainer is ready to release.
 
 ### Phase B — publish
 
-Merging the `chore: update versions` PR triggers the workflow again, which now sees no pending changesets but the bumped versions. The publish step is **currently commented out** in [`changesets.yml`](../.github/workflows/changesets.yml#L60):
+Merging the `chore: update versions` PR triggers the workflow again, which now sees no pending changesets but the bumped versions. Publishing is turned off for now: [`changesets.yml`](../.github/workflows/changesets.yml) passes `publish: false`, so the shared workflow skips its pack and publish jobs, and merging the PR publishes nothing.
 
-```yaml
-# publish: pnpm exec changeset publish
-```
-
-Until that is enabled, `npm publish` is a manual step a maintainer takes after merging the version PR:
+Until it's turned on, `npm publish` is a manual step a maintainer takes after merging the version PR:
 
 ```bash
 pnpm run ci:prepublish   # builds all packages
 pnpm exec changeset publish  # publishes everything with bumped versions
 ```
 
-`NPM_TOKEN` is already wired into the workflow env if/when publish is re-enabled.
+To publish from CI, remove `publish: false` and add an npm [trusted publisher](https://docs.npmjs.com/trusted-publishers) to each package, naming this repository and the `changesets.yml` workflow. The publish job then gets a short-lived credential through OIDC, so the workflow uses no `NPM_TOKEN`. Keep the file's name, since the trusted publisher names it: after a rename, the publish fails with a misleading E404.
 
 ## Versioning policy
 
