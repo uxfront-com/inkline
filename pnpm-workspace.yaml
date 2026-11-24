@@ -72,7 +72,7 @@ catalog:
   astro: ^7.4.11
   babel-plugin-react-compiler: ^1.0.0
   docus: ^5.13.0
-  jsdom: ^29.1.1
+  jsdom: ^31.0.1
   playwright: ^1.63.0
   react: ^19.2.7
   react-dom: ^19.2.7
