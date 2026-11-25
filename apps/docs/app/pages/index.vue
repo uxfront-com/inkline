@@ -2,12 +2,11 @@
 import { FRAMEWORKS } from "@uxfront/ui";
 import { corridor, ink, prism, stack, tokens } from "@uxfront/scene/formations";
 
-import { GITHUB_URL, SHARE_IMAGE } from "~/data/site";
+import { GITHUB_URL, SHARE_IMAGE, SITE_DESCRIPTION } from "~/data/site";
 
 useUxHead({
   title: "UI components for seven frameworks - Inkline",
-  description:
-    "Inkline is a UI component library with a native package for React, Vue, Svelte, Solid, Angular, Qwik and Astro, styled with Styleframe and accessible by default.",
+  description: SITE_DESCRIPTION,
   siteName: "Inkline",
   sameAs: [GITHUB_URL],
   image: SHARE_IMAGE,

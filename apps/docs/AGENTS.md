@@ -24,7 +24,7 @@ apps/docs/
 │   │   │                     # version select; VersionSelect (<AppVersionSelect>)
 │   │   └── site/             # SiteHeader: the homepage's and landing pages' header
 │   ├── data/frameworks.ts    # LANDING_FRAMEWORKS: one entry per landing page
-│   ├── data/site.ts          # DOCS_URL, GITHUB_URL, SHARE_IMAGE
+│   ├── data/site.ts          # DOCS_URL, GITHUB_URL, SITE_DESCRIPTION, SHARE_IMAGE
 │   └── data/versions.ts      # VERSIONS: v5 (this site), v4, v3, v2
 ├── public/share.png          # the homepage's and landing pages' share image, 1200 × 630
 ├── scripts/fetch-history.mjs # before `nuxt generate`: unshallows the clone for the sitemap's dates
