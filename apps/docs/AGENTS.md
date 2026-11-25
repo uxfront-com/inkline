@@ -136,10 +136,10 @@ pnpm --filter website lighthouse   # after generate: Lighthouse CI on the homepa
 
 ## SEO and Lighthouse checks
 
-Both checks come from [`@uxfront/site-checks`](https://www.npmjs.com/package/@uxfront/site-checks), which the other uxfront.com sites share, and both read `.output/public`, so run `generate` first.
+Both checks come from [`@uxfront/site-checks`](https://www.npmjs.com/package/@uxfront/site-checks), which the other uxfront.com sites share. Both read `.output/public`, so run `generate` first:
 
 - **`check:seo`** reads every page in the sitemap the way a crawler does: titles, descriptions, canonical links, share images, structured data, `sitemap.xml`, `robots.txt` and `llms.txt`. It runs the package's 20 core rules with their defaults, set in [`site-checks.config.mjs`](./site-checks.config.mjs). `sitemap-pages` takes `paths: "lookup"`, since Cloudflare serves a page at both `/a` and `/a/`. It prints one line per rule and exits 1 on any problem. CI's Build Website job runs it after `test:build`.
-- **`lighthouse`** runs Lighthouse CI three times on the homepage and five docs pages, with the package's thresholds: an error below 0.95 in performance, accessibility and best practices, and below 1 in SEO. [`lighthouserc.mjs`](./lighthouserc.mjs) lists the pages by file name, like `/docs/react/components/button.html`, because the static server Lighthouse CI starts sends `/a` to `/a/`, where `generate` writes no page. Reports go to `.lighthouseci/`. CI's Lighthouse job runs it on Build Website's artifact.
+- **`lighthouse`** runs Lighthouse CI three times on the homepage and five docs pages, with the package's thresholds: an error below 0.95 in performance, accessibility and best practices, and below 1 in SEO. [`lighthouserc.mjs`](./lighthouserc.mjs) lists the pages by file name, like `/docs/react/components/button.html`, because the static server Lighthouse CI starts sends `/a` to `/a/`, where `generate` writes no page. Reports go to `.lighthouseci/`. CI's Lighthouse job runs it on the site that Build Website uploads.
 
 Turn a rule back on, or a category back to `error`, once the site passes it. The two exceptions are in **Known gaps**.
 
