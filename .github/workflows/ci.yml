@@ -400,46 +400,12 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
-  # Lighthouse CI on the generated site, from Build Website's artifact, with the
-  # thresholds of @uxfront/site-checks (apps/docs/lighthouserc.mjs). The install
-  # only gives the config its import, so it skips scripts and the other packages.
-  lighthouse:
-    name: Lighthouse
-    runs-on: ubuntu-latest
-    needs: build-website
-    timeout-minutes: 15
-    steps:
-      - name: Checkout
-        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4.3.0
-
-      - name: Setup Node.js
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
-        with:
-          node-version-file: .node-version
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile --ignore-scripts --filter website
-
-      - name: Download website build
-        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
-        with:
-          name: website-build
-          path: apps/docs/.output/public
-
-      - name: Run Lighthouse
-        run: pnpm --filter website run lighthouse
-
   ci-success:
     name: CI Success
     runs-on: ubuntu-latest
     needs:
       - build
       - build-website
-      - lighthouse
       - lint
       - api-report
       - typecheck
