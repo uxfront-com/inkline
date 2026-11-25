@@ -28,6 +28,9 @@ export function lastModified(paths: string[], cwd?: string): Map<string, string>
     log = execFileSync(
       "git",
       [
+        // Names like `é.md` as they are, not quoted as `"\303\251.md"`.
+        "-c",
+        "core.quotePath=false",
         "--literal-pathspecs",
         "log",
         "--relative",

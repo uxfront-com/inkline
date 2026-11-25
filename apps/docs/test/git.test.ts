@@ -29,7 +29,7 @@ describe("lastModified", () => {
     expect(warn).toHaveBeenCalledOnce();
   });
 
-  it("dates each file by its last commit in UTC, keyed from cwd, with literal paths", () => {
+  it("dates each file by its last commit in UTC, keyed from cwd by its own name", () => {
     const repo = tempDir();
     const app = join(repo, "apps", "docs");
     mkdirSync(join(app, "app", "pages"), { recursive: true });
@@ -46,6 +46,7 @@ describe("lastModified", () => {
     // `[framework].vue` would match `f.vue` as a glob pattern.
     writeFileSync(join(app, "app", "pages", "[framework].vue"), "a");
     writeFileSync(join(app, "app", "pages", "f.vue"), "a");
+    writeFileSync(join(app, "app", "pages", "é.vue"), "a");
     git("2026-01-01T00:00:00Z", "add", "-A");
     git("2026-01-01T00:00:00Z", "commit", "-qm", "one");
     writeFileSync(join(app, "app", "pages", "f.vue"), "b");
@@ -59,6 +60,7 @@ describe("lastModified", () => {
       new Map([
         ["app/pages/f.vue", "2026-01-02"],
         ["app/pages/[framework].vue", "2026-01-01"],
+        ["app/pages/é.vue", "2026-01-01"],
       ]),
     );
   });
