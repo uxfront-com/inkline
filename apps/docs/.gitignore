@@ -8,6 +8,9 @@ dist
 dist-ssr
 *.local
 
+# Lighthouse CI reports (pnpm lighthouse)
+.lighthouseci
+
 # Vercel: build output (.vercel/output) and CLI project link (.vercel/project.json)
 .vercel
 
