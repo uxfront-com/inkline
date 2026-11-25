@@ -70,6 +70,13 @@ const frameworkOf = (file: string) =>
 /** The framework of a landing page, `<framework>.html` at the top level. */
 const landingOf = (file: string) => FRAMEWORKS.find((framework) => file === `${framework}.html`);
 
+/** The `content` of every `<meta>` whose `attribute` is `key`, in either attribute order. */
+const metaContent = (html: string, attribute: "name" | "property", key: string) =>
+  [...html.matchAll(/<meta\b[^>]*>/g)]
+    .map(([tag]) => tag)
+    .filter((tag) => tag.includes(`${attribute}="${key}"`))
+    .map((tag) => tag.match(/content="([^"]*)"/)?.[1]);
+
 const isNoindex = (html: string) => /<meta[^>]*name="robots"[^>]*content="[^"]*noindex/.test(html);
 
 describe("the generated site", () => {
@@ -248,6 +255,18 @@ describe("the sitemap", () => {
     // `/`, six pages under each of the seven frameworks, and the seven landing pages.
     expect(locs).toHaveLength(50);
   });
+
+  // Each `<url>` is dated by the last commit that changed its source, or the
+  // build day without one (server/routes/sitemap.xml.ts).
+  it("dates every URL with a <lastmod> day", () => {
+    const urls = [...read("sitemap.xml").matchAll(/<url>([\s\S]*?)<\/url>/g)].map(
+      (match) => match[1]!,
+    );
+    expect(urls).toHaveLength(50);
+    for (const url of urls) {
+      expect(url.match(/<lastmod>([^<]*)<\/lastmod>/)?.[1]).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    }
+  });
 });
 
 // D12: every URL llms.txt lists is built, the framework-neutral markdown twins
@@ -307,6 +326,27 @@ describe("the framework landing pages", () => {
     expect(canonical).toEqual([`${SITE_URL}/${value}`]);
     expect(html).toContain(install);
     expect(html).toContain(`href="/docs/${value}/getting-started"`);
+  });
+
+  // The homepage and the seven landing pages share public/share.png as their card.
+  it.each(["index", ...FRAMEWORKS])("gives %s.html the share image and a large card", (page) => {
+    const html = read(`${page}.html`);
+    expect(metaContent(html, "property", "og:image")).toEqual([`${SITE_URL}/share.png`]);
+    expect(metaContent(html, "property", "og:image:width")).toEqual(["1200"]);
+    expect(metaContent(html, "property", "og:image:height")).toEqual(["630"]);
+    expect(metaContent(html, "name", "twitter:card")).toEqual(["summary_large_image"]);
+    expect(metaContent(html, "name", "twitter:image")).toEqual([`${SITE_URL}/share.png`]);
+  });
+
+  it("ships share.png as a 1200 × 630 PNG", () => {
+    const png = readFileSync(join(output, "share.png"));
+    expect(png.subarray(0, 8)).toEqual(
+      Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]),
+    );
+    // The IHDR chunk: width at bytes 16 to 19 and height at 20 to 23, big-endian.
+    expect(png.toString("ascii", 12, 16)).toBe("IHDR");
+    expect([png.readUInt32BE(16), png.readUInt32BE(20)]).toEqual([1200, 630]);
+    expect(png.length).toBeLessThan(300 * 1024);
   });
 
   // D13a: each page shows its own package only.
