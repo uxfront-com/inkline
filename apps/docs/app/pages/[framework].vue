@@ -25,7 +25,7 @@ const app =
 // Draft copy, for Alex's approval before the site goes live on inkline.io.
 useUxHead({
   title: `${label} UI components - Inkline`,
-  description: `Inkline for ${label}: accessible UI components in one native package, ${pkg}, themed with Styleframe. Install it in ${app} with one command.`,
+  description: `Inkline for ${label}: accessible UI components in one native package, ${pkg}, themed with Styleframe and ready for ${app}.`,
   siteName: "Inkline",
   path: `/${value}`,
   sameAs: [GITHUB_URL],
