@@ -12,7 +12,7 @@ apps/docs/
 │                             # Vercel edge rules, the Cloudflare preset under WORKERS_CI
 ├── wrangler.json             # the inkline Worker: dist/ as static assets
 ├── app/
-│   ├── app.vue               # mounts Docus under /docs, the homepage everywhere else; title template
+│   ├── app.vue               # mounts Docus under /docs, the homepage everywhere else; site title template
 │   ├── app.config.ts         # GitHub links, docsTheme (frameworks, wordmark, byline,
 │   │                         # headerLinks), ui colours
 │   ├── app.css               # Inkline's purple scale and --ui-primary, Tailwind @source lines
@@ -47,7 +47,7 @@ apps/docs/
 ## Shared and local
 
 - **From the packages (don't copy or edit here):** Docus's header, sidebar, search, table of contents, colour mode, llms.txt, robots.txt and OG images; the layer's `FrameworkSwitcher`, Framework select, header wordmark and header links (`AppHeaderLinks`, from `docsTheme.headerLinks`), its framework URLs, `docsPath()` and the sitemap's docs entries (`getDocsSitemapEntries()`); the homepage components and the scene. If a build needs a package change, flag it upstream rather than forking the package into this app.
-- **Copied from Open Components:** `app/app.vue`, `app/error.vue`, `server/`, and the generic parts of `nuxt.config.ts` and `app/app.config.ts`. Keep them close to the source, so a fix there carries over. Framework URLs moved three of them away from that copy: the framework title template in `app/app.vue`, the `/docs` redirect in `nuxt.config.ts` and `server/routes/sitemap.xml.ts`, which lists the layer's entries in place of its own query.
+- **Copied from Open Components:** `app/app.vue`, `app/error.vue`, `server/`, and the generic parts of `nuxt.config.ts` and `app/app.config.ts`. Keep them close to the source, so a fix there carries over. Framework URLs moved two of them away from that copy: the `/docs` redirect in `nuxt.config.ts` and `server/routes/sitemap.xml.ts`, which lists the layer's entries in place of its own query.
 - **Local to this app:** the brand (`app/app.config.ts`, `app/app.css`), the header overrides in `app/components/app/`, which compose the layer's `AppHeaderLinks` and `AppHeaderFramework` around the Version select, the homepage and the framework landing pages, the embed port, the Vercel rules, the Cloudflare config and all markdown under `content/`.
 
 ## Docs content
@@ -62,7 +62,9 @@ Each page's markdown is served at `/raw/docs/<page>.md`, which `llms.txt` lists 
 
 ## Multi-framework examples
 
-The URL decides the framework: `/docs/vue/components/button` shows the Vue slot of every `::framework-switcher` on the page, before any script runs, and its title reads "Button - Inkline Vue". The Framework select above the sidebar (in the header's menu below 768px) goes to the same page under the framework the reader picks. localStorage only remembers the last pick. Each built page carries only its framework's slot. The seven frameworks, in Inkline's order, are `docsTheme.frameworks` in `app/app.config.ts`, and the first one, React, is the one `/docs` and the homepage link to: reorder the list, and change the `/docs` redirect in `nuxt.config.ts` with it.
+The URL decides the framework: `/docs/vue/components/button` shows the Vue slot of every `::framework-switcher` on the page, before any script runs. The layer names the framework in each copy's title and meta description, so the title reads "Button for Vue - Inkline" and no two copies share a description. A page can set its own text for one framework under `seo.frameworks` in its frontmatter ("Titles and descriptions" in the layer's README).
+
+The Framework select above the sidebar (in the header's menu below 768px) goes to the same page under the framework the reader picks. localStorage only remembers the last pick. Each built page carries only its framework's slot. The seven frameworks, in Inkline's order, are `docsTheme.frameworks` in `app/app.config.ts`, and the first one, React, is the one `/docs` and the homepage link to: reorder the list, and change the `/docs` redirect in `nuxt.config.ts` with it.
 
 The Button page shows a code sample for each framework inside its slot:
 
