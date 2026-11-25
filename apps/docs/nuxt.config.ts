@@ -2,6 +2,7 @@ import { existsSync } from "node:fs";
 import { readFile, rm, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { LANDING_PATHS } from "./app/data/frameworks";
+import { SITE_DESCRIPTION } from "./app/data/site";
 import { SECURITY_HEADERS } from "./server/lib/headers";
 
 const SITE_URL = "https://inkline.io";
@@ -71,6 +72,18 @@ export default defineNuxtConfig({
       ],
       link: [{ rel: "icon", href: "/favicon.svg", type: "image/svg+xml" }],
     },
+  },
+
+  // Docs pages' share images, which nuxt-og-image draws at 1200 × 600 by default:
+  // 1200 × 630 is the 1.91:1 size that link previews expect.
+  ogImage: {
+    defaults: { width: 1200, height: 630 },
+  },
+
+  // The summary llmstxt.org puts under llms.txt's title. Docus takes it from
+  // package.json's description otherwise, and this app's has none.
+  llms: {
+    description: SITE_DESCRIPTION,
   },
 
   experimental: {
