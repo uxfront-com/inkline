@@ -24,14 +24,17 @@ apps/docs/
 │   │   │                     # version select; VersionSelect (<AppVersionSelect>)
 │   │   └── site/             # SiteHeader: the homepage's and landing pages' header
 │   ├── data/frameworks.ts    # LANDING_FRAMEWORKS: one entry per landing page
-│   ├── data/site.ts          # DOCS_URL, GITHUB_URL
+│   ├── data/site.ts          # DOCS_URL, GITHUB_URL, SHARE_IMAGE
 │   └── data/versions.ts      # VERSIONS: v5 (this site), v4, v3, v2
+├── public/share.png          # the homepage's and landing pages' share image, 1200 × 630
+├── scripts/fetch-history.mjs # before `nuxt generate`: unshallows the clone for the sitemap's dates
 ├── server/
-│   ├── routes/sitemap.xml.ts # the homepage, the landing pages, then getDocsSitemapEntries()
+│   ├── routes/sitemap.xml.ts # the homepage, the landing pages, then getDocsSitemapEntries(),
+│   │                         # each dated by Git
 │   ├── middleware/raw-markdown.ts  # /raw/<path>.md from each page's source; the layer
 │   │                               # serves the /raw/docs/<framework>/… twins from it
-│   └── lib/                  # headers, docs, raw
-├── test/                     # brand palette, embed helpers, versions, frameworks;
+│   └── lib/                  # headers, docs, raw, git (lastModified())
+├── test/                     # brand palette, embed helpers, versions, frameworks, git;
 │                             # site.build.test.ts after generate
 └── content/
     ├── _compiler/            # parked, unrouted: compiler pages awaiting /compiler
@@ -90,6 +93,16 @@ The page validates its segment against the entries, so every other one-segment p
 
 The landing pages' copy is a draft until Alex approves it, before the site goes live on `inkline.io`.
 
+## Sitemap dates and share images
+
+Every URL in the sitemap has a `<lastmod>`: the UTC day of the last commit that changed its source, from `lastModified()` in `server/lib/git.ts`. The homepage dates by `app/pages/index.vue`, each landing page by the later of `app/pages/[framework].vue` and `app/data/frameworks.ts`, and each docs page by its markdown file, so its seven framework copies share one day. A page's `modifiedAt` wins over Git, and a source with no Git date takes the build's day.
+
+The dates need the repository's history. `generate` runs `scripts/fetch-history.mjs` first, which fetches the full history when the clone is shallow, as some hosts' clones are. It never stops the build: when the fetch fails, every page dates by the one commit the clone has, and with no Git at all, by the build day. Its `fetch-history:` line in the build log says which happened.
+
+A shared link shows a 1200 × 630 image. The docs pages generate theirs with nuxt-og-image, at the size `ogImage.defaults` in `nuxt.config.ts` sets, since its own default is 1200 × 600.
+
+The homepage and the seven landing pages share `public/share.png`, `SHARE_IMAGE` in `app/data/site.ts`: a screenshot of the homepage hero with the scene ready, and with the header's links, the button, the scroll hint and the HUD hidden (`.ux-header__nav`, `.ux-header__end`, `.ux-hero .ux-pill-link`, `.ux-hero__scroll`, `.ux-hud`). Take it again when the hero changes, at a 1200 × 630 viewport, and keep it under 300 KB. The scene's particles keep a full 256-colour PNG near 400 KB, so the current image is quantised at quality 75, with sharp's `png({ palette: true, quality: 75 })`, to 208 KB. `test:build` checks its size and the share tags on all eight pages.
+
 ## Version select
 
 Both headers have a Version select that shows v5, this site, and lists the older docs sites: v4, v3 and v2, each at `https://v<n>.inkline.io/`. The list is `app/data/versions.ts`, and `app/components/app/VersionSelect.vue` renders it on Nuxt UI's `USelect`. Nuxt names it `AppVersionSelect`, after its folder. It sits before the GitHub link in `SiteHeader`'s actions, on the homepage and the landing pages, and in the docs header (`AppHeaderCTA`), and in the docs header's menu below 768px, under the Framework select (`AppHeaderBody`).
@@ -109,13 +122,13 @@ pnpm --filter website dev   # nuxt dev with HMR
 ```bash
 pnpm --filter website generate     # static prerender → .output/public
 pnpm --filter website test         # source tests: the brand palette, the embed helpers, the versions,
-                                   # the landing pages' entries
+                                   # the landing pages' entries, the sitemap's Git dates
 pnpm --filter website test:build   # after generate: the files the deploy needs, the Version select, no assistant,
                                    # framework URLs, titles, links, the sitemap, the markdown twins
-                                   # and the landing pages
+                                   # and the landing pages with their share image
 ```
 
-`generate` is the build that ships, and it fails on any page that doesn't prerender (`nitro.prerender.failOnError`). `build` (node-server) is a local convenience only: it emits no `robots.txt`, `200.html` or `404.html`, all of which the deploy needs.
+`generate` is the build that ships. It runs `scripts/fetch-history.mjs`, then `nuxt generate`, which fails on any page that doesn't prerender (`nitro.prerender.failOnError`). `build` (node-server) is a local convenience only: it emits no `robots.txt`, `200.html` or `404.html`, all of which the deploy needs.
 
 ## Deploy
 

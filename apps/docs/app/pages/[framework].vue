@@ -3,7 +3,7 @@ import { FRAMEWORKS } from "@uxfront/ui";
 import { corridor, ink, outline, stack } from "@uxfront/scene/formations";
 
 import { isLandingFramework, landingFramework } from "~/data/frameworks";
-import { GITHUB_URL } from "~/data/site";
+import { GITHUB_URL, SHARE_IMAGE } from "~/data/site";
 
 // A framework's landing page, /react to /astro, from its entry in
 // app/data/frameworks.ts. Every other one-segment path is a 404.
@@ -29,6 +29,7 @@ useUxHead({
   siteName: "Inkline",
   path: `/${value}`,
   sameAs: [GITHUB_URL],
+  image: SHARE_IMAGE,
 });
 
 // Every docs link stays under this page's framework.

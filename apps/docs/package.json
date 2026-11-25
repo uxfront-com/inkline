@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nuxt dev",
     "build": "nuxt build",
-    "generate": "nuxt generate",
+    "generate": "node scripts/fetch-history.mjs && nuxt generate",
     "preview": "nuxt preview",
     "test": "vp test",
     "test:build": "vp test --config vite.build.config.ts",

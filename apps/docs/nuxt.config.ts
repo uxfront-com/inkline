@@ -73,6 +73,12 @@ export default defineNuxtConfig({
     },
   },
 
+  // Docs pages' share images, which nuxt-og-image draws at 1200 × 600 by default:
+  // 1200 × 630 is the 1.91:1 size that link previews expect.
+  ogImage: {
+    defaults: { width: 1200, height: 630 },
+  },
+
   experimental: {
     // Inline the payload on first load (the homepage makes no extra request),
     // and extract it for client-side navigation between docs pages.
