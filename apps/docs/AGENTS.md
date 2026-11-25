@@ -99,7 +99,9 @@ Every URL in the sitemap has a `<lastmod>`: the UTC day of the last commit that 
 
 The dates need the repository's history. `generate` runs `scripts/fetch-history.mjs` first, which fetches the full history when the clone is shallow, as some hosts' clones are. It never stops the build: when the fetch fails, every page dates by the one commit the clone has, and with no Git at all, by the build day. Its `fetch-history:` line in the build log says which happened.
 
-A shared link shows a 1200 × 630 image. The docs pages generate theirs with nuxt-og-image, at the size `ogImage.defaults` in `nuxt.config.ts` sets, since its own default is 1200 × 600. The homepage and the seven landing pages share `public/share.png`, `SHARE_IMAGE` in `app/data/site.ts`: a screenshot of the homepage hero with the scene ready, and with the header's links, the button, the scroll hint and the HUD hidden (`.ux-header__nav`, `.ux-header__end`, `.ux-hero .ux-pill-link`, `.ux-hero__scroll`, `.ux-hud`). Take it again when the hero changes, at a 1200 × 630 viewport, and keep it under 300 KB: a 256-colour PNG is. `test:build` checks its size and the share tags on all eight pages.
+A shared link shows a 1200 × 630 image. The docs pages generate theirs with nuxt-og-image, at the size `ogImage.defaults` in `nuxt.config.ts` sets, since its own default is 1200 × 600.
+
+The homepage and the seven landing pages share `public/share.png`, `SHARE_IMAGE` in `app/data/site.ts`: a screenshot of the homepage hero with the scene ready, and with the header's links, the button, the scroll hint and the HUD hidden (`.ux-header__nav`, `.ux-header__end`, `.ux-hero .ux-pill-link`, `.ux-hero__scroll`, `.ux-hud`). Take it again when the hero changes, at a 1200 × 630 viewport, and keep it under 300 KB. The scene's particles keep a full 256-colour PNG near 400 KB, so the current image is quantised at quality 75, with sharp's `png({ palette: true, quality: 75 })`, to 208 KB. `test:build` checks its size and the share tags on all eight pages.
 
 ## Version select
 
