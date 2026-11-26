@@ -7,7 +7,5 @@ export default defineConfig({
   rules: {
     // Cloudflare's static assets serve a page at both `/a` and `/a/`.
     "sitemap-pages": { paths: "lookup" },
-    // Off for now: each docs page is served once per framework with one description.
-    "description-unique": false,
   },
 });
