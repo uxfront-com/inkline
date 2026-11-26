@@ -42,7 +42,7 @@ catalog:
   "@angular/platform-browser": 22.2.6
   "@angular/platform-browser-dynamic": ^22.2.6
   "@angular/platform-server": 22.2.6
-  "@babel/core": ^7.29.7
+  "@babel/core": ^8.1.2
   "@qwik.dev/core": 2.0.0-rc.5
   "@styleframe/cli": ^4.1.2
   "@styleframe/core": ^3.7.0
@@ -73,7 +73,7 @@ catalog:
   astro: ^7.4.11
   babel-plugin-react-compiler: ^1.0.0
   docus: ^5.13.0
-  jsdom: ^29.1.1
+  jsdom: ^31.0.0
   playwright: ^1.63.0
   react: ^19.2.7
   react-dom: ^19.2.7
@@ -86,7 +86,7 @@ catalog:
   typescript: ^7.0.2
   vite: npm:@voidzero-dev/vite-plus-core@latest
   vite-plugin-solid: ^2.11.12
-  vite-plus: ^0.1.24
+  vite-plus: ^1.6.0
   vitest: npm:@voidzero-dev/vite-plus-test@^0.1.24
   vue: ^3.5.43
   zone.js: ^0.16.2
