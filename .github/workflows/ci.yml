@@ -102,6 +102,11 @@ jobs:
       - name: Check generated site
         run: pnpm --filter website run test:build
 
+      # The search and AI search checks from @uxfront/site-checks: the core rules
+      # (apps/docs/site-checks.config.mjs) on every page in the sitemap.
+      - name: Check SEO
+        run: pnpm --filter website run check:seo
+
       # `.output/public` is `generate`'s real output. The previous path,
       # `apps/docs/dist`, is an untracked symlink Nuxt only creates on
       # `generate` — under `build` it never existed and this artifact uploaded

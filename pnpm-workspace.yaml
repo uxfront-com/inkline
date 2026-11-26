@@ -62,6 +62,7 @@ catalog:
   "@uxfront/layer-docs": ^0.10.0
   "@uxfront/layer-ui": ^0.1.11
   "@uxfront/scene": ^0.5.2
+  "@uxfront/site-checks": 0.1.1
   "@uxfront/typescript-config": ^0.2.0
   "@uxfront/ui": ^0.9.2
   "@uxfront/unframework": 0.4.1

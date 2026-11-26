@@ -96,6 +96,9 @@ catalogs:
     '@uxfront/scene':
       specifier: ^0.5.2
       version: 0.5.2
+    '@uxfront/site-checks':
+      specifier: 0.1.1
+      version: 0.1.1
     '@uxfront/typescript-config':
       specifier: ^0.2.0
       version: 0.2.0
@@ -237,6 +240,9 @@ importers:
         specifier: ^5.1.0
         version: 5.4.0(@farmfe/core@1.7.11(@types/node@26.1.1)(supports-color@10.2.2))(@rspack/core@2.0.8(@swc/helpers@0.5.23))(@voidzero-dev/vite-plus-core@8.3.8001(@types/node@26.1.1)(@typescript/typescript6@6.0.2)(@volar/typescript@2.4.30(@typescript/typescript6@6.0.2))(@vue/language-core@3.3.14)(esbuild@0.28.2)(jiti@2.7.0)(less@4.9.1(supports-color@10.2.2))(sass-embedded@1.104.1)(sass@1.104.1)(terser@5.51.2)(tsx@4.22.4)(yaml@2.9.1))(@vue/compiler-sfc@3.5.43)(esbuild@0.28.2)(rolldown@1.2.19)(rollup@4.62.0)(vue@3.5.43(@typescript/typescript6@6.0.2))(webpack@5.112.0(clean-css@5.3.3)(cssnano@9.5.0(postcss@8.5.32))(csso@5.0.5)(esbuild@0.28.2)(html-minifier-terser@6.1.0)(lightningcss@1.33.0)(postcss@8.5.32)(sharp@0.34.5)(svgo@4.1.0))
     devDependencies:
+      '@uxfront/site-checks':
+        specifier: 'catalog:'
+        version: 0.1.1
       typescript:
         specifier: catalog:ts6
         version: '@typescript/typescript6@6.0.2'
@@ -7768,6 +7774,11 @@ packages:
 
   '@uxfront/scene@0.5.2':
     resolution: {integrity: sha512-b0vkpy0yHfqydN0DQAqSRn2tRMf8i7K2Z0qha3wRhk3bnKwUgO6SDzHqpIyyx3SPVI+S+ENpAkKpJAArZEFr+w==}
+
+  '@uxfront/site-checks@0.1.1':
+    resolution: {integrity: sha512-o4VhBST5hangF++whY0WDIL22CbbMXzWoBGQVRzgFLRu/7+eK7oycLDSHauVV0cnmPDdDHzN039bNcgzjV17jA==}
+    engines: {node: '>=24'}
+    hasBin: true
 
   '@uxfront/typescript-config@0.2.0':
     resolution: {integrity: sha512-gEg9Sk82x60DYmHS/D1EXJ8lx6nMo27Pz2ptEh5kg/zu7Q9OfdOsKdFCk/2ncZSVyS8vUYFQ7hgJY0b6ikP3pg==}
@@ -22597,6 +22608,8 @@ snapshots:
       - webpack
 
   '@uxfront/scene@0.5.2': {}
+
+  '@uxfront/site-checks@0.1.1': {}
 
   '@uxfront/typescript-config@0.2.0': {}
 

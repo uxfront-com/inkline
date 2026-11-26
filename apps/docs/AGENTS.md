@@ -11,6 +11,8 @@ apps/docs/
 ├── nuxt.config.ts            # extends layer-ui + layer-docs, framework URLs, site URL, redirects,
 │                             # Vercel edge rules, the Cloudflare preset under WORKERS_CI
 ├── wrangler.json             # the inkline Worker: dist/ as static assets
+├── site-checks.config.mjs    # the SEO check's rules, for `check:seo`
+├── lighthouserc.mjs          # Lighthouse CI: the pages and thresholds, for `lighthouse`
 ├── app/
 │   ├── app.vue               # mounts Docus under /docs, the homepage everywhere else; site title template
 │   ├── app.config.ts         # GitHub links, docsTheme (frameworks, wordmark, byline,
@@ -128,9 +130,20 @@ pnpm --filter website test         # source tests: the brand palette, the embed 
 pnpm --filter website test:build   # after generate: the files the deploy needs, the Version select, no assistant,
                                    # framework URLs, titles, links, the sitemap, the markdown twins
                                    # and the landing pages with their share image
+pnpm --filter website check:seo    # after generate: the search and AI search checks on every page in the sitemap
+pnpm --filter website lighthouse   # after generate: Lighthouse CI on the homepage and five docs pages
 ```
 
 `generate` is the build that ships. It runs `scripts/fetch-history.mjs`, then `nuxt generate`, which fails on any page that doesn't prerender (`nitro.prerender.failOnError`). `build` (node-server) is a local convenience only: it emits no `robots.txt`, `200.html` or `404.html`, all of which the deploy needs.
+
+## SEO and Lighthouse checks
+
+Both checks come from [`@uxfront/site-checks`](https://www.npmjs.com/package/@uxfront/site-checks), which the other uxfront.com sites share. Both read `.output/public`, so run `generate` first:
+
+- **`check:seo`** reads every page in the sitemap the way a crawler does: titles, descriptions, canonical links, share images, structured data, `sitemap.xml`, `robots.txt` and `llms.txt`. It runs the package's 20 core rules with their defaults, set in [`site-checks.config.mjs`](./site-checks.config.mjs). `sitemap-pages` takes `paths: "lookup"`, since Cloudflare serves a page at both `/a` and `/a/`. It prints one line per rule and exits 1 on any problem. CI's Build Website job runs it after `test:build`.
+- **`lighthouse`** runs Lighthouse CI three times on the homepage and five docs pages, with the package's thresholds: an error below 0.95 in performance, accessibility and best practices, and below 1 in SEO. [`lighthouserc.mjs`](./lighthouserc.mjs) lists the pages by file name, like `/docs/react/components/button.html`, because the static server Lighthouse CI starts sends `/a` to `/a/`, where `generate` writes no page. Reports go to `.lighthouseci/`. [`lighthouse.yml`](../../.github/workflows/lighthouse.yml) runs it each night through the shared workflow in `uxfront-com/.github`, and only when `main` has moved since the last audit. Run it by hand from the Actions tab at any time.
+
+Turn the performance and accessibility categories back to `error` once the site passes them: **Known gaps** says why they warn.
 
 ## Deploy
 
@@ -162,6 +175,8 @@ The `/` → `/llms.txt` negotiation is Vercel-only, so on Cloudflare `/` always 
 
 ## Known gaps
 
+- **Lighthouse accessibility:** the category only warns in `lighthouserc.mjs`, because three docs pages score 0.90 to 0.94: Docus's "Copy page" menu button has no accessible name, and the text of the warning callout is below 4.5:1 contrast.
+- **Lighthouse performance:** the category only warns in `lighthouserc.mjs`, because the docs pages score 0.78 to 0.81 on CI's runners, where they block the main thread for 0.85 to 1 second. Locally they score 0.98 or more. The homepage scores 0.95.
 - **Live examples:** the component pages show code, not rendered components, and don't embed the deployed preview.
 - **Agent discovery on a static host:** the lockfile holds Docus 5.13.0. Docus 5.14 adds `nuxt-agent-discovery` and a prerendered `/openapi.json` that describes each page's Markdown twin and the MCP endpoint, which is off here. Only what's prerendered survives on a static host, and its server routes are inert, so check what both claim when Docus is bumped.
 
