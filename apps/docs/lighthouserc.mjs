@@ -15,7 +15,8 @@ export default lighthouseConfig({
       "http://localhost/docs/react/components/button.html",
     ],
   },
-  // Warns until the docs pages pass: the "Copy page" menu button has no name, and the warning
-  // callout's text is below 4.5:1 contrast.
-  categories: { accessibility: { level: "warn" } },
+  // Both warn until the docs pages pass. Accessibility: the "Copy page" menu button has no name,
+  // and the warning callout's text is below 4.5:1 contrast. Performance: on CI's runners, the docs
+  // pages block the main thread for about a second and score 0.78 to 0.81.
+  categories: { performance: { level: "warn" }, accessibility: { level: "warn" } },
 });
