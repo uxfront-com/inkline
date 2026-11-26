@@ -1,0 +1,31 @@
+# Audits the docs site nightly with the shared Lighthouse workflow, which skips a
+# scheduled run when main hasn't moved since the last audit. Run it by hand from
+# the Actions tab at any time: a manual run always audits. The pages and
+# thresholds are in apps/docs/lighthouserc.mjs.
+name: Lighthouse
+
+on:
+  schedule:
+    - cron: "27 4 * * *"
+  workflow_dispatch:
+  # Tests the caller itself, and each later pin bump, before it merges.
+  pull_request:
+    paths: [.github/workflows/lighthouse.yml]
+
+concurrency:
+  group: lighthouse-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions: {}
+
+jobs:
+  lighthouse:
+    name: Lighthouse
+    permissions:
+      actions: read # the change check reads earlier runs
+      contents: read
+    uses: uxfront-com/.github/.github/workflows/lighthouse.yml@d2f86bc4b9602818601b0415509c5be0348bb8bc # main
+    with:
+      build: pnpm --filter website run generate
+      audit: pnpm --filter website lighthouse
+      reports: apps/docs/.lighthouseci
