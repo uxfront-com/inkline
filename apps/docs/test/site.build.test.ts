@@ -212,10 +212,11 @@ describe("framework URLs", () => {
     expect(isNoindex(html)).toBe(false);
   });
 
-  // D10: titles name the framework, and only on a framework page.
+  // D10: the layer names the framework in the title of a framework page, as
+  // "{title} for {framework}", and the site's template adds " - Inkline".
   it.each([
-    ["docs/vue/components/button.html", "Button - Inkline Vue"],
-    ["docs/qwik/getting-started.html", "Introduction - Inkline Qwik"],
+    ["docs/vue/components/button.html", "Button for Vue - Inkline"],
+    ["docs/qwik/getting-started.html", "Introduction for Qwik - Inkline"],
   ])("titles %s %j", (file, title) => {
     expect(read(file).match(/<title>([^<]*)<\/title>/)?.[1]).toBe(title);
   });
@@ -223,13 +224,43 @@ describe("framework URLs", () => {
   it("names the framework in the title of every framework page", () => {
     for (const file of htmlFiles().filter(frameworkOf)) {
       const title = read(file).match(/<title>([^<]*)<\/title>/)?.[1];
-      expect(title, file).toMatch(new RegExp(` - Inkline ${LABELS[frameworkOf(file)!]}$`));
+      expect(title, file).toContain(LABELS[frameworkOf(file)!]);
+      expect(title, file).toMatch(/ - Inkline$/);
     }
   });
 
   it.each(["index.html", "404.html"])("names no framework in the title of %s", (file) => {
     const title = read(file).match(/<title>([^<]*)<\/title>/)?.[1] ?? "";
-    for (const label of Object.values(LABELS)) expect(title).not.toContain(`Inkline ${label}`);
+    for (const label of Object.values(LABELS)) {
+      expect(title).not.toContain(`Inkline ${label}`);
+      expect(title).not.toContain(`for ${label}`);
+    }
+  });
+
+  // D10 (descriptions): the layer names the framework in the meta description of a framework
+  // page too, so each page's seven copies differ.
+  it("names the framework in the description of every framework page", () => {
+    for (const file of htmlFiles().filter(frameworkOf)) {
+      const [description] = metaContent(read(file), "name", "description");
+      expect(description, file).toContain(LABELS[frameworkOf(file)!]);
+    }
+  });
+
+  it("gives each copy of a docs page its own title and description", () => {
+    const pages = new Map<string, { titles: Set<string>; descriptions: Set<string> }>();
+    for (const file of htmlFiles().filter(frameworkOf)) {
+      const page = file.slice(`docs/${frameworkOf(file)}/`.length);
+      const html = read(file);
+      const entry = pages.get(page) ?? { titles: new Set(), descriptions: new Set() };
+      entry.titles.add(html.match(/<title>([^<]*)<\/title>/)?.[1] ?? "");
+      entry.descriptions.add(metaContent(html, "name", "description")[0] ?? "");
+      pages.set(page, entry);
+    }
+    expect(pages.size).toBeGreaterThan(0);
+    for (const [page, { titles, descriptions }] of pages) {
+      expect(titles.size, page).toBe(FRAMEWORKS.length);
+      expect(descriptions.size, page).toBe(FRAMEWORKS.length);
+    }
   });
 });
 
