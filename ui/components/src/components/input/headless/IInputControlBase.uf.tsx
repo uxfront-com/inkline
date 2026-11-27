@@ -17,8 +17,8 @@ export default function IInputControlBase({
   ariaLabel,
   ariaDescribedby,
 }: InputControlBaseProps) {
-  // `focus` and `blur` fire as the native control gains and loses focus. Unframework passes no
-  // listener through to a component's root, so the component declares them.
+  // `focus` and `blur` fire as the native control gains and loses focus. The root is a fragment,
+  // with one branch for each type, so no listener falls through, and the component declares them.
   const emit = defineEmits<{ focus: []; blur: [] }>();
   // The value, a model, so a parent can bind it.
   const value = defineModel<string>("value", { default: "" });
