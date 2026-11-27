@@ -44,7 +44,10 @@ describe("checkbox group contrast", () => {
     if (!variable) {
       throw new Error(`Unknown token ${token}`);
     }
-    return String(variable.value);
+    if (typeof variable.value !== "string") {
+      throw new Error(`Token ${variable.name} isn't a plain value`);
+    }
+    return variable.value;
   }
 
   const pages = (theme: Theme) => [themes[theme].background!, themes[theme].surface!];

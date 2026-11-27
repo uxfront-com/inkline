@@ -316,6 +316,10 @@ describe("useFieldSelector", () => {
           type: "selector";
           query: string;
           declarations: Record<string, unknown>;
+          children: Array<{
+            query: string;
+            declarations: Record<string, unknown>;
+          }>;
         }
       | undefined;
   }
@@ -352,14 +356,9 @@ describe("useFieldSelector", () => {
       const s = createInstance();
       useFieldSelector(s, query);
 
-      const disabled = (
-        findSelector(s, query) as unknown as {
-          children: Array<{
-            query: string;
-            declarations: Record<string, unknown>;
-          }>;
-        }
-      ).children.find((child) => child.query === "&:disabled");
+      const disabled = findSelector(s, query)!.children.find(
+        (child) => child.query === "&:disabled",
+      );
 
       expect(disabled?.declarations, query).toEqual({ cursor: "not-allowed" });
     }

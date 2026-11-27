@@ -126,7 +126,7 @@ describe("Open Components rules", () => {
     name?: string;
     value?: unknown;
     declarations: Record<string, unknown>;
-    variables?: Array<Node>;
+    variables?: Array<{ name: string; value: unknown }>;
     children: Array<Node>;
   };
   type Block = Record<string, unknown>;
@@ -140,7 +140,7 @@ describe("Open Components rules", () => {
   }
 
   const selectors = (s: ReturnType<typeof styleframe>) =>
-    s.root.children.filter((child) => child.type === "selector") as unknown as Array<Node>;
+    s.root.children.filter((child) => child.type === "selector") as Array<Node>;
 
   function find(s: ReturnType<typeof styleframe>, query: string) {
     const node = selectors(s).find((child) => child.query === query);
@@ -159,9 +159,7 @@ describe("Open Components rules", () => {
   function blocks(all: ReturnType<typeof createAll>) {
     return [all.radio, all.field, all.group].flatMap((recipe) => [
       recipe.base as Block,
-      ...Object.values(recipe.variants ?? {}).flatMap(
-        (axis) => Object.values(axis) as Array<Block>,
-      ),
+      ...Object.values(recipe.variants ?? {}).flatMap((axis) => Object.values<Block>(axis)),
       ...(recipe.compoundVariants ?? []).map((cv) => cv.css as Block),
     ]);
   }

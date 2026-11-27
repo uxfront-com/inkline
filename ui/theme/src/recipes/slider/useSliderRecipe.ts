@@ -53,7 +53,7 @@ export const useSliderRecipe = createUseRecipe("slider", {
     ...sizes.map((size) => ({
       match: {
         orientation: "vertical" as const,
-        size: size as (typeof sizes)[number],
+        size,
       },
       css: {
         minHeight: "0",

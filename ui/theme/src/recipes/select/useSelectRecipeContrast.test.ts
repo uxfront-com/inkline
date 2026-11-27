@@ -45,7 +45,10 @@ function collectPairs() {
     if (!variable) {
       throw new Error(`Unresolved token ${String(value)}`);
     }
-    return String(variable.value);
+    if (typeof variable.value !== "string") {
+      throw new Error(`Token ${variable.name} isn't a plain value`);
+    }
+    return variable.value;
   };
 
   const readonlyCss = recipe.compoundVariants!.find((cv) => cv.match.readonly === "true")!

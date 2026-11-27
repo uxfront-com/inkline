@@ -30,7 +30,7 @@ function mediaDeclarations(
     (child): child is AtRule =>
       child.type === "at-rule" && child.identifier === "media" && child.rule === media,
   );
-  return atRule?.declarations as Block | undefined;
+  return atRule?.declarations;
 }
 
 const field = '.switch-field[type="checkbox"]';

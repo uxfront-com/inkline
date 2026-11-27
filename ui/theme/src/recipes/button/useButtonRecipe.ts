@@ -1,3 +1,8 @@
+import type {
+  ModifierDeclarationsBlock,
+  TokenValue,
+  VariantDeclarationsBlock,
+} from "@styleframe/core";
 import { createUseRecipe } from "@styleframe/theme";
 
 const colors = ["primary", "secondary", "success", "info", "warning", "error"] as const;
@@ -52,9 +57,9 @@ const sizes = Object.keys(blockPadding) as Array<Size>;
 
 type Compound = {
   match: Record<string, string>;
-  css: Record<string, unknown>;
+  css: VariantDeclarationsBlock;
 };
-type Slot = Record<string, unknown>;
+type Slot = ModifierDeclarationsBlock;
 
 /**
  * Finishes the color × variant compounds in two ways. Each hover block repeats
@@ -73,8 +78,8 @@ function withStateColors<T extends Compound>(compounds: Array<T>): Array<T> {
 
     const dark = (css["&:dark"] ?? {}) as Slot;
     const rest = {
-      background: css.background ?? "transparent",
-      color: css.color,
+      background: (css.background ?? "transparent") as TokenValue,
+      color: css.color as TokenValue,
     };
     const darkRest = {
       background: dark.background ?? rest.background,
@@ -94,7 +99,7 @@ function withStateColors<T extends Compound>(compounds: Array<T>): Array<T> {
       },
     });
 
-    const next: Slot = {
+    const next: VariantDeclarationsBlock = {
       ...css,
       "&:hover-capable:hover": {
         color: rest.color,

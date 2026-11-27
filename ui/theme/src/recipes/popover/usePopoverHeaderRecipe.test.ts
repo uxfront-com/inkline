@@ -1,5 +1,4 @@
 import { styleframe } from "@styleframe/core";
-import type { Selector } from "@styleframe/core";
 
 import { useDarkModifier } from "@styleframe/theme";
 import { usePopoverHeaderRecipe } from "./index";
@@ -143,9 +142,7 @@ describe("usePopoverHeaderRecipe", () => {
     const s = createInstance();
     usePopoverHeaderRecipe(s);
 
-    const queries = s.root.children
-      .filter((child) => child.type === "selector")
-      .map((child) => child as Selector);
+    const queries = s.root.children.filter((child) => child.type === "selector");
     for (const query of [
       ".popover-header:first-child",
       ".popover-arrow:first-child + .popover-header",
