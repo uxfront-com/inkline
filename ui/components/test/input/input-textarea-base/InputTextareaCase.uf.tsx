@@ -6,53 +6,53 @@ import { defineEmits, ref, watch } from "@uxfront/unframework";
 import IInputTextareaBase from "../../../src/components/input/headless/IInputTextareaBase.uf.tsx";
 
 export default function InputTextareaCase({
-  initial = "",
-  disabled = false,
-  readonly = false,
-  attributes = false,
+	initial = "",
+	disabled = false,
+	readonly = false,
+	attributes = false,
 }: {
-  initial?: string;
-  disabled?: boolean;
-  readonly?: boolean;
-  attributes?: boolean;
+	initial?: string;
+	disabled?: boolean;
+	readonly?: boolean;
+	attributes?: boolean;
 }) {
-  const emit = defineEmits<{ input: [value: string]; focus: []; blur: [] }>();
-  const value = ref(initial);
-  watch(
-    () => value.value,
-    (current) => emit("input", current),
-  );
+	const emit = defineEmits<{ input: [value: string]; focus: []; blur: [] }>();
+	const value = ref(initial);
+	watch(
+		() => value.value,
+		(current) => emit("input", current),
+	);
 
-  return (
-    <>
-      {attributes ? (
-        <div>
-          <IInputTextareaBase
-            required={true}
-            autocomplete="off"
-            ariaLabel="Bio"
-            ariaDescribedby="bio-hint"
-            onFocus={() => emit("focus")}
-            onBlur={() => emit("blur")}
-          />
-          <p id="bio-hint">A line or two.</p>
-        </div>
-      ) : (
-        <div>
-          <label>
-            Name
-            <IInputTextareaBase
-              id="name"
-              name="name"
-              placeholder="Your name"
-              disabled={disabled}
-              readonly={readonly}
-              v-model:value={value.value}
-            />
-          </label>
-          <output>{value.value}</output>
-        </div>
-      )}
-    </>
-  );
+	return (
+		<>
+			{attributes ? (
+				<div>
+					<IInputTextareaBase
+						required={true}
+						autocomplete="off"
+						ariaLabel="Bio"
+						ariaDescribedby="bio-hint"
+						onFocus={() => emit("focus")}
+						onBlur={() => emit("blur")}
+					/>
+					<p id="bio-hint">A line or two.</p>
+				</div>
+			) : (
+				<div>
+					<label>
+						Name
+						<IInputTextareaBase
+							id="name"
+							name="name"
+							placeholder="Your name"
+							disabled={disabled}
+							readonly={readonly}
+							v-model:value={value.value}
+						/>
+					</label>
+					<output>{value.value}</output>
+				</div>
+			)}
+		</>
+	);
 }

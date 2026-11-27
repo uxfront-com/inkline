@@ -34,42 +34,43 @@ Use `defineStories<Props>()` with the styled component's props type. Set `compon
 
 ```ts
 import { defineStories } from "@inkline/storybook";
+
 import type { ButtonProps } from "../styled/IButton.ink.tsx";
 
 const meta = defineStories<ButtonProps>({
-  component: "IButton",
-  title: "Components/Button",
-  args: { label: "Button", disabled: false, loading: false, block: false },
-  argTypes: {
-    label: { control: "text", description: "Button text content" },
-    color: {
-      control: "select",
-      options: [
-        "primary",
-        "secondary",
-        "success",
-        "info",
-        "warning",
-        "error",
-        "light",
-        "dark",
-        "neutral",
-      ],
-      description: "Color variant",
-    },
-    variant: {
-      control: "select",
-      options: ["solid", "outline", "soft", "subtle", "ghost", "link"],
-      description: "Style variant",
-    },
-    size: {
-      control: "select",
-      options: ["xs", "sm", "md", "lg", "xl"],
-      description: "Size variant",
-    },
-    disabled: { control: "boolean", description: "Disabled state" },
-    loading: { control: "boolean", description: "Loading state with spinner" },
-  },
+	component: "IButton",
+	title: "Components/Button",
+	args: { label: "Button", disabled: false, loading: false, block: false },
+	argTypes: {
+		label: { control: "text", description: "Button text content" },
+		color: {
+			control: "select",
+			options: [
+				"primary",
+				"secondary",
+				"success",
+				"info",
+				"warning",
+				"error",
+				"light",
+				"dark",
+				"neutral",
+			],
+			description: "Color variant",
+		},
+		variant: {
+			control: "select",
+			options: ["solid", "outline", "soft", "subtle", "ghost", "link"],
+			description: "Style variant",
+		},
+		size: {
+			control: "select",
+			options: ["xs", "sm", "md", "lg", "xl"],
+			description: "Size variant",
+		},
+		disabled: { control: "boolean", description: "Disabled state" },
+		loading: { control: "boolean", description: "Loading state with spinner" },
+	},
 });
 
 export default meta;
@@ -88,17 +89,18 @@ A plain `defineComponent` returning the showcase wrapped in `<div id="story">`:
 
 ```tsx
 import { defineComponent } from "@inkline/core";
+
 import IBadge from "../styled/IBadge.ink.tsx";
 
 export default defineComponent(() => {
-  return (
-    <div id="story">
-      <IBadge color="primary">Primary</IBadge>
-      <IBadge color="secondary">Secondary</IBadge>
-      <IBadge color="success">Success</IBadge>
-      {/* …one per value in the axis… */}
-    </div>
-  );
+	return (
+		<div id="story">
+			<IBadge color="primary">Primary</IBadge>
+			<IBadge color="secondary">Secondary</IBadge>
+			<IBadge color="success">Success</IBadge>
+			{/* …one per value in the axis… */}
+		</div>
+	);
 });
 ```
 

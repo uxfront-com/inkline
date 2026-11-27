@@ -13,40 +13,40 @@ import type { RadioGroupProps } from "../types.ts";
  * recipes' axes.
  */
 export default function IRadioGroup({
-  id,
-  label,
-  readonly = false,
-  options = [],
-  name,
-  color,
-  size,
-  orientation,
-  disabled = false,
-  ariaDescribedby,
+	id,
+	label,
+	readonly = false,
+	options = [],
+	name,
+	color,
+	size,
+	orientation,
+	disabled = false,
+	ariaDescribedby,
 }: RadioGroupProps) {
-  const value = defineModel<string>("value");
+	const value = defineModel<string>("value");
 
-  return (
-    <IRadioGroupBase
-      id={id}
-      label={label}
-      readonly={readonly}
-      ariaDescribedby={ariaDescribedby}
-      class={radioGroupRecipe({ orientation, size })}
-    >
-      {options.map((option) => (
-        <IRadioBase key={option.value} class={radioRecipe({ size })}>
-          <IRadioFieldBase
-            class={radioFieldRecipe({ color, size })}
-            name={name}
-            value={option.value}
-            disabled={disabled || option.disabled}
-            readonly={readonly}
-            v-model:selected={value.value}
-          />
-          <span class="radio-label">{option.label ?? option.value}</span>
-        </IRadioBase>
-      ))}
-    </IRadioGroupBase>
-  );
+	return (
+		<IRadioGroupBase
+			id={id}
+			label={label}
+			readonly={readonly}
+			ariaDescribedby={ariaDescribedby}
+			class={radioGroupRecipe({ orientation, size })}
+		>
+			{options.map((option) => (
+				<IRadioBase key={option.value} class={radioRecipe({ size })}>
+					<IRadioFieldBase
+						class={radioFieldRecipe({ color, size })}
+						name={name}
+						value={option.value}
+						disabled={disabled || option.disabled}
+						readonly={readonly}
+						v-model:selected={value.value}
+					/>
+					<span class="radio-label">{option.label ?? option.value}</span>
+				</IRadioBase>
+			))}
+		</IRadioGroupBase>
+	);
 }

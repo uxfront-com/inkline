@@ -1,13 +1,14 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
+
 import type { H3Event } from "h3";
 
 // The fields read below. Nitro's types don't see the collections Docus defines.
 interface DocsPage {
-  stem: string;
-  extension: string;
-  title: string;
-  description: string;
+	stem: string;
+	extension: string;
+	title: string;
+	description: string;
 }
 
 /**
@@ -19,16 +20,16 @@ interface DocsPage {
  * tsconfig type-checks those too, and sees Nuxt Content's client queryCollection().
  */
 export async function readDocsPage(event: H3Event, path: string) {
-  const page = (await queryCollection(event, "docs" as never)
-    .path(path)
-    .first()) as DocsPage | null;
-  if (!page) {
-    return;
-  }
+	const page = (await queryCollection(event, "docs" as never)
+		.path(path)
+		.first()) as DocsPage | null;
+	if (!page) {
+		return;
+	}
 
-  const source = await readFile(
-    join(process.cwd(), "content", `${page.stem}.${page.extension}`),
-    "utf8",
-  );
-  return { page, source };
+	const source = await readFile(
+		join(process.cwd(), "content", `${page.stem}.${page.extension}`),
+		"utf8",
+	);
+	return { page, source };
 }

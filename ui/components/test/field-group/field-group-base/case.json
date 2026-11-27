@@ -1,8 +1,8 @@
 {
-  "description": "The headless field group, which holds the controls it joins.",
-  "ssr": {
-    "default": {
-      "props": {}
-    }
-  }
+	"description": "The headless field group, which holds the controls it joins.",
+	"ssr": {
+		"default": {
+			"props": {}
+		}
+	}
 }

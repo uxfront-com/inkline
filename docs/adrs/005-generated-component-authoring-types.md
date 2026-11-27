@@ -31,7 +31,7 @@ back to zero on a question that has already been measured.
 
 ```ts
 export type InkComponent<P = {}> = (
-  props: P & { class?: string; children?: any; ref?: Ref; key?: any; [attr: string]: any },
+	props: P & { class?: string; children?: any; ref?: Ref; key?: any; [attr: string]: any },
 ) => any;
 ```
 

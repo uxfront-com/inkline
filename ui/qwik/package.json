@@ -1,44 +1,44 @@
 {
-  "name": "@inkline/qwik",
-  "version": "0.0.0",
-  "license": "MIT",
-  "files": [
-    "dist"
-  ],
-  "type": "module",
-  "sideEffects": false,
-  "exports": {
-    ".": "./dist/index.qwik.mjs",
-    "./headless": "./dist/headless.qwik.mjs",
-    "./package.json": "./package.json"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "scripts": {
-    "build": "vite build --mode lib"
-  },
-  "dependencies": {
-    "@styleframe/runtime": "catalog:"
-  },
-  "devDependencies": {
-    "@inkline/components": "workspace:*",
-    "@qwik.dev/core": "catalog:",
-    "@styleframe/cli": "catalog:",
-    "@styleframe/core": "catalog:",
-    "@styleframe/license": "catalog:",
-    "@styleframe/loader": "catalog:",
-    "@styleframe/plugin": "catalog:",
-    "@styleframe/theme": "catalog:",
-    "@styleframe/transpiler": "catalog:",
-    "jsdom": "catalog:",
-    "styleframe": "catalog:",
-    "vite": "catalog:",
-    "vitest": "catalog:"
-  },
-  "peerDependencies": {
-    "@qwik.dev/core": "2.0.0-rc.5"
-  },
-  "prepublishOnly": "pnpm run build",
-  "qwik": "./dist/index.qwik.mjs"
+	"name": "@inkline/qwik",
+	"version": "0.0.0",
+	"license": "MIT",
+	"files": [
+		"dist"
+	],
+	"type": "module",
+	"sideEffects": false,
+	"exports": {
+		".": "./dist/index.qwik.mjs",
+		"./headless": "./dist/headless.qwik.mjs",
+		"./package.json": "./package.json"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"scripts": {
+		"build": "vite build --mode lib"
+	},
+	"dependencies": {
+		"@styleframe/runtime": "catalog:"
+	},
+	"devDependencies": {
+		"@inkline/components": "workspace:*",
+		"@qwik.dev/core": "catalog:",
+		"@styleframe/cli": "catalog:",
+		"@styleframe/core": "catalog:",
+		"@styleframe/license": "catalog:",
+		"@styleframe/loader": "catalog:",
+		"@styleframe/plugin": "catalog:",
+		"@styleframe/theme": "catalog:",
+		"@styleframe/transpiler": "catalog:",
+		"jsdom": "catalog:",
+		"styleframe": "catalog:",
+		"vite": "catalog:",
+		"vitest": "catalog:"
+	},
+	"peerDependencies": {
+		"@qwik.dev/core": "2.0.0-rc.5"
+	},
+	"prepublishOnly": "pnpm run build",
+	"qwik": "./dist/index.qwik.mjs"
 }

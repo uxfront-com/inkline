@@ -2,9 +2,9 @@
 import IInputSuffixBase from "../../../src/components/input/headless/IInputSuffixBase.uf.tsx";
 
 export default function InputAffixSuffixCase() {
-  return (
-    <div>
-      <IInputSuffixBase>USD</IInputSuffixBase>
-    </div>
-  );
+	return (
+		<div>
+			<IInputSuffixBase>USD</IInputSuffixBase>
+		</div>
+	);
 }

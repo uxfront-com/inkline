@@ -1,37 +1,37 @@
 {
-  "name": "website",
-  "version": "0.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "dev": "nuxt dev",
-    "build": "nuxt build",
-    "generate": "node scripts/fetch-history.mjs && nuxt generate",
-    "preview": "nuxt preview",
-    "test": "vitest run",
-    "test:build": "vitest run --config vite.build.config.ts",
-    "check:seo": "site-checks seo .output/public",
-    "lighthouse": "pnpm dlx @lhci/cli@0.16.1 autorun",
-    "postinstall": "nuxt prepare"
-  },
-  "dependencies": {
-    "@iconify-json/mdi": "^1.2.3",
-    "@nuxt/content": "^3.16.1",
-    "@uxfront/layer-docs": "catalog:",
-    "@uxfront/layer-ui": "catalog:",
-    "@uxfront/scene": "catalog:",
-    "@uxfront/ui": "catalog:",
-    "@vueuse/core": "catalog:",
-    "better-sqlite3": "^12.10.1",
-    "docus": "catalog:",
-    "nuxt": "^4.5.2",
-    "vue": "catalog:",
-    "vue-router": "^5.1.0"
-  },
-  "devDependencies": {
-    "@uxfront/site-checks": "catalog:",
-    "@vitest/coverage-v8": "catalog:",
-    "typescript": "catalog:ts6",
-    "vitest": "catalog:"
-  }
+	"name": "website",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "nuxt dev",
+		"build": "nuxt build",
+		"generate": "node scripts/fetch-history.mjs && nuxt generate",
+		"preview": "nuxt preview",
+		"test": "vitest run",
+		"test:build": "vitest run --config vite.build.config.ts",
+		"check:seo": "site-checks seo .output/public",
+		"lighthouse": "pnpm dlx @lhci/cli@0.16.1 autorun",
+		"postinstall": "nuxt prepare"
+	},
+	"dependencies": {
+		"@iconify-json/mdi": "^1.2.3",
+		"@nuxt/content": "^3.16.1",
+		"@uxfront/layer-docs": "catalog:",
+		"@uxfront/layer-ui": "catalog:",
+		"@uxfront/scene": "catalog:",
+		"@uxfront/ui": "catalog:",
+		"@vueuse/core": "catalog:",
+		"better-sqlite3": "^12.10.1",
+		"docus": "catalog:",
+		"nuxt": "^4.5.2",
+		"vue": "catalog:",
+		"vue-router": "^5.1.0"
+	},
+	"devDependencies": {
+		"@uxfront/site-checks": "catalog:",
+		"@vitest/coverage-v8": "catalog:",
+		"typescript": "catalog:ts6",
+		"vitest": "catalog:"
+	}
 }

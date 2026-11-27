@@ -21,42 +21,42 @@ import { execFileSync } from "node:child_process";
  * by the build day.
  */
 export function lastModified(paths: Array<string>, cwd?: string): Map<string, string> {
-  const dates = new Map<string, string>();
-  let log: string;
-  try {
-    // %ct is the committer's time in seconds since the epoch, which has no zone.
-    log = execFileSync(
-      "git",
-      [
-        // Names like `é.md` as they are, not quoted as `"\303\251.md"`.
-        "-c",
-        "core.quotePath=false",
-        "--literal-pathspecs",
-        "log",
-        "--relative",
-        "--format=%x00%ct",
-        "--name-only",
-        "--",
-        ...paths,
-      ],
-      { cwd, encoding: "utf8", maxBuffer: 64 * 1024 * 1024, stdio: ["ignore", "pipe", "pipe"] },
-    );
-  } catch (error) {
-    const reason = (error as { stderr?: string }).stderr?.trim() || (error as Error).message;
-    console.warn(
-      `lastModified: no Git history, so the sitemap dates pages by the build day. ${reason}`,
-    );
-    return dates;
-  }
-  // Newest commit first, so a file's first appearance is its last change.
-  for (const commit of log.split("\0").slice(1)) {
-    const [seconds, ...files] = commit.trim().split("\n");
-    const date = new Date(Number(seconds) * 1000).toISOString().slice(0, 10);
-    for (const file of files) {
-      if (file && !dates.has(file)) {
-        dates.set(file, date);
-      }
-    }
-  }
-  return dates;
+	const dates = new Map<string, string>();
+	let log: string;
+	try {
+		// %ct is the committer's time in seconds since the epoch, which has no zone.
+		log = execFileSync(
+			"git",
+			[
+				// Names like `é.md` as they are, not quoted as `"\303\251.md"`.
+				"-c",
+				"core.quotePath=false",
+				"--literal-pathspecs",
+				"log",
+				"--relative",
+				"--format=%x00%ct",
+				"--name-only",
+				"--",
+				...paths,
+			],
+			{ cwd, encoding: "utf8", maxBuffer: 64 * 1024 * 1024, stdio: ["ignore", "pipe", "pipe"] },
+		);
+	} catch (error) {
+		const reason = (error as { stderr?: string }).stderr?.trim() || (error as Error).message;
+		console.warn(
+			`lastModified: no Git history, so the sitemap dates pages by the build day. ${reason}`,
+		);
+		return dates;
+	}
+	// Newest commit first, so a file's first appearance is its last change.
+	for (const commit of log.split("\0").slice(1)) {
+		const [seconds, ...files] = commit.trim().split("\n");
+		const date = new Date(Number(seconds) * 1000).toISOString().slice(0, 10);
+		for (const file of files) {
+			if (file && !dates.has(file)) {
+				dates.set(file, date);
+			}
+		}
+	}
+	return dates;
 }

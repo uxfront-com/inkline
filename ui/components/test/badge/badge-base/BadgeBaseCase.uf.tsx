@@ -2,10 +2,10 @@
 import IBadgeBase from "../../../src/components/badge/headless/IBadgeBase.uf.tsx";
 
 export default function BadgeBaseCase() {
-  return (
-    <div>
-      <IBadgeBase label="From the prop" />
-      <IBadgeBase label="Overridden">From the slot</IBadgeBase>
-    </div>
-  );
+	return (
+		<div>
+			<IBadgeBase label="From the prop" />
+			<IBadgeBase label="Overridden">From the slot</IBadgeBase>
+		</div>
+	);
 }

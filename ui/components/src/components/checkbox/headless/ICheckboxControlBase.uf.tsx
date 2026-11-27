@@ -17,61 +17,61 @@ import type { CheckboxControlBaseProps } from "../types.ts";
 // when the two differ, so a parent's own change, which the first watcher copies into `state`, doesn't
 // come back to the parent as a change the control made.
 export default function ICheckboxControlBase({
-  id,
-  name,
-  disabled = false,
-  required = false,
-  readonly = false,
-  indeterminate = false,
-  ariaLabel,
-  ariaDescribedby,
+	id,
+	name,
+	disabled = false,
+	required = false,
+	readonly = false,
+	indeterminate = false,
+	ariaLabel,
+	ariaDescribedby,
 }: CheckboxControlBaseProps) {
-  const checked = defineModel<boolean>("checked", { default: false });
-  const state = ref(checked.value);
-  const control = useTemplateRef<HTMLInputElement>();
+	const checked = defineModel<boolean>("checked", { default: false });
+	const state = ref(checked.value);
+	const control = useTemplateRef<HTMLInputElement>();
 
-  watch(
-    () => checked.value,
-    (value) => {
-      state.value = value;
-    },
-  );
-  watch(
-    () => state.value,
-    (value) => {
-      if (readonly) state.value = checked.value;
-      else if (value !== checked.value) checked.value = value;
-    },
-  );
+	watch(
+		() => checked.value,
+		(value) => {
+			state.value = value;
+		},
+	);
+	watch(
+		() => state.value,
+		(value) => {
+			if (readonly) state.value = checked.value;
+			else if (value !== checked.value) checked.value = value;
+		},
+	);
 
-  onMounted(() => {
-    if (control.value) control.value.indeterminate = indeterminate;
-  });
-  watch(
-    () => indeterminate,
-    (value) => {
-      if (control.value) control.value.indeterminate = value;
-    },
-    { flush: "post" },
-  );
+	onMounted(() => {
+		if (control.value) control.value.indeterminate = indeterminate;
+	});
+	watch(
+		() => indeterminate,
+		(value) => {
+			if (control.value) control.value.indeterminate = value;
+		},
+		{ flush: "post" },
+	);
 
-  return (
-    <input
-      ref={control}
-      type="checkbox"
-      id={id}
-      name={name}
-      v-model={state.value}
-      disabled={disabled}
-      required={required}
-      aria-readonly={readonly ? "true" : undefined}
-      aria-label={ariaLabel}
-      aria-describedby={ariaDescribedby}
-      onClick={(event: MouseEvent) => {
-        if ((event.currentTarget as HTMLElement).getAttribute("aria-readonly") === "true") {
-          event.preventDefault();
-        }
-      }}
-    />
-  );
+	return (
+		<input
+			ref={control}
+			type="checkbox"
+			id={id}
+			name={name}
+			v-model={state.value}
+			disabled={disabled}
+			required={required}
+			aria-readonly={readonly ? "true" : undefined}
+			aria-label={ariaLabel}
+			aria-describedby={ariaDescribedby}
+			onClick={(event: MouseEvent) => {
+				if ((event.currentTarget as HTMLElement).getAttribute("aria-readonly") === "true") {
+					event.preventDefault();
+				}
+			}}
+		/>
+	);
 }

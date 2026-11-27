@@ -16,19 +16,19 @@ export const TYPES_DIR = join(ROOT, ".styleframe");
 
 /** Writes the declarations to `outDir`, and returns the names of the files it wrote. */
 export async function writeStyleframeTypes(outDir = TYPES_DIR): Promise<Array<string>> {
-  const files = await transpileTypes();
-  if (files.length === 0) {
-    throw new Error("Styleframe's transpiler wrote no type declarations");
-  }
-  mkdirSync(outDir, { recursive: true });
-  for (const file of files) {
-    writeFileSync(join(outDir, file.name), file.content);
-  }
-  return files.map((file) => file.name);
+	const files = await transpileTypes();
+	if (files.length === 0) {
+		throw new Error("Styleframe's transpiler wrote no type declarations");
+	}
+	mkdirSync(outDir, { recursive: true });
+	for (const file of files) {
+		writeFileSync(join(outDir, file.name), file.content);
+	}
+	return files.map((file) => file.name);
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === import.meta.filename) {
-  const names = await writeStyleframeTypes();
-  const dir = relative(process.cwd(), TYPES_DIR);
-  console.log(`Wrote ${names.map((name) => join(dir, name)).join(", ")}`);
+	const names = await writeStyleframeTypes();
+	const dir = relative(process.cwd(), TYPES_DIR);
+	console.log(`Wrote ${names.map((name) => join(dir, name)).join(", ")}`);
 }

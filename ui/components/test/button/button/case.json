@@ -1,27 +1,27 @@
 {
-  "description": "The styled button: its recipe and data attributes, its icons and parts, its toggle and popup states, the states that can't be activated, which the server renders natively disabled, and the link it renders with an href, which drops its href while disabled.",
-  "ssr": {
-    "default": {
-      "props": {}
-    },
-    "inert": {
-      "props": {
-        "scenario": "inert"
-      }
-    },
-    "link": {
-      "props": {
-        "scenario": "link",
-        "href": "/docs",
-        "color": "primary"
-      }
-    },
-    "link-disabled": {
-      "props": {
-        "scenario": "link",
-        "href": "/docs",
-        "disabled": true
-      }
-    }
-  }
+	"description": "The styled button: its recipe and data attributes, its icons and parts, its toggle and popup states, the states that can't be activated, which the server renders natively disabled, and the link it renders with an href, which drops its href while disabled.",
+	"ssr": {
+		"default": {
+			"props": {}
+		},
+		"inert": {
+			"props": {
+				"scenario": "inert"
+			}
+		},
+		"link": {
+			"props": {
+				"scenario": "link",
+				"href": "/docs",
+				"color": "primary"
+			}
+		},
+		"link-disabled": {
+			"props": {
+				"scenario": "link",
+				"href": "/docs",
+				"disabled": true
+			}
+		}
+	}
 }

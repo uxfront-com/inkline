@@ -40,16 +40,16 @@ Behavior, structure, slots, events, accessibility. **No styleframe classes, no d
 import { defineComponent, Slot } from "@inkline/core";
 
 export interface BadgeBaseProps {
-  /** Text content; overridden by the default slot. */
-  label?: string;
+	/** Text content; overridden by the default slot. */
+	label?: string;
 }
 
 export default defineComponent({ slots: { default: {} } }, (props: BadgeBaseProps) => {
-  return (
-    <div class="badge">
-      <Slot>{props.label}</Slot>
-    </div>
-  );
+	return (
+		<div class="badge">
+			<Slot>{props.label}</Slot>
+		</div>
+	);
 });
 ```
 
@@ -57,15 +57,15 @@ For stateful components, reflect state in ARIA and gate decoration with `<Show>`
 
 ```tsx
 <button
-  class="button"
-  type={props.type ?? "button"}
-  disabled={props.disabled || props.loading}
-  aria-busy={props.loading ? "true" : "false"}
+	class="button"
+	type={props.type ?? "button"}
+	disabled={props.disabled || props.loading}
+	aria-busy={props.loading ? "true" : "false"}
 >
-  <Show when={!!props.loading}>
-    <span class="button-spinner" aria-hidden="true" />
-  </Show>
-  <Slot>{props.label}</Slot>
+	<Show when={!!props.loading}>
+		<span class="button-spinner" aria-hidden="true" />
+	</Show>
+	<Slot>{props.label}</Slot>
 </button>
 ```
 
@@ -75,8 +75,8 @@ For a family, author one `I<Name>*Base` per structural part. Two-way state uses 
 const [value, setValue] = defineModel<string>("value");
 // ...
 <input
-  value={value() ?? ""}
-  onInput={(e: { currentTarget: HTMLInputElement }) => setValue(e.currentTarget.value)}
+	value={value() ?? ""}
+	onInput={(e: { currentTarget: HTMLInputElement }) => setValue(e.currentTarget.value)}
 />;
 ```
 
@@ -88,20 +88,21 @@ Compose the headless part(s) and apply the recipe class via `createMemo`. The st
 
 ```tsx
 import { defineComponent, Slot, createMemo } from "@inkline/core";
-import IBadgeBase, { type BadgeBaseProps } from "../headless/IBadgeBase.ink.tsx";
 import { badgeRecipe, type BadgeRecipeProps as BadgeStylingProps } from "virtual:styleframe";
+
+import IBadgeBase, { type BadgeBaseProps } from "../headless/IBadgeBase.ink.tsx";
 
 export interface BadgeProps extends BadgeBaseProps, BadgeStylingProps {}
 
 export default defineComponent({ slots: { default: {} } }, (props: BadgeProps) => {
-  const className = createMemo(() =>
-    badgeRecipe({ color: props.color, variant: props.variant, size: props.size }),
-  );
-  return (
-    <IBadgeBase class={className()}>
-      <Slot>{props.label}</Slot>
-    </IBadgeBase>
-  );
+	const className = createMemo(() =>
+		badgeRecipe({ color: props.color, variant: props.variant, size: props.size }),
+	);
+	return (
+		<IBadgeBase class={className()}>
+			<Slot>{props.label}</Slot>
+		</IBadgeBase>
+	);
 });
 ```
 
@@ -116,8 +117,8 @@ Register the recipe(s) and add any custom CSS. Branch on the spec's styling deci
 **(a) `@styleframe/theme` exports `use<Name>Recipe`** — reuse it:
 
 ```ts
-import { styleframe } from "virtual:styleframe";
 import { useBadgeRecipe } from "@styleframe/theme";
+import { styleframe } from "virtual:styleframe";
 
 const s = styleframe();
 export const badgeRecipe = useBadgeRecipe(s);
@@ -128,9 +129,7 @@ Layer custom, non-recipe rules in the same file (from `button` — `.button--blo
 ```ts
 s.selector(".button--block", { width: "100%" });
 s.keyframes("button-spin", { "100%": { transform: "rotate(360deg)" } });
-s.selector(".button-spinner", {
-  /* … */
-});
+s.selector(".button-spinner", {/* … */});
 export const buttonRecipe = useButtonRecipe(s);
 ```
 

@@ -1,8 +1,8 @@
 {
-  "description": "The headless input suffix, an inline addon with its text.",
-  "ssr": {
-    "default": {
-      "props": {}
-    }
-  }
+	"description": "The headless input suffix, an inline addon with its text.",
+	"ssr": {
+		"default": {
+			"props": {}
+		}
+	}
 }

@@ -11,7 +11,7 @@ const github = computed(() => links.value.slice(-1));
 </script>
 
 <template>
-  <AppHeaderLinks :items="pages" orientation="horizontal" class="hidden md:flex" />
-  <AppVersionSelect class="hidden md:inline-flex" />
-  <AppHeaderLinks :items="github" orientation="horizontal" class="hidden md:flex" />
+	<AppHeaderLinks :items="pages" orientation="horizontal" class="hidden md:flex" />
+	<AppVersionSelect class="hidden md:inline-flex" />
+	<AppHeaderLinks :items="github" orientation="horizontal" class="hidden md:flex" />
 </template>

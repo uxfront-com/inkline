@@ -1,8 +1,8 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "jsx": "react-jsx",
-    "jsxImportSource": "@qwik.dev/core"
-  },
-  "include": ["src", "test", "*.styleframe.ts", ".styleframe/**/*.d.ts"]
+	"extends": "../../tsconfig.json",
+	"compilerOptions": {
+		"jsx": "react-jsx",
+		"jsxImportSource": "@qwik.dev/core"
+	},
+	"include": ["src", "test", "*.styleframe.ts", ".styleframe/**/*.d.ts"]
 }

@@ -7,9 +7,9 @@ import IButton from "../styled/IButton.uf.tsx";
  * @category Components/Actions/Button
  */
 export default function ButtonLoading() {
-  return (
-    <div>
-      <IButton color="primary" loading={true} loadingLabel="Saving" label="Save changes" />
-    </div>
-  );
+	return (
+		<div>
+			<IButton color="primary" loading={true} loadingLabel="Saving" label="Save changes" />
+		</div>
+	);
 }

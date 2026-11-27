@@ -3,9 +3,9 @@ import IButton from "../styled/IButton.uf.tsx";
 
 /** @category Components/Actions/Button */
 export default function ButtonVariantSubtle() {
-  return (
-    <div>
-      <IButton variant="subtle" label="Subtle" />
-    </div>
-  );
+	return (
+		<div>
+			<IButton variant="subtle" label="Subtle" />
+		</div>
+	);
 }

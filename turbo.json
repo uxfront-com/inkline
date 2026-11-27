@@ -1,27 +1,27 @@
 {
-  "$schema": "https://turborepo.dev/schema.json",
-  // Tasks see only the environment variables named here. GitHub's, Playwright's browser path and
-  // the colour flag reach every task without changing what it caches.
-  "globalPassThroughEnv": ["GITHUB_*", "PLAYWRIGHT_BROWSERS_PATH", "FORCE_COLOR"],
-  "tasks": {
-    "build": {
-      "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      // `NODE_ENV` and the Styleframe licence key (`STYLEFRAME_KEY`, or a framework-prefixed name like
-      // `NUXT_STYLEFRAME_KEY`) change what a build writes: without the key, the CSS carries a
-      // watermark. Workers Builds sets `WORKERS_CI`, which picks the website's Nitro preset.
-      "env": ["NODE_ENV", "*STYLEFRAME_KEY", "WORKERS_CI", "NUXT_SITE_URL"],
-      "outputs": ["dist/**", ".styleframe/**", ".output/**", "!.output/cache/**"]
-    },
-    // No build dependency: CI's Unit Tests job runs on Build Packages' artifacts, and `ready` builds
-    // first.
-    "test": {
-      "env": ["NODE_ENV", "CI"],
-      "outputs": ["coverage/**"]
-    },
-    "dev": {
-      "cache": false,
-      "persistent": true
-    }
-  }
+	"$schema": "https://turborepo.dev/schema.json",
+	// Tasks see only the environment variables named here. GitHub's, Playwright's browser path and
+	// the colour flag reach every task without changing what it caches.
+	"globalPassThroughEnv": ["GITHUB_*", "PLAYWRIGHT_BROWSERS_PATH", "FORCE_COLOR"],
+	"tasks": {
+		"build": {
+			"dependsOn": ["^build"],
+			"inputs": ["$TURBO_DEFAULT$", ".env*"],
+			// `NODE_ENV` and the Styleframe licence key (`STYLEFRAME_KEY`, or a framework-prefixed name like
+			// `NUXT_STYLEFRAME_KEY`) change what a build writes: without the key, the CSS carries a
+			// watermark. Workers Builds sets `WORKERS_CI`, which picks the website's Nitro preset.
+			"env": ["NODE_ENV", "*STYLEFRAME_KEY", "WORKERS_CI", "NUXT_SITE_URL"],
+			"outputs": ["dist/**", ".styleframe/**", ".output/**", "!.output/cache/**"]
+		},
+		// No build dependency: CI's Unit Tests job runs on Build Packages' artifacts, and `ready` builds
+		// first.
+		"test": {
+			"env": ["NODE_ENV", "CI"],
+			"outputs": ["coverage/**"]
+		},
+		"dev": {
+			"cache": false,
+			"persistent": true
+		}
+	}
 }

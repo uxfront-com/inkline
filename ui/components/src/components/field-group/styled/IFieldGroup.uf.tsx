@@ -11,11 +11,11 @@ import type { FieldGroupProps } from "../types.ts";
  * `orientation` and `block` map to the recipe's axes.
  */
 export default function IFieldGroup({ id, orientation, block }: FieldGroupProps) {
-  const slots = defineSlots<{ default?(): Element }>();
+	const slots = defineSlots<{ default?(): Element }>();
 
-  return (
-    <IFieldGroupBase id={id} class={fieldGroupRecipe({ orientation, block })}>
-      {slots.default?.() ?? null}
-    </IFieldGroupBase>
-  );
+	return (
+		<IFieldGroupBase id={id} class={fieldGroupRecipe({ orientation, block })}>
+			{slots.default?.() ?? null}
+		</IFieldGroupBase>
+	);
 }

@@ -2,10 +2,10 @@
 import IFieldGroupBase from "../../../src/components/field-group/headless/IFieldGroupBase.uf.tsx";
 
 export default function FieldGroupBaseCase() {
-  return (
-    <IFieldGroupBase id="search">
-      <input aria-label="Query" />
-      <button type="button">Search</button>
-    </IFieldGroupBase>
-  );
+	return (
+		<IFieldGroupBase id="search">
+			<input aria-label="Query" />
+			<button type="button">Search</button>
+		</IFieldGroupBase>
+	);
 }

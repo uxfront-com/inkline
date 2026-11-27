@@ -8,82 +8,82 @@ import IRadioFieldBase from "../../../src/components/radio/headless/IRadioFieldB
 import IRadioGroupBase from "../../../src/components/radio/headless/IRadioGroupBase.uf.tsx";
 
 export default function RadioGroupBaseCase({
-  readonly = false,
-  attributes = false,
-  fields = false,
+	readonly = false,
+	attributes = false,
+	fields = false,
 }: {
-  readonly?: boolean;
-  attributes?: boolean;
-  fields?: boolean;
+	readonly?: boolean;
+	attributes?: boolean;
+	fields?: boolean;
 }) {
-  const emit = defineEmits<{ change: [value: string | undefined] }>();
-  const selected = ref<string | undefined>("apple");
-  watch(
-    () => selected.value,
-    (value) => emit("change", value),
-  );
+	const emit = defineEmits<{ change: [value: string | undefined] }>();
+	const selected = ref<string | undefined>("apple");
+	watch(
+		() => selected.value,
+		(value) => emit("change", value),
+	);
 
-  return (
-    <>
-      {fields ? (
-        <div>
-          <IRadioGroupBase id="fruit" label="Fruit" readonly={readonly}>
-            <label>
-              <IRadioFieldBase
-                name="fruit"
-                value="apple"
-                readonly={readonly}
-                v-model:selected={selected.value}
-              />
-              Apple
-            </label>
-            <label>
-              <IRadioFieldBase
-                name="fruit"
-                value="pear"
-                readonly={readonly}
-                v-model:selected={selected.value}
-              />
-              Pear
-            </label>
-            <label>
-              <IRadioFieldBase
-                name="fruit"
-                value="fig"
-                readonly={readonly}
-                v-model:selected={selected.value}
-              />
-              Fig
-            </label>
-          </IRadioGroupBase>
-          <output>{selected.value}</output>
-        </div>
-      ) : attributes ? (
-        <div>
-          <IRadioGroupBase id="fruit" label="Fruit" ariaDescribedby="fruit-hint">
-            <label>
-              <input type="radio" name="fruit" value="apple" />
-              Apple
-            </label>
-            <label>
-              <input type="radio" name="fruit" value="pear" />
-              Pear
-            </label>
-          </IRadioGroupBase>
-          <p id="fruit-hint">Pick one.</p>
-        </div>
-      ) : (
-        <IRadioGroupBase id="fruit" label="Fruit" readonly={readonly}>
-          <label>
-            <input type="radio" name="fruit" value="apple" />
-            Apple
-          </label>
-          <label>
-            <input type="radio" name="fruit" value="pear" />
-            Pear
-          </label>
-        </IRadioGroupBase>
-      )}
-    </>
-  );
+	return (
+		<>
+			{fields ? (
+				<div>
+					<IRadioGroupBase id="fruit" label="Fruit" readonly={readonly}>
+						<label>
+							<IRadioFieldBase
+								name="fruit"
+								value="apple"
+								readonly={readonly}
+								v-model:selected={selected.value}
+							/>
+							Apple
+						</label>
+						<label>
+							<IRadioFieldBase
+								name="fruit"
+								value="pear"
+								readonly={readonly}
+								v-model:selected={selected.value}
+							/>
+							Pear
+						</label>
+						<label>
+							<IRadioFieldBase
+								name="fruit"
+								value="fig"
+								readonly={readonly}
+								v-model:selected={selected.value}
+							/>
+							Fig
+						</label>
+					</IRadioGroupBase>
+					<output>{selected.value}</output>
+				</div>
+			) : attributes ? (
+				<div>
+					<IRadioGroupBase id="fruit" label="Fruit" ariaDescribedby="fruit-hint">
+						<label>
+							<input type="radio" name="fruit" value="apple" />
+							Apple
+						</label>
+						<label>
+							<input type="radio" name="fruit" value="pear" />
+							Pear
+						</label>
+					</IRadioGroupBase>
+					<p id="fruit-hint">Pick one.</p>
+				</div>
+			) : (
+				<IRadioGroupBase id="fruit" label="Fruit" readonly={readonly}>
+					<label>
+						<input type="radio" name="fruit" value="apple" />
+						Apple
+					</label>
+					<label>
+						<input type="radio" name="fruit" value="pear" />
+						Pear
+					</label>
+				</IRadioGroupBase>
+			)}
+		</>
+	);
 }

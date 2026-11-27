@@ -1,8 +1,8 @@
 {
-  "description": "The headless radio row, a label that names the radio it wraps.",
-  "ssr": {
-    "default": {
-      "props": {}
-    }
-  }
+	"description": "The headless radio row, a label that names the radio it wraps.",
+	"ssr": {
+		"default": {
+			"props": {}
+		}
+	}
 }

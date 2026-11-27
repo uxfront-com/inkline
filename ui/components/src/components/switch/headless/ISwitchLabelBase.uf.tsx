@@ -5,7 +5,7 @@ import type { Element } from "@uxfront/unframework";
 // renders it, and a `.switch-label:empty` rule collapses it when there's no label, so an unlabelled
 // switch leaves no trailing gap.
 export default function ISwitchLabelBase() {
-  const slots = defineSlots<{ default?(): Element }>();
+	const slots = defineSlots<{ default?(): Element }>();
 
-  return <span class="switch-label">{slots.default?.()}</span>;
+	return <span class="switch-label">{slots.default?.()}</span>;
 }

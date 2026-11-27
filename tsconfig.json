@@ -1,10 +1,10 @@
 {
-  "extends": "@uxfront/typescript-config/tsconfig.json",
-  "compilerOptions": {
-    "strict": true,
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
-    "allowImportingTsExtensions": true
-  },
-  "include": ["${configDir}/**/*"]
+	"extends": "@uxfront/typescript-config/tsconfig.json",
+	"compilerOptions": {
+		"strict": true,
+		"module": "nodenext",
+		"moduleResolution": "nodenext",
+		"allowImportingTsExtensions": true
+	},
+	"include": ["${configDir}/**/*"]
 }

@@ -2,9 +2,9 @@
 import IInputBase from "../../../src/components/input/headless/IInputBase.uf.tsx";
 
 export default function InputBaseCase() {
-  return (
-    <IInputBase id="amount">
-      <input aria-label="Amount" />
-    </IInputBase>
-  );
+	return (
+		<IInputBase id="amount">
+			<input aria-label="Amount" />
+		</IInputBase>
+	);
 }

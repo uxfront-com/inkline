@@ -9,17 +9,17 @@ const versionLabelId = useId();
 </script>
 
 <template>
-  <AppHeaderLinks orientation="vertical" class="mb-4 -mx-2.5 md:hidden" />
-  <AppHeaderFramework />
-  <div class="md:hidden">
-    <span :id="versionLabelId" class="w-full pr-2.5 py-1.5 flex items-center text-sm text-muted">
-      Version
-    </span>
-    <div class="mb-2 ms-2.5 -me-2.5 border-s border-default">
-      <div class="ps-1.5 -ms-px">
-        <AppVersionSelect :aria-labelledby="versionLabelId" class="w-full" />
-      </div>
-    </div>
-  </div>
-  <DocusAppHeaderBody />
+	<AppHeaderLinks orientation="vertical" class="mb-4 -mx-2.5 md:hidden" />
+	<AppHeaderFramework />
+	<div class="md:hidden">
+		<span :id="versionLabelId" class="w-full pr-2.5 py-1.5 flex items-center text-sm text-muted">
+			Version
+		</span>
+		<div class="mb-2 ms-2.5 -me-2.5 border-s border-default">
+			<div class="ps-1.5 -ms-px">
+				<AppVersionSelect :aria-labelledby="versionLabelId" class="w-full" />
+			</div>
+		</div>
+	</div>
+	<DocusAppHeaderBody />
 </template>

@@ -7,56 +7,56 @@ import { defineEmits, ref, watch } from "@uxfront/unframework";
 import ISwitchControlBase from "../../../src/components/switch/headless/ISwitchControlBase.uf.tsx";
 
 export default function SwitchControlCase({
-  initial = false,
-  disabled = false,
-  readonly = false,
-  attributes = false,
-  parent = false,
+	initial = false,
+	disabled = false,
+	readonly = false,
+	attributes = false,
+	parent = false,
 }: {
-  initial?: boolean;
-  disabled?: boolean;
-  readonly?: boolean;
-  attributes?: boolean;
-  parent?: boolean;
+	initial?: boolean;
+	disabled?: boolean;
+	readonly?: boolean;
+	attributes?: boolean;
+	parent?: boolean;
 }) {
-  const emit = defineEmits<{ change: [checked: boolean] }>();
-  const checked = ref(initial);
-  watch(
-    () => checked.value,
-    (value) => emit("change", value),
-  );
+	const emit = defineEmits<{ change: [checked: boolean] }>();
+	const checked = ref(initial);
+	watch(
+		() => checked.value,
+		(value) => emit("change", value),
+	);
 
-  return (
-    <>
-      {attributes ? (
-        <div>
-          <ISwitchControlBase
-            ariaLabel="Wi-Fi"
-            ariaDescribedby="wifi-hint"
-            v-model:checked={checked.value}
-          />
-          <p id="wifi-hint">Joins known networks.</p>
-        </div>
-      ) : (
-        <div>
-          <label>
-            <ISwitchControlBase
-              id="wifi"
-              name="wifi"
-              disabled={disabled}
-              readonly={readonly}
-              v-model:checked={checked.value}
-            />
-            Accept
-          </label>
-          <output>{checked.value ? "on" : "off"}</output>
-          {parent && (
-            <button type="button" onClick={() => (checked.value = !checked.value)}>
-              Select all
-            </button>
-          )}
-        </div>
-      )}
-    </>
-  );
+	return (
+		<>
+			{attributes ? (
+				<div>
+					<ISwitchControlBase
+						ariaLabel="Wi-Fi"
+						ariaDescribedby="wifi-hint"
+						v-model:checked={checked.value}
+					/>
+					<p id="wifi-hint">Joins known networks.</p>
+				</div>
+			) : (
+				<div>
+					<label>
+						<ISwitchControlBase
+							id="wifi"
+							name="wifi"
+							disabled={disabled}
+							readonly={readonly}
+							v-model:checked={checked.value}
+						/>
+						Accept
+					</label>
+					<output>{checked.value ? "on" : "off"}</output>
+					{parent && (
+						<button type="button" onClick={() => (checked.value = !checked.value)}>
+							Select all
+						</button>
+					)}
+				</div>
+			)}
+		</>
+	);
 }

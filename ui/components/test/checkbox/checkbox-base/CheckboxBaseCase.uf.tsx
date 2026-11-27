@@ -2,10 +2,10 @@
 import ICheckboxBase from "../../../src/components/checkbox/headless/ICheckboxBase.uf.tsx";
 
 export default function CheckboxBaseCase() {
-  return (
-    <ICheckboxBase>
-      <input type="checkbox" name="terms" />
-      Accept the terms
-    </ICheckboxBase>
-  );
+	return (
+		<ICheckboxBase>
+			<input type="checkbox" name="terms" />
+			Accept the terms
+		</ICheckboxBase>
+	);
 }

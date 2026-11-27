@@ -1,8 +1,8 @@
 {
-  "description": "The headless input shell, which holds its control.",
-  "ssr": {
-    "default": {
-      "props": {}
-    }
-  }
+	"description": "The headless input shell, which holds its control.",
+	"ssr": {
+		"default": {
+			"props": {}
+		}
+	}
 }

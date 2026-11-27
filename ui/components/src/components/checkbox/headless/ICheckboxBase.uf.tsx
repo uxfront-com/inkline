@@ -5,7 +5,7 @@ import type { Element } from "@uxfront/unframework";
 // the control and its text. Nesting the control inside the `<label>` labels it implicitly: clicking
 // the text toggles the box, with no `for` and `id` to wire.
 export default function ICheckboxBase() {
-  const slots = defineSlots<{ default?(): Element }>();
+	const slots = defineSlots<{ default?(): Element }>();
 
-  return <label>{slots.default?.()}</label>;
+	return <label>{slots.default?.()}</label>;
 }

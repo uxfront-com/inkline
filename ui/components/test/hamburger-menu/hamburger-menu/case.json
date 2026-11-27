@@ -1,19 +1,19 @@
 {
-  "description": "The styled hamburger toggle, its `open` model bound by a parent that shows the menu it controls.",
-  "ssr": {
-    "closed": {
-      "props": {}
-    },
-    "open": {
-      "props": {
-        "initial": true,
-        "ariaLabel": "Close navigation"
-      }
-    },
-    "disabled": {
-      "props": {
-        "disabled": true
-      }
-    }
-  }
+	"description": "The styled hamburger toggle, its `open` model bound by a parent that shows the menu it controls.",
+	"ssr": {
+		"closed": {
+			"props": {}
+		},
+		"open": {
+			"props": {
+				"initial": true,
+				"ariaLabel": "Close navigation"
+			}
+		},
+		"disabled": {
+			"props": {
+				"disabled": true
+			}
+		}
+	}
 }

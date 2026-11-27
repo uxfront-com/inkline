@@ -1,6 +1,7 @@
 import { existsSync } from "node:fs";
 import { readFile, rm, writeFile } from "node:fs/promises";
 import { join } from "node:path";
+
 import { LANDING_PATHS } from "./app/data/frameworks";
 import { SITE_DESCRIPTION } from "./app/data/site";
 import { SECURITY_HEADERS } from "./server/lib/headers";
@@ -13,181 +14,181 @@ process.env.NUXT_SITE_URL ||= SITE_URL;
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: "2025-07-15",
-  devtools: { enabled: true },
-  ssr: true,
+	compatibilityDate: "2025-07-15",
+	devtools: { enabled: true },
+	ssr: true,
 
-  // Since Nuxt 4.6, `nuxt build` and `generate` move to node_modules/.cache/nuxt
-  // when .nuxt exists, and point .nuxt/tsconfig.server.json there. The root type
-  // check (`pnpm run check-types`, after `pnpm run build`) skips node_modules, so it lost the
-  // Nitro auto-imports server/ relies on. Keep every command on .nuxt.
-  buildDir: ".nuxt",
+	// Since Nuxt 4.6, `nuxt build` and `generate` move to node_modules/.cache/nuxt
+	// when .nuxt exists, and point .nuxt/tsconfig.server.json there. The root type
+	// check (`pnpm run check-types`, after `pnpm run build`) skips node_modules, so it lost the
+	// Nitro auto-imports server/ relies on. Keep every command on .nuxt.
+	buildDir: ".nuxt",
 
-  extends: [
-    // The homepage kit: components, fonts, head helpers and critical-path loading.
-    "@uxfront/layer-ui",
-    // The docs theme: Docus, which renders content/docs/ at /docs (see app/app.vue),
-    // plus the framework switcher (`docsTheme.frameworks` in app/app.config.ts).
-    "@uxfront/layer-docs",
-  ],
+	extends: [
+		// The homepage kit: components, fonts, head helpers and critical-path loading.
+		"@uxfront/layer-ui",
+		// The docs theme: Docus, which renders content/docs/ at /docs (see app/app.vue),
+		// plus the framework switcher (`docsTheme.frameworks` in app/app.config.ts).
+		"@uxfront/layer-docs",
+	],
 
-  // Every docs page at /docs/<framework>/<page>, once for each framework in
-  // `docsTheme.frameworks`, and built for each ("Framework URLs" in the
-  // @uxfront/layer-docs README).
-  frameworkUrls: {
-    enabled: true,
-  },
+	// Every docs page at /docs/<framework>/<page>, once for each framework in
+	// `docsTheme.frameworks`, and built for each ("Framework URLs" in the
+	// @uxfront/layer-docs README).
+	frameworkUrls: {
+		enabled: true,
+	},
 
-  runtimeConfig: {
-    public: {
-      siteUrl: SITE_URL,
-    },
-  },
+	runtimeConfig: {
+		public: {
+			siteUrl: SITE_URL,
+		},
+	},
 
-  // The docs header and title template (Docus falls back to the package name).
-  site: {
-    name: "Inkline",
-  },
+	// The docs header and title template (Docus falls back to the package name).
+	site: {
+		name: "Inkline",
+	},
 
-  // The site is static, so Docus's MCP server has nothing to run on.
-  mcp: {
-    enabled: false,
-  },
+	// The site is static, so Docus's MCP server has nothing to run on.
+	mcp: {
+		enabled: false,
+	},
 
-  docus: {
-    // The assistant answers from a server route, which a static host doesn't have.
-    // Off, its button stays out of the docs header even when the build can reach
-    // an AI gateway (VERCEL_OIDC_TOKEN on Vercel).
-    assistant: {
-      enabled: false,
-    },
-  },
+	docus: {
+		// The assistant answers from a server route, which a static host doesn't have.
+		// Off, its button stays out of the docs header even when the build can reach
+		// an AI gateway (VERCEL_OIDC_TOKEN on Vercel).
+		assistant: {
+			enabled: false,
+		},
+	},
 
-  app: {
-    head: {
-      htmlAttrs: { lang: "en" },
-      meta: [
-        { charset: "utf-8" },
-        { name: "viewport", content: "width=device-width, initial-scale=1" },
-      ],
-      link: [{ rel: "icon", href: "/favicon.svg", type: "image/svg+xml" }],
-    },
-  },
+	app: {
+		head: {
+			htmlAttrs: { lang: "en" },
+			meta: [
+				{ charset: "utf-8" },
+				{ name: "viewport", content: "width=device-width, initial-scale=1" },
+			],
+			link: [{ rel: "icon", href: "/favicon.svg", type: "image/svg+xml" }],
+		},
+	},
 
-  // Docs pages' share images, which nuxt-og-image draws at 1200 × 600 by default:
-  // 1200 × 630 is the 1.91:1 size that link previews expect.
-  ogImage: {
-    defaults: { width: 1200, height: 630 },
-  },
+	// Docs pages' share images, which nuxt-og-image draws at 1200 × 600 by default:
+	// 1200 × 630 is the 1.91:1 size that link previews expect.
+	ogImage: {
+		defaults: { width: 1200, height: 630 },
+	},
 
-  // The summary llmstxt.org puts under llms.txt's title. Docus takes it from
-  // package.json's description otherwise, and this app's has none.
-  llms: {
-    description: SITE_DESCRIPTION,
-  },
+	// The summary llmstxt.org puts under llms.txt's title. Docus takes it from
+	// package.json's description otherwise, and this app's has none.
+	llms: {
+		description: SITE_DESCRIPTION,
+	},
 
-  experimental: {
-    // Inline the payload on first load (the homepage makes no extra request),
-    // and extract it for client-side navigation between docs pages.
-    payloadExtraction: "client",
-  },
+	experimental: {
+		// Inline the payload on first load (the homepage makes no extra request),
+		// and extract it for client-side navigation between docs pages.
+		payloadExtraction: "client",
+	},
 
-  routeRules: {
-    // The first framework's introduction. `react` is the first value in
-    // `docsTheme.frameworks` (app/app.config.ts): reorder that list, change this.
-    "/docs": {
-      redirect: "/docs/react/getting-started",
-    },
-    // Hashed build assets never change, so cache them forever.
-    "/_nuxt/**": {
-      headers: { "cache-control": "public, max-age=31536000, immutable" },
-    },
-    "/**": {
-      headers: SECURITY_HEADERS,
-    },
-  },
+	routeRules: {
+		// The first framework's introduction. `react` is the first value in
+		// `docsTheme.frameworks` (app/app.config.ts): reorder that list, change this.
+		"/docs": {
+			redirect: "/docs/react/getting-started",
+		},
+		// Hashed build assets never change, so cache them forever.
+		"/_nuxt/**": {
+			headers: { "cache-control": "public, max-age=31536000, immutable" },
+		},
+		"/**": {
+			headers: SECURITY_HEADERS,
+		},
+	},
 
-  nitro: {
-    // Cloudflare Workers Builds sets WORKERS_CI, and Nitro reads it to pick its
-    // `cloudflare-module` server preset, even under `nuxt generate`. That preset
-    // writes .wrangler/deploy/config.json, which Wrangler prefers over this app's
-    // wrangler.json. `cloudflare_pages_static` writes a static site to dist/ instead,
-    // with a _headers file built from routeRules. Only there: the local and CI
-    // `generate` keep the default preset, whose .output/public `test:build` reads.
-    // Vercel's NITRO_PRESET still wins, since `nuxt generate` passes it as an override.
-    preset: process.env.WORKERS_CI ? "cloudflare_pages_static" : undefined,
-    prerender: {
-      crawlLinks: true,
-      // The layer adds every docs page under each framework, with the markdown
-      // twin each one links to. llms.txt adds the framework-neutral twins it
-      // lists. /docs only redirects. Nothing links to the framework landing
-      // pages (/react to /astro, app/data/frameworks.ts), so they're listed here.
-      routes: ["/", "/docs", ...LANDING_PATHS],
-      failOnError: true,
-    },
-    vercel: {
-      config: {
-        // Agents asking for markdown, and curl, get the llms.txt entry point at
-        // `/`; browsers get the rendered homepage. A fully static deploy
-        // (ADR-007) has no Nitro runtime to negotiate that, so it has to happen
-        // at the CDN edge. Docus's vercel-markdown-rewrite module now writes
-        // its own `^/$` → `/llms.txt` rewrites ahead of these two redirects, and
-        // those match first; these two stay as the fallback if Docus drops them.
-        // `(?i)` makes the match case-insensitive.
-        //
-        // Build Output API v3 routes must be declared here, not in vercel.json —
-        // once .vercel/output/config.json exists, Vercel ignores vercel.json's
-        // own routes/redirects entirely.
-        //
-        // Nitro types `routes` as a narrow 3-variant union that predates `has`
-        // and redirect routes; the Build Output API accepts both, and the
-        // emitted .vercel/output/config.json carries these two entries verbatim,
-        // after Docus's rewrites. Drop the directives below when nitropack
-        // widens the type — ts-expect-error errors once it is unnecessary.
-        routes: [
-          {
-            src: "/",
-            has: [{ type: "header", key: "accept", value: "(?i).*text/markdown.*" }],
-            status: 302,
-            // @ts-expect-error -- nitropack's route type allows only cache-control here
-            headers: { Location: "/llms.txt" },
-          },
-          {
-            src: "/",
-            has: [{ type: "header", key: "user-agent", value: "(?i)curl/.*" }],
-            status: 302,
-            // @ts-expect-error -- nitropack's route type allows only cache-control here
-            headers: { Location: "/llms.txt" },
-          },
-        ],
-      },
-    },
-  },
+	nitro: {
+		// Cloudflare Workers Builds sets WORKERS_CI, and Nitro reads it to pick its
+		// `cloudflare-module` server preset, even under `nuxt generate`. That preset
+		// writes .wrangler/deploy/config.json, which Wrangler prefers over this app's
+		// wrangler.json. `cloudflare_pages_static` writes a static site to dist/ instead,
+		// with a _headers file built from routeRules. Only there: the local and CI
+		// `generate` keep the default preset, whose .output/public `test:build` reads.
+		// Vercel's NITRO_PRESET still wins, since `nuxt generate` passes it as an override.
+		preset: process.env.WORKERS_CI ? "cloudflare_pages_static" : undefined,
+		prerender: {
+			crawlLinks: true,
+			// The layer adds every docs page under each framework, with the markdown
+			// twin each one links to. llms.txt adds the framework-neutral twins it
+			// lists. /docs only redirects. Nothing links to the framework landing
+			// pages (/react to /astro, app/data/frameworks.ts), so they're listed here.
+			routes: ["/", "/docs", ...LANDING_PATHS],
+			failOnError: true,
+		},
+		vercel: {
+			config: {
+				// Agents asking for markdown, and curl, get the llms.txt entry point at
+				// `/`; browsers get the rendered homepage. A fully static deploy
+				// (ADR-007) has no Nitro runtime to negotiate that, so it has to happen
+				// at the CDN edge. Docus's vercel-markdown-rewrite module now writes
+				// its own `^/$` → `/llms.txt` rewrites ahead of these two redirects, and
+				// those match first; these two stay as the fallback if Docus drops them.
+				// `(?i)` makes the match case-insensitive.
+				//
+				// Build Output API v3 routes must be declared here, not in vercel.json —
+				// once .vercel/output/config.json exists, Vercel ignores vercel.json's
+				// own routes/redirects entirely.
+				//
+				// Nitro types `routes` as a narrow 3-variant union that predates `has`
+				// and redirect routes; the Build Output API accepts both, and the
+				// emitted .vercel/output/config.json carries these two entries verbatim,
+				// after Docus's rewrites. Drop the directives below when nitropack
+				// widens the type — ts-expect-error errors once it is unnecessary.
+				routes: [
+					{
+						src: "/",
+						has: [{ type: "header", key: "accept", value: "(?i).*text/markdown.*" }],
+						status: 302,
+						// @ts-expect-error -- nitropack's route type allows only cache-control here
+						headers: { Location: "/llms.txt" },
+					},
+					{
+						src: "/",
+						has: [{ type: "header", key: "user-agent", value: "(?i)curl/.*" }],
+						status: 302,
+						// @ts-expect-error -- nitropack's route type allows only cache-control here
+						headers: { Location: "/llms.txt" },
+					},
+				],
+			},
+		},
+	},
 
-  hooks: {
-    // Docus writes the assistant's endpoint into the public runtime config, and
-    // so into every page, even with the assistant off. Off, nothing reads it.
-    "nitro:config"(nitroConfig) {
-      const assistant = nitroConfig.runtimeConfig?.public?.assistant;
-      delete assistant?.apiPath;
-    },
-    // Workers rejects the `/* /404.html 404` fallback the Cloudflare preset writes
-    // to _redirects (404 isn't a valid redirect status), failing the deploy.
-    // not_found_handling in wrangler.json serves 404.html instead. Registered here,
-    // not in nitro.hooks, so it runs after the preset's compiled hook instead of
-    // replacing it. The static and vercel_static presets this app also builds with
-    // write no _redirects, so it does nothing there.
-    "nitro:init"(nitro) {
-      nitro.hooks.hook("compiled", async () => {
-        const file = join(nitro.options.output.dir, "_redirects");
-        if (!existsSync(file)) {
-          return;
-        }
-        const rules = (await readFile(file, "utf8"))
-          .split("\n")
-          .filter((line) => line && !/\s404$/.test(line));
-        await (rules.length ? writeFile(file, rules.join("\n")) : rm(file));
-      });
-    },
-  },
+	hooks: {
+		// Docus writes the assistant's endpoint into the public runtime config, and
+		// so into every page, even with the assistant off. Off, nothing reads it.
+		"nitro:config"(nitroConfig) {
+			const assistant = nitroConfig.runtimeConfig?.public?.assistant;
+			delete assistant?.apiPath;
+		},
+		// Workers rejects the `/* /404.html 404` fallback the Cloudflare preset writes
+		// to _redirects (404 isn't a valid redirect status), failing the deploy.
+		// not_found_handling in wrangler.json serves 404.html instead. Registered here,
+		// not in nitro.hooks, so it runs after the preset's compiled hook instead of
+		// replacing it. The static and vercel_static presets this app also builds with
+		// write no _redirects, so it does nothing there.
+		"nitro:init"(nitro) {
+			nitro.hooks.hook("compiled", async () => {
+				const file = join(nitro.options.output.dir, "_redirects");
+				if (!existsSync(file)) {
+					return;
+				}
+				const rules = (await readFile(file, "utf8"))
+					.split("\n")
+					.filter((line) => line && !/\s404$/.test(line));
+				await (rules.length ? writeFile(file, rules.join("\n")) : rm(file));
+			});
+		},
+	},
 });

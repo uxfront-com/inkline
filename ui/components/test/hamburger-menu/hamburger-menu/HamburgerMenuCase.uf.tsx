@@ -5,37 +5,37 @@ import { defineEmits, ref, watch } from "@uxfront/unframework";
 import IHamburgerMenu from "../../../src/components/hamburger-menu/styled/IHamburgerMenu.uf.tsx";
 
 export default function HamburgerMenuCase({
-  initial = false,
-  disabled = false,
-  ariaLabel,
+	initial = false,
+	disabled = false,
+	ariaLabel,
 }: {
-  initial?: boolean;
-  disabled?: boolean;
-  ariaLabel?: string;
+	initial?: boolean;
+	disabled?: boolean;
+	ariaLabel?: string;
 }) {
-  const emit = defineEmits<{ toggle: [open: boolean] }>();
-  const open = ref(initial);
-  watch(
-    () => open.value,
-    (value) => emit("toggle", value),
-  );
+	const emit = defineEmits<{ toggle: [open: boolean] }>();
+	const open = ref(initial);
+	watch(
+		() => open.value,
+		(value) => emit("toggle", value),
+	);
 
-  return (
-    <div>
-      <IHamburgerMenu
-        ariaControls="menu"
-        ariaLabel={ariaLabel}
-        disabled={disabled}
-        color="dark"
-        size="lg"
-        animation="arrow-up"
-        v-model:open={open.value}
-      />
-      {open.value ? (
-        <nav id="menu" aria-label="Main">
-          <a href="#home">Home</a>
-        </nav>
-      ) : null}
-    </div>
-  );
+	return (
+		<div>
+			<IHamburgerMenu
+				ariaControls="menu"
+				ariaLabel={ariaLabel}
+				disabled={disabled}
+				color="dark"
+				size="lg"
+				animation="arrow-up"
+				v-model:open={open.value}
+			/>
+			{open.value ? (
+				<nav id="menu" aria-label="Main">
+					<a href="#home">Home</a>
+				</nav>
+			) : null}
+		</div>
+	);
 }

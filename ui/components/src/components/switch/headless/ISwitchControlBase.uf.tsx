@@ -15,50 +15,50 @@ import type { SwitchControlBaseProps } from "../types.ts";
 // the model only when the two differ, so a parent's own change, which the first watcher copies into
 // `state`, doesn't come back to the parent as a change the control made.
 export default function ISwitchControlBase({
-  id,
-  name,
-  disabled = false,
-  readonly = false,
-  ariaLabel,
-  ariaDescribedby,
+	id,
+	name,
+	disabled = false,
+	readonly = false,
+	ariaLabel,
+	ariaDescribedby,
 }: SwitchControlBaseProps) {
-  const checked = defineModel<boolean>("checked", { default: false });
-  const state = ref(checked.value);
+	const checked = defineModel<boolean>("checked", { default: false });
+	const state = ref(checked.value);
 
-  watch(
-    () => checked.value,
-    (value) => {
-      state.value = value;
-    },
-  );
-  watch(
-    () => state.value,
-    (value) => {
-      if (readonly) state.value = checked.value;
-      else if (value !== checked.value) checked.value = value;
-    },
-  );
+	watch(
+		() => checked.value,
+		(value) => {
+			state.value = value;
+		},
+	);
+	watch(
+		() => state.value,
+		(value) => {
+			if (readonly) state.value = checked.value;
+			else if (value !== checked.value) checked.value = value;
+		},
+	);
 
-  return (
-    <input
-      type="checkbox"
-      role="switch"
-      id={id}
-      name={name}
-      v-model={state.value}
-      aria-checked={state.value ? "true" : "false"}
-      aria-readonly={readonly ? "true" : undefined}
-      aria-label={ariaLabel}
-      aria-describedby={ariaDescribedby}
-      disabled={disabled}
-      onClick={(event: MouseEvent) => {
-        if ((event.currentTarget as HTMLElement).getAttribute("aria-readonly") === "true") {
-          event.preventDefault();
-        }
-      }}
-      onKeydown={(event: KeyboardEvent) => {
-        if (event.key === "Enter") (event.currentTarget as HTMLInputElement).click();
-      }}
-    />
-  );
+	return (
+		<input
+			type="checkbox"
+			role="switch"
+			id={id}
+			name={name}
+			v-model={state.value}
+			aria-checked={state.value ? "true" : "false"}
+			aria-readonly={readonly ? "true" : undefined}
+			aria-label={ariaLabel}
+			aria-describedby={ariaDescribedby}
+			disabled={disabled}
+			onClick={(event: MouseEvent) => {
+				if ((event.currentTarget as HTMLElement).getAttribute("aria-readonly") === "true") {
+					event.preventDefault();
+				}
+			}}
+			onKeydown={(event: KeyboardEvent) => {
+				if (event.key === "Enter") (event.currentTarget as HTMLInputElement).click();
+			}}
+		/>
+	);
 }
