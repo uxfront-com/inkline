@@ -1,5 +1,5 @@
 import { styleframe } from "virtual:styleframe";
-import { useFieldGroupRecipe } from "@styleframe/theme";
+import { useFieldGroupRecipe } from "@inkline/theme";
 
 const s = styleframe();
 

@@ -1,5 +1,5 @@
 import { styleframe } from "virtual:styleframe";
-import { useInputRecipe, useInputPrefixRecipe, useInputSuffixRecipe } from "@styleframe/theme";
+import { useInputRecipe, useInputPrefixRecipe, useInputSuffixRecipe } from "@inkline/theme";
 
 const s = styleframe();
 

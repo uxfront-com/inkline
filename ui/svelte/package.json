@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@inkline/components": "workspace:*",
+    "@inkline/theme": "workspace:*",
     "@styleframe/cli": "catalog:",
     "@styleframe/core": "catalog:",
     "@styleframe/license": "catalog:",

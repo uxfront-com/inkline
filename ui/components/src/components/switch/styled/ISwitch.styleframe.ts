@@ -1,5 +1,5 @@
 import { styleframe } from "virtual:styleframe";
-import { useSwitchRecipe, useSwitchFieldRecipe } from "@styleframe/theme";
+import { useSwitchRecipe, useSwitchFieldRecipe } from "@inkline/theme";
 
 const s = styleframe();
 

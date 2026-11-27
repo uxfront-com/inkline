@@ -42,6 +42,7 @@
     "@angular/platform-browser-dynamic": "catalog:",
     "@angular/platform-server": "catalog:",
     "@inkline/components": "workspace:*",
+    "@inkline/theme": "workspace:*",
     "@styleframe/cli": "catalog:",
     "@styleframe/core": "catalog:",
     "@styleframe/license": "catalog:",

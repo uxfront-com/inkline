@@ -1,5 +1,5 @@
 import { styleframe } from "virtual:styleframe";
-import { useHamburgerMenuRecipe } from "@styleframe/theme";
+import { useHamburgerMenuRecipe } from "@inkline/theme";
 
 const s = styleframe();
 
