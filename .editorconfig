@@ -1,0 +1,15 @@
+# Shared whitespace rules for every uxfront-com repository.
+# The canonical copy is .editorconfig in uxfront-com/.github. Change it there, then copy it.
+# It matches @uxfront/oxfmt-config, which keeps oxfmt's defaults: two spaces, LF and a final newline.
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = space
+indent_size = 2
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.md]
+trim_trailing_whitespace = false
