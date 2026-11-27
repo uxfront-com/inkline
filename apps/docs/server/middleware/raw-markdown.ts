@@ -14,10 +14,14 @@ import { rawPage } from "../lib/raw";
  */
 export default defineEventHandler(async (event) => {
   const match = event.path.match(/^\/raw(\/.+?)(?:\/index)?\.md$/);
-  if (!match?.[1]) return;
+  if (!match?.[1]) {
+    return;
+  }
 
   const docs = await readDocsPage(event, match[1]);
-  if (!docs) return;
+  if (!docs) {
+    return;
+  }
 
   setHeader(event, "Content-Type", "text/markdown; charset=utf-8");
   return rawPage(docs.page, docs.source);

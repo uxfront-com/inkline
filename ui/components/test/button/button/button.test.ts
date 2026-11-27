@@ -246,7 +246,7 @@ describeTargets("button/button", () => {
         // the Enter key's press, which dispatches the click. A region the click itself creates
         // isn't there yet. Qwik runs the click's handlers from the document, so the click's own
         // capture phase can't tell.
-        const seen: string[] = [];
+        const seen: Array<string> = [];
         const record = () => {
           const region = document.querySelector("[data-inkline-announcer]");
           seen.push(region ? `ready: "${region.textContent}"` : "absent");
@@ -410,8 +410,11 @@ describeTargets("button/button", () => {
         await view.user.tab();
         await view.expectParity(`${name}-tabbed`);
         const docs = view.getByRole("link", { name: "Docs" });
-        if (focused === "Docs") await expect.element(docs).toHaveFocus();
-        else await expect.element(view.getByRole("searchbox", { name: "Search" })).toHaveFocus();
+        if (focused === "Docs") {
+          await expect.element(docs).toHaveFocus();
+        } else {
+          await expect.element(view.getByRole("searchbox", { name: "Search" })).toHaveFocus();
+        }
         // Playwright refuses to click an `aria-disabled` element, so the click is the element's own.
         (docs.element() as HTMLElement).click();
         await view.expectParity(`${name}-clicked`);
@@ -458,10 +461,12 @@ describeTargets("button/button", () => {
     // The harness fails a test whose link click goes unprevented, since it would leave the page.
     // So this listener, which runs after the component's, records whether the component let the
     // click through to the browser, and then stops the navigation itself.
-    const followed: string[] = [];
+    const followed: Array<string> = [];
     const follow = (event: MouseEvent) => {
       const link = (event.target as Element).closest("a[href]");
-      if (!link || event.defaultPrevented) return;
+      if (!link || event.defaultPrevented) {
+        return;
+      }
       followed.push(link.getAttribute("href") ?? "");
       event.preventDefault();
     };

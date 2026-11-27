@@ -1,17 +1,15 @@
 import "@angular/compiler";
 
-import { Component, provideZonelessChangeDetection, type Type } from "@angular/core";
+import { Component, provideZonelessChangeDetection } from "@angular/core";
+import type { Type } from "@angular/core";
 import { bootstrapApplication } from "@angular/platform-browser";
 import { provideServerRendering, renderApplication } from "@angular/platform-server";
 import { expect, it } from "vitest";
 
 // The bundles ship no declarations of their own, so they're typed here.
-const { IButton }: { IButton: Type<unknown> } = await import(
-  "../dist/fesm2022/index.mjs" as string
-);
-const { IButtonBase }: { IButtonBase: Type<unknown> } = await import(
-  "../dist/fesm2022/headless.mjs" as string
-);
+const { IButton }: { IButton: Type<unknown> } = await import("../dist/fesm2022/index.mjs");
+const { IButtonBase }: { IButtonBase: Type<unknown> } =
+  await import("../dist/fesm2022/headless.mjs");
 
 // Server-renders a styled and a headless component from the built package, with a static input
 // and a bound one. A component the Angular compiler skipped renders its markup with neither.
@@ -38,11 +36,13 @@ async function render(component: Type<unknown>, selector: string): Promise<strin
 
 function button(html: string): { id: string | null; text: string } {
   const match = html.match(/<button\b([^>]*)>([\s\S]*?)<\/button>/);
-  if (!match) throw new Error(`no <button> in ${html}`);
+  if (!match) {
+    throw new Error(`no <button> in ${html}`);
+  }
   const [, attributes = "", content = ""] = match;
   return {
     id: attributes.match(/\bid="([^"]*)"/)?.[1] ?? null,
-    text: content.replace(/<[^>]*>/g, "").trim(),
+    text: content.replaceAll(/<[^>]*>/g, "").trim(),
   };
 }
 

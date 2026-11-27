@@ -20,7 +20,7 @@ import { execFileSync } from "node:child_process";
  * returns an empty map, so the build carries on and the sitemap dates the pages
  * by the build day.
  */
-export function lastModified(paths: string[], cwd?: string): Map<string, string> {
+export function lastModified(paths: Array<string>, cwd?: string): Map<string, string> {
   const dates = new Map<string, string>();
   let log: string;
   try {
@@ -53,7 +53,9 @@ export function lastModified(paths: string[], cwd?: string): Map<string, string>
     const [seconds, ...files] = commit.trim().split("\n");
     const date = new Date(Number(seconds) * 1000).toISOString().slice(0, 10);
     for (const file of files) {
-      if (file && !dates.has(file)) dates.set(file, date);
+      if (file && !dates.has(file)) {
+        dates.set(file, date);
+      }
     }
   }
   return dates;

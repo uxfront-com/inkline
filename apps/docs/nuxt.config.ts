@@ -168,9 +168,7 @@ export default defineNuxtConfig({
     // Docus writes the assistant's endpoint into the public runtime config, and
     // so into every page, even with the assistant off. Off, nothing reads it.
     "nitro:config"(nitroConfig) {
-      const assistant = nitroConfig.runtimeConfig?.public?.assistant as
-        | { apiPath?: string }
-        | undefined;
+      const assistant = nitroConfig.runtimeConfig?.public?.assistant;
       delete assistant?.apiPath;
     },
     // Workers rejects the `/* /404.html 404` fallback the Cloudflare preset writes
@@ -182,7 +180,9 @@ export default defineNuxtConfig({
     "nitro:init"(nitro) {
       nitro.hooks.hook("compiled", async () => {
         const file = join(nitro.options.output.dir, "_redirects");
-        if (!existsSync(file)) return;
+        if (!existsSync(file)) {
+          return;
+        }
         const rules = (await readFile(file, "utf8"))
           .split("\n")
           .filter((line) => line && !/\s404$/.test(line));

@@ -9,19 +9,19 @@ import { describe, expect, it } from "vitest";
 // host's bindings never reach it. The input check is the one that catches that: never drop it.
 
 interface ComponentReport {
-  selectors: string[];
-  props: string[];
-  models: string[];
-  events: string[];
+  selectors: Array<string>;
+  props: Array<string>;
+  models: Array<string>;
+  events: Array<string>;
 }
 
 interface ApiReport {
-  entries: Record<string, string[]>;
+  entries: Record<string, Array<string>>;
   components: Record<string, ComponentReport>;
 }
 
 interface ComponentDef {
-  selectors: unknown[][];
+  selectors: Array<Array<unknown>>;
   inputs: Record<string, unknown>;
   outputs: Record<string, string>;
 }
@@ -36,13 +36,16 @@ const bundles: Record<string, string> = {
 for (const [entry, names] of Object.entries(report.entries)) {
   describe(`the built ${entry} entry`, async () => {
     const bundle = bundles[entry];
-    if (!bundle) throw new Error(`api.json lists ${entry}, which this test doesn't load`);
+    if (!bundle) {
+      throw new Error(`api.json lists ${entry}, which this test doesn't load`);
+    }
     const module: Record<string, unknown> = await import(bundle);
 
     it.each(names)("compiles %s with every input, model and event", (name) => {
       const component = report.components[name];
-      if (!component)
+      if (!component) {
         throw new Error(`api.json lists ${name} in ${entry} but has no report for it`);
+      }
       const def = (module[name] as { ɵcmp?: ComponentDef } | undefined)?.ɵcmp;
 
       expect(def, `${name} has no component definition`).toBeDefined();

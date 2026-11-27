@@ -11,7 +11,7 @@ Repo-wide conventions for code, tests, files, and commits. This document is a po
 | Workspace layout        | pnpm workspaces           | [`pnpm-workspace.yaml`](../pnpm-workspace.yaml)                                                                             |
 | Task runner             | Turbo                     | root [`turbo.json`](../turbo.json)                                                                                          |
 | Build / dev / test      | Vite, Vitest, tsdown      | per-package [`vite.config.ts`](../ui/react/vite.config.ts), and [`tsdown.config.ts`](../ui/astro/tsdown.config.ts) on Astro |
-| Linter                  | OXLint (`pnpm run lint`)  | root [`oxlint.config.ts`](../oxlint.config.ts)                                                                              |
+| Linter                  | OXLint (`pnpm run lint`)  | root [`oxlint.config.ts`](../oxlint.config.ts), which extends `@uxfront/oxlint-config/vue`                                  |
 | Formatter               | Oxfmt (`pnpm run format`) | root [`oxfmt.config.ts`](../oxfmt.config.ts)                                                                                |
 | Type checker            | `pnpm run typecheck`      | root [`tsconfig.json`](../tsconfig.json) + per-package extensions — never bare `tsc` from the root                          |
 | Test runner             | Vitest                    | per-package `vite.config.ts` `test` section                                                                                 |
@@ -59,7 +59,7 @@ Run all tests with `pnpm run test` from the repo root, and a single package's te
 
 - TypeScript everywhere. No JavaScript source.
 - Oxfmt is authoritative — do not configure editor formatters that disagree. Run `pnpm run format` before you commit, since CI's Lint job runs `pnpm run format:check`.
-- The lint config in [`oxlint.config.ts`](../oxlint.config.ts) enables `typeAware: true, typeCheck: true`. Lint failures are CI-blocking.
+- The lint config in [`oxlint.config.ts`](../oxlint.config.ts) extends `@uxfront/oxlint-config/vue`, the config the other uxfront repositories share, and enables `typeAware: true, typeCheck: true`. Each rule it turns off has its reason in a comment above it. Lint failures are CI-blocking.
 - No `console.log` in shipped code (lint will catch it).
 - Public APIs are explicitly typed at the boundary (no inferred return types on exported functions).
 

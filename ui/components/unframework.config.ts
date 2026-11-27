@@ -16,7 +16,9 @@ function themeBody(): Plugin {
     name: "inkline:theme-body",
     enforce: "pre",
     transform(code, id) {
-      if (!id.includes("virtual:styleframe.css")) return null;
+      if (!id.includes("virtual:styleframe.css")) {
+        return null;
+      }
       return `${code}\nhtml body { color: var(--body--color); background: var(--body--background); }\n`;
     },
   };
@@ -38,15 +40,19 @@ const FREEZE_ANIMATIONS =
  * `transform`. Only the harness's servers get it, never the preview, where the spinner keeps its
  * pulse.
  */
-function freezeAnimations(plugins: Plugin | Plugin[]): Plugin[] {
+function freezeAnimations(plugins: Plugin | Array<Plugin>): Array<Plugin> {
   return [plugins].flat().map((plugin) => {
-    if (typeof plugin.load !== "function") return plugin;
+    if (typeof plugin.load !== "function") {
+      return plugin;
+    }
     const load = plugin.load;
     return {
       ...plugin,
       async load(id, ...rest) {
         const loaded = await load.call(this, id, ...rest);
-        if (loaded == null || !id.includes("virtual:styleframe.css")) return loaded;
+        if (loaded === null || loaded === undefined || !id.includes("virtual:styleframe.css")) {
+          return loaded;
+        }
         return typeof loaded === "string"
           ? `${loaded}\n${FREEZE_ANIMATIONS}\n`
           : { ...loaded, code: `${loaded.code}\n${FREEZE_ANIMATIONS}\n` };

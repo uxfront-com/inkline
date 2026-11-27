@@ -13,7 +13,7 @@ const installation = readFileSync(
 );
 const page = readFileSync(new URL("../app/pages/[framework].vue", import.meta.url), "utf8");
 
-let frameworks: { value: string; label: string }[] = [];
+let frameworks: Array<{ value: string; label: string }> = [];
 
 beforeAll(async () => {
   // app.config.ts calls Nuxt's auto-imported defineAppConfig(), which only
@@ -38,7 +38,9 @@ describe("the framework landing pages", () => {
   it.each(LANDING_FRAMEWORKS)("installs and imports @inkline/$value only", (framework) => {
     expect(framework.install).toBe(`npm install @inkline/${framework.value}`);
     expect(framework.example.code).toContain(`from "@inkline/${framework.value}"`);
-    if (framework.stylesheet) expect(framework.stylesheet).toBe(`@inkline/${framework.value}/css`);
+    if (framework.stylesheet) {
+      expect(framework.stylesheet).toBe(`@inkline/${framework.value}/css`);
+    }
   });
 
   // The installation page is the source: a change there shows up here.
@@ -50,12 +52,17 @@ describe("the framework landing pages", () => {
     expect(installation).toContain(
       `[${framework.example.title}]\n${framework.example.code}\n\`\`\``,
     );
-    if (framework.stylesheet) expect(installation).toContain(`import "${framework.stylesheet}";`);
-    else expect(installation).not.toContain(`@inkline/${framework.value}/css`);
+    if (framework.stylesheet) {
+      expect(installation).toContain(`import "${framework.stylesheet}";`);
+    } else {
+      expect(installation).not.toContain(`@inkline/${framework.value}/css`);
+    }
   });
 
   it("accepts the seven frameworks and rejects every other segment", () => {
-    for (const { value } of frameworks) expect(isLandingFramework(value)).toBe(true);
+    for (const { value } of frameworks) {
+      expect(isLandingFramework(value)).toBe(true);
+    }
     for (const value of ["docs", "foo", "", "React", "raw", undefined, ["vue"]]) {
       expect(isLandingFramework(value)).toBe(false);
       expect(landingFramework(value)).toBeUndefined();

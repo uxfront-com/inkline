@@ -11,7 +11,9 @@ const items = VERSIONS.map(({ label }) => label);
 
 function go(label: string) {
   const url = VERSIONS.find((version) => version.label === label)?.url;
-  if (url) navigateTo(url, { external: true });
+  if (url) {
+    navigateTo(url, { external: true });
+  }
 }
 </script>
 

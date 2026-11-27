@@ -1,6 +1,8 @@
 // @vitest-environment jsdom
-import { act, createElement, type ComponentType } from "react";
-import { createRoot, type Root } from "react-dom/client";
+import { act, createElement } from "react";
+import type { ComponentType } from "react";
+import { createRoot } from "react-dom/client";
+import type { Root } from "react-dom/client";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 // A model's callback reports a change the component made, never one its parent made. Unframework's
@@ -23,11 +25,13 @@ const styled = await load("index");
 
 function exported(module: Record<string, Control>, name: string): [string, Control] {
   const control = module[name];
-  if (!control) throw new Error(`the build doesn't export ${name}`);
+  if (!control) {
+    throw new Error(`the build doesn't export ${name}`);
+  }
   return [name, control];
 }
 
-const controls: [string, Control][] = [
+const controls: Array<[string, Control]> = [
   exported(headless, "ICheckboxControlBase"),
   exported(headless, "ISwitchControlBase"),
   exported(styled, "ICheckbox"),

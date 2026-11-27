@@ -33,14 +33,14 @@ const LANDING = ["app/pages/[framework].vue", "app/data/frameworks.ts"];
  */
 export default defineEventHandler(async (event) => {
   const { siteUrl } = useRuntimeConfig(event).public;
-  const pages = (await queryCollection(event, "docs" as never).all()) as DocsPage[];
+  const pages = (await queryCollection(event, "docs" as never).all()) as Array<DocsPage>;
   const sources = new Map(
     pages.map((page) => [page.path, `content/${page.stem}.${page.extension}`]),
   );
 
   const changed = lastModified(["content/docs", HOMEPAGE, ...LANDING]);
   const today = new Date().toISOString().slice(0, 10);
-  const dateOf = (...files: string[]) =>
+  const dateOf = (...files: Array<string>) =>
     files
       .map((file) => changed.get(file))
       .filter((date) => date !== undefined)
@@ -48,7 +48,7 @@ export default defineEventHandler(async (event) => {
       .at(-1) ?? today;
 
   const landing = dateOf(...LANDING);
-  const urls: { loc: string; lastmod: string }[] = [
+  const urls: Array<{ loc: string; lastmod: string }> = [
     { loc: "/", lastmod: dateOf(HOMEPAGE) },
     ...LANDING_PATHS.map((loc) => ({ loc, lastmod: landing })),
     ...(await getDocsSitemapEntries(event)).map(({ loc, path, lastmod }) => {
@@ -82,5 +82,5 @@ const XML_ENTITIES: Record<string, string> = {
 };
 
 function escapeXml(value: string) {
-  return value.replace(/[&<>"']/g, (char) => XML_ENTITIES[char]!);
+  return value.replaceAll(/[&<>"']/g, (char) => XML_ENTITIES[char]!);
 }

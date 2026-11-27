@@ -3,7 +3,7 @@ import { test } from "node:test";
 
 import { diffReports } from "./api-report.ts";
 
-const report = (...lines: string[]) => `${lines.join("\n")}\n`;
+const report = (...lines: Array<string>) => `${lines.join("\n")}\n`;
 
 await test("finds no difference between equal reports", () => {
   strictEqual(diffReports(report("a", "b"), report("a", "b")), "");
