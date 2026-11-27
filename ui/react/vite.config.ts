@@ -1,5 +1,5 @@
 import { resolve } from "node:path";
-import { defineConfig } from "vite-plus";
+import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import styleframe from "styleframe/plugin/vite";
 
