@@ -1,7 +1,7 @@
-import { defineConfig } from "vite-plus";
+import { defineConfig } from "vitest/config";
 
 // Test config only. Nuxt does not read `vite.config.ts` — its Vite options live
-// under the `vite` key in `nuxt.config.ts` — so this file is `vp test`'s alone.
+// under the `vite` key in `nuxt.config.ts` — so this file is Vitest's alone.
 export default defineConfig({
   test: {
     include: ["test/**/*.test.ts"],

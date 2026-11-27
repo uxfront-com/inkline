@@ -17,9 +17,8 @@
     "access": "public"
   },
   "scripts": {
-    "build": "vp build",
-    "validate": "vp check",
-    "test": "vp test"
+    "build": "vite build",
+    "test": "vitest run"
   },
   "dependencies": {
     "@styleframe/runtime": "catalog:"
@@ -36,14 +35,16 @@
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@vitejs/plugin-react": "catalog:",
+    "@vitest/coverage-v8": "catalog:",
     "jsdom": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",
     "styleframe": "catalog:",
+    "vite": "catalog:",
     "vitest": "catalog:"
   },
   "peerDependencies": {
     "react": ">=19.2"
   },
-  "prepublishOnly": "vp run build"
+  "prepublishOnly": "pnpm run build"
 }

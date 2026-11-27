@@ -21,9 +21,9 @@
 
 ## Test plan
 
-<!-- Bulleted checklist. Include vp run ready, manual checks, etc. -->
+<!-- Bulleted checklist. Include pnpm run ready, manual checks, etc. -->
 
-- [ ] `vp run ready` passes locally
+- [ ] `pnpm run ready` passes locally
 - [ ] <!-- add manual or framework-specific checks -->
 
 ## Checklist

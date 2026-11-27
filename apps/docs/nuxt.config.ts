@@ -19,7 +19,7 @@ export default defineNuxtConfig({
 
   // Since Nuxt 4.6, `nuxt build` and `generate` move to node_modules/.cache/nuxt
   // when .nuxt exists, and point .nuxt/tsconfig.server.json there. The root type
-  // check (`vp check`, after `pnpm run build`) skips node_modules, so it lost the
+  // check (`pnpm run check-types`, after `pnpm run build`) skips node_modules, so it lost the
   // Nitro auto-imports server/ relies on. Keep every command on .nuxt.
   buildDir: ".nuxt",
 

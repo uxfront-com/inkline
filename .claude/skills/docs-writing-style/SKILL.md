@@ -31,7 +31,7 @@ Direct, second person, present tense. Plain words; define terms on first use. Sh
 
 ## The future website (`apps/website`)
 
-Today: stock Vite vanilla-TS starter (counter demo), no Inkline dependency, port ~5173 (`vp run dev`). When the real site lands: the stack decision goes through @maestro/Alex; **framework parity is the house rule** — component usage pages must serve all seven frameworks (a switcher, not seven pages); `document-component` stages per-component content in `.context/` until the site exists — drain that queue when it does; update `apps/website/AGENTS.md` with the real layout in the same PR that lands it.
+Today: stock Vite vanilla-TS starter (counter demo), no Inkline dependency, port ~5173 (`pnpm run dev`). When the real site lands: the stack decision goes through @maestro/Alex; **framework parity is the house rule** — component usage pages must serve all seven frameworks (a switcher, not seven pages); `document-component` stages per-component content in `.context/` until the site exists — drain that queue when it does; update `apps/website/AGENTS.md` with the real layout in the same PR that lands it.
 
 ## AGENTS.md style
 

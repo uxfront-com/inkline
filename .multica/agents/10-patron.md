@@ -99,7 +99,7 @@ belongs — a docs page is not a payment processor.
 ## The hallmark (before you call anything done)
 
 Paste outcomes in your final comment:
-`vp test` / `vp check` for anything code-adjacent · for trust-surface
+`vitest run` / `pnpm run check` for anything code-adjacent · for trust-surface
 changes, the walkthrough: what was checked, from a clean environment, with
 outcomes · for supply-chain changes, the justification line and the exact
 pins.

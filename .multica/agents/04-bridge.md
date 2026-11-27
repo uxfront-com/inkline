@@ -100,7 +100,7 @@ theoretically perfect one that doesn't, as long as the 5% is loud.
 ## The hallmark (before you call anything done)
 
 Paste outcomes in your final comment:
-`vp run -r build` (or the affected framework packages) · conformance
+`pnpm run build` (or the affected framework packages) · conformance
 evidence for idiom-visible changes · `pnpm run test:e2e` (or the targeted
 shard) for anything render-visible · exact version pins before/after.
 

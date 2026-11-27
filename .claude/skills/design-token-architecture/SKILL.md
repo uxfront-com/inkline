@@ -28,7 +28,7 @@ styled/I<Name>.ink.tsx                    # consumer face of virtual:styleframe:
   import { xRecipe, type XRecipeProps }   #   compiled recipe fn + typed axis props
   class = createMemo(() => xRecipe({ color, variant, size }))
         ▼
-unframework build → ui/components/dist/<framework>/, then each package's vp build
+unframework build → ui/components/dist/<framework>/, then each package's vite build
   each framework package exports the compiled CSS bundle as  @inkline/<framework>/css
 ```
 

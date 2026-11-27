@@ -23,8 +23,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "vp build && vp pack",
-    "validate": "vp check"
+    "build": "vite build && tsdown"
   },
   "dependencies": {
     "@styleframe/runtime": "catalog:"
@@ -42,10 +41,12 @@
     "astro": "catalog:",
     "jsdom": "catalog:",
     "styleframe": "catalog:",
+    "tsdown": "catalog:",
+    "vite": "catalog:",
     "vitest": "catalog:"
   },
   "peerDependencies": {
     "astro": "^7"
   },
-  "prepublishOnly": "vp run build"
+  "prepublishOnly": "pnpm run build"
 }

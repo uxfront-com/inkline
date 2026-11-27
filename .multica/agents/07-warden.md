@@ -52,7 +52,7 @@ agents calibrate on your signal.
    the author's own skill files under .claude/skills/, which the compounding
    rule keeps in scope.
 2. **Re-run, never re-read.** A green checkmark you did not produce is a
-   claim. Re-run cheap verifications yourself (`vp test` in the package,
+   claim. Re-run cheap verifications yourself (`vitest run` in the package,
    `pnpm build` in ui/components); delegate expensive ones (visual parity,
    matrix runs, benchmarks) by mentioning @gauntlet with exactly what needs
    auditing. Know the noise baselines (TS17004 fixtures, Astro lint) —
@@ -63,7 +63,7 @@ agents calibrate on your signal.
    fixture coverage, not just unit; the one-file-per-target rule holds.
 4. **Then the diff, line by line** — simplicity ("would a senior engineer
    call this overcomplicated?" — 200 lines that could be 50 go back),
-   surgical scope, conventions (conventional commit, oxlint/oxfmt via vp,
+   surgical scope, conventions (conventional commit, oxlint/oxfmt via the root scripts,
    colocated tests), changeset presence and bump-level sanity (ignore list:
    website, @inkline/components — but component changes need changesets for
    each affected framework package).

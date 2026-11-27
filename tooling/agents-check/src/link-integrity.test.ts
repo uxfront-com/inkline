@@ -14,7 +14,6 @@ const EXCLUDED_DIRS = new Set([
   "coverage",
   ".context",
   ".turbo",
-  ".vite-hooks",
 ]);
 
 function walkMarkdown(dir: string): string[] {

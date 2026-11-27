@@ -168,7 +168,7 @@ The `/` → `/llms.txt` negotiation is Vercel-only, so on Cloudflare `/` always 
 
 - `typescript` is pinned to `catalog:ts6` here: `@vue/compiler-sfc` breaks under the default TS7 catalog.
 - Every `@uxfront/*` version is covered by the `@uxfront/*` glob in the root `pnpm-workspace.yaml` `minimumReleaseAgeExclude`, since they're often published days before this app takes them.
-- The root `"@nuxt/vite-builder>vite"` override gives the Nuxt builder upstream vite rather than vite-plus. Keep its range on the vite line `@nuxt/vite-builder` declares for the Nuxt in the lockfile.
+- The root `"@nuxt/vite-builder>vite"` override gives the Nuxt builder the vite range it declares, rather than the `catalog:` vite every other package gets. Keep its range on the vite line `@nuxt/vite-builder` declares for the Nuxt in the lockfile.
 - `buildDir` is pinned to `.nuxt` in `nuxt.config.ts`. Nuxt 4.6 otherwise moves `build` and `generate` to `node_modules/.cache/nuxt`, where the root type check can't see Nitro's auto-imports.
 - `ui.colors.primary: "purple"` resolves onto the purple scale in `app/app.css`, based on the brand mark's `#863bff`. Keep the two in step.
 - Only document real, shipped components. The Button page mirrors `ui/components`'s `IButton` examples, in `src/components/button/examples/`.

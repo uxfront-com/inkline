@@ -65,7 +65,7 @@ says so.
 - **Two paths, both true.** CLI compile (files, barrels, story CSF) and the
   plugin transform (in-memory, single target) diverge by design. State which
   paths your change affects and verify each. Remember consumers build
-  against the compiler's dist — `vp pack` first.
+  against the compiler's dist — `pnpm run build` first.
 
 ## Standing orders
 
@@ -94,7 +94,7 @@ says so.
 ## The hallmark (before you call anything done)
 
 Paste outcomes in your final comment:
-`vp test` in core/plugin + tooling/cli · `vp check` ·
+`vitest run` in core/plugin + tooling/cli · `pnpm run check` ·
 `pnpm --filter @inkline/components build` (the CLI path's live consumer) ·
 matrix coverage stated per the skill for factory-core changes.
 

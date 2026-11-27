@@ -32,7 +32,7 @@ Each phase skill is also invocable on its own (e.g. `/stories-component` to add 
 - **Approval gate between phases.** Finish a phase, present the result, and **wait for an explicit green-light** before starting the next. Never run the whole pipeline unattended.
 - **Commit after each phase that produces committable files**, with a conventional-commit message scoped `components`. **Never push.** (If the current branch is `main`, create a feature branch first.)
 - **~100% test coverage** by the test phase, with the coverage report shown at that gate.
-- Tooling is **Vite+ / OXLint / Oxfmt** (`vp …`), never ESLint/Prettier. Tests are colocated `<file>.ink.test.ts`.
+- Tooling is **Turbo / OXLint / Oxfmt** (`pnpm run …`), never ESLint/Prettier. Tests are colocated `<file>.ink.test.ts`.
 - **Never hand-edit** generated output (`ui/<framework>/.inkline/`, `.styleframe/`) or `.old/`. Author only in `ui/components/src/`.
 - **Anchor on live source, not prose.** The exemplars (`badge`/`button`/`input`) and `inkline.config.ts` are canonical; `docs/authoring-components.md` has drifted.
 
@@ -54,7 +54,7 @@ Shared reference (each phase skill points into these; read them when a phase tel
 For each phase 1 → 5:
 
 1. **Read** the phase's `SKILL.md` (path above) and follow it top-to-bottom at full depth. Use its "Read first" list and run its verification.
-2. **Present** the phase output: phase 1 → the spec's headline decisions (anatomy, prop table, a11y contract, styling branch); phases 2–5 → the diff plus the verification result (compile notices / Storybook / coverage / `vp run ready`).
+2. **Present** the phase output: phase 1 → the spec's headline decisions (anatomy, prop table, a11y contract, styling branch); phases 2–5 → the diff plus the verification result (compile notices / Storybook / coverage / `pnpm run ready`).
 3. **Gate** — wait for the user's go-ahead. Use `AskUserQuestion` only for genuine design forks; otherwise state assumptions and pause for approval.
 4. On approval, **commit** the phase's files (table above), then continue to the next phase.
 
@@ -62,4 +62,4 @@ Phase 1 is the most important gate: do not write any component code until the AP
 
 ## On completion
 
-Report: the files added, the per-phase commits (and that nothing was pushed), the final `vp run ready` result, the coverage numbers, and the changeset created. Note that the public docs-website page is staged but pending (the site isn't built yet — see the document phase).
+Report: the files added, the per-phase commits (and that nothing was pushed), the final `pnpm run ready` result, the coverage numbers, and the changeset created. Note that the public docs-website page is staged but pending (the site isn't built yet — see the document phase).
