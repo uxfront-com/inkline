@@ -5,8 +5,10 @@ import type { ButtonRecipeProps } from "../../recipes.ts";
 export interface ButtonBaseProps extends Pick<ButtonRecipeProps, "color" | "variant" | "size"> {
   /** Label text; the default slot overrides it. */
   label?: string;
-  /** The native button type. */
+  /** The native button type. A link has none. */
   type?: "button" | "submit" | "reset";
+  /** Renders a link (`<a href>`) that looks like the button, for navigation. */
+  href?: string;
   /** Disables the button and takes it out of the tab order. */
   disabled?: boolean;
   /**
@@ -29,7 +31,10 @@ export interface ButtonBaseProps extends Pick<ButtonRecipeProps, "color" | "vari
   ariaLabel?: string;
   /** Id of the element that describes the button, exposed as `aria-describedby`. */
   ariaDescribedby?: string;
-  /** Whether a toggle button is pressed, exposed as `aria-pressed`. Unset, the button is no toggle. */
+  /**
+   * Whether a toggle button is pressed, exposed as `aria-pressed`. Unset, the button is no toggle.
+   * A link is never a toggle, so it renders none.
+   */
   ariaPressed?: boolean;
   /** Whether the popup the button controls is open, exposed as `aria-expanded`. */
   ariaExpanded?: boolean;
