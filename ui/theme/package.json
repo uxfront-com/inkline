@@ -1,0 +1,42 @@
+{
+  "name": "@inkline/theme",
+  "version": "0.0.0",
+  "description": "The Styleframe recipes that style Inkline's components.",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.ts",
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "./package.json": "./package.json"
+    },
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsdown",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@styleframe/core": "catalog:",
+    "@styleframe/theme": "catalog:",
+    "@styleframe/transpiler": "catalog:",
+    "@vitest/coverage-v8": "catalog:",
+    "culori": "catalog:",
+    "tsdown": "catalog:",
+    "vitest": "catalog:"
+  },
+  "peerDependencies": {
+    "@styleframe/core": "^3.6.1",
+    "@styleframe/theme": "^3.11.0 || ^4.0.0"
+  }
+}

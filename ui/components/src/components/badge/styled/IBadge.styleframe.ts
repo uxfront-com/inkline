@@ -1,5 +1,5 @@
-import { useBadgeRecipe } from "@styleframe/theme";
 import { styleframe } from "virtual:styleframe";
+import { useBadgeRecipe } from "@inkline/theme";
 
 const s = styleframe();
 

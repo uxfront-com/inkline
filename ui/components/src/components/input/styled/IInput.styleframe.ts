@@ -1,5 +1,5 @@
-import { useInputRecipe, useInputPrefixRecipe, useInputSuffixRecipe } from "@styleframe/theme";
 import { styleframe } from "virtual:styleframe";
+import { useInputRecipe, useInputPrefixRecipe, useInputSuffixRecipe } from "@inkline/theme";
 
 const s = styleframe();
 
@@ -16,5 +16,5 @@ export const inputSuffixRecipe = useInputSuffixRecipe(s);
 const { selector } = s;
 
 selector(".input-prefix:empty, .input-suffix:empty", {
-	display: "none",
+  display: "none",
 });

@@ -1,46 +1,47 @@
 {
-	"name": "@inkline/svelte",
-	"version": "0.0.0",
-	"license": "MIT",
-	"files": [
-		"dist"
-	],
-	"type": "module",
-	"sideEffects": false,
-	"exports": {
-		".": "./dist/index.js",
-		"./headless": "./dist/headless.js",
-		"./css": "./dist/index.css",
-		"./package.json": "./package.json"
-	},
-	"publishConfig": {
-		"access": "public"
-	},
-	"scripts": {
-		"build": "vite build"
-	},
-	"dependencies": {
-		"@styleframe/runtime": "catalog:"
-	},
-	"devDependencies": {
-		"@inkline/components": "workspace:*",
-		"@styleframe/cli": "catalog:",
-		"@styleframe/core": "catalog:",
-		"@styleframe/license": "catalog:",
-		"@styleframe/loader": "catalog:",
-		"@styleframe/plugin": "catalog:",
-		"@styleframe/theme": "catalog:",
-		"@styleframe/transpiler": "catalog:",
-		"@sveltejs/vite-plugin-svelte": "catalog:",
-		"@types/node": "catalog:",
-		"jsdom": "catalog:",
-		"styleframe": "catalog:",
-		"svelte": "catalog:",
-		"vite": "catalog:",
-		"vitest": "catalog:"
-	},
-	"peerDependencies": {
-		"svelte": ">=5"
-	},
-	"prepublishOnly": "pnpm run build"
+  "name": "@inkline/svelte",
+  "version": "0.0.0",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./dist/index.js",
+    "./headless": "./dist/headless.js",
+    "./css": "./dist/index.css",
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "vite build"
+  },
+  "dependencies": {
+    "@styleframe/runtime": "catalog:"
+  },
+  "devDependencies": {
+    "@inkline/components": "workspace:*",
+    "@inkline/theme": "workspace:*",
+    "@styleframe/cli": "catalog:",
+    "@styleframe/core": "catalog:",
+    "@styleframe/license": "catalog:",
+    "@styleframe/loader": "catalog:",
+    "@styleframe/plugin": "catalog:",
+    "@styleframe/theme": "catalog:",
+    "@styleframe/transpiler": "catalog:",
+    "@sveltejs/vite-plugin-svelte": "catalog:",
+    "@types/node": "catalog:",
+    "jsdom": "catalog:",
+    "styleframe": "catalog:",
+    "svelte": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:"
+  },
+  "peerDependencies": {
+    "svelte": ">=5"
+  },
+  "prepublishOnly": "pnpm run build"
 }

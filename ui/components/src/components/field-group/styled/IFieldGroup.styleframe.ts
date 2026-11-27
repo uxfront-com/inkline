@@ -1,5 +1,5 @@
-import { useFieldGroupRecipe } from "@styleframe/theme";
 import { styleframe } from "virtual:styleframe";
+import { useFieldGroupRecipe } from "@inkline/theme";
 
 const s = styleframe();
 
@@ -18,20 +18,20 @@ export const fieldGroupRecipe = useFieldGroupRecipe(s);
 const CONTROL = ":where(.button, .input, .select, .textarea)";
 
 s.selector(`.field-group.-vertical > *:not(:last-child) ${CONTROL}`, {
-	borderBottomLeftRadius: "0",
-	borderBottomRightRadius: "0",
-	borderBottomWidth: "0",
+  borderBottomLeftRadius: "0",
+  borderBottomRightRadius: "0",
+  borderBottomWidth: "0",
 });
 s.selector(`.field-group.-vertical > *:not(:first-child) ${CONTROL}`, {
-	borderTopLeftRadius: "0",
-	borderTopRightRadius: "0",
+  borderTopLeftRadius: "0",
+  borderTopRightRadius: "0",
 });
 s.selector(`.field-group.-horizontal > *:not(:last-child) ${CONTROL}`, {
-	borderTopRightRadius: "0",
-	borderBottomRightRadius: "0",
-	borderRightWidth: "0",
+  borderTopRightRadius: "0",
+  borderBottomRightRadius: "0",
+  borderRightWidth: "0",
 });
 s.selector(`.field-group.-horizontal > *:not(:first-child) ${CONTROL}`, {
-	borderTopLeftRadius: "0",
-	borderBottomLeftRadius: "0",
+  borderTopLeftRadius: "0",
+  borderBottomLeftRadius: "0",
 });

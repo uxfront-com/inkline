@@ -43,7 +43,9 @@ apps/docs/
     └── docs/
         ├── 01.getting-started/  # .navigation.yml, 00.index, 01.installation,
         │                        # 02.first-component, 03.theming, 04.framework-support
-        └── 03.components/       # .navigation.yml, 01.button
+        ├── 03.components/       # .navigation.yml, 01.button
+        └── 04.recipes/          # .navigation.yml, 00.index, then one page per
+                                 # @inkline/theme recipe, 01.button to 44.chat-message
 ```
 
 ## Shared and local

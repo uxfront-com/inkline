@@ -1,52 +1,53 @@
 {
-	"name": "@inkline/astro",
-	"version": "0.0.0",
-	"license": "MIT",
-	"files": [
-		"dist"
-	],
-	"type": "module",
-	"sideEffects": false,
-	"exports": {
-		".": {
-			"types": "./dist/index.d.mts",
-			"default": "./dist/index.mjs"
-		},
-		"./headless": {
-			"types": "./dist/headless.d.mts",
-			"default": "./dist/headless.mjs"
-		},
-		"./css": "./dist/index.css",
-		"./package.json": "./package.json"
-	},
-	"publishConfig": {
-		"access": "public"
-	},
-	"scripts": {
-		"build": "vite build && tsdown"
-	},
-	"dependencies": {
-		"@styleframe/runtime": "catalog:"
-	},
-	"devDependencies": {
-		"@inkline/components": "workspace:*",
-		"@styleframe/cli": "catalog:",
-		"@styleframe/core": "catalog:",
-		"@styleframe/license": "catalog:",
-		"@styleframe/loader": "catalog:",
-		"@styleframe/plugin": "catalog:",
-		"@styleframe/theme": "catalog:",
-		"@styleframe/transpiler": "catalog:",
-		"@types/node": "catalog:",
-		"astro": "catalog:",
-		"jsdom": "catalog:",
-		"styleframe": "catalog:",
-		"tsdown": "catalog:",
-		"vite": "catalog:",
-		"vitest": "catalog:"
-	},
-	"peerDependencies": {
-		"astro": "^7"
-	},
-	"prepublishOnly": "pnpm run build"
+  "name": "@inkline/astro",
+  "version": "0.0.0",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "default": "./dist/index.mjs"
+    },
+    "./headless": {
+      "types": "./dist/headless.d.mts",
+      "default": "./dist/headless.mjs"
+    },
+    "./css": "./dist/index.css",
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "vite build && tsdown"
+  },
+  "dependencies": {
+    "@styleframe/runtime": "catalog:"
+  },
+  "devDependencies": {
+    "@inkline/components": "workspace:*",
+    "@inkline/theme": "workspace:*",
+    "@styleframe/cli": "catalog:",
+    "@styleframe/core": "catalog:",
+    "@styleframe/license": "catalog:",
+    "@styleframe/loader": "catalog:",
+    "@styleframe/plugin": "catalog:",
+    "@styleframe/theme": "catalog:",
+    "@styleframe/transpiler": "catalog:",
+    "@types/node": "catalog:",
+    "astro": "catalog:",
+    "jsdom": "catalog:",
+    "styleframe": "catalog:",
+    "tsdown": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:"
+  },
+  "peerDependencies": {
+    "astro": "^7"
+  },
+  "prepublishOnly": "pnpm run build"
 }

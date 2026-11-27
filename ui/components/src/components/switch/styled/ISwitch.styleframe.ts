@@ -1,5 +1,5 @@
-import { useSwitchRecipe, useSwitchFieldRecipe } from "@styleframe/theme";
 import { styleframe } from "virtual:styleframe";
+import { useSwitchRecipe, useSwitchFieldRecipe } from "@inkline/theme";
 
 const s = styleframe();
 
@@ -14,5 +14,5 @@ export const switchFieldRecipe = useSwitchFieldRecipe(s);
 const { selector } = s;
 
 selector(".switch-label:empty", {
-	display: "none",
+  display: "none",
 });
