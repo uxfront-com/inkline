@@ -26,7 +26,7 @@ Peer dependency: `@qwik.dev/core` 2.0.0-rc.5 exactly, the version Unframework ge
 
 ## Build
 
-`vp build --mode lib`. Output goes to `dist/`: `index.qwik.mjs` and `headless.qwik.mjs`. Without `--mode lib`, Qwik's Vite plugin runs an app build, which writes neither entry. Build `@inkline/components` first.
+`vite build --mode lib`. Output goes to `dist/`: `index.qwik.mjs` and `headless.qwik.mjs`. Without `--mode lib`, Qwik's Vite plugin runs an app build, which writes neither entry. Build `@inkline/components` first.
 
 ## Preview
 

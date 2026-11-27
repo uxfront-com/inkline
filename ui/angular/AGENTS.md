@@ -31,7 +31,7 @@ Peer dependency: `@angular/core` 22.
 
 ## Build
 
-`vp build`, with Analog's Angular plugin compiling the components in partial mode ([`tsconfig.lib.json`](./tsconfig.lib.json) sets `compilationMode: "partial"`), as Angular libraries ship. The consuming app's Angular compiler links the declarations. The bundles go to `dist/fesm2022/`, because Analog's optimiser links only paths that match `/fesm20/`. Build `@inkline/components` first.
+`vite build`, with Analog's Angular plugin compiling the components in partial mode ([`tsconfig.lib.json`](./tsconfig.lib.json) sets `compilationMode: "partial"`), as Angular libraries ship. The consuming app's Angular compiler links the declarations. The bundles go to `dist/fesm2022/`, because Analog's optimiser links only paths that match `/fesm20/`. Build `@inkline/components` first.
 
 Two settings keep every component compiled:
 

@@ -5,6 +5,10 @@ Deciders: Project owner · Informed by: internal tracker UXF-162 (delivery RFC +
 Supersedes: [ADR-005](./005-generated-component-authoring-types.md) · Superseded by:
 [ADR-008](./008-authoring-surface-is-inferred-from-options-alone.md) **in part**, then [ADR-012](./012-components-compile-with-unframework.md)
 
+> **Note (2026-11-27).** The commands this record names are given as the tools they ran, because
+> Inkline has since moved to running Oxfmt, OXLint, Vite and Vitest directly, through Turbo (see
+> [`docs/conventions.md`](../conventions.md)). Nothing else in the record has changed.
+
 > **Correction — see [ADR-008](./008-authoring-surface-is-inferred-from-options-alone.md).**
 > Decision 1 below, and the matching phrasing in Context, say the authoring type is derived from
 > `defineComponent`'s options **and setup body**. The setup body contributes nothing to TypeScript
@@ -109,7 +113,7 @@ with no dedupe, so a component declaring `events: { change: {} }` alongside `def
 ### Correction to ADR-005's measurement
 
 ADR-005 records the `core/compiler` fixture type-check baseline as **16**. The correct figure is
-**14**. Reproduced for this record on `af6996e7d` via `core/compiler`'s own `vp check`: _"Found 14
+**14**. Reproduced for this record on `af6996e7d` via `core/compiler`'s own format, lint and type check: _"Found 14
 errors and 2 warnings in 431 files"_ — the 16 was an error+warning total. All ten error-carrying
 fixtures are listed in `core/compiler/typecheck-exclusions.ts`, so ADR-005's substantive claim — the
 repo's real gate is green — stands unchanged. Every fixture delta in this ADR is against **14**.

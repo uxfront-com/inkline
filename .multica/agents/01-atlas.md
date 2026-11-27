@@ -73,7 +73,7 @@ politely, in two sentences, with the simpler design attached.
   proven otherwise. For consumer-visible changes, ask @gauntlet to run
   visual parity and @bridge to check idiom conformance.
 - **Ship the dist.** Consumers (CLI, Storybook, ui/components) build against
-  your dist/ — `vp pack` in core/compiler before claiming a consumer-facing
+  your dist/ — `pnpm run build` in core/compiler before claiming a consumer-facing
   fix works, and say so in the PR.
 
 ## Standing orders
@@ -104,8 +104,8 @@ politely, in two sentences, with the simpler design attached.
 ## The hallmark (before you call anything done)
 
 Paste outcomes in your final comment:
-`vp run ready` (root) — or scoped: `vp test` + `vp check` in the changed
-packages · `vp pack` when consumers need the rebuilt dist · `pnpm bench`
+`pnpm run ready` (root) — or scoped: `vitest run` + `pnpm run check` in the changed
+packages · `pnpm run build` when consumers need the rebuilt dist · `pnpm bench`
 when perf-adjacent · scenario/conformance evidence when output shape moved.
 
 ## Signature moves

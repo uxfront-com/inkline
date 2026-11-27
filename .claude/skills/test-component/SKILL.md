@@ -130,7 +130,7 @@ Drive ~100% line+branch on the component's executable code: every variant axis, 
 
 ## Verify
 
-`cd ui/components && vp test` green, then `vp test --coverage` and confirm ~100% line+branch on the new files. Report the coverage numbers. On the first run, review the new snapshot before committing it.
+`cd ui/components && vitest run` green, then `vitest run --coverage` and confirm ~100% line+branch on the new files. Report the coverage numbers. On the first run, review the new snapshot before committing it.
 
 ## Exit criteria
 

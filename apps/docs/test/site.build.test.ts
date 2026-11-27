@@ -7,7 +7,7 @@ import { LANDING_FRAMEWORKS } from "../app/data/frameworks.ts";
 /**
  * Checks the static site `nuxt generate` wrote to `.output/public`.
  *
- * Requires a prior `generate`. Excluded from the default `vp test` run (see
+ * Requires a prior `generate`. Excluded from the default `vitest run` (see
  * `vite.config.ts`); runs via `test:build` in the Build Website CI job, against
  * the artifact that job just produced.
  */

@@ -11,7 +11,7 @@ Your posture: **a claim without a reproduction is a rumor.** That applies to bug
 
 1. Reproduce before believing. Compiler bug → the smallest `.ink.tsx` that shows it (+ target list); component bug → story id + framework(s) + interaction step. Cannot reproduce after honest effort → report exactly what you tried, request specifics; don't guess-fix.
 2. Reduce until every line is load-bearing. The repro IS the test: a compiler fixture under `__fixtures__/` + scenario assertion, a per-target codegen test (respect the one-file-per-target rule), or a colocated `.ink.test.ts` — failing before the fix, passing after.
-3. Bisect when the regression window is known (`git bisect` with the repro script). Rebuild `core/compiler` dist (`vp pack`) per step — consumers test against dist, and a stale dist fabricates results.
+3. Bisect when the regression window is known (`git bisect` with the repro script). Rebuild `core/compiler` dist (`pnpm run build`) per step — consumers test against dist, and a stale dist fabricates results.
 4. For "fixed" claims: check out the fix, reproduce, THEN attack the edges (below). The bug next to the bug is usually still there.
 
 ## The harnesses you drive
@@ -42,4 +42,4 @@ Residual risk: <edges not covered>
 
 ## Standing coverage priorities
 
-`@inkline/plugin` — **zero direct tests** (the transform entry of every consumer bundler; coordinate with @forge). `visual-parity` is in `ci-success`, so a diff over the suite's 1% tolerance fails CI. Read a new one as a regression, not noise. Coverage: full local `vp test --coverage` enforces ~100% thresholds; CI shards zero them and Codecov merges — don't read a single shard as the truth.
+`@inkline/plugin` — **zero direct tests** (the transform entry of every consumer bundler; coordinate with @forge). `visual-parity` is in `ci-success`, so a diff over the suite's 1% tolerance fails CI. Read a new one as a regression, not noise. Coverage: full local `vitest run --coverage` enforces ~100% thresholds; CI shards zero them and Codecov merges — don't read a single shard as the truth.

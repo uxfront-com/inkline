@@ -4,6 +4,10 @@ Date: 2026-11-19 · Status: Accepted
 Deciders: Project owner
 Supersedes: [ADR-012](./012-components-compile-with-unframework.md) **in part**: the check in its Decision 5, only · Superseded by: none
 
+> **Note (2026-11-27).** The commands this record names are given as the tools they ran, because
+> Inkline has since moved to running Oxfmt, OXLint, Vite and Vitest directly, through Turbo (see
+> [`docs/conventions.md`](../conventions.md)). Nothing else in the record has changed.
+
 ## Context
 
 [ADR-012](./012-components-compile-with-unframework.md) Decision 5 says:
@@ -12,7 +16,7 @@ Supersedes: [ADR-012](./012-components-compile-with-unframework.md) **in part**:
 
 So each of the seven `ui/<framework>` packages had a `test/api.test.ts` that rebuilt its report, in a child process, and compared it with `api.json`. Those tests ran inside CI's Unit Tests job, which splits the suite into two shards and turns on coverage. Two things went wrong with that:
 
-- **CI's flags never reached the tests.** CI ran `pnpm run test -- --coverage --shard=<n>/2 …`, and each `ui/<framework>` package's script was `vp test --passWithNoTests`. Vitest ignores what follows a `--` that isn't its first argument, so these packages got no coverage, and every one of their test files ran in both shards.
+- **CI's flags never reached the tests.** CI ran `pnpm run test -- --coverage --shard=<n>/2 …`, and each `ui/<framework>` package's script ran Vitest with `--passWithNoTests`. Vitest ignores what follows a `--` that isn't its first argument, so these packages got no coverage, and every one of their test files ran in both shards.
 - **The check was shaped around the shards.** A report is one comparison of the whole package's build, not a unit of it, so splitting it across shards had nothing to gain. The tests ran it in a child process to keep it out of V8 coverage, which CI never collected for these packages, and gave it a 30 s timeout because it shared a runner with other packages' tests.
 
 Libraries usually check an API report once per CI run, in a step of its own that fails when the committed report differs from the build and names the command that updates it, like `api-extractor run` and `api-extractor run --local`.
