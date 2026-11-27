@@ -12,7 +12,7 @@ Repo-wide conventions for code, tests, files, and commits. This document is a po
 | Task runner             | Turbo                     | root [`turbo.json`](../turbo.json)                                                                                          |
 | Build / dev / test      | Vite, Vitest, tsdown      | per-package [`vite.config.ts`](../ui/react/vite.config.ts), and [`tsdown.config.ts`](../ui/astro/tsdown.config.ts) on Astro |
 | Linter                  | OXLint (`pnpm run lint`)  | root [`oxlint.config.ts`](../oxlint.config.ts), which extends `@uxfront/oxlint-config/vue`                                  |
-| Formatter               | Oxfmt (`pnpm run format`) | root [`oxfmt.config.ts`](../oxfmt.config.ts)                                                                                |
+| Formatter               | Oxfmt (`pnpm run format`) | root [`oxfmt.config.ts`](../oxfmt.config.ts), which spreads `@uxfront/oxfmt-config`                                         |
 | Type checker            | `pnpm run typecheck`      | root [`tsconfig.json`](../tsconfig.json) + per-package extensions — never bare `tsc` from the root                          |
 | Test runner             | Vitest                    | per-package `vite.config.ts` `test` section                                                                                 |
 | Versioning / publishing | Changesets                | [`.changeset/config.json`](../.changeset/config.json) — see [release-process.md](./release-process.md)                      |

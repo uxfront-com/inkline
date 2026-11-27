@@ -1,0 +1,20 @@
+# Shared whitespace rules for every uxfront-com repository.
+# The canonical copy is .editorconfig in uxfront-com/.github. Change it there, then copy it.
+# It matches @uxfront/oxfmt-config: tabs, with no fixed width, so each reader picks their own.
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+indent_style = tab
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# YAML forbids tabs for indentation.
+[*.{yml,yaml}]
+indent_style = space
+indent_size = 2
+
+# Two trailing spaces are a line break in Markdown, so keep them.
+[*.md]
+trim_trailing_whitespace = false
