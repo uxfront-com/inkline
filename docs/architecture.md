@@ -28,6 +28,7 @@ The components' outputs import `virtual:styleframe` as written. Unframework pass
 | ------------------------------------------------------ | ---------------------------------------------------------------------------------- |
 | `@inkline/components` (private)                        | The `.uf.tsx` sources, their recipes, tests and examples                           |
 | `@inkline/{react,vue,svelte,solid,angular,qwik,astro}` | The published packages, built from Unframework's output                            |
+| `@inkline/theme`                                       | The Styleframe recipes the components' `*.styleframe.ts` files call                |
 | `@inkline/toolchain-angular` (private)                 | Angular's compiler stack on TypeScript 6, where the test and preview tools load it |
 | `@inkline/agents-check` (private)                      | Checks that every relative link in the contributor docs resolves                   |
 | `website` (`apps/docs`)                                | The documentation site                                                             |

@@ -25,7 +25,8 @@ Turbo runs `build`, `dev` and `test` in every package ([`turbo.json`](./turbo.js
 ```
 tooling/     @inkline/agents-check (docs link-integrity test),
              @inkline/toolchain-angular (Angular's stack for Unframework's tools)
-ui/          @inkline/components (single source of truth) + 7 framework output packages
+ui/          @inkline/components (single source of truth) + 7 framework output packages,
+             @inkline/theme (ui/theme: the component recipes)
 apps/        docs (the docs site)
 docs/        architecture, conventions, contributing, release-process, authoring, maintenance
 docs/adrs/   architecture decision records — why the codebase is the way it is
@@ -45,6 +46,7 @@ Per package — descend to the `AGENTS.md` nearest the file you're editing (LLM 
 | [`tooling/toolchain-angular/AGENTS.md`](./tooling/toolchain-angular/AGENTS.md) | Angular's compiler stack, on TypeScript 6, for `unframework test`, `visual` and `preview` |
 | [`ui/components/AGENTS.md`](./ui/components/AGENTS.md)                         | **Where you author components** — the single source for all 7 frameworks                  |
 | [`ui/react/AGENTS.md`](./ui/react/AGENTS.md) and the six siblings              | Per-framework packages, built from Unframework's output                                   |
+| [`ui/theme/AGENTS.md`](./ui/theme/AGENTS.md)                                   | The Styleframe recipes the components use, moved from `@styleframe/theme`                 |
 | [`apps/docs/AGENTS.md`](./apps/docs/AGENTS.md)                                 | The docs site                                                                             |
 
 Per topic — read the relevant `docs/`:
@@ -63,7 +65,7 @@ Per topic — read the relevant `docs/`:
 
 These apply everywhere. Package-level `AGENTS.md` files repeat them only when consequential.
 
-- **Tooling**: pnpm 11, Node ≥24, Turbo for the tasks, Vite and Vitest in each package, tsdown for Astro. OXLint via `pnpm run lint`, Oxfmt via `pnpm run format`. **Not ESLint, not Prettier.**
+- **Tooling**: pnpm 11, Node ≥24, Turbo for the tasks, Vite and Vitest in each package, tsdown for Astro and `@inkline/theme`. OXLint via `pnpm run lint`, Oxfmt via `pnpm run format`. **Not ESLint, not Prettier.**
 - **Tests**: colocated as `<file>.test.ts`. Vitest. Never in a separate `tests/` folder, with two exceptions: the component cases in `ui/components/test/`, since Unframework compiles every `.uf.tsx` under `src/`, and each framework package's API report in `ui/<framework>/test/`.
 - **Commits**: conventional commits with package scope — `feat(components): …`, `fix(ci): …`. See [docs/conventions.md](./docs/conventions.md) → "Commit messages".
 - **Changesets**: every change to a published package needs one (`pnpm changeset`). See [docs/release-process.md](./docs/release-process.md).

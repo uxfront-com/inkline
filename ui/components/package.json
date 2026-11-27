@@ -31,6 +31,7 @@
     "@angular/platform-browser": "catalog:",
     "@angular/platform-server": "catalog:",
     "@babel/core": "catalog:",
+    "@inkline/theme": "workspace:*",
     "@qwik.dev/core": "catalog:",
     "@styleframe/cli": "catalog:",
     "@styleframe/core": "catalog:",

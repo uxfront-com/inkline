@@ -1,5 +1,5 @@
 import { styleframe } from "virtual:styleframe";
-import { useRadioGroupRecipe, useRadioRecipe, useRadioFieldRecipe } from "@styleframe/theme";
+import { useRadioGroupRecipe, useRadioRecipe, useRadioFieldRecipe } from "@inkline/theme";
 
 const s = styleframe();
 

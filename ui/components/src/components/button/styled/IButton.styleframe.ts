@@ -1,5 +1,5 @@
 import { styleframe } from "virtual:styleframe";
-import { useButtonRecipe, useSpinnerCircleRecipe, useSpinnerRecipe } from "@styleframe/theme";
+import { useButtonRecipe, useSpinnerCircleRecipe, useSpinnerRecipe } from "@inkline/theme";
 
 const s = styleframe();
 

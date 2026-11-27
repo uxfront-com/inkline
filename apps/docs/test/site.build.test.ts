@@ -288,8 +288,11 @@ describe("the sitemap", () => {
         .map((file) => `/${file.replace(/\.html$/, "")}`),
     ];
     expect([...locs].sort()).toEqual(expected.sort());
-    // `/`, six pages under each of the seven frameworks, and the seven landing pages.
-    expect(locs).toHaveLength(50);
+    // `/`, the seven landing pages, the six Getting started and Components pages
+    // under each of the seven frameworks, and the 45 recipe pages: the index and
+    // Chat Message under all seven, and the 43 with Vue and React examples only
+    // under those two, since the other copies are noindex.
+    expect(locs).toHaveLength(150);
   });
 
   // Each `<url>` is dated by the last commit that changed its source, or the
@@ -298,7 +301,7 @@ describe("the sitemap", () => {
     const urls = [...read("sitemap.xml").matchAll(/<url>([\s\S]*?)<\/url>/g)].map(
       (match) => match[1]!,
     );
-    expect(urls).toHaveLength(50);
+    expect(urls).toHaveLength(150);
     for (const url of urls) {
       expect(url.match(/<lastmod>([^<]*)<\/lastmod>/)?.[1]).toMatch(/^\d{4}-\d{2}-\d{2}$/);
     }
