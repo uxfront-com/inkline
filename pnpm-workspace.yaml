@@ -73,6 +73,7 @@ catalog:
   "@vueuse/core": ^15.0.0
   astro: ^7.4.11
   babel-plugin-react-compiler: ^1.0.0
+  culori: ^4.0.2
   docus: ^5.13.0
   jsdom: ^29.1.1
   oxfmt: 0.52.0

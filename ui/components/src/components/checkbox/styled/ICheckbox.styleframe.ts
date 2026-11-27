@@ -1,5 +1,5 @@
 import { styleframe } from "virtual:styleframe";
-import { useCheckboxRecipe, useCheckboxFieldRecipe } from "@styleframe/theme";
+import { useCheckboxRecipe, useCheckboxFieldRecipe } from "@inkline/theme";
 
 const s = styleframe();
 
