@@ -18,79 +18,79 @@ import { createUseRecipe } from "@styleframe/theme";
  * `setup` callback.
  */
 export const useCheckboxRecipe = createUseRecipe(
-  "checkbox",
-  {
-    base: {
-      position: "relative",
-      display: "inline-flex",
-      alignItems: "flex-start",
-      cursor: "pointer",
-      userSelect: "none",
-      color: "@color.text",
-      lineHeight: "@line-height.normal",
-      "&:before": {
-        position: "absolute",
-        width: "1.5rem",
-        height: "1.5rem",
-      },
-    },
-    variants: {
-      size: {
-        sm: {
-          gap: "@0.375",
-          fontSize: "@font-size.xs",
-          paddingBlock: "max(0px, calc((1.5rem - @font-size.xs * @line-height.normal) / 2))",
-          "&:before": {
-            top: "max(0px, calc((@font-size.xs * @line-height.normal - 1.5rem) / 2))",
-            insetInlineStart: "calc((0.875rem - 1.5rem) / 2)",
-          },
-        },
-        md: {
-          gap: "@0.5",
-          fontSize: "@font-size.sm",
-          paddingBlock: "max(0px, calc((1.5rem - @font-size.sm * @line-height.normal) / 2))",
-          "&:before": {
-            top: "max(0px, calc((@font-size.sm * @line-height.normal - 1.5rem) / 2))",
-            insetInlineStart: "calc((1rem - 1.5rem) / 2)",
-          },
-        },
-        lg: {
-          gap: "@0.625",
-          fontSize: "@font-size.md",
-          paddingBlock: "max(0px, calc((1.5rem - @font-size.md * @line-height.normal) / 2))",
-          "&:before": {
-            top: "max(0px, calc((@font-size.md * @line-height.normal - 1.5rem) / 2))",
-            insetInlineStart: "calc((1.25rem - 1.5rem) / 2)",
-          },
-        },
-      },
-    },
-    defaultVariants: {
-      size: "md",
-    },
-  },
-  (s) => {
-    const { selector } = s;
+	"checkbox",
+	{
+		base: {
+			position: "relative",
+			display: "inline-flex",
+			alignItems: "flex-start",
+			cursor: "pointer",
+			userSelect: "none",
+			color: "@color.text",
+			lineHeight: "@line-height.normal",
+			"&:before": {
+				position: "absolute",
+				width: "1.5rem",
+				height: "1.5rem",
+			},
+		},
+		variants: {
+			size: {
+				sm: {
+					gap: "@0.375",
+					fontSize: "@font-size.xs",
+					paddingBlock: "max(0px, calc((1.5rem - @font-size.xs * @line-height.normal) / 2))",
+					"&:before": {
+						top: "max(0px, calc((@font-size.xs * @line-height.normal - 1.5rem) / 2))",
+						insetInlineStart: "calc((0.875rem - 1.5rem) / 2)",
+					},
+				},
+				md: {
+					gap: "@0.5",
+					fontSize: "@font-size.sm",
+					paddingBlock: "max(0px, calc((1.5rem - @font-size.sm * @line-height.normal) / 2))",
+					"&:before": {
+						top: "max(0px, calc((@font-size.sm * @line-height.normal - 1.5rem) / 2))",
+						insetInlineStart: "calc((1rem - 1.5rem) / 2)",
+					},
+				},
+				lg: {
+					gap: "@0.625",
+					fontSize: "@font-size.md",
+					paddingBlock: "max(0px, calc((1.5rem - @font-size.md * @line-height.normal) / 2))",
+					"&:before": {
+						top: "max(0px, calc((@font-size.md * @line-height.normal - 1.5rem) / 2))",
+						insetInlineStart: "calc((1.25rem - 1.5rem) / 2)",
+					},
+				},
+			},
+		},
+		defaultVariants: {
+			size: "md",
+		},
+	},
+	(s) => {
+		const { selector } = s;
 
-    // Dim the label when the nested field is disabled, `<fieldset disabled>`
-    // included. Forced colors mode marks it with `GrayText` instead.
-    selector(".checkbox:has(.checkbox-field:disabled)", {
-      opacity: "0.5",
-      cursor: "not-allowed",
-      "@media (forced-colors: active)": {
-        opacity: "1",
-        color: "GrayText",
-      },
-    });
+		// Dim the label when the nested field is disabled, `<fieldset disabled>`
+		// included. Forced colors mode marks it with `GrayText` instead.
+		selector(".checkbox:has(.checkbox-field:disabled)", {
+			opacity: "0.5",
+			cursor: "not-allowed",
+			"@media (forced-colors: active)": {
+				opacity: "1",
+				color: "GrayText",
+			},
+		});
 
-    // The label already dims the box, so the box doesn't dim twice.
-    selector(".checkbox .checkbox-field:disabled", {
-      opacity: "1",
-    });
+		// The label already dims the box, so the box doesn't dim twice.
+		selector(".checkbox .checkbox-field:disabled", {
+			opacity: "1",
+		});
 
-    // A read-only box can't be toggled, so its label doesn't invite a press.
-    selector('.checkbox:has(.checkbox-field[aria-readonly="true"])', {
-      cursor: "default",
-    });
-  },
+		// A read-only box can't be toggled, so its label doesn't invite a press.
+		selector('.checkbox:has(.checkbox-field[aria-readonly="true"])', {
+			cursor: "default",
+		});
+	},
 );

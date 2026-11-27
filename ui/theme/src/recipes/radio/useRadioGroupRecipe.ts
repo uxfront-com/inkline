@@ -20,75 +20,75 @@ import { createUseRecipe } from "@styleframe/theme";
  * before anyone has answered it.
  */
 export const useRadioGroupRecipe = createUseRecipe(
-  "radio-group",
-  {
-    base: {
-      display: "flex",
-      minWidth: "0",
-      margin: "0",
-      padding: "0",
-      borderWidth: "0",
-      color: "@color.text",
-    },
-    variants: {
-      orientation: {
-        vertical: {
-          flexDirection: "column",
-        },
-        horizontal: {
-          flexDirection: "row",
-          flexWrap: "wrap",
-          alignItems: "center",
-        },
-      },
-      size: {
-        sm: {
-          gap: "@0.5",
-        },
-        md: {
-          gap: "@0.75",
-        },
-        lg: {
-          gap: "@1",
-        },
-      },
-    },
-    defaultVariants: {
-      orientation: "vertical",
-      size: "md",
-    },
-  },
-  (s) => {
-    const { selector } = s;
+	"radio-group",
+	{
+		base: {
+			display: "flex",
+			minWidth: "0",
+			margin: "0",
+			padding: "0",
+			borderWidth: "0",
+			color: "@color.text",
+		},
+		variants: {
+			orientation: {
+				vertical: {
+					flexDirection: "column",
+				},
+				horizontal: {
+					flexDirection: "row",
+					flexWrap: "wrap",
+					alignItems: "center",
+				},
+			},
+			size: {
+				sm: {
+					gap: "@0.5",
+				},
+				md: {
+					gap: "@0.75",
+				},
+				lg: {
+					gap: "@1",
+				},
+			},
+		},
+		defaultVariants: {
+			orientation: "vertical",
+			size: "md",
+		},
+	},
+	(s) => {
+		const { selector } = s;
 
-    selector(".radio-group > legend", {
-      padding: "0",
-      marginBlockEnd: "@spacing.xs",
-      fontSize: "@font-size.sm",
-      fontWeight: "@font-weight.medium",
-      color: "@color.text",
-    });
+		selector(".radio-group > legend", {
+			padding: "0",
+			marginBlockEnd: "@spacing.xs",
+			fontSize: "@font-size.sm",
+			fontWeight: "@font-weight.medium",
+			color: "@color.text",
+		});
 
-    selector('.radio-group > [data-slot="hint"], .radio-group > [data-slot="error"]', {
-      flexBasis: "100%",
-      margin: "0",
-      fontSize: "@font-size.sm",
-    });
+		selector('.radio-group > [data-slot="hint"], .radio-group > [data-slot="error"]', {
+			flexBasis: "100%",
+			margin: "0",
+			fontSize: "@font-size.sm",
+		});
 
-    selector('.radio-group > [data-slot="hint"]', {
-      color: "@color.text-weak",
-    });
+		selector('.radio-group > [data-slot="hint"]', {
+			color: "@color.text-weak",
+		});
 
-    selector('.radio-group > [data-slot="error"]', {
-      color: "@color.error",
-      ':is(.dark-theme, [data-theme="dark"]) &': {
-        color: "@color.error-400",
-      },
-    });
+		selector('.radio-group > [data-slot="error"]', {
+			color: "@color.error",
+			':is(.dark-theme, [data-theme="dark"]) &': {
+				color: "@color.error-400",
+			},
+		});
 
-    selector('.radio-group[aria-invalid="true"] .radio > .radio-field', {
-      borderColor: "@color.error",
-      boxShadow: "inset 0 0 0 1px @color.error",
-    });
-  },
+		selector('.radio-group[aria-invalid="true"] .radio > .radio-field', {
+			borderColor: "@color.error",
+			boxShadow: "inset 0 0 0 1px @color.error",
+		});
+	},
 );

@@ -13,20 +13,20 @@ import { createUseRecipe } from "@styleframe/theme";
  * at each size. Defaults to `md` to match the toast.
  */
 export const useToastDescriptionRecipe = createUseRecipe("toast-description", {
-  base: {
-    display: "block",
-    marginTop: "@0.25",
-    fontWeight: "@font-weight.normal",
-    lineHeight: "@line-height.normal",
-  },
-  variants: {
-    size: {
-      sm: { fontSize: "@font-size.xs" },
-      md: { fontSize: "@font-size.sm" },
-      lg: { fontSize: "@font-size.md" },
-    },
-  },
-  defaultVariants: {
-    size: "md",
-  },
+	base: {
+		display: "block",
+		marginTop: "@0.25",
+		fontWeight: "@font-weight.normal",
+		lineHeight: "@line-height.normal",
+	},
+	variants: {
+		size: {
+			sm: { fontSize: "@font-size.xs" },
+			md: { fontSize: "@font-size.sm" },
+			lg: { fontSize: "@font-size.md" },
+		},
+	},
+	defaultVariants: {
+		size: "md",
+	},
 });

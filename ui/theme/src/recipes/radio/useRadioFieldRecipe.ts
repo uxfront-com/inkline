@@ -34,136 +34,136 @@ import { createUseRecipe } from "@styleframe/theme";
  * colours, with a `Highlight` focus ring.
  */
 const dotImage =
-  "url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'%3E%3Ccircle cx='8' cy='8' r='3'/%3E%3C/svg%3E\")";
+	"url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='white'%3E%3Ccircle cx='8' cy='8' r='3'/%3E%3C/svg%3E\")";
 
 export const useRadioFieldRecipe = createUseRecipe(
-  "radio-field",
-  {
-    base: {
-      appearance: "none",
-      WebkitAppearance: "none",
-      boxSizing: "border-box",
-      display: "inline-block",
-      flexShrink: "0",
-      margin: "0",
-      borderWidth: "@border-width.thin",
-      borderStyle: "@border-style.solid",
-      cursor: "pointer",
-      backgroundRepeat: "no-repeat",
-      backgroundPosition: "center",
-      backgroundSize: "contain",
-      transitionProperty: "color, background-color, border-color",
-      transitionDuration: "150ms",
-      transitionTimingFunction: "@easing.ease-in-out",
-      "&:checked": {
-        backgroundColor: "@color.primary",
-        borderColor: "@color.primary",
-        backgroundImage: dotImage,
-      },
-      "&:focus-visible": {
-        outlineWidth: "2px",
-        outlineStyle: "solid",
-        outlineColor: "@color.focus",
-        outlineOffset: "2px",
-      },
-      "&:disabled": {
-        opacity: "0.5",
-        cursor: "not-allowed",
-      },
-      "&:forced-colors": {
-        appearance: "auto",
-        WebkitAppearance: "auto",
-      },
-      "&:forced-colors:checked": {
-        backgroundImage: "none",
-      },
-      "&:forced-colors:focus-visible": {
-        outlineColor: "Highlight",
-      },
-      "&:forced-colors:disabled": {
-        opacity: "1",
-      },
-    },
-    variants: {
-      color: {
-        light: {},
-        dark: {},
-        neutral: {},
-      },
-      size: {
-        sm: {
-          width: "0.875rem",
-          height: "0.875rem",
-          borderRadius: "@border-radius.full",
-        },
-        md: {
-          width: "1rem",
-          height: "1rem",
-          borderRadius: "@border-radius.full",
-        },
-        lg: {
-          width: "1.25rem",
-          height: "1.25rem",
-          borderRadius: "@border-radius.full",
-        },
-      },
-    },
-    compoundVariants: [
-      // Light surface — fixed across themes. The base `&:checked` fill
-      // out-specifies this unchecked rule in every mode, so no dark override.
-      {
-        match: { color: "light" as const },
-        css: {
-          backgroundColor: "@color.white",
-          borderColor: "@color.gray-450",
-          color: "@color.gray-900",
-        },
-      },
-      // Dark surface — fixed across themes.
-      {
-        match: { color: "dark" as const },
-        css: {
-          backgroundColor: "@color.gray-900",
-          borderColor: "@color.gray-500",
-          color: "@color.white",
-        },
-      },
-      // Neutral surface — adaptive. The `&:dark` unchecked rule gains
-      // attribute-selector specificity, so the checked fill is re-asserted
-      // under `&:dark:checked` to keep winning.
-      {
-        match: { color: "neutral" as const },
-        css: {
-          backgroundColor: "@color.white",
-          borderColor: "@color.gray-450",
-          color: "@color.gray-900",
-          "&:dark": {
-            backgroundColor: "@color.gray-900",
-            borderColor: "@color.gray-500",
-            color: "@color.white",
-          },
-          "&:dark:checked": {
-            backgroundColor: "@color.primary",
-            borderColor: "@color.primary",
-          },
-        },
-      },
-    ],
-    defaultVariants: {
-      color: "neutral",
-      size: "md",
-    },
-  },
-  (s) => {
-    const { selector } = s;
+	"radio-field",
+	{
+		base: {
+			appearance: "none",
+			WebkitAppearance: "none",
+			boxSizing: "border-box",
+			display: "inline-block",
+			flexShrink: "0",
+			margin: "0",
+			borderWidth: "@border-width.thin",
+			borderStyle: "@border-style.solid",
+			cursor: "pointer",
+			backgroundRepeat: "no-repeat",
+			backgroundPosition: "center",
+			backgroundSize: "contain",
+			transitionProperty: "color, background-color, border-color",
+			transitionDuration: "150ms",
+			transitionTimingFunction: "@easing.ease-in-out",
+			"&:checked": {
+				backgroundColor: "@color.primary",
+				borderColor: "@color.primary",
+				backgroundImage: dotImage,
+			},
+			"&:focus-visible": {
+				outlineWidth: "2px",
+				outlineStyle: "solid",
+				outlineColor: "@color.focus",
+				outlineOffset: "2px",
+			},
+			"&:disabled": {
+				opacity: "0.5",
+				cursor: "not-allowed",
+			},
+			"&:forced-colors": {
+				appearance: "auto",
+				WebkitAppearance: "auto",
+			},
+			"&:forced-colors:checked": {
+				backgroundImage: "none",
+			},
+			"&:forced-colors:focus-visible": {
+				outlineColor: "Highlight",
+			},
+			"&:forced-colors:disabled": {
+				opacity: "1",
+			},
+		},
+		variants: {
+			color: {
+				light: {},
+				dark: {},
+				neutral: {},
+			},
+			size: {
+				sm: {
+					width: "0.875rem",
+					height: "0.875rem",
+					borderRadius: "@border-radius.full",
+				},
+				md: {
+					width: "1rem",
+					height: "1rem",
+					borderRadius: "@border-radius.full",
+				},
+				lg: {
+					width: "1.25rem",
+					height: "1.25rem",
+					borderRadius: "@border-radius.full",
+				},
+			},
+		},
+		compoundVariants: [
+			// Light surface — fixed across themes. The base `&:checked` fill
+			// out-specifies this unchecked rule in every mode, so no dark override.
+			{
+				match: { color: "light" as const },
+				css: {
+					backgroundColor: "@color.white",
+					borderColor: "@color.gray-450",
+					color: "@color.gray-900",
+				},
+			},
+			// Dark surface — fixed across themes.
+			{
+				match: { color: "dark" as const },
+				css: {
+					backgroundColor: "@color.gray-900",
+					borderColor: "@color.gray-500",
+					color: "@color.white",
+				},
+			},
+			// Neutral surface — adaptive. The `&:dark` unchecked rule gains
+			// attribute-selector specificity, so the checked fill is re-asserted
+			// under `&:dark:checked` to keep winning.
+			{
+				match: { color: "neutral" as const },
+				css: {
+					backgroundColor: "@color.white",
+					borderColor: "@color.gray-450",
+					color: "@color.gray-900",
+					"&:dark": {
+						backgroundColor: "@color.gray-900",
+						borderColor: "@color.gray-500",
+						color: "@color.white",
+					},
+					"&:dark:checked": {
+						backgroundColor: "@color.primary",
+						borderColor: "@color.primary",
+					},
+				},
+			},
+		],
+		defaultVariants: {
+			color: "neutral",
+			size: "md",
+		},
+	},
+	(s) => {
+		const { selector } = s;
 
-    // With more contrast, both ring grays resolve to the field's color, so
-    // every unchecked ring is drawn at full strength.
-    selector(".radio-field", ({ media }) => {
-      media("(prefers-contrast: more)", ({ variable }) => {
-        variable("color.gray-450", "currentColor", { default: true });
-        variable("color.gray-500", "currentColor", { default: true });
-      });
-    });
-  },
+		// With more contrast, both ring grays resolve to the field's color, so
+		// every unchecked ring is drawn at full strength.
+		selector(".radio-field", ({ media }) => {
+			media("(prefers-contrast: more)", ({ variable }) => {
+				variable("color.gray-450", "currentColor", { default: true });
+				variable("color.gray-500", "currentColor", { default: true });
+			});
+		});
+	},
 );

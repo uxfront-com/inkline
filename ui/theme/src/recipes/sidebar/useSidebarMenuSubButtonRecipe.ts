@@ -6,4 +6,4 @@ import { createSidebarMenuButtonRecipe } from "./createSidebarRecipe";
  * indentation and guide line of the parent `.sidebar-menu-sub` provide the visual nesting.
  */
 export const useSidebarMenuSubButtonRecipe =
-  createSidebarMenuButtonRecipe("sidebar-menu-sub-button");
+	createSidebarMenuButtonRecipe("sidebar-menu-sub-button");

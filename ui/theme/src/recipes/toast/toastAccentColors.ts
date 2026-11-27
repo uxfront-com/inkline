@@ -11,22 +11,22 @@
  * outline variant, so the accent vocabulary stays consistent across the family.
  */
 export const toastAccentColorVariants = {
-  primary: { color: "@color.primary" },
-  secondary: { color: "@color.secondary" },
-  success: { color: "@color.success" },
-  info: { color: "@color.info" },
-  warning: { color: "@color.warning" },
-  error: { color: "@color.error" },
-  light: {
-    color: "@color.text-inverted",
-    "&:dark": { color: "@color.text" },
-  },
-  dark: {
-    color: "@color.text",
-    "&:dark": { color: "@color.text-inverted" },
-  },
-  neutral: {
-    color: "@color.text",
-    "&:dark": { color: "@color.gray-200" },
-  },
+	primary: { color: "@color.primary" },
+	secondary: { color: "@color.secondary" },
+	success: { color: "@color.success" },
+	info: { color: "@color.info" },
+	warning: { color: "@color.warning" },
+	error: { color: "@color.error" },
+	light: {
+		color: "@color.text-inverted",
+		"&:dark": { color: "@color.text" },
+	},
+	dark: {
+		color: "@color.text",
+		"&:dark": { color: "@color.text-inverted" },
+	},
+	neutral: {
+		color: "@color.text",
+		"&:dark": { color: "@color.gray-200" },
+	},
 } as const;

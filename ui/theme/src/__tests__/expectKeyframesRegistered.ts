@@ -16,11 +16,11 @@ import { expect } from "vitest";
  * Returns the matched at-rule so callers can further assert its steps.
  */
 export function expectKeyframesRegistered(s: Styleframe, name: string): AtRule {
-  const keyframes = s.root.children.filter(
-    (child): child is AtRule => child.type === "at-rule" && child.identifier === "keyframes",
-  );
+	const keyframes = s.root.children.filter(
+		(child): child is AtRule => child.type === "at-rule" && child.identifier === "keyframes",
+	);
 
-  expect(keyframes.map((rule) => rule.rule)).toContain(name);
+	expect(keyframes.map((rule) => rule.rule)).toContain(name);
 
-  return keyframes.find((rule) => rule.rule === name) as AtRule;
+	return keyframes.find((rule) => rule.rule === name) as AtRule;
 }

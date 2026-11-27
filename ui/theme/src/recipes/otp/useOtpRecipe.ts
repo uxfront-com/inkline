@@ -10,24 +10,24 @@ import { createUseRecipe } from "@styleframe/theme";
  * (`useOtpCellRecipe`); this recipe carries no color or variant axis.
  */
 export const useOtpRecipe = createUseRecipe("otp", {
-  base: {
-    display: "inline-flex",
-    alignItems: "center",
-  },
-  variants: {
-    size: {
-      sm: {
-        gap: "@0.5",
-      },
-      md: {
-        gap: "@0.75",
-      },
-      lg: {
-        gap: "@1",
-      },
-    },
-  },
-  defaultVariants: {
-    size: "md",
-  },
+	base: {
+		display: "inline-flex",
+		alignItems: "center",
+	},
+	variants: {
+		size: {
+			sm: {
+				gap: "@0.5",
+			},
+			md: {
+				gap: "@0.75",
+			},
+			lg: {
+				gap: "@1",
+			},
+		},
+	},
+	defaultVariants: {
+		size: "md",
+	},
 });

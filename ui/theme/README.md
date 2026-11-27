@@ -17,9 +17,9 @@ pnpm add -D @inkline/theme @styleframe/theme @styleframe/core
 Call a recipe on your instance, after the presets that define the tokens it reads:
 
 ```ts
-import { styleframe } from "styleframe";
-import { useDesignTokensPreset, useModifiersPreset, useUtilitiesPreset } from "@styleframe/theme";
 import { useButtonRecipe } from "@inkline/theme";
+import { useDesignTokensPreset, useModifiersPreset, useUtilitiesPreset } from "@styleframe/theme";
+import { styleframe } from "styleframe";
 
 const s = styleframe();
 

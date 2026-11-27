@@ -1,4 +1,5 @@
 import { createUseRecipe } from "@styleframe/theme";
+
 import { toastAccentColorVariants } from "./toastAccentColors";
 
 /**
@@ -19,32 +20,32 @@ import { toastAccentColorVariants } from "./toastAccentColors";
  * currentColor` paints the bar in that accent at full opacity.
  */
 export const useToastProgressRecipe = createUseRecipe(
-  "toast-progress",
-  {
-    base: {
-      position: "absolute",
-      bottom: "0",
-      left: "0",
-      right: "0",
-      height: "@spacing.2xs",
-      transformOrigin: "left center",
-      background: "currentColor",
-      borderRadius: "@border-radius.full",
-      animationName: "toast-progress",
-      animationDuration: "var(--toast-duration, 5s)",
-      animationTimingFunction: "linear",
-    },
-    variants: {
-      color: toastAccentColorVariants,
-    },
-    defaultVariants: {
-      color: "neutral",
-    },
-  },
-  (s) => {
-    s.keyframes("toast-progress", {
-      "0%": { transform: "scaleX(1)" },
-      "100%": { transform: "scaleX(0)" },
-    });
-  },
+	"toast-progress",
+	{
+		base: {
+			position: "absolute",
+			bottom: "0",
+			left: "0",
+			right: "0",
+			height: "@spacing.2xs",
+			transformOrigin: "left center",
+			background: "currentColor",
+			borderRadius: "@border-radius.full",
+			animationName: "toast-progress",
+			animationDuration: "var(--toast-duration, 5s)",
+			animationTimingFunction: "linear",
+		},
+		variants: {
+			color: toastAccentColorVariants,
+		},
+		defaultVariants: {
+			color: "neutral",
+		},
+	},
+	(s) => {
+		s.keyframes("toast-progress", {
+			"0%": { transform: "scaleX(1)" },
+			"100%": { transform: "scaleX(0)" },
+		});
+	},
 );

@@ -8,6 +8,6 @@ import { createFieldAddonRecipe } from "../input/createFieldRecipe";
  * an OUTSIDE joined block alongside the textarea.
  */
 export const useTextareaPrefixRecipe = createFieldAddonRecipe(
-  "textarea-prefix",
-  "paddingInlineEnd",
+	"textarea-prefix",
+	"paddingInlineEnd",
 );

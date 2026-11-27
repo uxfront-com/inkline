@@ -9,8 +9,8 @@ import { createMenuPanelRecipe } from "../dropdown/createMenuRecipe";
  * Built on the shared menu-surface builder (see `../dropdown/createMenuRecipe.ts`).
  */
 export const useSelectPanelRecipe = createMenuPanelRecipe("select-panel", {
-  base: {
-    maxHeight: "@12",
-    overflowY: "auto",
-  },
+	base: {
+		maxHeight: "@12",
+		overflowY: "auto",
+	},
 });

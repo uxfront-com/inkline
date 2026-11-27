@@ -14,19 +14,19 @@ import { createUseRecipe } from "@styleframe/theme";
  * match the callout.
  */
 export const useCalloutTitleRecipe = createUseRecipe("callout-title", {
-  base: {
-    display: "block",
-    fontWeight: "@font-weight.semibold",
-    lineHeight: "@line-height.snug",
-  },
-  variants: {
-    size: {
-      sm: { fontSize: "@font-size.sm" },
-      md: { fontSize: "@font-size.md" },
-      lg: { fontSize: "@font-size.lg" },
-    },
-  },
-  defaultVariants: {
-    size: "md",
-  },
+	base: {
+		display: "block",
+		fontWeight: "@font-weight.semibold",
+		lineHeight: "@line-height.snug",
+	},
+	variants: {
+		size: {
+			sm: { fontSize: "@font-size.sm" },
+			md: { fontSize: "@font-size.md" },
+			lg: { fontSize: "@font-size.lg" },
+		},
+	},
+	defaultVariants: {
+		size: "md",
+	},
 });

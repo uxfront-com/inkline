@@ -20,59 +20,59 @@ import { createUseRecipe } from "@styleframe/theme";
  * `GrayText` there instead.
  */
 export const useRadioRecipe = createUseRecipe(
-  "radio",
-  {
-    base: {
-      display: "inline-flex",
-      alignItems: "center",
-      boxSizing: "border-box",
-      cursor: "pointer",
-      userSelect: "none",
-      color: "@color.text",
-      lineHeight: "@line-height.normal",
-    },
-    variants: {
-      size: {
-        sm: {
-          gap: "@0.375",
-          fontSize: "@font-size.xs",
-          minHeight: "2rem",
-        },
-        md: {
-          gap: "@0.5",
-          fontSize: "@font-size.sm",
-          minHeight: "2.25rem",
-        },
-        lg: {
-          gap: "@0.625",
-          fontSize: "@font-size.md",
-          minHeight: "2.5rem",
-        },
-      },
-    },
-    defaultVariants: {
-      size: "md",
-    },
-  },
-  (s) => {
-    const { selector } = s;
+	"radio",
+	{
+		base: {
+			display: "inline-flex",
+			alignItems: "center",
+			boxSizing: "border-box",
+			cursor: "pointer",
+			userSelect: "none",
+			color: "@color.text",
+			lineHeight: "@line-height.normal",
+		},
+		variants: {
+			size: {
+				sm: {
+					gap: "@0.375",
+					fontSize: "@font-size.xs",
+					minHeight: "2rem",
+				},
+				md: {
+					gap: "@0.5",
+					fontSize: "@font-size.sm",
+					minHeight: "2.25rem",
+				},
+				lg: {
+					gap: "@0.625",
+					fontSize: "@font-size.md",
+					minHeight: "2.5rem",
+				},
+			},
+		},
+		defaultVariants: {
+			size: "md",
+		},
+	},
+	(s) => {
+		const { selector } = s;
 
-    // On touch screens each row is at least 44px tall. `:has()` lifts the rule
-    // above the size's own `min-height` utility, whatever order they're in.
-    selector(".radio:has(> .radio-field)", {
-      "@media (any-pointer: coarse)": {
-        minHeight: "2.75rem",
-      },
-    });
+		// On touch screens each row is at least 44px tall. `:has()` lifts the rule
+		// above the size's own `min-height` utility, whatever order they're in.
+		selector(".radio:has(> .radio-field)", {
+			"@media (any-pointer: coarse)": {
+				minHeight: "2.75rem",
+			},
+		});
 
-    // Dim the label when the nested field is disabled.
-    selector(".radio:has(.radio-field:disabled)", {
-      opacity: "0.5",
-      cursor: "not-allowed",
-      "@media (forced-colors: active)": {
-        color: "GrayText",
-        opacity: "1",
-      },
-    });
-  },
+		// Dim the label when the nested field is disabled.
+		selector(".radio:has(.radio-field:disabled)", {
+			opacity: "0.5",
+			cursor: "not-allowed",
+			"@media (forced-colors: active)": {
+				color: "GrayText",
+				opacity: "1",
+			},
+		});
+	},
 );

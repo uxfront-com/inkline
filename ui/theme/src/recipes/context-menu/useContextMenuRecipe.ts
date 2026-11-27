@@ -13,7 +13,7 @@ import { createMenuPanelRecipe } from "../dropdown/createMenuRecipe";
  * Built on the shared menu-surface builder (see `../dropdown/createMenuRecipe.ts`).
  */
 export const useContextMenuRecipe = createMenuPanelRecipe("context-menu", {
-  base: {
-    maxWidth: "@18",
-  },
+	base: {
+		maxWidth: "@18",
+	},
 });
