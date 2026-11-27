@@ -8,8 +8,8 @@
     "build": "nuxt build",
     "generate": "node scripts/fetch-history.mjs && nuxt generate",
     "preview": "nuxt preview",
-    "test": "vp test",
-    "test:build": "vp test --config vite.build.config.ts",
+    "test": "vitest run",
+    "test:build": "vitest run --config vite.build.config.ts",
     "check:seo": "site-checks seo .output/public",
     "lighthouse": "pnpm dlx @lhci/cli@0.16.1 autorun",
     "postinstall": "nuxt prepare"
@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "@uxfront/site-checks": "catalog:",
+    "@vitest/coverage-v8": "catalog:",
     "typescript": "catalog:ts6",
     "vitest": "catalog:"
   }

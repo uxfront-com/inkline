@@ -91,7 +91,7 @@ body:
     id: environment
     attributes:
       label: Environment
-      description: Run the commands below and paste the output. Include `vp env doctor` if the issue looks tooling-related.
+      description: Run the commands below and paste the output. Include `node --version` and `pnpm --version` if the issue looks tooling-related.
       value: |
         - Inkline: # pnpm list "@inkline/*"
         - Node:    # node -v

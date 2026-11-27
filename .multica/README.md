@@ -32,7 +32,7 @@ The team's skills live in **`.claude/skills/`** at the repo root (Anthropic Agen
    - **Name**: the file's @handle (e.g. `@atlas` → agent named Atlas).
    - **System instructions**: copy the fenced block under _System instructions_ verbatim.
    - **Runtime / Model / Skills / Triggers / Concurrency / Visibility**: from the _Multica configuration_ table below the instructions.
-3. **Check `multica.json`** at the repo root has run scripts that match the toolchain (Vite+ under pnpm):
+3. **Check `multica.json`** at the repo root has run scripts that match the toolchain (Turbo under pnpm):
 
    ```json
    {

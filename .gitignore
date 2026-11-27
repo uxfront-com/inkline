@@ -37,3 +37,6 @@ coverage
 
 # Unframework's scratch files, like the Angular toolchain's tsconfig.analog.json
 .uf-tmp/
+
+# Turborepo
+.turbo

@@ -17,9 +17,8 @@
     "access": "public"
   },
   "scripts": {
-    "build": "vp build",
-    "validate": "vp check",
-    "test": "vp test"
+    "build": "vite build",
+    "test": "vitest run"
   },
   "dependencies": {
     "@styleframe/runtime": "catalog:"
@@ -34,14 +33,16 @@
     "@styleframe/theme": "catalog:",
     "@styleframe/transpiler": "catalog:",
     "@types/node": "catalog:",
+    "@vitest/coverage-v8": "catalog:",
     "jsdom": "catalog:",
     "solid-js": "catalog:",
     "styleframe": "catalog:",
+    "vite": "catalog:",
     "vite-plugin-solid": "catalog:",
     "vitest": "catalog:"
   },
   "peerDependencies": {
     "solid-js": ">=1"
   },
-  "prepublishOnly": "vp run build"
+  "prepublishOnly": "pnpm run build"
 }

@@ -17,8 +17,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "vp build",
-    "validate": "vp check"
+    "build": "vite build"
   },
   "dependencies": {
     "@styleframe/runtime": "catalog:"
@@ -37,11 +36,12 @@
     "jsdom": "catalog:",
     "styleframe": "catalog:",
     "typescript": "catalog:ts6",
+    "vite": "catalog:",
     "vitest": "catalog:",
     "vue": "catalog:"
   },
   "peerDependencies": {
     "vue": ">=3"
   },
-  "prepublishOnly": "vp run build"
+  "prepublishOnly": "pnpm run build"
 }

@@ -122,10 +122,10 @@ jobs:
           path: ui
 
       - name: Run oxlint
-        run: npx vp lint
+        run: pnpm run lint
 
       - name: Check formatting
-        run: npx vp fmt --check
+        run: pnpm run format:check
 
   # Builds each framework package's API report from Build Packages' artifacts and compares it with
   # the committed `ui/<framework>/test/api.json`, once per run. A difference fails the job with the
@@ -203,13 +203,14 @@ jobs:
       - name: Run tests
         # Each shard runs only part of the suite, so per-package coverage is partial. Disable the
         # 100% coverage thresholds for the sharded run (Codecov merges the two shard uploads); the
-        # gate still applies to full local `vp test --coverage` runs. A CLI flag is used rather than
-        # an env var because `vp run` executes tasks in a clean environment that strips ad-hoc vars.
-        # There is no `--` before the flags: `vp run` forwards what follows the task name to each
-        # package's `vp test`, and Vitest ignores everything after a `--` that isn't its first argument.
-        # So no package's `test` script may repeat one of these flags, or Vitest fails on the repeat.
+        # gate still applies to full local `vitest run --coverage` runs. A CLI flag is used rather than
+        # an env var because Turbo runs tasks with only the env vars `turbo.json` names.
+        # The `--` ends Turbo's own options: Turbo passes what follows it to each package's `test`
+        # script, `vitest run`, with no `--` in front, since Vitest ignores everything after a `--`
+        # that isn't its first argument. So no package's `test` script may repeat one of these
+        # flags, or Vitest fails on the repeat.
         run: >-
-          pnpm run test
+          pnpm run test --
           --coverage --shard=${{ matrix.shard }}/2 --passWithNoTests
           --coverage.thresholds.lines=0 --coverage.thresholds.branches=0
           --coverage.thresholds.functions=0 --coverage.thresholds.statements=0

@@ -104,7 +104,7 @@ on.
 
 Paste outcomes in your final comment:
 `cd ui/components && pnpm build` (all 7 targets, expected notices only) ·
-`vp test --coverage` (~100% on the component's executable code) ·
+`vitest run --coverage` (~100% on the component's executable code) ·
 changesets listed · story-facts issue filed to @herald.
 
 ## Signature moves

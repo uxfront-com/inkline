@@ -16,8 +16,7 @@
     "access": "public"
   },
   "scripts": {
-    "build": "vp build --mode lib",
-    "validate": "vp check"
+    "build": "vite build --mode lib"
   },
   "dependencies": {
     "@styleframe/runtime": "catalog:"
@@ -34,11 +33,12 @@
     "@styleframe/transpiler": "catalog:",
     "jsdom": "catalog:",
     "styleframe": "catalog:",
+    "vite": "catalog:",
     "vitest": "catalog:"
   },
   "peerDependencies": {
     "@qwik.dev/core": "2.0.0-rc.5"
   },
-  "prepublishOnly": "vp run build",
+  "prepublishOnly": "pnpm run build",
   "qwik": "./dist/index.qwik.mjs"
 }

@@ -5,6 +5,6 @@
 # logic *is* unit-tested that drag their untestable `main()` argv dispatch and module-entry guard
 # into the denominator. Exclude them from coverage attribution so the gate never fails on lines
 # that cannot run. The real coverage threshold still applies to normal `.ts`/`.tsx` source and to
-# the local `vp test --coverage` run.
+# a local `vitest run --coverage`.
 ignore:
   - "**/scripts/**"

@@ -1,5 +1,5 @@
 import { resolve } from "node:path";
-import { defineConfig } from "vite-plus";
+import { defineConfig } from "vitest/config";
 import solid from "vite-plugin-solid";
 import styleframe from "styleframe/plugin/vite";
 

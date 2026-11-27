@@ -53,8 +53,8 @@ Leave a short note in the changeset or PR description that the website page is p
 
 ### 5. Final verify
 
-`vp run ready` (build + check + test) from the repo root must be green. When reading `vp check`, ignore the ~290 pre-existing `TS17004` fixture errors (standing baseline — see `.../reference/verification.md`); trust `vp test`.
+`pnpm run ready` (build + check + test) from the repo root must be green. When reading `pnpm run check`, ignore the ~290 pre-existing `TS17004` fixture errors (standing baseline — see `.../reference/verification.md`); trust `vitest run`.
 
 ## Exit criteria
 
-Every prop/slot/event has TSDoc, a changeset exists for the 7 framework packages with a clear summary, exports and repo docs are current, the future docs-page content is staged, and `vp run ready` is green.
+Every prop/slot/event has TSDoc, a changeset exists for the 7 framework packages with a clear summary, exports and repo docs are current, the future docs-page content is staged, and `pnpm run ready` is green.

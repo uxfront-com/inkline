@@ -1,7 +1,7 @@
 import { fileURLToPath } from "node:url";
-import { defineConfig } from "vite-plus";
+import { defineConfig } from "vitest/config";
 
-// Build tests. Separate from the default `vp test` run because they
+// Build tests. Separate from the default `vitest run` because they
 // read `.output/` off disk and so need a prior `nuxt build`; invoked via the
 // `test:build` script from the Build Website job, against the artifact that job
 // just produced.
