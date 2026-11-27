@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@iconify-json/mdi": "^1.2.3",
-    "@nuxt/content": "^3.16.1",
+    "@nuxt/content": "^3.17.0",
     "@uxfront/layer-docs": "catalog:",
     "@uxfront/layer-ui": "catalog:",
     "@uxfront/scene": "catalog:",
@@ -24,9 +24,9 @@
     "@vueuse/core": "catalog:",
     "better-sqlite3": "^12.10.1",
     "docus": "catalog:",
-    "nuxt": "^4.5.2",
+    "nuxt": "^4.7.0",
     "vue": "catalog:",
-    "vue-router": "^5.1.0"
+    "vue-router": "^5.5.1"
   },
   "devDependencies": {
     "@uxfront/site-checks": "catalog:",
