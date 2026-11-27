@@ -124,7 +124,7 @@ A spec checks the component's ARIA tree with `toHaveAriaTree`, axe-core with `to
 
 ## Common gotchas
 
-- **Only `class` and `style` fall through.** Every other attribute a parent passes must be a prop the component declares.
+- **Only a component with one root element takes what it doesn't declare.** A parent's attributes, DOM listeners, `class`, `style` and `ref` fall through to that element. A component whose root is a fragment or several elements, like `IInputControlBase`, gets none of them, so give it a prop for everything it must receive. [Unframework's fallthrough page](https://unframework.dev/docs/components/fallthrough) has the rules.
 - **Form state is a model, not an attribute.** Bind a control's `value` or `checked` with `v-model`, never as an attribute.
 - **React fires a checkbox's or a radio's `change` from the click itself,** before a click handler can cancel it. A read-only control that cancels its click must also put back any value the change writes, as `ICheckboxControlBase` and `IRadioGroup` do.
 - **Default-slot presence doesn't work on Angular and Qwik.** Render a default slot, or give it a fallback, but don't test whether it's filled. A named slot works everywhere.

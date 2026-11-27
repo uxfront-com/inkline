@@ -8,6 +8,9 @@
 // - `form`: a submit button in a form with one text field. The form emits `submit` and cancels it.
 // - `inert`: two submit buttons that can't be activated, one loading and one focusable disabled.
 // - `saving`: a button whose own click starts loading, as a Save button's does.
+// - `link`: a button with an `href`, which renders a link, and takes the state props, before a
+//   search field that takes the focus a link gives up.
+// - `link-icons`: an icon-only link, and one with a leading and a trailing icon.
 //
 // It emits `click` with the button's id whenever one of them does.
 import { defineEmits, ref } from "@uxfront/unframework";
@@ -25,6 +28,7 @@ export default function ButtonCase({
   disabled,
   focusableWhenDisabled,
   type,
+  href,
   ariaPressed,
   ariaExpanded,
   scenario = "default",
@@ -32,7 +36,16 @@ export default function ButtonCase({
   ButtonProps,
   "label" | "id" | "ariaLabel" | "ariaDescribedby" | "ariaHaspopup" | "ariaControls" | "iconOnly"
 > & {
-  scenario?: "default" | "attributes" | "icons" | "toggles" | "form" | "inert" | "saving";
+  scenario?:
+    | "default"
+    | "attributes"
+    | "icons"
+    | "toggles"
+    | "form"
+    | "inert"
+    | "saving"
+    | "link"
+    | "link-icons";
 }) {
   const emit = defineEmits<{ click: [button: string]; submit: [] }>();
   const saving = ref(false);
@@ -146,6 +159,68 @@ export default function ButtonCase({
               emit("click", "save");
             }}
           />
+        </div>
+      ) : scenario === "link" ? (
+        <div>
+          <IButton
+            href={href}
+            label="Docs"
+            color={color}
+            variant={variant}
+            size={size}
+            block={block}
+            loading={loading}
+            loadingLabel={loadingLabel}
+            disabled={disabled}
+            focusableWhenDisabled={focusableWhenDisabled}
+            type={type}
+            ariaPressed={ariaPressed}
+            ariaExpanded={ariaExpanded}
+            onClick={() => emit("click", "docs")}
+          />
+          <input type="search" aria-label="Search" />
+        </div>
+      ) : scenario === "link-icons" ? (
+        <div>
+          <IButton
+            href="/settings"
+            label="Settings"
+            variant="outline"
+            iconOnly={true}
+            onClick={() => emit("click", "settings")}
+          >
+            {{
+              leading: () => (
+                <svg viewBox="0 0 16 16" width="16" height="16">
+                  <circle cx="8" cy="8" r="3" />
+                </svg>
+              ),
+              trailing: () => (
+                <svg viewBox="0 0 16 16" width="16" height="16">
+                  <path d="M4 6l4 4 4-4" />
+                </svg>
+              ),
+            }}
+          </IButton>
+          <IButton
+            href="/next"
+            label="Continue"
+            color="primary"
+            onClick={() => emit("click", "continue")}
+          >
+            {{
+              leading: () => (
+                <svg viewBox="0 0 16 16" width="16" height="16">
+                  <path d="M8 3v10M3 8h10" />
+                </svg>
+              ),
+              trailing: () => (
+                <svg viewBox="0 0 16 16" width="16" height="16">
+                  <path d="M3 8h10M9 4l4 4-4 4" />
+                </svg>
+              ),
+            }}
+          </IButton>
         </div>
       ) : scenario === "inert" ? (
         <form aria-label="Post">

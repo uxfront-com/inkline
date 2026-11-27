@@ -13,6 +13,7 @@ import type { ButtonProps } from "../types.ts";
 export default function IButton({
   label,
   type,
+  href,
   disabled,
   focusableWhenDisabled,
   loading,
@@ -37,6 +38,7 @@ export default function IButton({
     <IButtonBase
       class={[buttonRecipe({ color, variant, size }), { "button--block": block }]}
       type={type}
+      href={href}
       disabled={disabled}
       focusableWhenDisabled={focusableWhenDisabled}
       loading={loading}

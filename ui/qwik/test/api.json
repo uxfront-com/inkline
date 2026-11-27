@@ -42,7 +42,7 @@
       ],
       "models": [],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "IBadgeBase": {
       "props": [
@@ -52,7 +52,7 @@
       ],
       "models": [],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "IButton": {
       "props": [
@@ -67,6 +67,7 @@
         "color",
         "disabled",
         "focusableWhenDisabled",
+        "href",
         "iconOnly",
         "id",
         "label",
@@ -83,7 +84,7 @@
       "events": [
         "onClick$"
       ],
-      "attributes": false
+      "attributes": true
     },
     "IButtonBase": {
       "props": [
@@ -97,6 +98,7 @@
         "color",
         "disabled",
         "focusableWhenDisabled",
+        "href",
         "iconOnly",
         "id",
         "label",
@@ -114,7 +116,7 @@
       "events": [
         "onClick$"
       ],
-      "attributes": false
+      "attributes": true
     },
     "ICheckbox": {
       "props": [
@@ -138,7 +140,7 @@
       "events": [
         "onCheckedChange$"
       ],
-      "attributes": false
+      "attributes": true
     },
     "ICheckboxBase": {
       "props": [
@@ -147,7 +149,7 @@
       ],
       "models": [],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "ICheckboxControlBase": {
       "props": [
@@ -159,6 +161,7 @@
         "indeterminate",
         "name",
         "readonly",
+        "ref",
         "required",
         "style"
       ],
@@ -168,7 +171,7 @@
       "events": [
         "onCheckedChange$"
       ],
-      "attributes": false
+      "attributes": true
     },
     "IFieldGroup": {
       "props": [
@@ -180,7 +183,7 @@
       ],
       "models": [],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "IFieldGroupBase": {
       "props": [
@@ -190,7 +193,7 @@
       ],
       "models": [],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "IHamburgerMenu": {
       "props": [
@@ -209,7 +212,7 @@
       "events": [
         "onOpenChange$"
       ],
-      "attributes": false
+      "attributes": true
     },
     "IHamburgerMenuBase": {
       "props": [
@@ -225,7 +228,7 @@
       "events": [
         "onOpenChange$"
       ],
-      "attributes": false
+      "attributes": true
     },
     "IInput": {
       "props": [
@@ -256,7 +259,7 @@
         "onFocus$",
         "onValueChange$"
       ],
-      "attributes": false
+      "attributes": true
     },
     "IInputBase": {
       "props": [
@@ -266,7 +269,7 @@
       ],
       "models": [],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "IInputControlBase": {
       "props": [
@@ -298,7 +301,7 @@
       ],
       "models": [],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "IInputSuffixBase": {
       "props": [
@@ -307,7 +310,7 @@
       ],
       "models": [],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "IInputTextareaBase": {
       "props": [
@@ -331,7 +334,7 @@
         "onFocus$",
         "onValueChange$"
       ],
-      "attributes": false
+      "attributes": true
     },
     "IRadioBase": {
       "props": [
@@ -341,7 +344,7 @@
       ],
       "models": [],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "IRadioFieldBase": {
       "props": [
@@ -360,7 +363,7 @@
       "events": [
         "onSelectedChange$"
       ],
-      "attributes": false
+      "attributes": true
     },
     "IRadioGroup": {
       "props": [
@@ -383,7 +386,7 @@
       "events": [
         "onValueChange$"
       ],
-      "attributes": false
+      "attributes": true
     },
     "IRadioGroupBase": {
       "props": [
@@ -396,7 +399,7 @@
       ],
       "models": [],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "ISwitch": {
       "props": [
@@ -418,7 +421,7 @@
       "events": [
         "onCheckedChange$"
       ],
-      "attributes": false
+      "attributes": true
     },
     "ISwitchBase": {
       "props": [
@@ -427,7 +430,7 @@
       ],
       "models": [],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "ISwitchControlBase": {
       "props": [
@@ -446,7 +449,7 @@
       "events": [
         "onCheckedChange$"
       ],
-      "attributes": false
+      "attributes": true
     },
     "ISwitchLabelBase": {
       "props": [
@@ -455,7 +458,7 @@
       ],
       "models": [],
       "events": [],
-      "attributes": false
+      "attributes": true
     }
   }
 }
