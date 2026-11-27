@@ -1,4 +1,5 @@
 import { ref } from "@uxfront/unframework";
+
 import "virtual:styleframe.css";
 import IRadioGroup from "../styled/IRadioGroup.uf.tsx";
 
@@ -6,19 +7,19 @@ import IRadioGroup from "../styled/IRadioGroup.uf.tsx";
 // The ref backs `value` so the default selection renders; clicks can't change it, by design.
 /** @category Components/Forms/Radio */
 export default function RadioReadonly() {
-  const value = ref<string | undefined>("banana");
-  return (
-    <div>
-      <IRadioGroup
-        readonly={true}
-        name="fruit"
-        v-model:value={value.value}
-        options={[
-          { value: "apple", label: "Apple" },
-          { value: "banana", label: "Banana" },
-          { value: "cherry", label: "Cherry" },
-        ]}
-      />
-    </div>
-  );
+	const value = ref<string | undefined>("banana");
+	return (
+		<div>
+			<IRadioGroup
+				readonly={true}
+				name="fruit"
+				v-model:value={value.value}
+				options={[
+					{ value: "apple", label: "Apple" },
+					{ value: "banana", label: "Banana" },
+					{ value: "cherry", label: "Cherry" },
+				]}
+			/>
+		</div>
+	);
 }

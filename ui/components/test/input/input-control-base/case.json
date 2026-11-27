@@ -1,29 +1,29 @@
 {
-  "description": "The headless text control, its `value` model bound by a parent, in each state.",
-  "ssr": {
-    "empty": {
-      "props": {}
-    },
-    "filled": {
-      "props": {
-        "initial": "Ada"
-      }
-    },
-    "readonly": {
-      "props": {
-        "initial": "Ada",
-        "readonly": true
-      }
-    },
-    "disabled": {
-      "props": {
-        "disabled": true
-      }
-    },
-    "attributes": {
-      "props": {
-        "attributes": true
-      }
-    }
-  }
+	"description": "The headless text control, its `value` model bound by a parent, in each state.",
+	"ssr": {
+		"empty": {
+			"props": {}
+		},
+		"filled": {
+			"props": {
+				"initial": "Ada"
+			}
+		},
+		"readonly": {
+			"props": {
+				"initial": "Ada",
+				"readonly": true
+			}
+		},
+		"disabled": {
+			"props": {
+				"disabled": true
+			}
+		},
+		"attributes": {
+			"props": {
+				"attributes": true
+			}
+		}
+	}
 }

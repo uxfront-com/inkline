@@ -17,46 +17,46 @@ import { createUseRecipe } from "@styleframe/theme";
  * structural styles are applied here.
  */
 export const useAccordionContentRecipe = createUseRecipe(
-  "accordion-content",
-  {
-    base: {
-      display: "grid",
-      gridTemplateRows: "0fr",
-      transitionProperty: "grid-template-rows",
-      transitionTimingFunction: "@easing.ease-out-cubic",
-      transitionDuration: "@duration.normal",
-    },
-    variants: {
-      color: {
-        light: {},
-        dark: {},
-        neutral: {},
-      },
-      variant: {
-        solid: {},
-        ghost: {},
-      },
-      size: {
-        sm: {},
-        md: {},
-        lg: {},
-      },
-    },
-    defaultVariants: {
-      color: "neutral",
-      variant: "solid",
-      size: "md",
-    },
-  },
-  (s) => {
-    s.selector('.accordion-content[data-state="open"]', {
-      gridTemplateRows: "1fr",
-    });
-    // The single grid child is the overflow clip. Padding lives on the body
-    // *inside* it, never on this element, so the 0fr row collapses to 0.
-    s.selector(".accordion-content > *", {
-      overflow: "hidden",
-      minHeight: "0",
-    });
-  },
+	"accordion-content",
+	{
+		base: {
+			display: "grid",
+			gridTemplateRows: "0fr",
+			transitionProperty: "grid-template-rows",
+			transitionTimingFunction: "@easing.ease-out-cubic",
+			transitionDuration: "@duration.normal",
+		},
+		variants: {
+			color: {
+				light: {},
+				dark: {},
+				neutral: {},
+			},
+			variant: {
+				solid: {},
+				ghost: {},
+			},
+			size: {
+				sm: {},
+				md: {},
+				lg: {},
+			},
+		},
+		defaultVariants: {
+			color: "neutral",
+			variant: "solid",
+			size: "md",
+		},
+	},
+	(s) => {
+		s.selector('.accordion-content[data-state="open"]', {
+			gridTemplateRows: "1fr",
+		});
+		// The single grid child is the overflow clip. Padding lives on the body
+		// *inside* it, never on this element, so the 0fr row collapses to 0.
+		s.selector(".accordion-content > *", {
+			overflow: "hidden",
+			minHeight: "0",
+		});
+	},
 );

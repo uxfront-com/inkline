@@ -19,29 +19,29 @@ import { createFieldRecipe } from "./createFieldRecipe";
  * wrapper sits inline (inline-flex, vertically centered).
  */
 export const useInputRecipe = createFieldRecipe(
-  "input",
-  {
-    base: {
-      display: "inline-flex",
-      alignItems: "center",
-    },
-  },
-  (s) => {
-    const { selector } = s;
+	"input",
+	{
+		base: {
+			display: "inline-flex",
+			alignItems: "center",
+		},
+	},
+	(s) => {
+		const { selector } = s;
 
-    // On touch screens the input's text is at least 16px, or Safari on iOS
-    // zooms in when it gets focus. The input also gets a hit area at least
-    // 44px tall, reaching past the smaller fields: its 16px text sets a 24px
-    // line, and a transparent 10px border above and below, pulled back by a
-    // negative margin, adds the rest without moving anything. The
-    // padding-box clip keeps the browser's autofill color off that border.
-    selector(".input-field", {
-      "@media (any-pointer: coarse)": {
-        fontSize: "max(1em, 1rem)",
-        marginBlock: "calc(@spacing * -0.625)",
-        borderBlock: "calc(@spacing * 0.625) solid transparent",
-        backgroundClip: "padding-box",
-      },
-    });
-  },
+		// On touch screens the input's text is at least 16px, or Safari on iOS
+		// zooms in when it gets focus. The input also gets a hit area at least
+		// 44px tall, reaching past the smaller fields: its 16px text sets a 24px
+		// line, and a transparent 10px border above and below, pulled back by a
+		// negative margin, adds the rest without moving anything. The
+		// padding-box clip keeps the browser's autofill color off that border.
+		selector(".input-field", {
+			"@media (any-pointer: coarse)": {
+				fontSize: "max(1em, 1rem)",
+				marginBlock: "calc(@spacing * -0.625)",
+				borderBlock: "calc(@spacing * 0.625) solid transparent",
+				backgroundClip: "padding-box",
+			},
+		});
+	},
 );

@@ -1,4 +1,5 @@
 import { createUseRecipe } from "@styleframe/theme";
+
 import { toastAccentColorVariants } from "./toastAccentColors";
 
 /**
@@ -9,14 +10,14 @@ import { toastAccentColorVariants } from "./toastAccentColors";
  * with `currentColor` pick it up automatically.
  */
 export const useToastIconRecipe = createUseRecipe("toast-icon", {
-  base: {
-    display: "inline-flex",
-    flexShrink: "0",
-  },
-  variants: {
-    color: toastAccentColorVariants,
-  },
-  defaultVariants: {
-    color: "neutral",
-  },
+	base: {
+		display: "inline-flex",
+		flexShrink: "0",
+	},
+	variants: {
+		color: toastAccentColorVariants,
+	},
+	defaultVariants: {
+		color: "neutral",
+	},
 });

@@ -14,32 +14,32 @@ import type { SwitchProps } from "../types.ts";
  * `label`, names it.
  */
 export default function ISwitch({
-  id,
-  name,
-  disabled,
-  readonly,
-  color,
-  size,
-  label,
-  ariaLabel,
-  ariaDescribedby,
+	id,
+	name,
+	disabled,
+	readonly,
+	color,
+	size,
+	label,
+	ariaLabel,
+	ariaDescribedby,
 }: SwitchProps) {
-  const checked = defineModel<boolean>("checked", { default: false });
-  const slots = defineSlots<{ default?(): Element }>();
+	const checked = defineModel<boolean>("checked", { default: false });
+	const slots = defineSlots<{ default?(): Element }>();
 
-  return (
-    <ISwitchBase class={switchRecipe({ size })}>
-      <ISwitchControlBase
-        class={switchFieldRecipe({ color, size })}
-        id={id}
-        name={name}
-        v-model:checked={checked.value}
-        disabled={disabled}
-        readonly={readonly}
-        ariaLabel={ariaLabel}
-        ariaDescribedby={ariaDescribedby}
-      />
-      <ISwitchLabelBase>{slots.default?.() ?? label}</ISwitchLabelBase>
-    </ISwitchBase>
-  );
+	return (
+		<ISwitchBase class={switchRecipe({ size })}>
+			<ISwitchControlBase
+				class={switchFieldRecipe({ color, size })}
+				id={id}
+				name={name}
+				v-model:checked={checked.value}
+				disabled={disabled}
+				readonly={readonly}
+				ariaLabel={ariaLabel}
+				ariaDescribedby={ariaDescribedby}
+			/>
+			<ISwitchLabelBase>{slots.default?.() ?? label}</ISwitchLabelBase>
+		</ISwitchBase>
+	);
 }

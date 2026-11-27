@@ -1,49 +1,49 @@
 {
-  "name": "@inkline/solid",
-  "version": "0.0.0",
-  "license": "MIT",
-  "files": [
-    "dist"
-  ],
-  "type": "module",
-  "sideEffects": false,
-  "exports": {
-    ".": "./dist/index.js",
-    "./headless": "./dist/headless.js",
-    "./css": "./dist/index.css",
-    "./package.json": "./package.json"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "scripts": {
-    "build": "vite build",
-    "test": "vitest run"
-  },
-  "dependencies": {
-    "@styleframe/runtime": "catalog:"
-  },
-  "devDependencies": {
-    "@inkline/components": "workspace:*",
-    "@inkline/theme": "workspace:*",
-    "@styleframe/cli": "catalog:",
-    "@styleframe/core": "catalog:",
-    "@styleframe/license": "catalog:",
-    "@styleframe/loader": "catalog:",
-    "@styleframe/plugin": "catalog:",
-    "@styleframe/theme": "catalog:",
-    "@styleframe/transpiler": "catalog:",
-    "@types/node": "catalog:",
-    "@vitest/coverage-v8": "catalog:",
-    "jsdom": "catalog:",
-    "solid-js": "catalog:",
-    "styleframe": "catalog:",
-    "vite": "catalog:",
-    "vite-plugin-solid": "catalog:",
-    "vitest": "catalog:"
-  },
-  "peerDependencies": {
-    "solid-js": ">=1"
-  },
-  "prepublishOnly": "pnpm run build"
+	"name": "@inkline/solid",
+	"version": "0.0.0",
+	"license": "MIT",
+	"files": [
+		"dist"
+	],
+	"type": "module",
+	"sideEffects": false,
+	"exports": {
+		".": "./dist/index.js",
+		"./headless": "./dist/headless.js",
+		"./css": "./dist/index.css",
+		"./package.json": "./package.json"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"scripts": {
+		"build": "vite build",
+		"test": "vitest run"
+	},
+	"dependencies": {
+		"@styleframe/runtime": "catalog:"
+	},
+	"devDependencies": {
+		"@inkline/components": "workspace:*",
+		"@inkline/theme": "workspace:*",
+		"@styleframe/cli": "catalog:",
+		"@styleframe/core": "catalog:",
+		"@styleframe/license": "catalog:",
+		"@styleframe/loader": "catalog:",
+		"@styleframe/plugin": "catalog:",
+		"@styleframe/theme": "catalog:",
+		"@styleframe/transpiler": "catalog:",
+		"@types/node": "catalog:",
+		"@vitest/coverage-v8": "catalog:",
+		"jsdom": "catalog:",
+		"solid-js": "catalog:",
+		"styleframe": "catalog:",
+		"vite": "catalog:",
+		"vite-plugin-solid": "catalog:",
+		"vitest": "catalog:"
+	},
+	"peerDependencies": {
+		"solid-js": ">=1"
+	},
+	"prepublishOnly": "pnpm run build"
 }

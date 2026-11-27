@@ -61,6 +61,7 @@ catalog:
   "@unframework.dev/visual": 0.5.3
   "@uxfront/layer-docs": ^0.10.0
   "@uxfront/layer-ui": ^0.1.11
+  "@uxfront/oxfmt-config": ^0.2.0
   "@uxfront/oxlint-config": ^0.2.0
   "@uxfront/scene": ^0.5.2
   "@uxfront/site-checks": 0.1.1
@@ -77,7 +78,7 @@ catalog:
   culori: ^4.0.2
   docus: ^5.13.0
   jsdom: ^29.1.1
-  oxfmt: 0.52.0
+  oxfmt: 0.80.0
   oxlint: 1.95.0
   oxlint-tsgolint: 7.0.2008
   playwright: ^1.63.0

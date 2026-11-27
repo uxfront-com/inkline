@@ -1,68 +1,68 @@
 {
-  "name": "@inkline/angular",
-  "version": "0.0.0",
-  "license": "MIT",
-  "files": [
-    "dist"
-  ],
-  "type": "module",
-  "sideEffects": false,
-  "typings": "./dist/.inkline/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/.inkline/index.d.ts",
-      "default": "./dist/fesm2022/index.mjs"
-    },
-    "./headless": {
-      "types": "./dist/.inkline/headless.d.ts",
-      "default": "./dist/fesm2022/headless.mjs"
-    },
-    "./package.json": "./package.json"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "scripts": {
-    "build": "vite build",
-    "test": "vitest run"
-  },
-  "dependencies": {
-    "@styleframe/runtime": "catalog:"
-  },
-  "devDependencies": {
-    "@analogjs/vite-plugin-angular": "catalog:",
-    "@angular/animations": "catalog:",
-    "@angular/build": "catalog:",
-    "@angular/cli": "catalog:",
-    "@angular/common": "catalog:",
-    "@angular/compiler": "catalog:",
-    "@angular/compiler-cli": "catalog:",
-    "@angular/core": "catalog:",
-    "@angular/platform-browser": "catalog:",
-    "@angular/platform-browser-dynamic": "catalog:",
-    "@angular/platform-server": "catalog:",
-    "@inkline/components": "workspace:*",
-    "@inkline/theme": "workspace:*",
-    "@styleframe/cli": "catalog:",
-    "@styleframe/core": "catalog:",
-    "@styleframe/license": "catalog:",
-    "@styleframe/loader": "catalog:",
-    "@styleframe/plugin": "catalog:",
-    "@styleframe/theme": "catalog:",
-    "@styleframe/transpiler": "catalog:",
-    "@types/node": "catalog:",
-    "@vitest/coverage-v8": "catalog:",
-    "jsdom": "catalog:",
-    "rxjs": "catalog:",
-    "styleframe": "catalog:",
-    "tslib": "catalog:",
-    "typescript": "catalog:ts6",
-    "vite": "catalog:",
-    "vitest": "catalog:",
-    "zone.js": "catalog:"
-  },
-  "peerDependencies": {
-    "@angular/core": "^22"
-  },
-  "prepublishOnly": "pnpm run build"
+	"name": "@inkline/angular",
+	"version": "0.0.0",
+	"license": "MIT",
+	"files": [
+		"dist"
+	],
+	"type": "module",
+	"sideEffects": false,
+	"typings": "./dist/.inkline/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/.inkline/index.d.ts",
+			"default": "./dist/fesm2022/index.mjs"
+		},
+		"./headless": {
+			"types": "./dist/.inkline/headless.d.ts",
+			"default": "./dist/fesm2022/headless.mjs"
+		},
+		"./package.json": "./package.json"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"scripts": {
+		"build": "vite build",
+		"test": "vitest run"
+	},
+	"dependencies": {
+		"@styleframe/runtime": "catalog:"
+	},
+	"devDependencies": {
+		"@analogjs/vite-plugin-angular": "catalog:",
+		"@angular/animations": "catalog:",
+		"@angular/build": "catalog:",
+		"@angular/cli": "catalog:",
+		"@angular/common": "catalog:",
+		"@angular/compiler": "catalog:",
+		"@angular/compiler-cli": "catalog:",
+		"@angular/core": "catalog:",
+		"@angular/platform-browser": "catalog:",
+		"@angular/platform-browser-dynamic": "catalog:",
+		"@angular/platform-server": "catalog:",
+		"@inkline/components": "workspace:*",
+		"@inkline/theme": "workspace:*",
+		"@styleframe/cli": "catalog:",
+		"@styleframe/core": "catalog:",
+		"@styleframe/license": "catalog:",
+		"@styleframe/loader": "catalog:",
+		"@styleframe/plugin": "catalog:",
+		"@styleframe/theme": "catalog:",
+		"@styleframe/transpiler": "catalog:",
+		"@types/node": "catalog:",
+		"@vitest/coverage-v8": "catalog:",
+		"jsdom": "catalog:",
+		"rxjs": "catalog:",
+		"styleframe": "catalog:",
+		"tslib": "catalog:",
+		"typescript": "catalog:ts6",
+		"vite": "catalog:",
+		"vitest": "catalog:",
+		"zone.js": "catalog:"
+	},
+	"peerDependencies": {
+		"@angular/core": "^22"
+	},
+	"prepublishOnly": "pnpm run build"
 }

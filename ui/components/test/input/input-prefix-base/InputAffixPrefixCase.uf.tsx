@@ -2,9 +2,9 @@
 import IInputPrefixBase from "../../../src/components/input/headless/IInputPrefixBase.uf.tsx";
 
 export default function InputAffixPrefixCase() {
-  return (
-    <div>
-      <IInputPrefixBase>$</IInputPrefixBase>
-    </div>
-  );
+	return (
+		<div>
+			<IInputPrefixBase>$</IInputPrefixBase>
+		</div>
+	);
 }

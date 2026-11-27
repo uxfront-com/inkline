@@ -6,55 +6,55 @@ import { defineEmits, ref, watch } from "@uxfront/unframework";
 import IInputControlBase from "../../../src/components/input/headless/IInputControlBase.uf.tsx";
 
 export default function InputControlCase({
-  initial = "",
-  disabled = false,
-  readonly = false,
-  attributes = false,
+	initial = "",
+	disabled = false,
+	readonly = false,
+	attributes = false,
 }: {
-  initial?: string;
-  disabled?: boolean;
-  readonly?: boolean;
-  attributes?: boolean;
+	initial?: string;
+	disabled?: boolean;
+	readonly?: boolean;
+	attributes?: boolean;
 }) {
-  const emit = defineEmits<{ input: [value: string]; focus: []; blur: [] }>();
-  const value = ref(initial);
-  watch(
-    () => value.value,
-    (current) => emit("input", current),
-  );
+	const emit = defineEmits<{ input: [value: string]; focus: []; blur: [] }>();
+	const value = ref(initial);
+	watch(
+		() => value.value,
+		(current) => emit("input", current),
+	);
 
-  return (
-    <>
-      {attributes ? (
-        <div>
-          <IInputControlBase
-            type="email"
-            required={true}
-            autocomplete="email"
-            ariaLabel="Email"
-            ariaDescribedby="email-hint"
-            onFocus={() => emit("focus")}
-            onBlur={() => emit("blur")}
-          />
-          <p id="email-hint">We never share it.</p>
-        </div>
-      ) : (
-        <div>
-          <label>
-            Name
-            <IInputControlBase
-              id="name"
-              name="name"
-              placeholder="Your name"
-              disabled={disabled}
-              readonly={readonly}
-              v-model:value={value.value}
-            />
-          </label>
-          <IInputControlBase type="email" placeholder="Email" />
-          <output>{value.value}</output>
-        </div>
-      )}
-    </>
-  );
+	return (
+		<>
+			{attributes ? (
+				<div>
+					<IInputControlBase
+						type="email"
+						required={true}
+						autocomplete="email"
+						ariaLabel="Email"
+						ariaDescribedby="email-hint"
+						onFocus={() => emit("focus")}
+						onBlur={() => emit("blur")}
+					/>
+					<p id="email-hint">We never share it.</p>
+				</div>
+			) : (
+				<div>
+					<label>
+						Name
+						<IInputControlBase
+							id="name"
+							name="name"
+							placeholder="Your name"
+							disabled={disabled}
+							readonly={readonly}
+							v-model:value={value.value}
+						/>
+					</label>
+					<IInputControlBase type="email" placeholder="Email" />
+					<output>{value.value}</output>
+				</div>
+			)}
+		</>
+	);
 }

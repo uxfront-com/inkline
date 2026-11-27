@@ -13,36 +13,36 @@ Components are authored once against `@inkline/core` and compiled to 7 framework
 
 ```tsx
 import {
-  defineComponent,
-  defineProps,
-  defineSlot,
-  createSignal,
-  createMemo,
-  Show,
-  Slot,
+	defineComponent,
+	defineProps,
+	defineSlot,
+	createSignal,
+	createMemo,
+	Show,
+	Slot,
 } from "@inkline/core";
 
 export interface ButtonBaseProps {
-  label?: string;
-  disabled?: boolean;
+	label?: string;
+	disabled?: boolean;
 }
 
 export default defineComponent(
-  { meta: { headless: true } }, // options (events, meta, name)
-  () => {
-    const props = defineProps<ButtonBaseProps>(); // props — macro form, the primary style
-    defineSlot(); // slots — macro form; the call declares, the binding is optional
-    const [count, setCount] = createSignal(0);
-    const doubled = createMemo(() => count() * 2);
-    return (
-      <button disabled={props.disabled} onClick={() => setCount(count() + 1)}>
-        <Show when={doubled() > 4} fallback={<span>keep going</span>}>
-          …
-        </Show>
-        <Slot>{props.label}</Slot>
-      </button>
-    );
-  },
+	{ meta: { headless: true } }, // options (events, meta, name)
+	() => {
+		const props = defineProps<ButtonBaseProps>(); // props — macro form, the primary style
+		defineSlot(); // slots — macro form; the call declares, the binding is optional
+		const [count, setCount] = createSignal(0);
+		const doubled = createMemo(() => count() * 2);
+		return (
+			<button disabled={props.disabled} onClick={() => setCount(count() + 1)}>
+				<Show when={doubled() > 4} fallback={<span>keep going</span>}>
+					…
+				</Show>
+				<Slot>{props.label}</Slot>
+			</button>
+		);
+	},
 );
 ```
 

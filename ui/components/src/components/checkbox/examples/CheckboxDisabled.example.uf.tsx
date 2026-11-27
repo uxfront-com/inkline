@@ -1,4 +1,5 @@
 import { ref } from "@uxfront/unframework";
+
 import "virtual:styleframe.css";
 import ICheckbox from "../styled/ICheckbox.uf.tsx";
 
@@ -6,10 +7,10 @@ import ICheckbox from "../styled/ICheckbox.uf.tsx";
 // checkbox takes no input, so it does not toggle, that is the point of this example.
 /** @category Components/Forms/Checkbox */
 export default function CheckboxDisabled() {
-  const checked = ref(false);
-  return (
-    <div>
-      <ICheckbox label="Accept terms" disabled={true} v-model:checked={checked.value} />
-    </div>
-  );
+	const checked = ref(false);
+	return (
+		<div>
+			<ICheckbox label="Accept terms" disabled={true} v-model:checked={checked.value} />
+		</div>
+	);
 }

@@ -1,9 +1,9 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    "jsx": "preserve",
-    "jsxImportSource": "solid-js",
-    "types": ["node"]
-  },
-  "include": ["src", "test", "*.styleframe.ts", ".styleframe/**/*.d.ts"]
+	"extends": "../../tsconfig.json",
+	"compilerOptions": {
+		"jsx": "preserve",
+		"jsxImportSource": "solid-js",
+		"types": ["node"]
+	},
+	"include": ["src", "test", "*.styleframe.ts", ".styleframe/**/*.d.ts"]
 }

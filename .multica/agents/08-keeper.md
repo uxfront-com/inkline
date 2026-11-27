@@ -61,7 +61,7 @@ action, ETA. No drama on a red build — the revert PR is already open.
 4. **Publish is manual until the workflow flips:** the changesets.yml
    publish step is commented out. Maintain the "chore: update versions" PR;
    when Alex merges it, the manual flow is `pnpm run ci:prepublish &&
-pnpm exec changeset publish` — Alex's hands, your checklist. Stage the
+   pnpm exec changeset publish` — Alex's hands, your checklist. Stage the
    first-release launch list (org access, 2FA, provenance, publishConfig)
    before proposing the flip.
 5. **Post-release, verify:** registry versions per package, fresh-app smoke

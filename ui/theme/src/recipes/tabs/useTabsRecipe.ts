@@ -7,26 +7,26 @@ import { createUseRecipe } from "@styleframe/theme";
  * lives on the `tabs-list`, `tabs-trigger`, and `tabs-content` parts.
  */
 export const useTabsRecipe = createUseRecipe("tabs", {
-  base: {
-    display: "flex",
-  },
-  variants: {
-    orientation: {
-      horizontal: {
-        flexDirection: "column",
-      },
-      vertical: {
-        flexDirection: "row",
-      },
-    },
-    size: {
-      sm: { gap: "@0.5" },
-      md: { gap: "@0.75" },
-      lg: { gap: "@1" },
-    },
-  },
-  defaultVariants: {
-    orientation: "horizontal",
-    size: "md",
-  },
+	base: {
+		display: "flex",
+	},
+	variants: {
+		orientation: {
+			horizontal: {
+				flexDirection: "column",
+			},
+			vertical: {
+				flexDirection: "row",
+			},
+		},
+		size: {
+			sm: { gap: "@0.5" },
+			md: { gap: "@0.75" },
+			lg: { gap: "@1" },
+		},
+	},
+	defaultVariants: {
+		orientation: "horizontal",
+		size: "md",
+	},
 });

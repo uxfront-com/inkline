@@ -11,68 +11,68 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 (globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }).IS_REACT_ACT_ENVIRONMENT = true;
 
 type Control = ComponentType<{
-  ariaLabel?: string;
-  checked?: boolean;
-  onCheckedChange?: (value: boolean) => void;
+	ariaLabel?: string;
+	checked?: boolean;
+	onCheckedChange?: (value: boolean) => void;
 }>;
 
 // The package's build, as a consumer imports it. It ships no declarations, so each component takes
 // the type of the props this test passes.
 const load = (entry: string): Promise<Record<string, Control>> =>
-  import(new URL(`../dist/${entry}.js`, import.meta.url).href);
+	import(new URL(`../dist/${entry}.js`, import.meta.url).href);
 const headless = await load("headless");
 const styled = await load("index");
 
 function exported(module: Record<string, Control>, name: string): [string, Control] {
-  const control = module[name];
-  if (!control) {
-    throw new Error(`the build doesn't export ${name}`);
-  }
-  return [name, control];
+	const control = module[name];
+	if (!control) {
+		throw new Error(`the build doesn't export ${name}`);
+	}
+	return [name, control];
 }
 
 const controls: Array<[string, Control]> = [
-  exported(headless, "ICheckboxControlBase"),
-  exported(headless, "ISwitchControlBase"),
-  exported(styled, "ICheckbox"),
-  exported(styled, "ISwitch"),
+	exported(headless, "ICheckboxControlBase"),
+	exported(headless, "ISwitchControlBase"),
+	exported(styled, "ICheckbox"),
+	exported(styled, "ISwitch"),
 ];
 
 let container: HTMLElement;
 let root: Root;
 
 beforeEach(() => {
-  container = document.createElement("div");
-  document.body.append(container);
-  root = createRoot(container);
+	container = document.createElement("div");
+	document.body.append(container);
+	root = createRoot(container);
 });
 
 afterEach(async () => {
-  await act(async () => root.unmount());
-  container.remove();
+	await act(async () => root.unmount());
+	container.remove();
 });
 
 describe.each(controls)("%s", (_name, Control) => {
-  const render = (checked: boolean, onCheckedChange: (value: boolean) => void) =>
-    act(async () =>
-      root.render(createElement(Control, { ariaLabel: "Accept", checked, onCheckedChange })),
-    );
-  const input = () => container.querySelector("input") as HTMLInputElement;
+	const render = (checked: boolean, onCheckedChange: (value: boolean) => void) =>
+		act(async () =>
+			root.render(createElement(Control, { ariaLabel: "Accept", checked, onCheckedChange })),
+		);
+	const input = () => container.querySelector("input") as HTMLInputElement;
 
-  it("follows a parent's change of checked without calling onCheckedChange", async () => {
-    const onCheckedChange = vi.fn();
-    await render(false, onCheckedChange);
-    await render(true, onCheckedChange);
-    expect(input().checked).toBe(true);
-    await render(false, onCheckedChange);
-    expect(input().checked).toBe(false);
-    expect(onCheckedChange).not.toHaveBeenCalled();
-  });
+	it("follows a parent's change of checked without calling onCheckedChange", async () => {
+		const onCheckedChange = vi.fn();
+		await render(false, onCheckedChange);
+		await render(true, onCheckedChange);
+		expect(input().checked).toBe(true);
+		await render(false, onCheckedChange);
+		expect(input().checked).toBe(false);
+		expect(onCheckedChange).not.toHaveBeenCalled();
+	});
 
-  it("calls onCheckedChange once for a click", async () => {
-    const onCheckedChange = vi.fn();
-    await render(false, onCheckedChange);
-    await act(async () => input().click());
-    expect(onCheckedChange.mock.calls).toEqual([[true]]);
-  });
+	it("calls onCheckedChange once for a click", async () => {
+		const onCheckedChange = vi.fn();
+		await render(false, onCheckedChange);
+		await act(async () => input().click());
+		expect(onCheckedChange.mock.calls).toEqual([[true]]);
+	});
 });

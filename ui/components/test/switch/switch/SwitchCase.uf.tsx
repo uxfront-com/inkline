@@ -7,52 +7,52 @@ import { defineEmits, ref, watch } from "@uxfront/unframework";
 import ISwitch from "../../../src/components/switch/styled/ISwitch.uf.tsx";
 
 export default function SwitchCase({
-  initial = false,
-  disabled = false,
-  readonly = false,
-  attributes = false,
-  parent = false,
+	initial = false,
+	disabled = false,
+	readonly = false,
+	attributes = false,
+	parent = false,
 }: {
-  initial?: boolean;
-  disabled?: boolean;
-  readonly?: boolean;
-  attributes?: boolean;
-  parent?: boolean;
+	initial?: boolean;
+	disabled?: boolean;
+	readonly?: boolean;
+	attributes?: boolean;
+	parent?: boolean;
 }) {
-  const emit = defineEmits<{ change: [checked: boolean] }>();
-  const checked = ref(initial);
-  watch(
-    () => checked.value,
-    (value) => emit("change", value),
-  );
+	const emit = defineEmits<{ change: [checked: boolean] }>();
+	const checked = ref(initial);
+	watch(
+		() => checked.value,
+		(value) => emit("change", value),
+	);
 
-  return (
-    <>
-      {attributes ? (
-        <div>
-          <ISwitch ariaLabel="Wi-Fi" ariaDescribedby="wifi-hint" v-model:checked={checked.value} />
-          <p id="wifi-hint">Joins known networks.</p>
-        </div>
-      ) : (
-        <div>
-          <ISwitch
-            label="Accept"
-            name="wifi"
-            color="dark"
-            size="lg"
-            disabled={disabled}
-            readonly={readonly}
-            v-model:checked={checked.value}
-          />
-          <ISwitch label="Overridden">From the slot</ISwitch>
-          <output>{checked.value ? "on" : "off"}</output>
-          {parent && (
-            <button type="button" onClick={() => (checked.value = !checked.value)}>
-              Select all
-            </button>
-          )}
-        </div>
-      )}
-    </>
-  );
+	return (
+		<>
+			{attributes ? (
+				<div>
+					<ISwitch ariaLabel="Wi-Fi" ariaDescribedby="wifi-hint" v-model:checked={checked.value} />
+					<p id="wifi-hint">Joins known networks.</p>
+				</div>
+			) : (
+				<div>
+					<ISwitch
+						label="Accept"
+						name="wifi"
+						color="dark"
+						size="lg"
+						disabled={disabled}
+						readonly={readonly}
+						v-model:checked={checked.value}
+					/>
+					<ISwitch label="Overridden">From the slot</ISwitch>
+					<output>{checked.value ? "on" : "off"}</output>
+					{parent && (
+						<button type="button" onClick={() => (checked.value = !checked.value)}>
+							Select all
+						</button>
+					)}
+				</div>
+			)}
+		</>
+	);
 }

@@ -8,6 +8,6 @@ import { createFieldAddonRecipe } from "../input/createFieldRecipe";
  * which renders an OUTSIDE joined block alongside the textarea.
  */
 export const useTextareaSuffixRecipe = createFieldAddonRecipe(
-  "textarea-suffix",
-  "paddingInlineStart",
+	"textarea-suffix",
+	"paddingInlineStart",
 );

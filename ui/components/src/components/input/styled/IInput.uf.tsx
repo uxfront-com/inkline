@@ -16,65 +16,65 @@ import type { InputProps } from "../types.ts";
  * them in `IFieldGroup`.
  */
 export default function IInput({
-  id,
-  name,
-  type,
-  placeholder,
-  disabled,
-  readonly,
-  color,
-  variant,
-  size,
-  invalid,
-  required,
-  autocomplete,
-  ariaLabel,
-  ariaDescribedby,
+	id,
+	name,
+	type,
+	placeholder,
+	disabled,
+	readonly,
+	color,
+	variant,
+	size,
+	invalid,
+	required,
+	autocomplete,
+	ariaLabel,
+	ariaDescribedby,
 }: InputProps) {
-  const emit = defineEmits<{ focus: []; blur: [] }>();
-  const value = defineModel<string>("value", { default: "" });
-  const slots = defineSlots<{ prefix?(): Element; suffix?(): Element }>();
+	const emit = defineEmits<{ focus: []; blur: [] }>();
+	const value = defineModel<string>("value", { default: "" });
+	const slots = defineSlots<{ prefix?(): Element; suffix?(): Element }>();
 
-  return (
-    <IInputBase class={inputRecipe({ color, variant, size, invalid, disabled, readonly })}>
-      {slots.prefix ? (
-        <IInputPrefixBase class={inputPrefixRecipe({ size })}>{slots.prefix?.()}</IInputPrefixBase>
-      ) : null}
-      {type === "textarea" ? (
-        <IInputTextareaBase
-          id={id}
-          name={name}
-          v-model:value={value.value}
-          placeholder={placeholder}
-          disabled={disabled}
-          readonly={readonly}
-          required={required}
-          autocomplete={autocomplete}
-          ariaLabel={ariaLabel}
-          ariaDescribedby={ariaDescribedby}
-          onFocus={() => emit("focus")}
-          onBlur={() => emit("blur")}
-        />
-      ) : (
-        <IInputControlBase
-          id={id}
-          name={name}
-          type={type}
-          v-model:value={value.value}
-          placeholder={placeholder}
-          disabled={disabled}
-          readonly={readonly}
-          required={required}
-          autocomplete={autocomplete}
-          ariaLabel={ariaLabel}
-          ariaDescribedby={ariaDescribedby}
-          onFocus={() => emit("focus")}
-          onBlur={() => emit("blur")}
-        />
-      )}
-      {slots.suffix ? (
-        <IInputSuffixBase class={inputSuffixRecipe({ size })}>{slots.suffix?.()}</IInputSuffixBase>
-      ) : null}
-    </IInputBase>
-  );
+	return (
+		<IInputBase class={inputRecipe({ color, variant, size, invalid, disabled, readonly })}>
+			{slots.prefix ? (
+				<IInputPrefixBase class={inputPrefixRecipe({ size })}>{slots.prefix?.()}</IInputPrefixBase>
+			) : null}
+			{type === "textarea" ? (
+				<IInputTextareaBase
+					id={id}
+					name={name}
+					v-model:value={value.value}
+					placeholder={placeholder}
+					disabled={disabled}
+					readonly={readonly}
+					required={required}
+					autocomplete={autocomplete}
+					ariaLabel={ariaLabel}
+					ariaDescribedby={ariaDescribedby}
+					onFocus={() => emit("focus")}
+					onBlur={() => emit("blur")}
+				/>
+			) : (
+				<IInputControlBase
+					id={id}
+					name={name}
+					type={type}
+					v-model:value={value.value}
+					placeholder={placeholder}
+					disabled={disabled}
+					readonly={readonly}
+					required={required}
+					autocomplete={autocomplete}
+					ariaLabel={ariaLabel}
+					ariaDescribedby={ariaDescribedby}
+					onFocus={() => emit("focus")}
+					onBlur={() => emit("blur")}
+				/>
+			)}
+			{slots.suffix ? (
+				<IInputSuffixBase class={inputSuffixRecipe({ size })}>{slots.suffix?.()}</IInputSuffixBase>
+			) : null}
+		</IInputBase>
+	);
 }

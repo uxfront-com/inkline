@@ -1,8 +1,8 @@
 {
-  "mcpServers": {
-    "linear-server": {
-      "type": "http",
-      "url": "https://mcp.linear.app/mcp"
-    }
-  }
+	"mcpServers": {
+		"linear-server": {
+			"type": "http",
+			"url": "https://mcp.linear.app/mcp"
+		}
+	}
 }

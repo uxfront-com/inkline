@@ -10,21 +10,21 @@ const current = VERSIONS[0].label;
 const items = VERSIONS.map(({ label }) => label);
 
 function go(label: string) {
-  const url = VERSIONS.find((version) => version.label === label)?.url;
-  if (url) {
-    navigateTo(url, { external: true });
-  }
+	const url = VERSIONS.find((version) => version.label === label)?.url;
+	if (url) {
+		navigateTo(url, { external: true });
+	}
 }
 </script>
 
 <template>
-  <USelect
-    :model-value="current"
-    :items="items"
-    aria-label="Version"
-    variant="ghost"
-    color="neutral"
-    :ui="{ content: 'min-w-fit' }"
-    @update:model-value="go"
-  />
+	<USelect
+		:model-value="current"
+		:items="items"
+		aria-label="Version"
+		variant="ghost"
+		color="neutral"
+		:ui="{ content: 'min-w-fit' }"
+		@update:model-value="go"
+	/>
 </template>

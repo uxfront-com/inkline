@@ -6,10 +6,10 @@ import type { FieldGroupProps } from "../../../src/components/field-group/types.
 import IInput from "../../../src/components/input/styled/IInput.uf.tsx";
 
 export default function FieldGroupCase({ orientation, block }: Omit<FieldGroupProps, "id">) {
-  return (
-    <IFieldGroup id="search" orientation={orientation} block={block}>
-      <IInput name="query" placeholder="Search" />
-      <IButton label="Search" color="primary" />
-    </IFieldGroup>
-  );
+	return (
+		<IFieldGroup id="search" orientation={orientation} block={block}>
+			<IInput name="query" placeholder="Search" />
+			<IButton label="Search" color="primary" />
+		</IFieldGroup>
+	);
 }

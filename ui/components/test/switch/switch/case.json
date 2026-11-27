@@ -1,34 +1,34 @@
 {
-  "description": "The styled switch, its `checked` model bound by a parent, in each state, and labelled by its slot.",
-  "ssr": {
-    "unchecked": {
-      "props": {}
-    },
-    "checked": {
-      "props": {
-        "initial": true
-      }
-    },
-    "readonly": {
-      "props": {
-        "initial": true,
-        "readonly": true
-      }
-    },
-    "disabled": {
-      "props": {
-        "disabled": true
-      }
-    },
-    "attributes": {
-      "props": {
-        "attributes": true
-      }
-    },
-    "parent": {
-      "props": {
-        "parent": true
-      }
-    }
-  }
+	"description": "The styled switch, its `checked` model bound by a parent, in each state, and labelled by its slot.",
+	"ssr": {
+		"unchecked": {
+			"props": {}
+		},
+		"checked": {
+			"props": {
+				"initial": true
+			}
+		},
+		"readonly": {
+			"props": {
+				"initial": true,
+				"readonly": true
+			}
+		},
+		"disabled": {
+			"props": {
+				"disabled": true
+			}
+		},
+		"attributes": {
+			"props": {
+				"attributes": true
+			}
+		},
+		"parent": {
+			"props": {
+				"parent": true
+			}
+		}
+	}
 }

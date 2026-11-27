@@ -1,21 +1,21 @@
 {
-  "name": "@inkline/toolchain-angular",
-  "version": "0.0.0",
-  "private": true,
-  "description": "Angular's compiler stack on TypeScript 6, where `unframework test`, `visual` and `preview` resolve it for `ui/components` (its `package.resolveFrom.angular`).",
-  "type": "module",
-  "devDependencies": {
-    "@analogjs/vite-plugin-angular": "catalog:",
-    "@angular/build": "catalog:",
-    "@angular/common": "catalog:",
-    "@angular/compiler": "catalog:",
-    "@angular/compiler-cli": "catalog:",
-    "@angular/core": "catalog:",
-    "@angular/platform-browser": "catalog:",
-    "@angular/platform-server": "catalog:",
-    "rxjs": "catalog:",
-    "tslib": "catalog:",
-    "typescript": "catalog:ts6",
-    "vite": "catalog:unframework"
-  }
+	"name": "@inkline/toolchain-angular",
+	"version": "0.0.0",
+	"private": true,
+	"description": "Angular's compiler stack on TypeScript 6, where `unframework test`, `visual` and `preview` resolve it for `ui/components` (its `package.resolveFrom.angular`).",
+	"type": "module",
+	"devDependencies": {
+		"@analogjs/vite-plugin-angular": "catalog:",
+		"@angular/build": "catalog:",
+		"@angular/common": "catalog:",
+		"@angular/compiler": "catalog:",
+		"@angular/compiler-cli": "catalog:",
+		"@angular/core": "catalog:",
+		"@angular/platform-browser": "catalog:",
+		"@angular/platform-server": "catalog:",
+		"rxjs": "catalog:",
+		"tslib": "catalog:",
+		"typescript": "catalog:ts6",
+		"vite": "catalog:unframework"
+	}
 }

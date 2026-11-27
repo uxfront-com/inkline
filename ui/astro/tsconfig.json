@@ -1,7 +1,7 @@
 {
-  "extends": "../../tsconfig.json",
-  "include": ["src", "test", "*.styleframe.ts", ".styleframe/**/*.d.ts"],
-  "compilerOptions": {
-    "types": ["node"]
-  }
+	"extends": "../../tsconfig.json",
+	"include": ["src", "test", "*.styleframe.ts", ".styleframe/**/*.d.ts"],
+	"compilerOptions": {
+		"types": ["node"]
+	}
 }

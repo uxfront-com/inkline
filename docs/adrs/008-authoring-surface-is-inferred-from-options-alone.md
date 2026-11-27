@@ -97,8 +97,8 @@ options-taking overload every authored component without an `options.props` map 
 
 ```ts
 export function defineComponent<P = {}>(
-  options: ComponentOptions & { props?: never },
-  setup: (props: P) => any,
+	options: ComponentOptions & { props?: never },
+	setup: (props: P) => any,
 ): InkComponent<P>;
 ```
 

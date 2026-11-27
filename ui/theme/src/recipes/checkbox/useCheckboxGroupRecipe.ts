@@ -26,125 +26,125 @@ import { createUseRecipe } from "@styleframe/theme";
  * touched it.
  */
 export const useCheckboxGroupRecipe = createUseRecipe(
-  "checkbox-group",
-  {
-    base: {
-      display: "flex",
-      minWidth: "0",
-      margin: "0",
-      padding: "0",
-      borderWidth: "0",
-      color: "@color.text",
-    },
-    variants: {
-      orientation: {
-        vertical: {
-          flexDirection: "column",
-        },
-        horizontal: {
-          flexDirection: "row",
-          flexWrap: "wrap",
-          alignItems: "center",
-          // Wrapped lines stay together in a group taller than its content.
-          alignContent: "flex-start",
-          gapX: "@1.5",
-        },
-      },
-      size: {
-        sm: {
-          gapY: "@0.5",
-        },
-        md: {
-          gapY: "@0.75",
-        },
-        lg: {
-          gapY: "@1",
-        },
-      },
-    },
-    // Hook classes for the legend's size and the select-all indent, which
-    // the `setup` callback styles per size.
-    compoundVariants: [
-      { match: { size: "sm" as const }, className: "-size-sm" },
-      { match: { size: "md" as const }, className: "-size-md" },
-      { match: { size: "lg" as const }, className: "-size-lg" },
-    ],
-    defaultVariants: {
-      orientation: "vertical",
-      size: "md",
-    },
-  },
-  (s) => {
-    const { selector, ref, css } = s;
+	"checkbox-group",
+	{
+		base: {
+			display: "flex",
+			minWidth: "0",
+			margin: "0",
+			padding: "0",
+			borderWidth: "0",
+			color: "@color.text",
+		},
+		variants: {
+			orientation: {
+				vertical: {
+					flexDirection: "column",
+				},
+				horizontal: {
+					flexDirection: "row",
+					flexWrap: "wrap",
+					alignItems: "center",
+					// Wrapped lines stay together in a group taller than its content.
+					alignContent: "flex-start",
+					gapX: "@1.5",
+				},
+			},
+			size: {
+				sm: {
+					gapY: "@0.5",
+				},
+				md: {
+					gapY: "@0.75",
+				},
+				lg: {
+					gapY: "@1",
+				},
+			},
+		},
+		// Hook classes for the legend's size and the select-all indent, which
+		// the `setup` callback styles per size.
+		compoundVariants: [
+			{ match: { size: "sm" as const }, className: "-size-sm" },
+			{ match: { size: "md" as const }, className: "-size-md" },
+			{ match: { size: "lg" as const }, className: "-size-lg" },
+		],
+		defaultVariants: {
+			orientation: "vertical",
+			size: "md",
+		},
+	},
+	(s) => {
+		const { selector, ref, css } = s;
 
-    selector(".checkbox-group > legend", {
-      padding: "0",
-      marginBlockEnd: "@spacing.xs",
-      fontWeight: "@font-weight.semibold",
-      lineHeight: "@line-height.normal",
-      color: "@color.text",
-    });
+		selector(".checkbox-group > legend", {
+			padding: "0",
+			marginBlockEnd: "@spacing.xs",
+			fontWeight: "@font-weight.semibold",
+			lineHeight: "@line-height.normal",
+			color: "@color.text",
+		});
 
-    // The legend is the same size as the options' text in `checkbox`.
-    for (const [size, fontSize] of [
-      ["sm", "@font-size.xs"],
-      ["md", "@font-size.sm"],
-      ["lg", "@font-size.md"],
-    ] as const) {
-      selector(`.checkbox-group.-size-${size} > legend`, { fontSize });
-    }
+		// The legend is the same size as the options' text in `checkbox`.
+		for (const [size, fontSize] of [
+			["sm", "@font-size.xs"],
+			["md", "@font-size.sm"],
+			["lg", "@font-size.md"],
+		] as const) {
+			selector(`.checkbox-group.-size-${size} > legend`, { fontSize });
+		}
 
-    // The select-all box and the options each take a line of their own, and
-    // the options take the group's direction and gaps. A width rather than a
-    // flex basis, which would set their height in a column and pull them
-    // apart in a group taller than its content.
-    selector(
-      '.checkbox-group > [data-slot="select-all"], .checkbox-group > [data-slot="options"]',
-      {
-        boxSizing: "border-box",
-        width: "100%",
-      },
-    );
+		// The select-all box and the options each take a line of their own, and
+		// the options take the group's direction and gaps. A width rather than a
+		// flex basis, which would set their height in a column and pull them
+		// apart in a group taller than its content.
+		selector(
+			'.checkbox-group > [data-slot="select-all"], .checkbox-group > [data-slot="options"]',
+			{
+				boxSizing: "border-box",
+				width: "100%",
+			},
+		);
 
-    selector('.checkbox-group > [data-slot="options"]', {
-      display: "flex",
-      flexDirection: "inherit",
-      flexWrap: "inherit",
-      alignItems: "inherit",
-      gap: "inherit",
-    });
+		selector('.checkbox-group > [data-slot="options"]', {
+			display: "flex",
+			flexDirection: "inherit",
+			flexWrap: "inherit",
+			alignItems: "inherit",
+			gap: "inherit",
+		});
 
-    // The indent is the select-all box and its gap in `checkbox` of the
-    // same size, so the options' boxes line up with its label.
-    for (const [size, box, gap] of [
-      ["sm", "0.875rem", 0.375],
-      ["md", "1rem", 0.5],
-      ["lg", "1.25rem", 0.625],
-    ] as const) {
-      selector(`.checkbox-group.-size-${size} > [data-slot="select-all"] + [data-slot="options"]`, {
-        paddingInlineStart: css`calc(${box} + ${ref("spacing")} * ${gap})`,
-      });
-    }
+		// The indent is the select-all box and its gap in `checkbox` of the
+		// same size, so the options' boxes line up with its label.
+		for (const [size, box, gap] of [
+			["sm", "0.875rem", 0.375],
+			["md", "1rem", 0.5],
+			["lg", "1.25rem", 0.625],
+		] as const) {
+			selector(`.checkbox-group.-size-${size} > [data-slot="select-all"] + [data-slot="options"]`, {
+				paddingInlineStart: css`calc(${box} + ${ref("spacing")} * ${gap})`,
+			});
+		}
 
-    selector(".checkbox-group:disabled > legend", {
-      opacity: "0.5",
-      "@media (forced-colors: active)": {
-        opacity: "1",
-        color: "GrayText",
-      },
-    });
+		selector(".checkbox-group:disabled > legend", {
+			opacity: "0.5",
+			"@media (forced-colors: active)": {
+				opacity: "1",
+				color: "GrayText",
+			},
+		});
 
-    selector('.checkbox-group[aria-invalid="true"] .checkbox > .checkbox-field', {
-      borderColor: "@color.error",
-      boxShadow: "inset 0 0 0 1px @color.error",
-    });
+		selector('.checkbox-group[aria-invalid="true"] .checkbox > .checkbox-field', {
+			borderColor: "@color.error",
+			boxShadow: "inset 0 0 0 1px @color.error",
+		});
 
-    // The invalid border outranks the box's own forced colors disabled
-    // border, so a disabled box keeps its `GrayText` border here.
-    selector('.checkbox-group[aria-invalid="true"] .checkbox > .checkbox-field:disabled', {
-      "@media (forced-colors: active)": {
-        borderColor: "GrayText",
-      },
-    });
-  },
+		// The invalid border outranks the box's own forced colors disabled
+		// border, so a disabled box keeps its `GrayText` border here.
+		selector('.checkbox-group[aria-invalid="true"] .checkbox > .checkbox-field:disabled', {
+			"@media (forced-colors: active)": {
+				borderColor: "GrayText",
+			},
+		});
+	},
 );

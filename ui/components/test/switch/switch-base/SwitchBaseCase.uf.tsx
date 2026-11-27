@@ -2,10 +2,10 @@
 import ISwitchBase from "../../../src/components/switch/headless/ISwitchBase.uf.tsx";
 
 export default function SwitchBaseCase() {
-  return (
-    <ISwitchBase>
-      <input type="checkbox" role="switch" name="wifi" />
-      Wi-Fi
-    </ISwitchBase>
-  );
+	return (
+		<ISwitchBase>
+			<input type="checkbox" role="switch" name="wifi" />
+			Wi-Fi
+		</ISwitchBase>
+	);
 }

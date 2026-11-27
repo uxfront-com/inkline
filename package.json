@@ -1,36 +1,37 @@
 {
-  "name": "@inkline/monorepo",
-  "version": "0.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "ready": "pnpm run build && pnpm run check && pnpm run test && pnpm --filter @inkline/components test:recipes && pnpm --filter @inkline/components test:targets && pnpm --filter @inkline/components api:check",
-    "build": "turbo run build",
-    "dev": "turbo run dev --filter=website",
-    "test": "turbo run test",
-    "lint": "oxlint",
-    "lint:fix": "oxlint --fix",
-    "format": "oxfmt",
-    "format:check": "oxfmt --check",
-    "check-types": "oxlint -A all",
-    "check": "pnpm run format:check && pnpm run lint",
-    "typecheck": "pnpm run build && pnpm run check-types",
-    "clean": "pnpm -r exec rm -rf dist",
-    "ci:version": "changeset version",
-    "ci:prepublish": "pnpm run build",
-    "ci:publish": "pnpm run ci:prepublish && changeset publish"
-  },
-  "devDependencies": {
-    "@changesets/cli": "^3.0.3",
-    "@uxfront/oxlint-config": "catalog:",
-    "@uxfront/typescript-config": "catalog:",
-    "oxfmt": "catalog:",
-    "oxlint": "catalog:",
-    "oxlint-tsgolint": "catalog:",
-    "turbo": "catalog:"
-  },
-  "engines": {
-    "node": ">=24"
-  },
-  "packageManager": "pnpm@11.25.0"
+	"name": "@inkline/monorepo",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"ready": "pnpm run build && pnpm run check && pnpm run test && pnpm --filter @inkline/components test:recipes && pnpm --filter @inkline/components test:targets && pnpm --filter @inkline/components api:check",
+		"build": "turbo run build",
+		"dev": "turbo run dev --filter=website",
+		"test": "turbo run test",
+		"lint": "oxlint",
+		"lint:fix": "oxlint --fix",
+		"format": "oxfmt",
+		"format:check": "oxfmt --check",
+		"check-types": "oxlint -A all",
+		"check": "pnpm run format:check && pnpm run lint",
+		"typecheck": "pnpm run build && pnpm run check-types",
+		"clean": "pnpm -r exec rm -rf dist",
+		"ci:version": "changeset version",
+		"ci:prepublish": "pnpm run build",
+		"ci:publish": "pnpm run ci:prepublish && changeset publish"
+	},
+	"devDependencies": {
+		"@changesets/cli": "^3.0.3",
+		"@uxfront/oxfmt-config": "catalog:",
+		"@uxfront/oxlint-config": "catalog:",
+		"@uxfront/typescript-config": "catalog:",
+		"oxfmt": "catalog:",
+		"oxlint": "catalog:",
+		"oxlint-tsgolint": "catalog:",
+		"turbo": "catalog:"
+	},
+	"engines": {
+		"node": ">=24"
+	},
+	"packageManager": "pnpm@11.25.0"
 }

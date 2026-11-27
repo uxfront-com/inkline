@@ -1,9 +1,9 @@
 import { styleframe } from "@styleframe/core";
-import { wcagContrast } from "culori";
-
 import { useDesignTokensPreset } from "@styleframe/theme";
 import { useModifiersPreset } from "@styleframe/theme";
 import { useUtilitiesPreset } from "@styleframe/theme";
+import { wcagContrast } from "culori";
+
 import { usePopoverRecipe } from "./usePopoverRecipe";
 
 type Slot = Record<string, unknown>;
@@ -19,60 +19,60 @@ const MIN_TEXT_CONTRAST = 4.5;
  * draw it at full strength.
  */
 function createInstance() {
-  const s = styleframe();
-  useDesignTokensPreset(s);
-  useModifiersPreset(s);
-  useUtilitiesPreset(s);
-  return s;
+	const s = styleframe();
+	useDesignTokensPreset(s);
+	useModifiersPreset(s);
+	useUtilitiesPreset(s);
+	return s;
 }
 
 function collectPairs() {
-  const s = createInstance();
-  const recipe = usePopoverRecipe(s);
+	const s = createInstance();
+	const recipe = usePopoverRecipe(s);
 
-  const dark = s.root.themes.find((theme) => theme.name === "dark");
-  const resolve = (value: unknown, isDark: boolean): string => {
-    const name = String(value).replace(/^@/, "");
-    const variable =
-      (isDark && dark?.variables.find((v) => v.name === name)) ||
-      s.root.variables.find((v) => v.name === name);
-    if (!variable) {
-      throw new Error(`Unresolved token ${String(value)}`);
-    }
-    return String(variable.value);
-  };
+	const dark = s.root.themes.find((theme) => theme.name === "dark");
+	const resolve = (value: unknown, isDark: boolean): string => {
+		const name = String(value).replace(/^@/, "");
+		const variable =
+			(isDark && dark?.variables.find((v) => v.name === name)) ||
+			s.root.variables.find((v) => v.name === name);
+		if (!variable) {
+			throw new Error(`Unresolved token ${String(value)}`);
+		}
+		return String(variable.value);
+	};
 
-  const pairs: Array<{ label: string; text: string; background: string }> = [];
+	const pairs: Array<{ label: string; text: string; background: string }> = [];
 
-  for (const cv of recipe.compoundVariants!) {
-    if (!cv.match.color || !cv.match.variant) {
-      continue;
-    }
-    const css = cv.css as Slot;
+	for (const cv of recipe.compoundVariants!) {
+		if (!cv.match.color || !cv.match.variant) {
+			continue;
+		}
+		const css = cv.css as Slot;
 
-    for (const [theme, slot, isDark] of [
-      ["light", css, false],
-      ["dark", css["&:dark"] as Slot, true],
-    ] as const) {
-      pairs.push({
-        label: `${cv.match.color} ${cv.match.variant} in ${theme} mode`,
-        text: resolve(slot.color, isDark),
-        background: resolve(slot.background, isDark),
-      });
-    }
-  }
+		for (const [theme, slot, isDark] of [
+			["light", css, false],
+			["dark", css["&:dark"] as Slot, true],
+		] as const) {
+			pairs.push({
+				label: `${cv.match.color} ${cv.match.variant} in ${theme} mode`,
+				text: resolve(slot.color, isDark),
+				background: resolve(slot.background, isDark),
+			});
+		}
+	}
 
-  return pairs;
+	return pairs;
 }
 
 describe("popover contrast", () => {
-  const pairs = collectPairs();
+	const pairs = collectPairs();
 
-  it("should check every color × variant compound in both themes", () => {
-    expect(pairs).toHaveLength(9 * 2);
-  });
+	it("should check every color × variant compound in both themes", () => {
+		expect(pairs).toHaveLength(9 * 2);
+	});
 
-  it.each(pairs)("popover/contrast $label has text of at least 4.5:1", ({ text, background }) => {
-    expect(wcagContrast(text, background)).toBeGreaterThanOrEqual(MIN_TEXT_CONTRAST);
-  });
+	it.each(pairs)("popover/contrast $label has text of at least 4.5:1", ({ text, background }) => {
+		expect(wcagContrast(text, background)).toBeGreaterThanOrEqual(MIN_TEXT_CONTRAST);
+	});
 });

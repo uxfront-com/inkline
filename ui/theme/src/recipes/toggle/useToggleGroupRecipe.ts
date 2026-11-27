@@ -12,34 +12,34 @@ import { createUseRecipe } from "@styleframe/theme";
  * border radii and inner borders on any bordered child.
  */
 export const useToggleGroupRecipe = createUseRecipe("toggle-group", {
-  base: {
-    display: "flex",
-  },
-  variants: {
-    orientation: {
-      horizontal: {
-        flexDirection: "row",
-        flexWrap: "wrap",
-        alignItems: "center",
-      },
-      vertical: {
-        flexDirection: "column",
-      },
-    },
-    size: {
-      sm: {
-        gap: "@0.5",
-      },
-      md: {
-        gap: "@0.75",
-      },
-      lg: {
-        gap: "@1",
-      },
-    },
-  },
-  defaultVariants: {
-    orientation: "horizontal",
-    size: "md",
-  },
+	base: {
+		display: "flex",
+	},
+	variants: {
+		orientation: {
+			horizontal: {
+				flexDirection: "row",
+				flexWrap: "wrap",
+				alignItems: "center",
+			},
+			vertical: {
+				flexDirection: "column",
+			},
+		},
+		size: {
+			sm: {
+				gap: "@0.5",
+			},
+			md: {
+				gap: "@0.75",
+			},
+			lg: {
+				gap: "@1",
+			},
+		},
+	},
+	defaultVariants: {
+		orientation: "horizontal",
+		size: "md",
+	},
 });

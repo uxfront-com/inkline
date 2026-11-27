@@ -1,4 +1,5 @@
 import { fileURLToPath } from "node:url";
+
 import { defineConfig } from "vitest/config";
 
 // Build tests. Separate from the default `vitest run` because they
@@ -9,8 +10,8 @@ import { defineConfig } from "vitest/config";
 // `root` is pinned here so the run resolves the same way whether it is invoked
 // from this directory or from the workspace root with `--config`.
 export default defineConfig({
-  root: fileURLToPath(new URL(".", import.meta.url)),
-  test: {
-    include: ["test/**/*.build.test.ts"],
-  },
+	root: fileURLToPath(new URL(".", import.meta.url)),
+	test: {
+		include: ["test/**/*.build.test.ts"],
+	},
 });

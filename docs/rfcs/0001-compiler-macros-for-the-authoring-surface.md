@@ -93,15 +93,15 @@ Add `defineProps` as a third props channel, in the two forms the compiler alread
 ```tsx
 // Type form — mirrors today's parameter annotation
 export default defineComponent(() => {
-  const props = defineProps<ButtonProps>();
-  return <button disabled={props.disabled}>{props.label}</button>;
+	const props = defineProps<ButtonProps>();
+	return <button disabled={props.disabled}>{props.label}</button>;
 });
 
 // Object form — mirrors today's options.props (per-target defaults, required flags)
 export default defineComponent(() => {
-  const props = defineProps({ color: "blue", size: Number });
-  //    ^ typed via the existing InferProps<D> (core/core/src/index.ts:94-100)
-  return <div class={`${props.color} ${props.size}`} />;
+	const props = defineProps({ color: "blue", size: Number });
+	//    ^ typed via the existing InferProps<D> (core/core/src/index.ts:94-100)
+	return <div class={`${props.color} ${props.size}`} />;
 });
 ```
 

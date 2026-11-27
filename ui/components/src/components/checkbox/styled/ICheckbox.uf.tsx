@@ -13,36 +13,36 @@ import type { CheckboxProps } from "../types.ts";
  * `indeterminate` and `readonly` pass on as props.
  */
 export default function ICheckbox({
-  id,
-  name,
-  disabled,
-  required,
-  readonly,
-  indeterminate,
-  color,
-  size,
-  label,
-  ariaLabel,
-  ariaDescribedby,
+	id,
+	name,
+	disabled,
+	required,
+	readonly,
+	indeterminate,
+	color,
+	size,
+	label,
+	ariaLabel,
+	ariaDescribedby,
 }: CheckboxProps) {
-  const checked = defineModel<boolean>("checked", { default: false });
-  const slots = defineSlots<{ default?(): Element }>();
+	const checked = defineModel<boolean>("checked", { default: false });
+	const slots = defineSlots<{ default?(): Element }>();
 
-  return (
-    <ICheckboxBase class={checkboxRecipe({ size })}>
-      <ICheckboxControlBase
-        class={checkboxFieldRecipe({ color, size })}
-        id={id}
-        name={name}
-        disabled={disabled}
-        required={required}
-        readonly={readonly}
-        indeterminate={indeterminate}
-        ariaLabel={ariaLabel}
-        ariaDescribedby={ariaDescribedby}
-        v-model:checked={checked.value}
-      />
-      {slots.default?.() ?? label}
-    </ICheckboxBase>
-  );
+	return (
+		<ICheckboxBase class={checkboxRecipe({ size })}>
+			<ICheckboxControlBase
+				class={checkboxFieldRecipe({ color, size })}
+				id={id}
+				name={name}
+				disabled={disabled}
+				required={required}
+				readonly={readonly}
+				indeterminate={indeterminate}
+				ariaLabel={ariaLabel}
+				ariaDescribedby={ariaDescribedby}
+				v-model:checked={checked.value}
+			/>
+			{slots.default?.() ?? label}
+		</ICheckboxBase>
+	);
 }

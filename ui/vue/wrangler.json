@@ -1,8 +1,8 @@
 {
-  "name": "inkline-preview-vue",
-  "compatibility_date": "2026-09-21",
-  "assets": {
-    "directory": "../components/preview-vue"
-  },
-  "previews": {}
+	"name": "inkline-preview-vue",
+	"compatibility_date": "2026-09-21",
+	"assets": {
+		"directory": "../components/preview-vue"
+	},
+	"previews": {}
 }

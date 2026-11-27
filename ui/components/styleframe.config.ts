@@ -1,9 +1,9 @@
 import {
-  useDesignTokensPreset,
-  useGlobalPreset,
-  useModifiersPreset,
-  useSanitizePreset,
-  useUtilitiesPreset,
+	useDesignTokensPreset,
+	useGlobalPreset,
+	useModifiersPreset,
+	useSanitizePreset,
+	useUtilitiesPreset,
 } from "@styleframe/theme";
 import { styleframe } from "styleframe";
 

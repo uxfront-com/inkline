@@ -8,12 +8,12 @@ const route = useRoute();
 const usesDocus = computed(() => route.path === "/docs" || route.path.startsWith("/docs/"));
 
 useHead({
-  titleTemplate: (title) => (title ? `${title} - Inkline` : "Inkline"),
+	titleTemplate: (title) => (title ? `${title} - Inkline` : "Inkline"),
 });
 </script>
 
 <template>
-  <NuxtRouteAnnouncer />
-  <DocusApp v-if="usesDocus" />
-  <NuxtPage v-else />
+	<NuxtRouteAnnouncer />
+	<DocusApp v-if="usesDocus" />
+	<NuxtPage v-else />
 </template>

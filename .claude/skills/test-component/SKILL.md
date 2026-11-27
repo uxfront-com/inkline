@@ -30,37 +30,37 @@ Tests are colocated as `<file>.ink.test.ts` (Vitest), next to the source they co
 ## Headless test — the baseline every component clears
 
 ```ts
-import { describe, it, expect } from "vitest";
 import {
-  compileComponent,
-  expectCompilationSuccess,
-  expectCorrectFileExtensions,
-  expectNoDiagnostics,
-  assertConformance,
-  snapshotOutput,
-  resolveComponent,
+	compileComponent,
+	expectCompilationSuccess,
+	expectCorrectFileExtensions,
+	expectNoDiagnostics,
+	assertConformance,
+	snapshotOutput,
+	resolveComponent,
 } from "@inkline/test-utils";
+import { describe, it, expect } from "vitest";
 
 const BADGE = resolveComponent(import.meta.url, "./IBadgeBase.ink.tsx");
 
 describe("Badge", () => {
-  it("compiles to all 7 targets without errors", async () => {
-    const result = await compileComponent(BADGE);
-    expectCompilationSuccess(result);
-    expect(Object.keys(result.files)).toHaveLength(7);
-  });
-  it("produces zero diagnostics", async () => {
-    expectNoDiagnostics(await compileComponent(BADGE));
-  });
-  it("produces correct file extensions per target", async () => {
-    expectCorrectFileExtensions(await compileComponent(BADGE));
-  });
-  it("passes conformance invariants for all targets", async () => {
-    assertConformance(await compileComponent(BADGE));
-  });
-  it("output matches snapshots", async () => {
-    expect(snapshotOutput(await compileComponent(BADGE))).toMatchSnapshot();
-  });
+	it("compiles to all 7 targets without errors", async () => {
+		const result = await compileComponent(BADGE);
+		expectCompilationSuccess(result);
+		expect(Object.keys(result.files)).toHaveLength(7);
+	});
+	it("produces zero diagnostics", async () => {
+		expectNoDiagnostics(await compileComponent(BADGE));
+	});
+	it("produces correct file extensions per target", async () => {
+		expectCorrectFileExtensions(await compileComponent(BADGE));
+	});
+	it("passes conformance invariants for all targets", async () => {
+		assertConformance(await compileComponent(BADGE));
+	});
+	it("output matches snapshots", async () => {
+		expect(snapshotOutput(await compileComponent(BADGE))).toMatchSnapshot();
+	});
 });
 ```
 
@@ -68,10 +68,10 @@ If the component uses two-way binding or `hasSlot` gating, replace `expectNoDiag
 
 ```ts
 it("emits only the expected notices (Astro two-way INK0045, Qwik/Angular hasSlot INK0068)", async () => {
-  const result = await compileComponent(COMPONENT);
-  const unexpected = result.diagnostics.filter((d) => d.code !== "INK0045" && d.code !== "INK0068");
-  expect(unexpected.map((d) => `${d.code}: ${d.title}`)).toEqual([]);
-  expect(result.diagnostics.filter((d) => d.code === "INK0068")).toHaveLength(2); // Qwik + Angular
+	const result = await compileComponent(COMPONENT);
+	const unexpected = result.diagnostics.filter((d) => d.code !== "INK0045" && d.code !== "INK0068");
+	expect(unexpected.map((d) => `${d.code}: ${d.title}`)).toEqual([]);
+	expect(result.diagnostics.filter((d) => d.code === "INK0068")).toHaveLength(2); // Qwik + Angular
 });
 ```
 
@@ -93,34 +93,34 @@ The strongest assertion: render the composed component and check actual HTML. Li
 import { mountStyledOnAngular } from "../../angular-ssr-helper.ts";
 
 describe("IInput (styled) on Angular SSR", () => {
-  const HEADLESS = [
-    "../headless/IInputBase.ink.tsx",
-    "../headless/IInputPrefixBase.ink.tsx",
-    "../headless/IInputSuffixBase.ink.tsx",
-    "../headless/IInputControlBase.ink.tsx",
-  ];
-  const mount = (props?: Record<string, unknown>) =>
-    mountStyledOnAngular(import.meta.url, "./IInput.ink.tsx", HEADLESS, props);
+	const HEADLESS = [
+		"../headless/IInputBase.ink.tsx",
+		"../headless/IInputPrefixBase.ink.tsx",
+		"../headless/IInputSuffixBase.ink.tsx",
+		"../headless/IInputControlBase.ink.tsx",
+	];
+	const mount = (props?: Record<string, unknown>) =>
+		mountStyledOnAngular(import.meta.url, "./IInput.ink.tsx", HEADLESS, props);
 
-  it("renders the shell with recipe classes + the native control", async () => {
-    const { html } = await mount({
-      placeholder: "Amount",
-      name: "amount",
-      size: "md",
-      color: "light",
-    });
-    expect(html).toMatch(/<div[^>]*class="input input--color-light input--size-md"/);
-    expect(html).toMatch(/<input[^>]*class="input-field"/);
-  });
+	it("renders the shell with recipe classes + the native control", async () => {
+		const { html } = await mount({
+			placeholder: "Amount",
+			name: "amount",
+			size: "md",
+			color: "light",
+		});
+		expect(html).toMatch(/<div[^>]*class="input input--color-light input--size-md"/);
+		expect(html).toMatch(/<input[^>]*class="input-field"/);
+	});
 
-  it("projects slot content", async () => {
-    const { html } = await mount({ __slots: { prefix: "$", suffix: "USD" } });
-    expect(html).toMatch(/<span[^>]*class="input-prefix[^"]*">\$<\/span>/);
-  });
+	it("projects slot content", async () => {
+		const { html } = await mount({ __slots: { prefix: "$", suffix: "USD" } });
+		expect(html).toMatch(/<span[^>]*class="input-prefix[^"]*">\$<\/span>/);
+	});
 
-  it("reflects disabled onto the native control", async () => {
-    expect((await mount({ disabled: true })).html).toMatch(/<input[^>]*disabled/);
-  });
+	it("reflects disabled onto the native control", async () => {
+		expect((await mount({ disabled: true })).html).toMatch(/<input[^>]*disabled/);
+	});
 });
 ```
 

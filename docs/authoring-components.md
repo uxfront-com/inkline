@@ -37,9 +37,9 @@ import type { Element } from "@uxfront/unframework";
 import type { BadgeBaseProps } from "../types.ts";
 
 export default function IBadgeBase({ label }: BadgeBaseProps) {
-  const slots = defineSlots<{ default?(): Element }>();
+	const slots = defineSlots<{ default?(): Element }>();
 
-  return <div>{slots.default?.() ?? label}</div>;
+	return <div>{slots.default?.() ?? label}</div>;
 }
 ```
 
@@ -54,13 +54,13 @@ import IBadgeBase from "../headless/IBadgeBase.uf.tsx";
 import type { BadgeProps } from "../types.ts";
 
 export default function IBadge({ label, color, variant, size }: BadgeProps) {
-  const slots = defineSlots<{ default?(): Element }>();
+	const slots = defineSlots<{ default?(): Element }>();
 
-  return (
-    <IBadgeBase class={badgeRecipe({ color, variant, size })}>
-      {slots.default?.() ?? label}
-    </IBadgeBase>
-  );
+	return (
+		<IBadgeBase class={badgeRecipe({ color, variant, size })}>
+			{slots.default?.() ?? label}
+		</IBadgeBase>
+	);
 }
 ```
 
@@ -76,7 +76,7 @@ A recipe's props come from [`ui/components/src/recipes.ts`](../ui/components/src
 import type { BadgeRecipeProps } from "../../recipes.ts";
 
 export interface BadgeProps
-  extends BadgeBaseProps, Pick<BadgeRecipeProps, "color" | "variant" | "size"> {}
+	extends BadgeBaseProps, Pick<BadgeRecipeProps, "color" | "variant" | "size"> {}
 ```
 
 `src/recipes.ts` is generated. When you change a `*.styleframe.ts` file, write it again with `node scripts/recipes.ts` from `ui/components`, or `pnpm test:recipes` fails.
@@ -102,12 +102,12 @@ import IBadge from "../styled/IBadge.uf.tsx";
 
 /** @category Components/Feedback/Badge */
 export default function BadgeSizes() {
-  return (
-    <div>
-      <IBadge size="sm">Small</IBadge>
-      <IBadge size="lg">Large</IBadge>
-    </div>
-  );
+	return (
+		<div>
+			<IBadge size="sm">Small</IBadge>
+			<IBadge size="lg">Large</IBadge>
+		</div>
+	);
 }
 ```
 

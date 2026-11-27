@@ -1,51 +1,51 @@
 {
-  "name": "@inkline/react",
-  "version": "0.0.0",
-  "license": "MIT",
-  "files": [
-    "dist"
-  ],
-  "type": "module",
-  "sideEffects": false,
-  "exports": {
-    ".": "./dist/index.js",
-    "./headless": "./dist/headless.js",
-    "./css": "./dist/index.css",
-    "./package.json": "./package.json"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "scripts": {
-    "build": "vite build",
-    "test": "vitest run"
-  },
-  "dependencies": {
-    "@styleframe/runtime": "catalog:"
-  },
-  "devDependencies": {
-    "@inkline/components": "workspace:*",
-    "@inkline/theme": "workspace:*",
-    "@styleframe/cli": "catalog:",
-    "@styleframe/core": "catalog:",
-    "@styleframe/license": "catalog:",
-    "@styleframe/loader": "catalog:",
-    "@styleframe/plugin": "catalog:",
-    "@styleframe/theme": "catalog:",
-    "@styleframe/transpiler": "catalog:",
-    "@types/node": "catalog:",
-    "@types/react": "catalog:",
-    "@vitejs/plugin-react": "catalog:",
-    "@vitest/coverage-v8": "catalog:",
-    "jsdom": "catalog:",
-    "react": "catalog:",
-    "react-dom": "catalog:",
-    "styleframe": "catalog:",
-    "vite": "catalog:",
-    "vitest": "catalog:"
-  },
-  "peerDependencies": {
-    "react": ">=19.2"
-  },
-  "prepublishOnly": "pnpm run build"
+	"name": "@inkline/react",
+	"version": "0.0.0",
+	"license": "MIT",
+	"files": [
+		"dist"
+	],
+	"type": "module",
+	"sideEffects": false,
+	"exports": {
+		".": "./dist/index.js",
+		"./headless": "./dist/headless.js",
+		"./css": "./dist/index.css",
+		"./package.json": "./package.json"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"scripts": {
+		"build": "vite build",
+		"test": "vitest run"
+	},
+	"dependencies": {
+		"@styleframe/runtime": "catalog:"
+	},
+	"devDependencies": {
+		"@inkline/components": "workspace:*",
+		"@inkline/theme": "workspace:*",
+		"@styleframe/cli": "catalog:",
+		"@styleframe/core": "catalog:",
+		"@styleframe/license": "catalog:",
+		"@styleframe/loader": "catalog:",
+		"@styleframe/plugin": "catalog:",
+		"@styleframe/theme": "catalog:",
+		"@styleframe/transpiler": "catalog:",
+		"@types/node": "catalog:",
+		"@types/react": "catalog:",
+		"@vitejs/plugin-react": "catalog:",
+		"@vitest/coverage-v8": "catalog:",
+		"jsdom": "catalog:",
+		"react": "catalog:",
+		"react-dom": "catalog:",
+		"styleframe": "catalog:",
+		"vite": "catalog:",
+		"vitest": "catalog:"
+	},
+	"peerDependencies": {
+		"react": ">=19.2"
+	},
+	"prepublishOnly": "pnpm run build"
 }

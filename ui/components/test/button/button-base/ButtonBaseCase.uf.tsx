@@ -8,72 +8,72 @@ import { defineEmits } from "@uxfront/unframework";
 import IButtonBase from "../../../src/components/button/headless/IButtonBase.uf.tsx";
 
 export default function ButtonBaseCase({
-  attributes = false,
-  loading = false,
-  link = false,
+	attributes = false,
+	loading = false,
+	link = false,
 }: {
-  attributes?: boolean;
-  loading?: boolean;
-  link?: boolean;
+	attributes?: boolean;
+	loading?: boolean;
+	link?: boolean;
 }) {
-  const emit = defineEmits<{ click: [button: string] }>();
+	const emit = defineEmits<{ click: [button: string] }>();
 
-  return (
-    <>
-      {attributes ? (
-        <div>
-          <IButtonBase
-            id="save"
-            label="Save"
-            ariaDescribedby="save-hint"
-            onClick={() => emit("click", "save")}
-          />
-          <IButtonBase ariaLabel="Close" onClick={() => emit("click", "close")}>
-            <span aria-hidden="true">×</span>
-          </IButtonBase>
-          <p id="save-hint">Saves the draft.</p>
-        </div>
-      ) : link ? (
-        <div>
-          <IButtonBase label="Docs" href="/docs" onClick={() => emit("click", "docs")} />
-          <IButtonBase
-            label="Off"
-            href="/off"
-            disabled={true}
-            onClick={() => emit("click", "off")}
-          />
-          <IButtonBase
-            label="Held"
-            href="/held"
-            disabled={true}
-            focusableWhenDisabled={true}
-            onClick={() => emit("click", "held")}
-          />
-          <IButtonBase
-            label="Wait"
-            href="/wait"
-            loading={true}
-            onClick={() => emit("click", "wait")}
-          />
-        </div>
-      ) : loading ? (
-        <div>
-          <IButtonBase label="Save" />
-          <IButtonBase label="Wait" loading={true}>
-            {{
-              leading: () => <>&lt;</>,
-              trailing: () => <>&gt;</>,
-            }}
-          </IButtonBase>
-        </div>
-      ) : (
-        <div>
-          <IButtonBase label="Save" />
-          <IButtonBase label="Send" type="submit" />
-          <IButtonBase label="Off" disabled={true} />
-          <IButtonBase label="Overridden">Slotted</IButtonBase>
-        </div>
-      )}
-    </>
-  );
+	return (
+		<>
+			{attributes ? (
+				<div>
+					<IButtonBase
+						id="save"
+						label="Save"
+						ariaDescribedby="save-hint"
+						onClick={() => emit("click", "save")}
+					/>
+					<IButtonBase ariaLabel="Close" onClick={() => emit("click", "close")}>
+						<span aria-hidden="true">×</span>
+					</IButtonBase>
+					<p id="save-hint">Saves the draft.</p>
+				</div>
+			) : link ? (
+				<div>
+					<IButtonBase label="Docs" href="/docs" onClick={() => emit("click", "docs")} />
+					<IButtonBase
+						label="Off"
+						href="/off"
+						disabled={true}
+						onClick={() => emit("click", "off")}
+					/>
+					<IButtonBase
+						label="Held"
+						href="/held"
+						disabled={true}
+						focusableWhenDisabled={true}
+						onClick={() => emit("click", "held")}
+					/>
+					<IButtonBase
+						label="Wait"
+						href="/wait"
+						loading={true}
+						onClick={() => emit("click", "wait")}
+					/>
+				</div>
+			) : loading ? (
+				<div>
+					<IButtonBase label="Save" />
+					<IButtonBase label="Wait" loading={true}>
+						{{
+							leading: () => <>&lt;</>,
+							trailing: () => <>&gt;</>,
+						}}
+					</IButtonBase>
+				</div>
+			) : (
+				<div>
+					<IButtonBase label="Save" />
+					<IButtonBase label="Send" type="submit" />
+					<IButtonBase label="Off" disabled={true} />
+					<IButtonBase label="Overridden">Slotted</IButtonBase>
+				</div>
+			)}
+		</>
+	);
 }

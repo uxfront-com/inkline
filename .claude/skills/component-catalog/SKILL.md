@@ -33,8 +33,8 @@ The catalog lives in `ui/components/src/components/` — the **single source of 
 ## Styleframe consumption (`styled/I<Name>.styleframe.ts`)
 
 ```ts
-import { styleframe } from "virtual:styleframe";
 import { useButtonRecipe } from "@styleframe/theme";
+import { styleframe } from "virtual:styleframe";
 const s = styleframe();
 s.selector(".button--block", { width: "100%" }); // custom CSS layered, never forked
 export const buttonRecipe = useButtonRecipe(s);

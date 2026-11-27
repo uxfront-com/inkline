@@ -19,40 +19,40 @@ import type { RadioFieldBaseProps } from "../types.ts";
 // the click is cancelled. The radio that holds the selection carries `data-selected` and keeps its
 // state: Qwik may run the capture listener after the click, once the browser has checked it again.
 export default function IRadioFieldBase({
-  id,
-  name,
-  value = "",
-  disabled = false,
-  required = false,
-  readonly = false,
+	id,
+	name,
+	value = "",
+	disabled = false,
+	required = false,
+	readonly = false,
 }: RadioFieldBaseProps) {
-  const selected = defineModel<string>("selected");
+	const selected = defineModel<string>("selected");
 
-  return (
-    <input
-      type="radio"
-      id={id}
-      name={name}
-      value={value}
-      v-model={selected.value}
-      disabled={disabled}
-      required={required}
-      data-readonly={readonly ? "true" : undefined}
-      data-selected={readonly && selected.value === value ? "true" : undefined}
-      onClickCapture={(event: MouseEvent) => {
-        const control = event.currentTarget as HTMLInputElement;
-        if (
-          control.getAttribute("data-readonly") === "true" &&
-          control.getAttribute("data-selected") !== "true"
-        ) {
-          control.checked = false;
-        }
-      }}
-      onClick={(event: MouseEvent) => {
-        if ((event.currentTarget as HTMLElement).getAttribute("data-readonly") === "true") {
-          event.preventDefault();
-        }
-      }}
-    />
-  );
+	return (
+		<input
+			type="radio"
+			id={id}
+			name={name}
+			value={value}
+			v-model={selected.value}
+			disabled={disabled}
+			required={required}
+			data-readonly={readonly ? "true" : undefined}
+			data-selected={readonly && selected.value === value ? "true" : undefined}
+			onClickCapture={(event: MouseEvent) => {
+				const control = event.currentTarget as HTMLInputElement;
+				if (
+					control.getAttribute("data-readonly") === "true" &&
+					control.getAttribute("data-selected") !== "true"
+				) {
+					control.checked = false;
+				}
+			}}
+			onClick={(event: MouseEvent) => {
+				if ((event.currentTarget as HTMLElement).getAttribute("data-readonly") === "true") {
+					event.preventDefault();
+				}
+			}}
+		/>
+	);
 }

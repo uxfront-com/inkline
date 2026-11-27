@@ -1,10 +1,10 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    // The recipes import each other without file extensions, as they did in `@styleframe/theme`.
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "types": ["vitest/globals"]
-  },
-  "include": ["src/**/*.ts", "*.config.ts"]
+	"extends": "../../tsconfig.json",
+	"compilerOptions": {
+		// The recipes import each other without file extensions, as they did in `@styleframe/theme`.
+		"module": "esnext",
+		"moduleResolution": "bundler",
+		"types": ["vitest/globals"]
+	},
+	"include": ["src/**/*.ts", "*.config.ts"]
 }

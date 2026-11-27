@@ -15,44 +15,44 @@ const ROOT = resolve(import.meta.dirname, "..");
 
 /** The two entries of one target's barrel. Throws on a line that is in neither. */
 export function splitBarrel(
-  barrel: string,
-  file = "index.ts",
+	barrel: string,
+	file = "index.ts",
 ): { index: string; headless: string } {
-  const index: Array<string> = [];
-  const headless: Array<string> = [];
-  for (const line of barrel.split("\n")) {
-    if (line.trim() === "") {
-      continue;
-    }
-    if (line.includes("/styled/")) {
-      index.push(line);
-    } else if (line.includes("/headless/")) {
-      headless.push(line);
-    } else {
-      throw new Error(
-        `${file}: \`${line}\` exports from neither a styled nor a headless directory`,
-      );
-    }
-  }
-  if (index.length === 0 || headless.length === 0) {
-    throw new Error(`${file}: a barrel with no styled or no headless component`);
-  }
-  return { index: `${index.join("\n")}\n`, headless: `${headless.join("\n")}\n` };
+	const index: Array<string> = [];
+	const headless: Array<string> = [];
+	for (const line of barrel.split("\n")) {
+		if (line.trim() === "") {
+			continue;
+		}
+		if (line.includes("/styled/")) {
+			index.push(line);
+		} else if (line.includes("/headless/")) {
+			headless.push(line);
+		} else {
+			throw new Error(
+				`${file}: \`${line}\` exports from neither a styled nor a headless directory`,
+			);
+		}
+	}
+	if (index.length === 0 || headless.length === 0) {
+		throw new Error(`${file}: a barrel with no styled or no headless component`);
+	}
+	return { index: `${index.join("\n")}\n`, headless: `${headless.join("\n")}\n` };
 }
 
 if (process.argv[1] && resolve(process.argv[1]) === import.meta.filename) {
-  for (const target of config.targets ?? []) {
-    const dir = join(ROOT, config.outDir ?? "dist", target);
-    const file = join(dir, "index.ts");
-    if (!existsSync(file)) {
-      throw new Error(`${file} doesn't exist: run \`unframework build\` first`);
-    }
-    // Already split: `unframework build` cleans the tree, so a `headless.ts` means this ran.
-    if (existsSync(join(dir, "headless.ts"))) {
-      continue;
-    }
-    const { index, headless } = splitBarrel(readFileSync(file, "utf8"), file);
-    writeFileSync(file, index);
-    writeFileSync(join(dir, "headless.ts"), headless);
-  }
+	for (const target of config.targets ?? []) {
+		const dir = join(ROOT, config.outDir ?? "dist", target);
+		const file = join(dir, "index.ts");
+		if (!existsSync(file)) {
+			throw new Error(`${file} doesn't exist: run \`unframework build\` first`);
+		}
+		// Already split: `unframework build` cleans the tree, so a `headless.ts` means this ran.
+		if (existsSync(join(dir, "headless.ts"))) {
+			continue;
+		}
+		const { index, headless } = splitBarrel(readFileSync(file, "utf8"), file);
+		writeFileSync(file, index);
+		writeFileSync(join(dir, "headless.ts"), headless);
+	}
 }

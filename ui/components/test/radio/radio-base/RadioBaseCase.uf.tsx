@@ -2,10 +2,10 @@
 import IRadioBase from "../../../src/components/radio/headless/IRadioBase.uf.tsx";
 
 export default function RadioBaseCase() {
-  return (
-    <IRadioBase id="apple-row">
-      <input type="radio" name="fruit" value="apple" />
-      Apple
-    </IRadioBase>
-  );
+	return (
+		<IRadioBase id="apple-row">
+			<input type="radio" name="fruit" value="apple" />
+			Apple
+		</IRadioBase>
+	);
 }

@@ -24,138 +24,138 @@ import type { ButtonBaseProps } from "../types.ts";
 // prepares the region when it gets focus or a pointer press, in a task before the click. A button
 // that starts loading with neither prepares it then, and that first message may go unannounced.
 export default function IButtonBase({
-  label,
-  type = "button",
-  href,
-  disabled = false,
-  focusableWhenDisabled = false,
-  loading = false,
-  loadingLabel = "Loading",
-  iconOnly = false,
-  id,
-  ariaLabel,
-  ariaDescribedby,
-  ariaPressed,
-  ariaExpanded,
-  ariaHaspopup,
-  ariaControls,
-  variant,
-  color,
-  size,
+	label,
+	type = "button",
+	href,
+	disabled = false,
+	focusableWhenDisabled = false,
+	loading = false,
+	loadingLabel = "Loading",
+	iconOnly = false,
+	id,
+	ariaLabel,
+	ariaDescribedby,
+	ariaPressed,
+	ariaExpanded,
+	ariaHaspopup,
+	ariaControls,
+	variant,
+	color,
+	size,
 }: ButtonBaseProps) {
-  // `click` fires on the native button's or link's click, unless it's disabled or loading. Other
-  // listeners fall through to the root, but `click` is declared so that the guard below decides
-  // when a consumer's handler runs, since `aria-disabled` stops no click on its own.
-  const emit = defineEmits<{ click: [] }>();
-  const slots = defineSlots<{
-    default?(): Element;
-    leading?(): Element;
-    trailing?(): Element;
-    spinner?(): Element;
-  }>();
-  const mounted = ref(false);
-  // Whether this button counts in the shared live region's `data-inkline-announcer`.
-  const counted = ref(false);
+	// `click` fires on the native button's or link's click, unless it's disabled or loading. Other
+	// listeners fall through to the root, but `click` is declared so that the guard below decides
+	// when a consumer's handler runs, since `aria-disabled` stops no click on its own.
+	const emit = defineEmits<{ click: [] }>();
+	const slots = defineSlots<{
+		default?(): Element;
+		leading?(): Element;
+		trailing?(): Element;
+		spinner?(): Element;
+	}>();
+	const mounted = ref(false);
+	// Whether this button counts in the shared live region's `data-inkline-announcer`.
+	const counted = ref(false);
 
-  // The page's one polite live region, shared by every button. Each button that uses it counts
-  // itself in, and the last one to unmount removes it.
-  function announcer(): HTMLElement {
-    let region = document.querySelector<HTMLElement>("[data-inkline-announcer]");
-    if (!region) {
-      region = document.createElement("div");
-      region.setAttribute("role", "status");
-      region.setAttribute("data-inkline-announcer", "0");
-      // Visually hidden, but not with display: none, which would take it out of the accessibility
-      // tree.
-      region.style.cssText =
-        "position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap";
-      document.body.append(region);
-    }
-    if (!counted.value) {
-      counted.value = true;
-      const count = Number(region.getAttribute("data-inkline-announcer")) + 1;
-      region.setAttribute("data-inkline-announcer", String(count));
-    }
-    return region;
-  }
+	// The page's one polite live region, shared by every button. Each button that uses it counts
+	// itself in, and the last one to unmount removes it.
+	function announcer(): HTMLElement {
+		let region = document.querySelector<HTMLElement>("[data-inkline-announcer]");
+		if (!region) {
+			region = document.createElement("div");
+			region.setAttribute("role", "status");
+			region.setAttribute("data-inkline-announcer", "0");
+			// Visually hidden, but not with display: none, which would take it out of the accessibility
+			// tree.
+			region.style.cssText =
+				"position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap";
+			document.body.append(region);
+		}
+		if (!counted.value) {
+			counted.value = true;
+			const count = Number(region.getAttribute("data-inkline-announcer")) + 1;
+			region.setAttribute("data-inkline-announcer", String(count));
+		}
+		return region;
+	}
 
-  onMounted(() => {
-    mounted.value = true;
-  });
+	onMounted(() => {
+		mounted.value = true;
+	});
 
-  onUnmounted(() => {
-    const region = document.querySelector<HTMLElement>("[data-inkline-announcer]");
-    if (!counted.value || !region) return;
-    const count = Number(region.getAttribute("data-inkline-announcer")) - 1;
-    if (count > 0) region.setAttribute("data-inkline-announcer", String(count));
-    else region.remove();
-  });
+	onUnmounted(() => {
+		const region = document.querySelector<HTMLElement>("[data-inkline-announcer]");
+		if (!counted.value || !region) return;
+		const count = Number(region.getAttribute("data-inkline-announcer")) - 1;
+		if (count > 0) region.setAttribute("data-inkline-announcer", String(count));
+		else region.remove();
+	});
 
-  watch(
-    () => loading,
-    (value) => {
-      if (!value) return;
-      // A new node each time, so the same message is announced again.
-      const message = document.createElement("div");
-      message.textContent = loadingLabel;
-      announcer().replaceChildren(message);
-    },
-    { flush: "post" },
-  );
+	watch(
+		() => loading,
+		(value) => {
+			if (!value) return;
+			// A new node each time, so the same message is announced again.
+			const message = document.createElement("div");
+			message.textContent = loadingLabel;
+			announcer().replaceChildren(message);
+		},
+		{ flush: "post" },
+	);
 
-  return (
-    <component
-      is={href ? "a" : "button"}
-      type={href ? undefined : type}
-      href={href && !disabled && !loading ? href : undefined}
-      role={href && (disabled || loading) ? "link" : undefined}
-      tabindex={href && (loading || (disabled && focusableWhenDisabled)) ? 0 : undefined}
-      id={id}
-      disabled={
-        (disabled && !focusableWhenDisabled) ||
-        (!mounted.value && (loading || (disabled && focusableWhenDisabled)))
-      }
-      aria-disabled={loading || (disabled && (focusableWhenDisabled || href)) ? "true" : undefined}
-      aria-pressed={href ? undefined : ariaPressed}
-      aria-expanded={ariaExpanded}
-      aria-haspopup={ariaHaspopup}
-      aria-controls={ariaControls}
-      aria-label={ariaLabel}
-      aria-describedby={ariaDescribedby}
-      data-variant={variant}
-      data-color={color}
-      data-size={size}
-      data-icon-only={iconOnly ? "" : undefined}
-      data-loading={loading ? "" : undefined}
-      onFocus={() => announcer()}
-      onPointerdown={() => announcer()}
-      onClick={(event: MouseEvent) => {
-        if ((event.currentTarget as HTMLElement).getAttribute("aria-disabled") === "true")
-          event.preventDefault();
-        if ((event.currentTarget as HTMLElement).getAttribute("aria-disabled") !== "true")
-          emit("click");
-      }}
-    >
-      {slots.leading ? (
-        <span data-slot="leading" aria-hidden="true">
-          {slots.leading?.()}
-        </span>
-      ) : null}
-      <span data-slot="label">{slots.default?.() ?? label}</span>
-      {slots.trailing && !iconOnly ? (
-        <span data-slot="trailing" aria-hidden="true">
-          {slots.trailing?.()}
-        </span>
-      ) : null}
-      {loading
-        ? (slots.spinner?.() ?? (
-            <span data-slot="spinner" aria-hidden="true">
-              <svg viewBox="0 0 50 50">
-                <circle cx="25" cy="25" r="20" />
-              </svg>
-            </span>
-          ))
-        : null}
-    </component>
-  );
+	return (
+		<component
+			is={href ? "a" : "button"}
+			type={href ? undefined : type}
+			href={href && !disabled && !loading ? href : undefined}
+			role={href && (disabled || loading) ? "link" : undefined}
+			tabindex={href && (loading || (disabled && focusableWhenDisabled)) ? 0 : undefined}
+			id={id}
+			disabled={
+				(disabled && !focusableWhenDisabled) ||
+				(!mounted.value && (loading || (disabled && focusableWhenDisabled)))
+			}
+			aria-disabled={loading || (disabled && (focusableWhenDisabled || href)) ? "true" : undefined}
+			aria-pressed={href ? undefined : ariaPressed}
+			aria-expanded={ariaExpanded}
+			aria-haspopup={ariaHaspopup}
+			aria-controls={ariaControls}
+			aria-label={ariaLabel}
+			aria-describedby={ariaDescribedby}
+			data-variant={variant}
+			data-color={color}
+			data-size={size}
+			data-icon-only={iconOnly ? "" : undefined}
+			data-loading={loading ? "" : undefined}
+			onFocus={() => announcer()}
+			onPointerdown={() => announcer()}
+			onClick={(event: MouseEvent) => {
+				if ((event.currentTarget as HTMLElement).getAttribute("aria-disabled") === "true")
+					event.preventDefault();
+				if ((event.currentTarget as HTMLElement).getAttribute("aria-disabled") !== "true")
+					emit("click");
+			}}
+		>
+			{slots.leading ? (
+				<span data-slot="leading" aria-hidden="true">
+					{slots.leading?.()}
+				</span>
+			) : null}
+			<span data-slot="label">{slots.default?.() ?? label}</span>
+			{slots.trailing && !iconOnly ? (
+				<span data-slot="trailing" aria-hidden="true">
+					{slots.trailing?.()}
+				</span>
+			) : null}
+			{loading
+				? (slots.spinner?.() ?? (
+						<span data-slot="spinner" aria-hidden="true">
+							<svg viewBox="0 0 50 50">
+								<circle cx="25" cy="25" r="20" />
+							</svg>
+						</span>
+					))
+				: null}
+		</component>
+	);
 }

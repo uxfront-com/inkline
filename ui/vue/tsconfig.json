@@ -1,10 +1,10 @@
 {
-  "extends": "../../tsconfig.json",
-  "include": ["src", "test", "*.styleframe.ts", ".styleframe/**/*.d.ts"],
-  "compilerOptions": {
-    "paths": {
-      "virtual:styleframe": ["./.styleframe/styleframe.d.ts"]
-    },
-    "types": ["node"]
-  }
+	"extends": "../../tsconfig.json",
+	"include": ["src", "test", "*.styleframe.ts", ".styleframe/**/*.d.ts"],
+	"compilerOptions": {
+		"paths": {
+			"virtual:styleframe": ["./.styleframe/styleframe.d.ts"]
+		},
+		"types": ["node"]
+	}
 }

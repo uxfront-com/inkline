@@ -15,51 +15,51 @@ import { createUseRecipe } from "@styleframe/theme";
  * correctly in both light and dark mode.
  */
 export const useInputDateSegmentRecipe = createUseRecipe("input-date-segment", {
-  base: {
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
-    boxSizing: "border-box",
-    fontFamily: "inherit",
-    fontWeight: "@font-weight.normal",
-    lineHeight: "@line-height.normal",
-    fontVariantNumeric: "tabular-nums",
-    paddingTop: "@0.125",
-    paddingBottom: "@0.125",
-    background: "transparent",
-    color: "inherit",
-    outline: "none",
-    transitionProperty: "color, background-color",
-    transitionTimingFunction: "@easing.ease-in-out",
-    transitionDuration: "150ms",
-    "&:focus": {
-      background: "@color.primary",
-      color: "@color.white",
-    },
-  },
-  variants: {
-    size: {
-      sm: {
-        fontSize: "@font-size.xs",
-        paddingLeft: "@0.125",
-        paddingRight: "@0.125",
-        borderRadius: "@border-radius.sm",
-      },
-      md: {
-        fontSize: "@font-size.sm",
-        paddingLeft: "@0.25",
-        paddingRight: "@0.25",
-        borderRadius: "@border-radius.sm",
-      },
-      lg: {
-        fontSize: "@font-size.md",
-        paddingLeft: "@0.25",
-        paddingRight: "@0.25",
-        borderRadius: "@border-radius.md",
-      },
-    },
-  },
-  defaultVariants: {
-    size: "md",
-  },
+	base: {
+		display: "inline-flex",
+		alignItems: "center",
+		justifyContent: "center",
+		boxSizing: "border-box",
+		fontFamily: "inherit",
+		fontWeight: "@font-weight.normal",
+		lineHeight: "@line-height.normal",
+		fontVariantNumeric: "tabular-nums",
+		paddingTop: "@0.125",
+		paddingBottom: "@0.125",
+		background: "transparent",
+		color: "inherit",
+		outline: "none",
+		transitionProperty: "color, background-color",
+		transitionTimingFunction: "@easing.ease-in-out",
+		transitionDuration: "150ms",
+		"&:focus": {
+			background: "@color.primary",
+			color: "@color.white",
+		},
+	},
+	variants: {
+		size: {
+			sm: {
+				fontSize: "@font-size.xs",
+				paddingLeft: "@0.125",
+				paddingRight: "@0.125",
+				borderRadius: "@border-radius.sm",
+			},
+			md: {
+				fontSize: "@font-size.sm",
+				paddingLeft: "@0.25",
+				paddingRight: "@0.25",
+				borderRadius: "@border-radius.sm",
+			},
+			lg: {
+				fontSize: "@font-size.md",
+				paddingLeft: "@0.25",
+				paddingRight: "@0.25",
+				borderRadius: "@border-radius.md",
+			},
+		},
+	},
+	defaultVariants: {
+		size: "md",
+	},
 });

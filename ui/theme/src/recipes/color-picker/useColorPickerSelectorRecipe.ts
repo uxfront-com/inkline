@@ -13,33 +13,33 @@ import { createUseRecipe } from "@styleframe/theme";
  * are intentionally literal.
  */
 export const useColorPickerSelectorRecipe = createUseRecipe(
-  "color-picker-selector",
-  {
-    base: {
-      position: "relative",
-      borderRadius: "@border-radius.md",
-    },
-    variants: {
-      size: {
-        xs: { width: "@9.5", height: "@9.5" },
-        sm: { width: "@10", height: "@10" },
-        md: { width: "@10.5", height: "@10.5" },
-        lg: { width: "@11", height: "@11" },
-        xl: { width: "@11.5", height: "@11.5" },
-      },
-    },
-    defaultVariants: {
-      size: "md",
-    },
-  },
-  (s) => {
-    // Public input: the current hue (0–360), updated by the consumer.
-    s.variable("color-picker.hue", "0", { default: true });
+	"color-picker-selector",
+	{
+		base: {
+			position: "relative",
+			borderRadius: "@border-radius.md",
+		},
+		variants: {
+			size: {
+				xs: { width: "@9.5", height: "@9.5" },
+				sm: { width: "@10", height: "@10" },
+				md: { width: "@10.5", height: "@10.5" },
+				lg: { width: "@11", height: "@11" },
+				xl: { width: "@11.5", height: "@11.5" },
+			},
+		},
+		defaultVariants: {
+			size: "md",
+		},
+	},
+	(s) => {
+		// Public input: the current hue (0–360), updated by the consumer.
+		s.variable("color-picker.hue", "0", { default: true });
 
-    s.selector(".color-picker-selector", {
-      touchAction: "none",
-      background:
-        "linear-gradient(to top, #000, transparent), linear-gradient(to right, #fff, hsl(var(--color-picker--hue, 0) 100% 50%))",
-    });
-  },
+		s.selector(".color-picker-selector", {
+			touchAction: "none",
+			background:
+				"linear-gradient(to top, #000, transparent), linear-gradient(to right, #fff, hsl(var(--color-picker--hue, 0) 100% 50%))",
+		});
+	},
 );

@@ -1,16 +1,16 @@
 {
-  "name": "@inkline/agents-check",
-  "version": "0.0.0",
-  "private": true,
-  "description": "Internal: link-integrity check for the agent-facing doc surface (AGENTS.md, docs/*.md, .github/*.md).",
-  "type": "module",
-  "scripts": {
-    "test": "vitest run"
-  },
-  "devDependencies": {
-    "@types/node": "catalog:",
-    "@vitest/coverage-v8": "catalog:",
-    "typescript": "catalog:",
-    "vitest": "catalog:"
-  }
+	"name": "@inkline/agents-check",
+	"version": "0.0.0",
+	"private": true,
+	"description": "Internal: link-integrity check for the agent-facing doc surface (AGENTS.md, docs/*.md, .github/*.md).",
+	"type": "module",
+	"scripts": {
+		"test": "vitest run"
+	},
+	"devDependencies": {
+		"@types/node": "catalog:",
+		"@vitest/coverage-v8": "catalog:",
+		"typescript": "catalog:",
+		"vitest": "catalog:"
+	}
 }

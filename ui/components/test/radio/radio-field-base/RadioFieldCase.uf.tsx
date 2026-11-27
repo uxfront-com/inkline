@@ -6,49 +6,49 @@ import { defineEmits, ref, watch } from "@uxfront/unframework";
 import IRadioFieldBase from "../../../src/components/radio/headless/IRadioFieldBase.uf.tsx";
 
 export default function RadioFieldCase({
-  initial = "apple",
-  disabled = false,
-  unvalued = false,
+	initial = "apple",
+	disabled = false,
+	unvalued = false,
 }: {
-  initial?: string;
-  disabled?: boolean;
-  unvalued?: boolean;
+	initial?: string;
+	disabled?: boolean;
+	unvalued?: boolean;
 }) {
-  const emit = defineEmits<{ select: [value: string | undefined] }>();
-  const selected = ref<string | undefined>(initial);
-  watch(
-    () => selected.value,
-    (value) => emit("select", value),
-  );
+	const emit = defineEmits<{ select: [value: string | undefined] }>();
+	const selected = ref<string | undefined>(initial);
+	watch(
+		() => selected.value,
+		(value) => emit("select", value),
+	);
 
-  return (
-    <div>
-      <label>
-        <IRadioFieldBase
-          name="fruit"
-          value="apple"
-          required={true}
-          disabled={disabled}
-          v-model:selected={selected.value}
-        />
-        Apple
-      </label>
-      <label>
-        <IRadioFieldBase
-          name="fruit"
-          value="pear"
-          disabled={disabled}
-          v-model:selected={selected.value}
-        />
-        Pear
-      </label>
-      {unvalued && (
-        <label>
-          <IRadioFieldBase name="other" />
-          Other
-        </label>
-      )}
-      <output>{selected.value}</output>
-    </div>
-  );
+	return (
+		<div>
+			<label>
+				<IRadioFieldBase
+					name="fruit"
+					value="apple"
+					required={true}
+					disabled={disabled}
+					v-model:selected={selected.value}
+				/>
+				Apple
+			</label>
+			<label>
+				<IRadioFieldBase
+					name="fruit"
+					value="pear"
+					disabled={disabled}
+					v-model:selected={selected.value}
+				/>
+				Pear
+			</label>
+			{unvalued && (
+				<label>
+					<IRadioFieldBase name="other" />
+					Other
+				</label>
+			)}
+			<output>{selected.value}</output>
+		</div>
+	);
 }

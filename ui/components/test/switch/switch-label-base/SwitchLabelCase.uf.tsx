@@ -2,10 +2,10 @@
 import ISwitchLabelBase from "../../../src/components/switch/headless/ISwitchLabelBase.uf.tsx";
 
 export default function SwitchLabelCase() {
-  return (
-    <label>
-      <input type="checkbox" role="switch" />
-      <ISwitchLabelBase>Dark mode</ISwitchLabelBase>
-    </label>
-  );
+	return (
+		<label>
+			<input type="checkbox" role="switch" />
+			<ISwitchLabelBase>Dark mode</ISwitchLabelBase>
+		</label>
+	);
 }

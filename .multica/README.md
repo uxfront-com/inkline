@@ -36,15 +36,15 @@ The team's skills live in **`.claude/skills/`** at the repo root (Anthropic Agen
 
    ```json
    {
-     "scripts": {
-       "setup": "pnpm install --frozen-lockfile && pnpm run build",
-       "run": {
-         "dev": "pnpm run dev",
-         "storybook": "pnpm run storybook",
-         "test:e2e": "pnpm run test:e2e"
-       },
-       "cleanup": "pnpm run clean"
-     }
+   	"scripts": {
+   		"setup": "pnpm install --frozen-lockfile && pnpm run build",
+   		"run": {
+   			"dev": "pnpm run dev",
+   			"storybook": "pnpm run storybook",
+   			"test:e2e": "pnpm run test:e2e"
+   		},
+   		"cleanup": "pnpm run clean"
+   	}
    }
    ```
 

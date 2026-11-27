@@ -1,8 +1,8 @@
 {
-  "name": "inkline-preview-solid",
-  "compatibility_date": "2026-09-21",
-  "assets": {
-    "directory": "../components/preview-solid"
-  },
-  "previews": {}
+	"name": "inkline-preview-solid",
+	"compatibility_date": "2026-09-21",
+	"assets": {
+		"directory": "../components/preview-solid"
+	},
+	"previews": {}
 }
