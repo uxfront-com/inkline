@@ -43,9 +43,9 @@ export default function IButtonBase({
   color,
   size,
 }: ButtonBaseProps) {
-  // `click` fires on the native button's or link's click, unless it's disabled or loading.
-  // Unframework passes no listener through to a component's root, so the component declares the
-  // one a button exists for.
+  // `click` fires on the native button's or link's click, unless it's disabled or loading. Other
+  // listeners fall through to the root, but `click` is declared so that the guard below decides
+  // when a consumer's handler runs, since `aria-disabled` stops no click on its own.
   const emit = defineEmits<{ click: [] }>();
   const slots = defineSlots<{
     default?(): Element;
