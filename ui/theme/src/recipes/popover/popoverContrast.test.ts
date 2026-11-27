@@ -39,7 +39,10 @@ function collectPairs() {
     if (!variable) {
       throw new Error(`Unresolved token ${String(value)}`);
     }
-    return String(variable.value);
+    if (typeof variable.value !== "string") {
+      throw new Error(`Token ${variable.name} isn't a plain value`);
+    }
+    return variable.value;
   };
 
   const pairs: Array<{ label: string; text: string; background: string }> = [];

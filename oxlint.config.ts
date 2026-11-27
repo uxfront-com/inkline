@@ -94,5 +94,13 @@ export default defineConfig({
         "no-promise-executor-return": "off",
       },
     },
+    {
+      // The test runs every recipe composable the package exports, so it reads them from the
+      // module's namespace, and a recipe added later is checked without a change to the test.
+      files: ["ui/theme/src/validate.test.ts"],
+      rules: {
+        "import/no-namespace": "off",
+      },
+    },
   ],
 });

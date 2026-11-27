@@ -25,7 +25,7 @@ function createInstance() {
 
 function findSelector(s: ReturnType<typeof styleframe>, query: string) {
   return s.root.children.find(
-    (child): child is Selector => child.type === "selector" && (child as Selector).query === query,
+    (child): child is Selector => child.type === "selector" && child.query === query,
   );
 }
 

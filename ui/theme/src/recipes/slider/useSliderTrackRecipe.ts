@@ -84,7 +84,7 @@ export const useSliderTrackRecipe = createUseRecipe("slider-track", {
     ...sizes.map((size) => ({
       match: {
         orientation: "vertical" as const,
-        size: size as (typeof sizes)[number],
+        size,
       },
       css: {
         height: "100%",

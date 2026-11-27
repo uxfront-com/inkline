@@ -368,7 +368,7 @@ describe("useInputDateRecipe", () => {
         s.root.children.filter(
           (child) =>
             child.type === "selector" && (child as { query: string }).query === ".input-date-field",
-        ) as unknown as Array<{
+        ) as Array<{
           children: Array<{
             rule?: string;
             declarations: Record<string, unknown>;
@@ -442,13 +442,16 @@ describe("useInputDateRecipe separator colors", () => {
     if (!variable) {
       throw new Error(`Unknown token ${name}`);
     }
-    return formatHex8(String(variable.value));
+    if (typeof variable.value !== "string") {
+      throw new Error(`Token ${variable.name} isn't a plain value`);
+    }
+    return formatHex8(variable.value);
   }
 
   function rule(query: string) {
     return s.root.children.find(
       (child) => child.type === "selector" && (child as { query: string }).query === query,
-    ) as unknown as
+    ) as
       | {
           declarations: Slot;
           children: Array<{ query: string; declarations: Slot }>;

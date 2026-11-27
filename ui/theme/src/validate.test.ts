@@ -18,7 +18,7 @@ describe("validate with every preset and recipe", () => {
     expect(recipeComposables.length).toBeGreaterThan(40);
 
     for (const [, useRecipe] of recipeComposables) {
-      (useRecipe as (s: ReturnType<typeof styleframe>) => unknown)(s);
+      (useRecipe as (s: ReturnType<typeof styleframe>) => void)(s);
     }
 
     expect(validate(s)).toEqual([]);

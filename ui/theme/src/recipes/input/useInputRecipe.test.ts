@@ -713,7 +713,10 @@ describe("Open Components rules", () => {
           JSON.stringify(cv.css).match(/@color\.gray-4[0-9]+|@color\.gray-5[0-9]+/g),
         ),
     );
-    expect([...borders].sort()).toEqual(["@color.gray-450", "@color.gray-500"]);
+    expect([...borders].sort((a, b) => String(a).localeCompare(String(b)))).toEqual([
+      "@color.gray-450",
+      "@color.gray-500",
+    ]);
     expect(media(find(s, ".input"), "(prefers-contrast: more)")).toBeDefined();
   });
 

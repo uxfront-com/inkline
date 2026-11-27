@@ -98,7 +98,7 @@ export const useProgressRecipe = createUseRecipe("progress", {
     ...sizes.map((size) => ({
       match: {
         orientation: "vertical" as const,
-        size: size as (typeof sizes)[number],
+        size,
       },
       css: {
         height: "auto",

@@ -37,7 +37,10 @@ describe("useSwitchFieldRecipe contrast", () => {
     if (!variable) {
       throw new Error(`Unknown token ${token}`);
     }
-    return String(variable.value);
+    if (typeof variable.value !== "string") {
+      throw new Error(`Token ${variable.name} isn't a plain value`);
+    }
+    return variable.value;
   }
 
   // The thumb's color token, from inside its gradient.
@@ -157,7 +160,8 @@ describe("useSwitchFieldRecipe contrast", () => {
 
   // Every color token in a block, resolved for a theme and written in hex, so
   // one color compares equal whichever way its theme spells it.
-  function applied(value: unknown, theme: Theme): unknown {
+  type Applied = string | { [key: string]: Applied };
+  function applied(value: unknown, theme: Theme): Applied {
     if (typeof value === "string") {
       return value.replaceAll(/@color\.[\w-]+/g, (token) => formatHex8(resolve(token, theme)));
     }

@@ -64,7 +64,7 @@ describe("spinner contrast", () => {
     }
     const value = variable.value as unknown;
     if (typeof value === "object" && value !== null && (value as Slot).type === "reference") {
-      return resolve(`@${(value as Slot).name}`, theme);
+      return resolve(`@${(value as { name: string }).name}`, theme);
     }
     return String(value);
   }

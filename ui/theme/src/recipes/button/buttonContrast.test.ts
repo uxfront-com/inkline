@@ -48,7 +48,7 @@ describe("useButtonRecipe contrast", () => {
     }
     const value = variable.value as unknown;
     if (typeof value === "object" && value !== null && (value as Slot).type === "reference") {
-      return resolve(`@${(value as Slot).name}`, theme);
+      return resolve(`@${(value as { name: string }).name}`, theme);
     }
     return String(value);
   }
@@ -119,7 +119,7 @@ describe("useButtonRecipe contrast", () => {
     for (const background of behind) {
       expect(
         wcagContrast(resolve(label as string, theme), background),
-        `${label} against ${background}`,
+        `${String(label)} against ${background}`,
       ).toBeGreaterThanOrEqual(4.5);
     }
   });

@@ -63,7 +63,7 @@ describe("card contrast", () => {
     const background = resolve(declarations.background, values);
     expect(
       wcagContrast(text, background),
-      `${declarations.color} on ${declarations.background}`,
+      `${String(declarations.color)} on ${String(declarations.background)}`,
     ).toBeGreaterThanOrEqual(4.5);
   });
 

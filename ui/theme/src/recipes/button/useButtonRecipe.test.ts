@@ -28,14 +28,14 @@ function blocks(recipe: ReturnType<typeof useButtonRecipe>) {
       }
     }
   };
-  visit("base", recipe.base as Slot);
+  visit("base", recipe.base);
   for (const [axis, values] of Object.entries(recipe.variants!)) {
     for (const [value, css] of Object.entries(values)) {
-      visit(`${axis}=${value}`, css as Slot);
+      visit(`${axis}=${value}`, css);
     }
   }
   for (const cv of recipe.compoundVariants!) {
-    visit(`${cv.match.color ?? "*"}/${cv.match.variant ?? "*"}`, cv.css as Slot);
+    visit(`${cv.match.color ?? "*"}/${cv.match.variant ?? "*"}`, cv.css);
   }
   return result;
 }

@@ -144,7 +144,7 @@ describe("Open Components rules", () => {
 
   // The group's own setup selectors.
   const own = (s: ReturnType<typeof styleframe>) =>
-    (s.root.children as unknown as Array<Node>).filter(
+    (s.root.children as Array<Node>).filter(
       (child) => child.type === "selector" && child.query!.startsWith(".checkbox-group"),
     );
 

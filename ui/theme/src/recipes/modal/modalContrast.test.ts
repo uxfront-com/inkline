@@ -29,7 +29,10 @@ describe("modal contrast", () => {
     if (!variable) {
       throw new Error(`Unknown token ${token}`);
     }
-    return String(variable.value);
+    if (typeof variable.value !== "string") {
+      throw new Error(`Token ${variable.name} isn't a plain value`);
+    }
+    return variable.value;
   }
 
   const cases = overlaySurfaceCompoundVariants.flatMap((cv) => {
@@ -81,7 +84,7 @@ describe("modal fixed colors", () => {
     }
     const value = variable.value as unknown;
     if (typeof value === "object" && value !== null && (value as Slot).type === "reference") {
-      return resolve(`@${(value as Slot).name}`, dark);
+      return resolve(`@${(value as { name: string }).name}`, dark);
     }
     return String(value);
   }
@@ -101,11 +104,13 @@ describe("modal fixed colors", () => {
     );
   }
 
-  const cases = [
-    ["panel", useModalRecipe(s)],
-    ["header", useModalHeaderRecipe(s)],
-    ["footer", useModalFooterRecipe(s)],
-  ].flatMap(([part, recipe]) =>
+  const cases = (
+    [
+      ["panel", useModalRecipe(s)],
+      ["header", useModalHeaderRecipe(s)],
+      ["footer", useModalFooterRecipe(s)],
+    ] as const
+  ).flatMap(([part, recipe]) =>
     (recipe as ReturnType<typeof useModalRecipe>)
       .compoundVariants!.filter((cv) => cv.match.color === "light" || cv.match.color === "dark")
       .map((cv) => ({
