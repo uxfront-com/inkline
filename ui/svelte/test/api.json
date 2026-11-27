@@ -41,9 +41,11 @@
         "style",
         "variant"
       ],
-      "models": [],
+      "models": [
+        "ref"
+      ],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "IBadgeBase": {
       "props": [
@@ -52,9 +54,11 @@
         "label",
         "style"
       ],
-      "models": [],
+      "models": [
+        "ref"
+      ],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "IButton": {
       "props": [
@@ -82,11 +86,13 @@
         "type",
         "variant"
       ],
-      "models": [],
+      "models": [
+        "ref"
+      ],
       "events": [
         "onclick"
       ],
-      "attributes": false
+      "attributes": true
     },
     "IButtonBase": {
       "props": [
@@ -114,11 +120,13 @@
         "type",
         "variant"
       ],
-      "models": [],
+      "models": [
+        "ref"
+      ],
       "events": [
         "onclick"
       ],
-      "attributes": false
+      "attributes": true
     },
     "ICheckbox": {
       "props": [
@@ -138,10 +146,11 @@
         "style"
       ],
       "models": [
-        "checked"
+        "checked",
+        "ref"
       ],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "ICheckboxBase": {
       "props": [
@@ -149,9 +158,11 @@
         "class",
         "style"
       ],
-      "models": [],
+      "models": [
+        "ref"
+      ],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "ICheckboxControlBase": {
       "props": [
@@ -167,10 +178,11 @@
         "style"
       ],
       "models": [
-        "checked"
+        "checked",
+        "ref"
       ],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "IFieldGroup": {
       "props": [
@@ -181,9 +193,11 @@
         "orientation",
         "style"
       ],
-      "models": [],
+      "models": [
+        "ref"
+      ],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "IFieldGroupBase": {
       "props": [
@@ -192,9 +206,11 @@
         "id",
         "style"
       ],
-      "models": [],
+      "models": [
+        "ref"
+      ],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "IHamburgerMenu": {
       "props": [
@@ -208,10 +224,11 @@
         "style"
       ],
       "models": [
-        "open"
+        "open",
+        "ref"
       ],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "IHamburgerMenuBase": {
       "props": [
@@ -222,10 +239,11 @@
         "style"
       ],
       "models": [
-        "open"
+        "open",
+        "ref"
       ],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "IInput": {
       "props": [
@@ -249,13 +267,14 @@
         "variant"
       ],
       "models": [
+        "ref",
         "value"
       ],
       "events": [
         "onblur",
         "onfocus"
       ],
-      "attributes": false
+      "attributes": true
     },
     "IInputBase": {
       "props": [
@@ -264,9 +283,11 @@
         "id",
         "style"
       ],
-      "models": [],
+      "models": [
+        "ref"
+      ],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "IInputControlBase": {
       "props": [
@@ -296,9 +317,11 @@
         "class",
         "style"
       ],
-      "models": [],
+      "models": [
+        "ref"
+      ],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "IInputSuffixBase": {
       "props": [
@@ -306,9 +329,11 @@
         "class",
         "style"
       ],
-      "models": [],
+      "models": [
+        "ref"
+      ],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "IInputTextareaBase": {
       "props": [
@@ -325,13 +350,14 @@
         "style"
       ],
       "models": [
+        "ref",
         "value"
       ],
       "events": [
         "onblur",
         "onfocus"
       ],
-      "attributes": false
+      "attributes": true
     },
     "IRadioBase": {
       "props": [
@@ -340,9 +366,11 @@
         "id",
         "style"
       ],
-      "models": [],
+      "models": [
+        "ref"
+      ],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "IRadioFieldBase": {
       "props": [
@@ -356,10 +384,11 @@
         "value"
       ],
       "models": [
+        "ref",
         "selected"
       ],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "IRadioGroup": {
       "props": [
@@ -377,10 +406,11 @@
         "style"
       ],
       "models": [
+        "ref",
         "value"
       ],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "IRadioGroupBase": {
       "props": [
@@ -392,9 +422,11 @@
         "readonly",
         "style"
       ],
-      "models": [],
+      "models": [
+        "ref"
+      ],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "ISwitch": {
       "props": [
@@ -412,10 +444,11 @@
         "style"
       ],
       "models": [
-        "checked"
+        "checked",
+        "ref"
       ],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "ISwitchBase": {
       "props": [
@@ -423,9 +456,11 @@
         "class",
         "style"
       ],
-      "models": [],
+      "models": [
+        "ref"
+      ],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "ISwitchControlBase": {
       "props": [
@@ -439,10 +474,11 @@
         "style"
       ],
       "models": [
-        "checked"
+        "checked",
+        "ref"
       ],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "ISwitchLabelBase": {
       "props": [
@@ -450,9 +486,11 @@
         "class",
         "style"
       ],
-      "models": [],
+      "models": [
+        "ref"
+      ],
       "events": [],
-      "attributes": false
+      "attributes": true
     }
   }
 }

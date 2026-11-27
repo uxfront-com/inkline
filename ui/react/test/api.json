@@ -34,27 +34,23 @@
     "IBadge": {
       "props": [
         "children",
-        "className",
         "color",
         "label",
         "size",
-        "style",
         "variant"
       ],
       "models": [],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "IBadgeBase": {
       "props": [
         "children",
-        "className",
-        "label",
-        "style"
+        "label"
       ],
       "models": [],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "IButton": {
       "props": [
@@ -66,7 +62,6 @@
         "ariaPressed",
         "block",
         "children",
-        "className",
         "color",
         "disabled",
         "focusableWhenDisabled",
@@ -77,7 +72,6 @@
         "loading",
         "loadingLabel",
         "size",
-        "style",
         "trailing",
         "type",
         "variant"
@@ -86,7 +80,7 @@
       "events": [
         "onClick"
       ],
-      "attributes": false
+      "attributes": true
     },
     "IButtonBase": {
       "props": [
@@ -97,7 +91,6 @@
         "ariaLabel",
         "ariaPressed",
         "children",
-        "className",
         "color",
         "disabled",
         "focusableWhenDisabled",
@@ -109,7 +102,6 @@
         "loadingLabel",
         "size",
         "spinner",
-        "style",
         "trailing",
         "type",
         "variant"
@@ -118,14 +110,13 @@
       "events": [
         "onClick"
       ],
-      "attributes": false
+      "attributes": true
     },
     "ICheckbox": {
       "props": [
         "ariaDescribedby",
         "ariaLabel",
         "children",
-        "className",
         "color",
         "disabled",
         "id",
@@ -134,8 +125,7 @@
         "name",
         "readonly",
         "required",
-        "size",
-        "style"
+        "size"
       ],
       "models": [
         "checked"
@@ -143,30 +133,26 @@
       "events": [
         "onCheckedChange"
       ],
-      "attributes": false
+      "attributes": true
     },
     "ICheckboxBase": {
       "props": [
-        "children",
-        "className",
-        "style"
+        "children"
       ],
       "models": [],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "ICheckboxControlBase": {
       "props": [
         "ariaDescribedby",
         "ariaLabel",
-        "className",
         "disabled",
         "id",
         "indeterminate",
         "name",
         "readonly",
-        "required",
-        "style"
+        "required"
       ],
       "models": [
         "checked"
@@ -174,42 +160,36 @@
       "events": [
         "onCheckedChange"
       ],
-      "attributes": false
+      "attributes": true
     },
     "IFieldGroup": {
       "props": [
         "block",
         "children",
-        "className",
         "id",
-        "orientation",
-        "style"
+        "orientation"
       ],
       "models": [],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "IFieldGroupBase": {
       "props": [
         "children",
-        "className",
-        "id",
-        "style"
+        "id"
       ],
       "models": [],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "IHamburgerMenu": {
       "props": [
         "animation",
         "ariaControls",
         "ariaLabel",
-        "className",
         "color",
         "disabled",
-        "size",
-        "style"
+        "size"
       ],
       "models": [
         "open"
@@ -217,15 +197,13 @@
       "events": [
         "onOpenChange"
       ],
-      "attributes": false
+      "attributes": true
     },
     "IHamburgerMenuBase": {
       "props": [
         "ariaControls",
         "ariaLabel",
-        "className",
-        "disabled",
-        "style"
+        "disabled"
       ],
       "models": [
         "open"
@@ -233,14 +211,13 @@
       "events": [
         "onOpenChange"
       ],
-      "attributes": false
+      "attributes": true
     },
     "IInput": {
       "props": [
         "ariaDescribedby",
         "ariaLabel",
         "autocomplete",
-        "className",
         "color",
         "disabled",
         "id",
@@ -251,7 +228,6 @@
         "readonly",
         "required",
         "size",
-        "style",
         "suffix",
         "type",
         "variant"
@@ -264,18 +240,16 @@
         "onFocus",
         "onValueChange"
       ],
-      "attributes": false
+      "attributes": true
     },
     "IInputBase": {
       "props": [
         "children",
-        "className",
-        "id",
-        "style"
+        "id"
       ],
       "models": [],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "IInputControlBase": {
       "props": [
@@ -302,37 +276,31 @@
     },
     "IInputPrefixBase": {
       "props": [
-        "children",
-        "className",
-        "style"
+        "children"
       ],
       "models": [],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "IInputSuffixBase": {
       "props": [
-        "children",
-        "className",
-        "style"
+        "children"
       ],
       "models": [],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "IInputTextareaBase": {
       "props": [
         "ariaDescribedby",
         "ariaLabel",
         "autocomplete",
-        "className",
         "disabled",
         "id",
         "name",
         "placeholder",
         "readonly",
-        "required",
-        "style"
+        "required"
       ],
       "models": [
         "value"
@@ -342,28 +310,24 @@
         "onFocus",
         "onValueChange"
       ],
-      "attributes": false
+      "attributes": true
     },
     "IRadioBase": {
       "props": [
         "children",
-        "className",
-        "id",
-        "style"
+        "id"
       ],
       "models": [],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "IRadioFieldBase": {
       "props": [
-        "className",
         "disabled",
         "id",
         "name",
         "readonly",
         "required",
-        "style",
         "value"
       ],
       "models": [
@@ -372,12 +336,11 @@
       "events": [
         "onSelectedChange"
       ],
-      "attributes": false
+      "attributes": true
     },
     "IRadioGroup": {
       "props": [
         "ariaDescribedby",
-        "className",
         "color",
         "disabled",
         "id",
@@ -386,8 +349,7 @@
         "options",
         "orientation",
         "readonly",
-        "size",
-        "style"
+        "size"
       ],
       "models": [
         "value"
@@ -395,36 +357,32 @@
       "events": [
         "onValueChange"
       ],
-      "attributes": false
+      "attributes": true
     },
     "IRadioGroupBase": {
       "props": [
         "ariaDescribedby",
         "children",
-        "className",
         "id",
         "label",
-        "readonly",
-        "style"
+        "readonly"
       ],
       "models": [],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "ISwitch": {
       "props": [
         "ariaDescribedby",
         "ariaLabel",
         "children",
-        "className",
         "color",
         "disabled",
         "id",
         "label",
         "name",
         "readonly",
-        "size",
-        "style"
+        "size"
       ],
       "models": [
         "checked"
@@ -432,28 +390,24 @@
       "events": [
         "onCheckedChange"
       ],
-      "attributes": false
+      "attributes": true
     },
     "ISwitchBase": {
       "props": [
-        "children",
-        "className",
-        "style"
+        "children"
       ],
       "models": [],
       "events": [],
-      "attributes": false
+      "attributes": true
     },
     "ISwitchControlBase": {
       "props": [
         "ariaDescribedby",
         "ariaLabel",
-        "className",
         "disabled",
         "id",
         "name",
-        "readonly",
-        "style"
+        "readonly"
       ],
       "models": [
         "checked"
@@ -461,17 +415,15 @@
       "events": [
         "onCheckedChange"
       ],
-      "attributes": false
+      "attributes": true
     },
     "ISwitchLabelBase": {
       "props": [
-        "children",
-        "className",
-        "style"
+        "children"
       ],
       "models": [],
       "events": [],
-      "attributes": false
+      "attributes": true
     }
   }
 }
