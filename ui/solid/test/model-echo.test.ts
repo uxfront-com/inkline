@@ -1,5 +1,6 @@
 // @vitest-environment jsdom
-import { createComponent, createSignal, type Component } from "solid-js";
+import { createComponent, createSignal } from "solid-js";
+import type { Component } from "solid-js";
 import { render } from "solid-js/web";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
@@ -21,11 +22,13 @@ const styled = await load("index");
 
 function exported(module: Record<string, Control>, name: string): [string, Control] {
   const control = module[name];
-  if (!control) throw new Error(`the build doesn't export ${name}`);
+  if (!control) {
+    throw new Error(`the build doesn't export ${name}`);
+  }
   return [name, control];
 }
 
-const controls: [string, Control][] = [
+const controls: Array<[string, Control]> = [
   exported(headless, "ICheckboxControlBase"),
   exported(headless, "ISwitchControlBase"),
   exported(styled, "ICheckbox"),

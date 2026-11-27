@@ -50,8 +50,11 @@ const files = [
 function* walk(dir: string): Generator<string> {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
     const path = join(dir, entry.name);
-    if (entry.isDirectory()) yield* walk(path);
-    else yield path;
+    if (entry.isDirectory()) {
+      yield* walk(path);
+    } else {
+      yield path;
+    }
   }
 }
 
@@ -98,7 +101,7 @@ describe("the generated site", () => {
       const html = readFileSync(join(output, file), "utf8");
       const trigger = html.match(/<button[^>]*aria-label="Version"[^>]*>.*?<\/button>/s)?.[0];
       expect(trigger).toMatch(/role="combobox"/);
-      expect(trigger?.replace(/<[^>]*>/g, "").trim()).toBe("v5");
+      expect(trigger?.replaceAll(/<[^>]*>/g, "").trim()).toBe("v5");
     },
   );
 
@@ -167,7 +170,7 @@ describe("framework URLs", () => {
 
   // D7: links keep the framework.
   it("links only to docs pages under a framework, and under the page's own", () => {
-    const offenders: string[] = [];
+    const offenders: Array<string> = [];
     for (const file of htmlFiles()) {
       const html = read(file);
       const own = frameworkOf(file) ?? landingOf(file);
@@ -181,7 +184,9 @@ describe("framework URLs", () => {
       );
       for (const url of [...hrefs, ...jsonLd]) {
         const ok = typeof prefix === "string" ? url.startsWith(prefix) : prefix.test(url);
-        if (!ok) offenders.push(`${file}: ${url}`);
+        if (!ok) {
+          offenders.push(`${file}: ${url}`);
+        }
       }
     }
     expect(offenders).toEqual([]);

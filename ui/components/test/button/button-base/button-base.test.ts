@@ -142,10 +142,12 @@ describeTargets("button/button-base", () => {
       // The harness fails a test whose link click goes unprevented, since it would leave the page.
       // So this listener, which runs after the component's, records whether the component let the
       // click through, and then stops the navigation itself.
-      const unprevented: string[] = [];
+      const unprevented: Array<string> = [];
       const record = (event: MouseEvent) => {
         const link = (event.target as Element).closest("a");
-        if (!link || event.defaultPrevented) return;
+        if (!link || event.defaultPrevented) {
+          return;
+        }
         unprevented.push(link.textContent ?? "");
         event.preventDefault();
       };

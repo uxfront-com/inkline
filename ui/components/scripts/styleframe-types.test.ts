@@ -8,10 +8,12 @@ import { ROOT } from "./recipes.ts";
 import { writeStyleframeTypes } from "./styleframe-types.ts";
 
 /** Every name the sources import from `virtual:styleframe`, like `buttonRecipe` and `styleframe`. */
-function importedNames(dir = join(ROOT, "src")): string[] {
+function importedNames(dir = join(ROOT, "src")): Array<string> {
   const names = new Set<string>();
   for (const entry of readdirSync(dir, { withFileTypes: true, recursive: true })) {
-    if (!entry.isFile() || !/\.(ts|tsx)$/.test(entry.name)) continue;
+    if (!entry.isFile() || !/\.(ts|tsx)$/.test(entry.name)) {
+      continue;
+    }
     const source = readFileSync(join(entry.parentPath, entry.name), "utf8");
     for (const [, list = ""] of source.matchAll(
       /import\s*\{([^}]*)\}\s*from\s*"virtual:styleframe"/g,
@@ -21,7 +23,9 @@ function importedNames(dir = join(ROOT, "src")): string[] {
           .replace(/^\s*type\s+/, "")
           .split(/\s+as\s+/)[0]
           ?.trim();
-        if (imported) names.add(imported);
+        if (imported) {
+          names.add(imported);
+        }
       }
     }
   }

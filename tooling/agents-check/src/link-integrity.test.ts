@@ -16,10 +16,12 @@ const EXCLUDED_DIRS = new Set([
   ".turbo",
 ]);
 
-function walkMarkdown(dir: string): string[] {
-  const out: string[] = [];
+function walkMarkdown(dir: string): Array<string> {
+  const out: Array<string> = [];
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
-    if (EXCLUDED_DIRS.has(entry.name)) continue;
+    if (EXCLUDED_DIRS.has(entry.name)) {
+      continue;
+    }
     const full = join(dir, entry.name);
     if (entry.isDirectory()) {
       out.push(...walkMarkdown(full));
@@ -29,7 +31,9 @@ function walkMarkdown(dir: string): string[] {
       out.push(full);
     } else if (entry.name.endsWith(".md")) {
       const rel = relative(REPO_ROOT, dir);
-      if (rel.startsWith("docs") || rel.startsWith(".github")) out.push(full);
+      if (rel.startsWith("docs") || rel.startsWith(".github")) {
+        out.push(full);
+      }
     }
   }
   return out;
@@ -42,23 +46,31 @@ const LINK_RE = /\[[^\]]*\]\(([^)]+)\)/g;
 // Strip fenced code blocks so triple-backtick examples don't generate false
 // positives.
 function stripCodeFences(input: string): string {
-  return input.replace(/```[\s\S]*?```/g, "");
+  return input.replaceAll(/```[\s\S]*?```/g, "");
 }
 
-function extractRelativeTargets(content: string): string[] {
+function extractRelativeTargets(content: string): Array<string> {
   const stripped = stripCodeFences(content);
-  const out: string[] = [];
+  const out: Array<string> = [];
   let match: RegExpExecArray | null;
   LINK_RE.lastIndex = 0;
   while ((match = LINK_RE.exec(stripped)) !== null) {
     const raw = match[1]?.trim();
-    if (!raw) continue;
+    if (!raw) {
+      continue;
+    }
     // Strip optional title: [text](path "title")
     const target = raw.split(/\s+/)[0] ?? "";
-    if (!target) continue;
+    if (!target) {
+      continue;
+    }
     // Skip non-relative targets.
-    if (/^[a-z][a-z0-9+.-]*:/i.test(target)) continue; // protocol (http:, mailto:, etc.)
-    if (target.startsWith("#")) continue; // page-internal anchor
+    if (/^[a-z][a-z0-9+.-]*:/i.test(target)) {
+      continue;
+    } // protocol (http:, mailto:, etc.)
+    if (target.startsWith("#")) {
+      continue;
+    } // page-internal anchor
     out.push(target);
   }
   return out;
@@ -67,7 +79,9 @@ function extractRelativeTargets(content: string): string[] {
 function resolveTarget(fromFile: string, link: string): string {
   // Drop URL fragments (#section) before resolving on disk.
   const cleaned = link.replace(/#.*$/, "");
-  if (cleaned === "") return fromFile; // anchor-only, already filtered above
+  if (cleaned === "") {
+    return fromFile;
+  } // anchor-only, already filtered above
   return resolve(dirname(fromFile), cleaned);
 }
 
@@ -81,7 +95,7 @@ describe("docs link integrity", () => {
   });
 
   it("every relative link in AGENTS.md / docs/*.md resolves to an existing file or directory", () => {
-    const issues: string[] = [];
+    const issues: Array<string> = [];
     for (const file of files) {
       const content = readFileSync(file, "utf8");
       const targets = extractRelativeTargets(content);

@@ -23,7 +23,7 @@
  */
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
-import { fileURLToPath, pathToFileURL } from "node:url";
+import { pathToFileURL } from "node:url";
 import { diff } from "node:util";
 
 import ts from "@typescript/typescript6";
@@ -34,25 +34,25 @@ export type Framework = (typeof FRAMEWORKS)[number];
 /** One exported component's API. */
 export interface ComponentApi {
   /** Angular only: the selectors the component matches. */
-  selectors?: string[];
+  selectors?: Array<string>;
   /** The props a consumer sets, models and events excluded. */
-  props: string[];
+  props: Array<string>;
   /** The two-way props: `v-model`, `bind:`, a prop with its update callback, or an Angular `model()`. */
-  models: string[];
+  models: Array<string>;
   /** The events a consumer listens to, as the consumer writes them. */
-  events: string[];
+  events: Array<string>;
   /** Whether the component also takes attributes beyond its props, like `class` or `aria-*`. */
   attributes: boolean;
 }
 
 export interface ApiReport {
   /** The names each entry exports, sorted. */
-  entries: Record<"." | "./headless", string[]>;
+  entries: Record<"." | "./headless", Array<string>>;
   /** Each exported component, by its exported name. */
   components: Record<string, ComponentApi>;
 }
 
-const UI = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
+const UI = resolve(import.meta.dirname, "../..");
 
 /** The report of `@inkline/<framework>`, from its build and the emitted sources in `emittedDir`. */
 export async function buildApiReport(framework: Framework, emittedDir: string): Promise<ApiReport> {
@@ -67,8 +67,9 @@ export async function buildApiReport(framework: Framework, emittedDir: string): 
   const reader = framework === "vue" ? undefined : new SourceReader(framework, packageDir);
   for (const name of names) {
     const source = sources.get(name);
-    if (!source)
+    if (!source) {
       throw new Error(`${framework}: no emitted source exports ${name} in ${emittedDir}`);
+    }
     components[name] =
       framework === "vue"
         ? await vueComponentApi(packageDir, name)
@@ -90,28 +91,38 @@ export function formatApiReport(report: ApiReport): string {
 function entryFile(packageDir: string, subpath: "." | "./headless"): string {
   const manifest = JSON.parse(readFileSync(join(packageDir, "package.json"), "utf8"));
   let target = manifest.exports?.[subpath];
-  while (target && typeof target === "object") target = target.import ?? target.default;
-  if (typeof target !== "string") throw new Error(`${packageDir}: no "${subpath}" export`);
+  while (target && typeof target === "object") {
+    target = target.import ?? target.default;
+  }
+  if (typeof target !== "string") {
+    throw new Error(`${packageDir}: no "${subpath}" export`);
+  }
   const file = join(packageDir, target);
-  if (!existsSync(file)) throw new Error(`${file} doesn't exist: build the package first`);
+  if (!existsSync(file)) {
+    throw new Error(`${file} doesn't exist: build the package first`);
+  }
   return file;
 }
 
 /** The names an ES module exports, read from its export declarations. */
-function exportNames(file: string): string[] {
+function exportNames(file: string): Array<string> {
   const source = ts.createSourceFile(file, readFileSync(file, "utf8"), ts.ScriptTarget.Latest);
-  const names: string[] = [];
+  const names: Array<string> = [];
   for (const statement of source.statements) {
     if (ts.isExportDeclaration(statement) && statement.exportClause) {
       if (ts.isNamedExports(statement.exportClause)) {
-        for (const element of statement.exportClause.elements) names.push(element.name.text);
+        for (const element of statement.exportClause.elements) {
+          names.push(element.name.text);
+        }
       }
     } else if (ts.isExportDeclaration(statement)) {
       throw new Error(`${file}: \`export *\` can't be read from the built entry`);
     } else if (hasExportModifier(statement)) {
       if (ts.isVariableStatement(statement)) {
         for (const declaration of statement.declarationList.declarations) {
-          if (ts.isIdentifier(declaration.name)) names.push(declaration.name.text);
+          if (ts.isIdentifier(declaration.name)) {
+            names.push(declaration.name.text);
+          }
         }
       } else if (
         (ts.isFunctionDeclaration(statement) || ts.isClassDeclaration(statement)) &&
@@ -146,7 +157,9 @@ function barrelSources(emittedDir: string): Map<string, Source> {
   const sources = new Map<string, Source>();
   for (const barrel of ["index.ts", "headless.ts"]) {
     const file = join(emittedDir, barrel);
-    if (!existsSync(file)) throw new Error(`${file} doesn't exist: compile the components first`);
+    if (!existsSync(file)) {
+      throw new Error(`${file} doesn't exist: compile the components first`);
+    }
     const source = ts.createSourceFile(file, readFileSync(file, "utf8"), ts.ScriptTarget.Latest);
     for (const statement of source.statements) {
       if (
@@ -180,7 +193,9 @@ function resolveEmitted(path: string): string {
     `${path}.vue`,
     `${path}.astro`,
   ]) {
-    if (existsSync(candidate)) return candidate;
+    if (existsSync(candidate)) {
+      return candidate;
+    }
   }
   throw new Error(`${path}: no emitted file`);
 }
@@ -230,7 +245,9 @@ class SourceReader {
     if (node) {
       const type = checker.getTypeAtLocation(node);
       const indexes = checker.getIndexInfosOfType(type);
-      if (indexes.length > 0) attributes = true;
+      if (indexes.length > 0) {
+        attributes = true;
+      }
       // A name an index signature takes, like Astro's `data-${string}`, is an attribute too.
       isIndexed = (name) =>
         indexes.some((index) =>
@@ -245,15 +262,23 @@ class SourceReader {
         const name = property.getName();
         if (/^on[A-Z]/.test(name) || this.isSvelteListener(name, property, node, checker)) {
           events.add(name);
-        } else props.add(name);
+        } else {
+          props.add(name);
+        }
       }
-      if (this.framework === "svelte") for (const name of svelteBindables(node)) models.add(name);
+      if (this.framework === "svelte") {
+        for (const name of svelteBindables(node)) {
+          models.add(name);
+        }
+      }
     }
     if (this.framework === "astro") {
       // A prop the frontmatter reads without declaring it, like a model's value. An attribute it
       // reads to merge with its root's own, like `aria-label`, is still an attribute.
       for (const name of astroPropReads(source)) {
-        if (!events.has(name) && !frameworkMembers.has(name) && !isIndexed(name)) props.add(name);
+        if (!events.has(name) && !frameworkMembers.has(name) && !isIndexed(name)) {
+          props.add(name);
+        }
       }
     }
     // A prop whose update callback the component takes is a model: `checked` with `onUpdateChecked`,
@@ -261,9 +286,13 @@ class SourceReader {
     for (const event of events) {
       const name = /^onUpdate(\w+?)\$?$/.exec(event)?.[1] ?? /^on(\w+?)Change\$?$/.exec(event)?.[1];
       const model = name && name.charAt(0).toLowerCase() + name.slice(1);
-      if (model && props.has(model)) models.add(model);
+      if (model && props.has(model)) {
+        models.add(model);
+      }
     }
-    for (const model of models) props.delete(model);
+    for (const model of models) {
+      props.delete(model);
+    }
     return {
       props: [...props].sort(),
       models: [...models].sort(),
@@ -282,7 +311,9 @@ class SourceReader {
     node: ts.Node,
     checker: ts.TypeChecker,
   ): boolean {
-    if (this.framework !== "svelte" || !/^on[a-z]/.test(name)) return false;
+    if (this.framework !== "svelte" || !/^on[a-z]/.test(name)) {
+      return false;
+    }
     const type = checker.getNonNullableType(checker.getTypeOfSymbolAtLocation(property, node));
     return type.getCallSignatures().length > 0;
   }
@@ -300,7 +331,9 @@ class SourceReader {
         ) {
           found = node.type ?? node.name;
         }
-        if (!found) node.forEachChild(visit);
+        if (!found) {
+          node.forEachChild(visit);
+        }
       });
       return found;
     }
@@ -316,7 +349,9 @@ class SourceReader {
       return undefined;
     }
     const component = this.componentNode(source, local);
-    if (!component) throw new Error(`${source.fileName}: no component \`${local}\``);
+    if (!component) {
+      throw new Error(`${source.fileName}: no component \`${local}\``);
+    }
     const parameter = component.parameters[0];
     return parameter ? (parameter.type ?? parameter.name) : undefined;
   }
@@ -330,10 +365,18 @@ class SourceReader {
       ) {
         expression = expression.expression;
       }
-      if (!expression) return undefined;
-      if (ts.isArrowFunction(expression) || ts.isFunctionExpression(expression)) return expression;
-      if (ts.isCallExpression(expression)) return unwrap(expression.arguments[0]);
-      if (ts.isIdentifier(expression)) return find(expression.text);
+      if (!expression) {
+        return undefined;
+      }
+      if (ts.isArrowFunction(expression) || ts.isFunctionExpression(expression)) {
+        return expression;
+      }
+      if (ts.isCallExpression(expression)) {
+        return unwrap(expression.arguments[0]);
+      }
+      if (ts.isIdentifier(expression)) {
+        return find(expression.text);
+      }
       return undefined;
     };
     const find = (name: string): ts.SignatureDeclaration | undefined => {
@@ -342,7 +385,9 @@ class SourceReader {
           const isDefault = (ts.getModifiers(statement) ?? []).some(
             (m) => m.kind === ts.SyntaxKind.DefaultKeyword,
           );
-          if (statement.name?.text === name || (name === "default" && isDefault)) return statement;
+          if (statement.name?.text === name || (name === "default" && isDefault)) {
+            return statement;
+          }
         } else if (ts.isVariableStatement(statement)) {
           for (const declaration of statement.declarationList.declarations) {
             if (ts.isIdentifier(declaration.name) && declaration.name.text === name) {
@@ -378,8 +423,9 @@ class SourceReader {
 
   private emittedRoot(dir: string): string {
     let current = dir;
-    while (!existsSync(join(current, "index.ts")) && dirname(current) !== current)
+    while (!existsSync(join(current, "index.ts")) && dirname(current) !== current) {
       current = dirname(current);
+    }
     return current;
   }
 
@@ -388,7 +434,7 @@ class SourceReader {
     return COMPONENT_EXTENSIONS.test(file) ? `${file}.ts` : file;
   }
 
-  private createProgram(roots: string[]): ts.Program {
+  private createProgram(roots: Array<string>): ts.Program {
     const options: ts.CompilerOptions = {
       target: ts.ScriptTarget.ESNext,
       module: ts.ModuleKind.ESNext,
@@ -407,10 +453,16 @@ class SourceReader {
     const styleframeTypes = join(this.packageDir, ".styleframe/styleframe.d.ts");
     const scripts = new Map<string, string>();
     const scriptOf = (path: string): string | undefined => {
-      if (!path.endsWith(".ts")) return undefined;
+      if (!path.endsWith(".ts")) {
+        return undefined;
+      }
       const original = path.slice(0, -3);
-      if (!COMPONENT_EXTENSIONS.test(original) || !existsSync(original)) return undefined;
-      if (!scripts.has(path)) scripts.set(path, componentScript(original) ?? "");
+      if (!COMPONENT_EXTENSIONS.test(original) || !existsSync(original)) {
+        return undefined;
+      }
+      if (!scripts.has(path)) {
+        scripts.set(path, componentScript(original) ?? "");
+      }
       return scripts.get(path);
     };
     const fileExists = host.fileExists.bind(host);
@@ -453,37 +505,43 @@ function isFrameworkFile(fileName: string): boolean {
  */
 function isFrameworkMember(property: ts.Symbol): boolean {
   const declarations = property.getDeclarations() ?? [];
-  if (declarations.length > 0)
+  if (declarations.length > 0) {
     return declarations.every((d) => isFrameworkFile(d.getSourceFile().fileName));
+  }
   const mapped = (property as { links?: { mappedType?: ts.Type } }).links?.mappedType;
   const origin = mapped?.aliasSymbol ?? mapped?.symbol;
   return (origin?.getDeclarations() ?? []).some((d) => isFrameworkFile(d.getSourceFile().fileName));
 }
 
 /** The props a Svelte component destructures as `$bindable()`. */
-function svelteBindables(node: ts.Node): string[] {
+function svelteBindables(node: ts.Node): Array<string> {
   const declaration = node.parent;
-  if (!ts.isVariableDeclaration(declaration) || !ts.isObjectBindingPattern(declaration.name))
+  if (!ts.isVariableDeclaration(declaration) || !ts.isObjectBindingPattern(declaration.name)) {
     return [];
+  }
   return declaration.name.elements
     .filter((element) => element.initializer && /^\$bindable\b/.test(element.initializer.getText()))
     .map((element) => ((element.propertyName ?? element.name) as ts.Identifier).text);
 }
 
 /** The props an Astro frontmatter reads from `Astro.props`, directly or through a `props` binding. */
-function astroPropReads(source: ts.SourceFile): string[] {
+function astroPropReads(source: ts.SourceFile): Array<string> {
   const names = new Set<string>();
   const aliases = new Set(["Astro.props"]);
   source.forEachChild(function visit(node) {
     if (ts.isVariableDeclaration(node) && node.initializer) {
       let init: ts.Expression = node.initializer;
-      while (ts.isAsExpression(init) || ts.isParenthesizedExpression(init)) init = init.expression;
+      while (ts.isAsExpression(init) || ts.isParenthesizedExpression(init)) {
+        init = init.expression;
+      }
       if (aliases.has(init.getText(source))) {
-        if (ts.isIdentifier(node.name)) aliases.add(node.name.text);
-        else if (ts.isObjectBindingPattern(node.name)) {
+        if (ts.isIdentifier(node.name)) {
+          aliases.add(node.name.text);
+        } else if (ts.isObjectBindingPattern(node.name)) {
           for (const element of node.name.elements) {
-            if (!element.dotDotDotToken)
+            if (!element.dotDotDotToken) {
               names.add(((element.propertyName ?? element.name) as ts.Identifier).text);
+            }
           }
         }
       }
@@ -514,35 +572,45 @@ function angularComponentApi(file: string, local: string): ComponentApi {
         (local === "default" &&
           (ts.getModifiers(statement) ?? []).some((m) => m.kind === ts.SyntaxKind.DefaultKeyword))),
   );
-  if (!declaration) throw new Error(`${file}: no class \`${local}\``);
-  const selectors: string[] = [];
+  if (!declaration) {
+    throw new Error(`${file}: no class \`${local}\``);
+  }
+  const selectors: Array<string> = [];
   for (const decorator of ts.getDecorators(declaration) ?? []) {
     const call = decorator.expression;
-    if (!ts.isCallExpression(call) || call.expression.getText(source) !== "Component") continue;
+    if (!ts.isCallExpression(call) || call.expression.getText(source) !== "Component") {
+      continue;
+    }
     const metadata = call.arguments[0];
-    if (!metadata || !ts.isObjectLiteralExpression(metadata)) continue;
+    if (!metadata || !ts.isObjectLiteralExpression(metadata)) {
+      continue;
+    }
     for (const property of metadata.properties) {
       if (ts.isPropertyAssignment(property) && property.name.getText(source) === "selector") {
         const value = property.initializer;
-        if (ts.isStringLiteralLike(value))
+        if (ts.isStringLiteralLike(value)) {
           selectors.push(...value.text.split(",").map((s) => s.trim()));
+        }
       }
     }
   }
-  const props: string[] = [];
-  const models: string[] = [];
-  const events: string[] = [];
+  const props: Array<string> = [];
+  const models: Array<string> = [];
+  const events: Array<string> = [];
   for (const member of declaration.members) {
-    if (!ts.isPropertyDeclaration(member) || !member.initializer || !ts.isIdentifier(member.name))
+    if (!ts.isPropertyDeclaration(member) || !member.initializer || !ts.isIdentifier(member.name)) {
       continue;
-    let call: ts.Expression = member.initializer;
-    if (!ts.isCallExpression(call)) continue;
+    }
+    const call: ts.Expression = member.initializer;
+    if (!ts.isCallExpression(call)) {
+      continue;
+    }
     const callee = call.expression.getText(source);
     const kind = /^(input|model|output)(\.required)?$/.exec(callee)?.[1];
-    if (!kind) continue;
-    const options = call.arguments.find((argument) => ts.isObjectLiteralExpression(argument)) as
-      | ts.ObjectLiteralExpression
-      | undefined;
+    if (!kind) {
+      continue;
+    }
+    const options = call.arguments.find(ts.isObjectLiteralExpression);
     const alias = options?.properties.find(
       (property): property is ts.PropertyAssignment =>
         ts.isPropertyAssignment(property) && property.name.getText(source) === "alias",
@@ -574,8 +642,10 @@ async function vueComponentApi(packageDir: string, name: string): Promise<Compon
     ),
   );
   const component = modules.map((module) => module[name]).find(Boolean);
-  if (!component) throw new Error(`vue: the build exports no component ${name}`);
-  const keys = (value: unknown): string[] =>
+  if (!component) {
+    throw new Error(`vue: the build exports no component ${name}`);
+  }
+  const keys = (value: unknown): Array<string> =>
     Array.isArray(value) ? value : value && typeof value === "object" ? Object.keys(value) : [];
   const emits = keys(component.emits);
   const models = emits
@@ -609,7 +679,9 @@ export const UPDATE_COMMAND = "pnpm --filter @inkline/components run api:update"
  * change, with `…` between changes that are further apart. Empty when the two are equal.
  */
 export function diffReports(committed: string, built: string, context = 2): string {
-  if (committed === built) return "";
+  if (committed === built) {
+    return "";
+  }
   // `diff(actual, expected)` marks a line only `actual` has with 1, and one only `expected` has with -1.
   const operations = diff(lines(built), lines(committed));
   const visible = operations.map((_, index) =>
@@ -617,14 +689,16 @@ export function diffReports(committed: string, built: string, context = 2): stri
       .slice(Math.max(0, index - context), index + context + 1)
       .some(([operation]) => operation !== 0),
   );
-  const out: string[] = [];
+  const out: Array<string> = [];
   let last = -1;
   for (let index = 0; index < operations.length; ) {
     if (!visible[index]) {
       index++;
       continue;
     }
-    if (last >= 0 && index > last + 1) out.push("…");
+    if (last >= 0 && index > last + 1) {
+      out.push("…");
+    }
     const operation = operations[index];
     if (operation?.[0] === 0) {
       out.push(`  ${operation[1]}`);
@@ -633,19 +707,33 @@ export function diffReports(committed: string, built: string, context = 2): stri
     }
     // A run of changed lines: the committed ones first, then the ones the build has instead.
     let end = index;
-    while (end < operations.length && operations[end]?.[0] !== 0) end++;
+    while (end < operations.length && operations[end]?.[0] !== 0) {
+      end++;
+    }
     const run = operations.slice(index, end);
-    for (const [operation, line] of run) if (operation === -1) out.push(`- ${line}`);
-    for (const [operation, line] of run) if (operation === 1) out.push(`+ ${line}`);
+    for (const [operation, line] of run) {
+      if (operation === -1) {
+        out.push(`- ${line}`);
+      }
+    }
+    for (const [operation, line] of run) {
+      if (operation === 1) {
+        out.push(`+ ${line}`);
+      }
+    }
     last = end - 1;
     index = end;
   }
-  if (out.length === 0) out.push("(only the final newline differs)");
+  if (out.length === 0) {
+    out.push("(only the final newline differs)");
+  }
   return `${out.join("\n")}\n`;
 }
 
-function lines(text: string): string[] {
-  if (text === "") return [];
+function lines(text: string): Array<string> {
+  if (text === "") {
+    return [];
+  }
   return (text.endsWith("\n") ? text.slice(0, -1) : text).split("\n");
 }
 
@@ -657,15 +745,17 @@ export function reportFile(framework: Framework): string {
 // ---------------------------------------------------------------------------------------------------
 // Command line
 
-if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+if (process.argv[1] && resolve(process.argv[1]) === import.meta.filename) {
   const [mode, ...names] = process.argv.slice(2);
   const unknown = names.filter((name) => !FRAMEWORKS.includes(name as Framework));
   if ((mode !== "check" && mode !== "update") || unknown.length > 0) {
     console.error(`usage: node scripts/api-report.ts <check|update> [${FRAMEWORKS.join("|")}]...`);
-    if (unknown.length > 0) console.error(`unknown framework: ${unknown.join(", ")}`);
+    if (unknown.length > 0) {
+      console.error(`unknown framework: ${unknown.join(", ")}`);
+    }
     process.exit(2);
   }
-  const frameworks = names.length > 0 ? (names as Framework[]) : FRAMEWORKS;
+  const frameworks = names.length > 0 ? (names as Array<Framework>) : FRAMEWORKS;
   let differ = 0;
   let broken = 0;
   for (const framework of frameworks) {
@@ -684,7 +774,9 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
     const committed = existsSync(file) ? readFileSync(file, "utf8") : "";
     const changes = diffReports(committed, built);
     if (mode === "update") {
-      if (changes) writeFileSync(file, built);
+      if (changes) {
+        writeFileSync(file, built);
+      }
       console.log(`${changes ? "updated" : "unchanged"} ${shown}`);
     } else if (changes) {
       console.error(`✗ ${framework}: the build's API differs from ${shown}`);
@@ -704,5 +796,7 @@ if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.ur
       `\n${differ} of ${frameworks.length} API reports differ from the build. If the change is intended, run \`${UPDATE_COMMAND}\` and list each changed line in the package's changeset.`,
     );
   }
-  if (broken > 0 || differ > 0) process.exit(1);
+  if (broken > 0 || differ > 0) {
+    process.exit(1);
+  }
 }

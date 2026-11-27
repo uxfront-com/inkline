@@ -10,7 +10,7 @@ import { lastModified } from "../server/lib/git.ts";
  * still finish, since `generate` fails on any page that doesn't prerender.
  */
 describe("lastModified", () => {
-  const dirs: string[] = [];
+  const dirs: Array<string> = [];
   const tempDir = () => {
     const dir = mkdtempSync(join(tmpdir(), "inkline-git-"));
     dirs.push(dir);
@@ -19,7 +19,9 @@ describe("lastModified", () => {
 
   afterEach(() => {
     vi.restoreAllMocks();
-    for (const dir of dirs.splice(0)) rmSync(dir, { recursive: true, force: true });
+    for (const dir of dirs.splice(0)) {
+      rmSync(dir, { recursive: true, force: true });
+    }
   });
 
   it("returns an empty map outside a repository, and warns", () => {
@@ -33,7 +35,7 @@ describe("lastModified", () => {
     const repo = tempDir();
     const app = join(repo, "apps", "docs");
     mkdirSync(join(app, "app", "pages"), { recursive: true });
-    const git = (date: string, ...args: string[]) =>
+    const git = (date: string, ...args: Array<string>) =>
       execFileSync(
         "git",
         ["-c", "user.name=t", "-c", "user.email=t@t", "-c", "commit.gpgsign=false", ...args],

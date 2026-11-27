@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [
     // Type checking makes a component the Angular compiler can't analyse fail the build. With it
     // off, Analog drops that error and ships the class uncompiled, with no inputs.
-    angular({ tsconfig: "tsconfig.lib.json", disableTypeChecking: false }) as any,
+    angular({ tsconfig: "tsconfig.lib.json", disableTypeChecking: false }),
     styleframe({
       entry: resolve(__dirname, "../components/styleframe.config.ts"),
       include: [resolve(__dirname, "../components/src/**/*.styleframe.ts")],

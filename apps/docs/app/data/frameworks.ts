@@ -22,11 +22,11 @@ export interface LandingFramework {
   /** The installation page's "Verify the install" snippet, with its file name. */
   example: { title: string; code: string };
   /** Other component libraries its readers may know, as plain names. */
-  alternatives: string[];
+  alternatives: Array<string>;
 }
 
 /** The landing pages, in the order of `docsTheme.frameworks` in `app/app.config.ts`. */
-export const LANDING_FRAMEWORKS: LandingFramework[] = [
+export const LANDING_FRAMEWORKS: Array<LandingFramework> = [
   {
     value: "react",
     label: "React",

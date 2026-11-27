@@ -9,7 +9,7 @@ import { GITHUB_URL } from "~/data/site";
 defineProps<{
   /** The Documentation link, from docsPath(). */
   docsUrl: string;
-  nav: UxNavItem[];
+  nav: Array<UxNavItem>;
   /** Where the wordmark goes: the top of the page by default. */
   homeHref?: string;
   /** The wordmark link's accessible name, for a `homeHref` other than the top. */
