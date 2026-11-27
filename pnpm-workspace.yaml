@@ -44,12 +44,12 @@ catalog:
   "@angular/platform-server": 22.2.6
   "@babel/core": ^7.29.7
   "@qwik.dev/core": 2.0.0-rc.5
-  "@styleframe/cli": ^4.1.2
+  "@styleframe/cli": ^4.2.0
   "@styleframe/core": ^3.7.0
   "@styleframe/license": ^2.0.2
-  "@styleframe/loader": ^3.0.4
+  "@styleframe/loader": ^3.0.5
   "@styleframe/plugin": ^3.4.2
-  "@styleframe/runtime": ^3.2.2
+  "@styleframe/runtime": ^3.2.3
   "@styleframe/theme": ^3.11.0
   "@styleframe/transpiler": ^3.5.0
   "@sveltejs/vite-plugin-svelte": ^7.1.2
@@ -65,7 +65,7 @@ catalog:
   "@uxfront/site-checks": 0.1.1
   "@uxfront/typescript-config": ^0.2.0
   "@uxfront/ui": ^0.9.2
-  "@uxfront/unframework": 0.4.1
+  "@uxfront/unframework": 0.5.0
   "@vitejs/plugin-react": ^6.1.1
   "@vitejs/plugin-vue": ^6.0.7
   "@vitest/browser-playwright": 5.0.3
