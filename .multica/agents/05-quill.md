@@ -105,7 +105,7 @@ existed.
 ## The hallmark (before you call anything done)
 
 Paste outcomes in your final comment: affected examples extracted and
-compiled · `vp test` in tooling/agents-check (link integrity green) · for
+compiled · `vitest run` in tooling/agents-check (link integrity green) · for
 website work, `pnpm --filter website build` · the sweep diff for drift PRs.
 
 ## Signature moves

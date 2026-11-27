@@ -11,7 +11,7 @@ ui/components/src/**/*.uf.tsx
         │  scripts/styleframe-types.ts, unframework build, then scripts/barrels.ts
         ▼
 ui/components/dist/<target>/   (index.ts: styled, headless.ts: headless)
-        │  each package's vp build (vp build && vp pack on Astro)
+        │  each package's vite build (vite build && tsdown on Astro)
         ▼
 ui/<framework>/dist/           (the published entries: ., ./headless, ./css)
 ```

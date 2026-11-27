@@ -11,8 +11,10 @@ apps/docs/
 ├── nuxt.config.ts            # extends layer-ui + layer-docs, framework URLs, site URL, redirects,
 │                             # Vercel edge rules, the Cloudflare preset under WORKERS_CI
 ├── wrangler.json             # the inkline Worker: dist/ as static assets
+├── site-checks.config.mjs    # the SEO check's rules, for `check:seo`
+├── lighthouserc.mjs          # Lighthouse CI: the pages and thresholds, for `lighthouse`
 ├── app/
-│   ├── app.vue               # mounts Docus under /docs, the homepage everywhere else; title template
+│   ├── app.vue               # mounts Docus under /docs, the homepage everywhere else; site title template
 │   ├── app.config.ts         # GitHub links, docsTheme (frameworks, wordmark, byline,
 │   │                         # headerLinks), ui colours
 │   ├── app.css               # Inkline's purple scale and --ui-primary, Tailwind @source lines
@@ -24,14 +26,17 @@ apps/docs/
 │   │   │                     # version select; VersionSelect (<AppVersionSelect>)
 │   │   └── site/             # SiteHeader: the homepage's and landing pages' header
 │   ├── data/frameworks.ts    # LANDING_FRAMEWORKS: one entry per landing page
-│   ├── data/site.ts          # DOCS_URL, GITHUB_URL
+│   ├── data/site.ts          # DOCS_URL, GITHUB_URL, SITE_DESCRIPTION, SHARE_IMAGE
 │   └── data/versions.ts      # VERSIONS: v5 (this site), v4, v3, v2
+├── public/share.png          # the homepage's and landing pages' share image, 1200 × 630
+├── scripts/fetch-history.mjs # before `nuxt generate`: unshallows the clone for the sitemap's dates
 ├── server/
-│   ├── routes/sitemap.xml.ts # the homepage, the landing pages, then getDocsSitemapEntries()
+│   ├── routes/sitemap.xml.ts # the homepage, the landing pages, then getDocsSitemapEntries(),
+│   │                         # each dated by Git
 │   ├── middleware/raw-markdown.ts  # /raw/<path>.md from each page's source; the layer
 │   │                               # serves the /raw/docs/<framework>/… twins from it
-│   └── lib/                  # headers, docs, raw
-├── test/                     # brand palette, embed helpers, versions, frameworks;
+│   └── lib/                  # headers, docs, raw, git (lastModified())
+├── test/                     # brand palette, embed helpers, versions, frameworks, git;
 │                             # site.build.test.ts after generate
 └── content/
     ├── _compiler/            # parked, unrouted: compiler pages awaiting /compiler
@@ -44,7 +49,7 @@ apps/docs/
 ## Shared and local
 
 - **From the packages (don't copy or edit here):** Docus's header, sidebar, search, table of contents, colour mode, llms.txt, robots.txt and OG images; the layer's `FrameworkSwitcher`, Framework select, header wordmark and header links (`AppHeaderLinks`, from `docsTheme.headerLinks`), its framework URLs, `docsPath()` and the sitemap's docs entries (`getDocsSitemapEntries()`); the homepage components and the scene. If a build needs a package change, flag it upstream rather than forking the package into this app.
-- **Copied from Open Components:** `app/app.vue`, `app/error.vue`, `server/`, and the generic parts of `nuxt.config.ts` and `app/app.config.ts`. Keep them close to the source, so a fix there carries over. Framework URLs moved three of them away from that copy: the framework title template in `app/app.vue`, the `/docs` redirect in `nuxt.config.ts` and `server/routes/sitemap.xml.ts`, which lists the layer's entries in place of its own query.
+- **Copied from Open Components:** `app/app.vue`, `app/error.vue`, `server/`, and the generic parts of `nuxt.config.ts` and `app/app.config.ts`. Keep them close to the source, so a fix there carries over. Framework URLs moved two of them away from that copy: the `/docs` redirect in `nuxt.config.ts` and `server/routes/sitemap.xml.ts`, which lists the layer's entries in place of its own query.
 - **Local to this app:** the brand (`app/app.config.ts`, `app/app.css`), the header overrides in `app/components/app/`, which compose the layer's `AppHeaderLinks` and `AppHeaderFramework` around the Version select, the homepage and the framework landing pages, the embed port, the Vercel rules, the Cloudflare config and all markdown under `content/`.
 
 ## Docs content
@@ -59,7 +64,9 @@ Each page's markdown is served at `/raw/docs/<page>.md`, which `llms.txt` lists 
 
 ## Multi-framework examples
 
-The URL decides the framework: `/docs/vue/components/button` shows the Vue slot of every `::framework-switcher` on the page, before any script runs, and its title reads "Button - Inkline Vue". The Framework select above the sidebar (in the header's menu below 768px) goes to the same page under the framework the reader picks. localStorage only remembers the last pick. Each built page carries only its framework's slot. The seven frameworks, in Inkline's order, are `docsTheme.frameworks` in `app/app.config.ts`, and the first one, React, is the one `/docs` and the homepage link to: reorder the list, and change the `/docs` redirect in `nuxt.config.ts` with it.
+The URL decides the framework: `/docs/vue/components/button` shows the Vue slot of every `::framework-switcher` on the page, before any script runs. The layer names the framework in each copy's title and meta description, so the title reads "Button for Vue - Inkline" and no two copies share a description. A page can set its own text for one framework under `seo.frameworks` in its frontmatter ("Titles and descriptions" in the layer's README).
+
+The Framework select above the sidebar (in the header's menu below 768px) goes to the same page under the framework the reader picks. localStorage only remembers the last pick. Each built page carries only its framework's slot. The seven frameworks, in Inkline's order, are `docsTheme.frameworks` in `app/app.config.ts`, and the first one, React, is the one `/docs` and the homepage link to: reorder the list, and change the `/docs` redirect in `nuxt.config.ts` with it.
 
 The Button page shows a code sample for each framework inside its slot:
 
@@ -90,6 +97,16 @@ The page validates its segment against the entries, so every other one-segment p
 
 The landing pages' copy is a draft until Alex approves it, before the site goes live on `inkline.io`.
 
+## Sitemap dates and share images
+
+Every URL in the sitemap has a `<lastmod>`: the UTC day of the last commit that changed its source, from `lastModified()` in `server/lib/git.ts`. The homepage dates by `app/pages/index.vue`, each landing page by the later of `app/pages/[framework].vue` and `app/data/frameworks.ts`, and each docs page by its markdown file, so its seven framework copies share one day. A page's `modifiedAt` wins over Git, and a source with no Git date takes the build's day.
+
+The dates need the repository's history. `generate` runs `scripts/fetch-history.mjs` first, which fetches the full history when the clone is shallow, as some hosts' clones are. It never stops the build: when the fetch fails, every page dates by the one commit the clone has, and with no Git at all, by the build day. Its `fetch-history:` line in the build log says which happened.
+
+A shared link shows a 1200 × 630 image. The docs pages generate theirs with nuxt-og-image, at the size `ogImage.defaults` in `nuxt.config.ts` sets, since its own default is 1200 × 600.
+
+The homepage and the seven landing pages share `public/share.png`, `SHARE_IMAGE` in `app/data/site.ts`: a screenshot of the homepage hero with the scene ready, and with the header's links, the button, the scroll hint and the HUD hidden (`.ux-header__nav`, `.ux-header__end`, `.ux-hero .ux-pill-link`, `.ux-hero__scroll`, `.ux-hud`). Take it again when the hero changes, at a 1200 × 630 viewport, and keep it under 300 KB. The scene's particles keep a full 256-colour PNG near 400 KB, so the current image is quantised at quality 75, with sharp's `png({ palette: true, quality: 75 })`, to 208 KB. `test:build` checks its size and the share tags on all eight pages.
+
 ## Version select
 
 Both headers have a Version select that shows v5, this site, and lists the older docs sites: v4, v3 and v2, each at `https://v<n>.inkline.io/`. The list is `app/data/versions.ts`, and `app/components/app/VersionSelect.vue` renders it on Nuxt UI's `USelect`. Nuxt names it `AppVersionSelect`, after its folder. It sits before the GitHub link in `SiteHeader`'s actions, on the homepage and the landing pages, and in the docs header (`AppHeaderCTA`), and in the docs header's menu below 768px, under the Framework select (`AppHeaderBody`).
@@ -109,13 +126,24 @@ pnpm --filter website dev   # nuxt dev with HMR
 ```bash
 pnpm --filter website generate     # static prerender → .output/public
 pnpm --filter website test         # source tests: the brand palette, the embed helpers, the versions,
-                                   # the landing pages' entries
+                                   # the landing pages' entries, the sitemap's Git dates
 pnpm --filter website test:build   # after generate: the files the deploy needs, the Version select, no assistant,
                                    # framework URLs, titles, links, the sitemap, the markdown twins
-                                   # and the landing pages
+                                   # and the landing pages with their share image
+pnpm --filter website check:seo    # after generate: the search and AI search checks on every page in the sitemap
+pnpm --filter website lighthouse   # after generate: Lighthouse CI on the homepage and five docs pages
 ```
 
-`generate` is the build that ships, and it fails on any page that doesn't prerender (`nitro.prerender.failOnError`). `build` (node-server) is a local convenience only: it emits no `robots.txt`, `200.html` or `404.html`, all of which the deploy needs.
+`generate` is the build that ships. It runs `scripts/fetch-history.mjs`, then `nuxt generate`, which fails on any page that doesn't prerender (`nitro.prerender.failOnError`). `build` (node-server) is a local convenience only: it emits no `robots.txt`, `200.html` or `404.html`, all of which the deploy needs.
+
+## SEO and Lighthouse checks
+
+Both checks come from [`@uxfront/site-checks`](https://www.npmjs.com/package/@uxfront/site-checks), which the other uxfront.com sites share. Both read `.output/public`, so run `generate` first:
+
+- **`check:seo`** reads every page in the sitemap the way a crawler does: titles, descriptions, canonical links, share images, structured data, `sitemap.xml`, `robots.txt` and `llms.txt`. It runs the package's 20 core rules with their defaults, set in [`site-checks.config.mjs`](./site-checks.config.mjs). `sitemap-pages` takes `paths: "lookup"`, since Cloudflare serves a page at both `/a` and `/a/`. It prints one line per rule and exits 1 on any problem. CI's Build Website job runs it after `test:build`.
+- **`lighthouse`** runs Lighthouse CI three times on the homepage and five docs pages, with the package's thresholds: an error below 0.95 in performance, accessibility and best practices, and below 1 in SEO. [`lighthouserc.mjs`](./lighthouserc.mjs) lists the pages by file name, like `/docs/react/components/button.html`, because the static server Lighthouse CI starts sends `/a` to `/a/`, where `generate` writes no page. Reports go to `.lighthouseci/`. [`lighthouse.yml`](../../.github/workflows/lighthouse.yml) runs it each night through the shared workflow in `uxfront-com/.github`, and only when `main` has moved since the last audit. Run it by hand from the Actions tab at any time.
+
+Turn the performance and accessibility categories back to `error` once the site passes them: **Known gaps** says why they warn.
 
 ## Deploy
 
@@ -140,13 +168,15 @@ The `/` → `/llms.txt` negotiation is Vercel-only, so on Cloudflare `/` always 
 
 - `typescript` is pinned to `catalog:ts6` here: `@vue/compiler-sfc` breaks under the default TS7 catalog.
 - Every `@uxfront/*` version is covered by the `@uxfront/*` glob in the root `pnpm-workspace.yaml` `minimumReleaseAgeExclude`, since they're often published days before this app takes them.
-- The root `"@nuxt/vite-builder>vite"` override gives the Nuxt builder upstream vite rather than vite-plus. Keep its range on the vite line `@nuxt/vite-builder` declares for the Nuxt in the lockfile.
+- The root `"@nuxt/vite-builder>vite"` override gives the Nuxt builder the vite range it declares, rather than the `catalog:` vite every other package gets. Keep its range on the vite line `@nuxt/vite-builder` declares for the Nuxt in the lockfile.
 - `buildDir` is pinned to `.nuxt` in `nuxt.config.ts`. Nuxt 4.6 otherwise moves `build` and `generate` to `node_modules/.cache/nuxt`, where the root type check can't see Nitro's auto-imports.
 - `ui.colors.primary: "purple"` resolves onto the purple scale in `app/app.css`, based on the brand mark's `#863bff`. Keep the two in step.
 - Only document real, shipped components. The Button page mirrors `ui/components`'s `IButton` examples, in `src/components/button/examples/`.
 
 ## Known gaps
 
+- **Lighthouse accessibility:** the category only warns in `lighthouserc.mjs`, because three docs pages score 0.90 to 0.94: Docus's "Copy page" menu button has no accessible name, and the text of the warning callout is below 4.5:1 contrast.
+- **Lighthouse performance:** the category only warns in `lighthouserc.mjs`, because the docs pages score 0.78 to 0.81 on CI's runners, where they block the main thread for 0.85 to 1 second. Locally they score 0.98 or more. The homepage scores 0.95.
 - **Live examples:** the component pages show code, not rendered components, and don't embed the deployed preview.
 - **Agent discovery on a static host:** the lockfile holds Docus 5.13.0. Docus 5.14 adds `nuxt-agent-discovery` and a prerendered `/openapi.json` that describes each page's Markdown twin and the MCP endpoint, which is off here. Only what's prerendered survives on a static host, and its server routes are inert, so check what both claim when Docus is bumped.
 

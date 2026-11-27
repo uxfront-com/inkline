@@ -224,17 +224,22 @@ class SourceReader {
     const props = new Set<string>();
     const events = new Set<string>();
     const models = new Set<string>();
+    const frameworkMembers = new Set<string>();
+    let isIndexed = (_name: string) => false;
     let attributes = false;
     if (node) {
       const type = checker.getTypeAtLocation(node);
-      if (checker.getIndexInfosOfType(type).length > 0) attributes = true;
+      const indexes = checker.getIndexInfosOfType(type);
+      if (indexes.length > 0) attributes = true;
+      // A name an index signature takes, like Astro's `data-${string}`, is an attribute too.
+      isIndexed = (name) =>
+        indexes.some((index) =>
+          checker.isTypeAssignableTo(checker.getStringLiteralType(name), index.keyType),
+        );
       for (const property of checker.getPropertiesOfType(type)) {
-        const declarations = property.getDeclarations() ?? [];
-        if (
-          declarations.length > 0 &&
-          declarations.every((d) => isFrameworkFile(d.getSourceFile().fileName))
-        ) {
+        if (isFrameworkMember(property)) {
           attributes = true;
+          frameworkMembers.add(property.getName());
           continue;
         }
         const name = property.getName();
@@ -245,14 +250,17 @@ class SourceReader {
       if (this.framework === "svelte") for (const name of svelteBindables(node)) models.add(name);
     }
     if (this.framework === "astro") {
-      // A prop the frontmatter reads without declaring it, like a model's value.
-      for (const name of astroPropReads(source)) if (!events.has(name)) props.add(name);
+      // A prop the frontmatter reads without declaring it, like a model's value. An attribute it
+      // reads to merge with its root's own, like `aria-label`, is still an attribute.
+      for (const name of astroPropReads(source)) {
+        if (!events.has(name) && !frameworkMembers.has(name) && !isIndexed(name)) props.add(name);
+      }
     }
     // A prop whose update callback the component takes is a model: `checked` with `onUpdateChecked`,
     // `onCheckedChange` or, on Qwik, `onCheckedChange$`.
     for (const event of events) {
       const name = /^onUpdate(\w+?)\$?$/.exec(event)?.[1] ?? /^on(\w+?)Change\$?$/.exec(event)?.[1];
-      const model = name && name[0].toLowerCase() + name.slice(1);
+      const model = name && name.charAt(0).toLowerCase() + name.slice(1);
       if (model && props.has(model)) models.add(model);
     }
     for (const model of models) props.delete(model);
@@ -438,6 +446,20 @@ function isFrameworkFile(fileName: string): boolean {
   return fileName.includes("/node_modules/");
 }
 
+/**
+ * Whether only a framework's own types declare a member, so it's an attribute. A member of a mapped
+ * type over template-literal keys, like Qwik's `window:onScroll$` or `stoppropagation:click`, has no
+ * declaration of its own, so the mapped type's declaration tells.
+ */
+function isFrameworkMember(property: ts.Symbol): boolean {
+  const declarations = property.getDeclarations() ?? [];
+  if (declarations.length > 0)
+    return declarations.every((d) => isFrameworkFile(d.getSourceFile().fileName));
+  const mapped = (property as { links?: { mappedType?: ts.Type } }).links?.mappedType;
+  const origin = mapped?.aliasSymbol ?? mapped?.symbol;
+  return (origin?.getDeclarations() ?? []).some((d) => isFrameworkFile(d.getSourceFile().fileName));
+}
+
 /** The props a Svelte component destructures as `$bindable()`. */
 function svelteBindables(node: ts.Node): string[] {
   const declaration = node.parent;
@@ -603,14 +625,15 @@ export function diffReports(committed: string, built: string, context = 2): stri
       continue;
     }
     if (last >= 0 && index > last + 1) out.push("…");
-    if (operations[index][0] === 0) {
-      out.push(`  ${operations[index][1]}`);
+    const operation = operations[index];
+    if (operation?.[0] === 0) {
+      out.push(`  ${operation[1]}`);
       last = index++;
       continue;
     }
     // A run of changed lines: the committed ones first, then the ones the build has instead.
     let end = index;
-    while (end < operations.length && operations[end][0] !== 0) end++;
+    while (end < operations.length && operations[end]?.[0] !== 0) end++;
     const run = operations.slice(index, end);
     for (const [operation, line] of run) if (operation === -1) out.push(`- ${line}`);
     for (const [operation, line] of run) if (operation === 1) out.push(`+ ${line}`);

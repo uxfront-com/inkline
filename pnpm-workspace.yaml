@@ -45,47 +45,54 @@ catalog:
   "@babel/core": ^7.29.7
   "@qwik.dev/core": 2.0.0-rc.5
   "@styleframe/cli": ^4.1.2
-  "@styleframe/core": ^3.6.2
+  "@styleframe/core": ^3.7.0
   "@styleframe/license": ^2.0.2
   "@styleframe/loader": ^3.0.4
-  "@styleframe/plugin": ^3.4.1
+  "@styleframe/plugin": ^3.4.2
   "@styleframe/runtime": ^3.2.2
   "@styleframe/theme": ^3.11.0
-  "@styleframe/transpiler": ^3.4.2
+  "@styleframe/transpiler": ^3.5.0
   "@sveltejs/vite-plugin-svelte": ^7.1.2
   "@tsdown/css": ^0.22.0
   "@types/node": ^24.13.2
   "@types/react": ^19.2.17
   "@typescript/typescript6": ^6.0.2
-  "@unframework.dev/testing": 0.3.2
-  "@unframework.dev/visual": 0.5.1
-  "@uxfront/layer-docs": ^0.9.0
-  "@uxfront/layer-ui": ^0.1.7
-  "@uxfront/scene": ^0.5.0
-  "@uxfront/ui": ^0.6.0
-  "@uxfront/unframework": 0.5.0
+  "@unframework.dev/testing": 0.3.4
+  "@unframework.dev/visual": 0.5.3
+  "@uxfront/layer-docs": ^0.10.0
+  "@uxfront/layer-ui": ^0.1.11
+  "@uxfront/scene": ^0.5.2
+  "@uxfront/site-checks": 0.1.1
+  "@uxfront/typescript-config": ^0.2.0
+  "@uxfront/ui": ^0.9.2
+  "@uxfront/unframework": 0.6.1
   "@vitejs/plugin-react": ^6.1.1
   "@vitejs/plugin-vue": ^6.0.7
   "@vitest/browser-playwright": 5.0.3
-  "@vueuse/core": ^14.4.0
+  "@vitest/coverage-v8": 5.0.3
+  "@vueuse/core": ^15.0.0
   astro: ^7.4.11
   babel-plugin-react-compiler: ^1.0.0
   docus: ^5.13.0
   jsdom: ^29.1.1
+  oxfmt: 0.52.0
+  oxlint: 1.67.0
+  oxlint-tsgolint: 0.23.0
   playwright: ^1.63.0
   react: ^19.2.7
   react-dom: ^19.2.7
   rollup-plugin-svelte: ^7.2.3
   rxjs: ^7.8.2
   solid-js: ^1.9.13
-  styleframe: ^3.9.1
+  styleframe: ^3.9.2
   svelte: ^5.56.3
+  tsdown: 0.22.1
   tslib: ^2.8.1
+  turbo: ^2.11.2
   typescript: ^7.0.2
-  vite: npm:@voidzero-dev/vite-plus-core@latest
+  vite: 8.3.1
   vite-plugin-solid: ^2.11.12
-  vite-plus: ^0.1.24
-  vitest: npm:@voidzero-dev/vite-plus-test@^0.1.24
+  vitest: 5.0.3
   vue: ^3.5.43
   zone.js: ^0.16.2
 
@@ -110,7 +117,7 @@ catalogs:
   ts6:
     typescript: npm:@typescript/typescript6@^6.0.2
   # Unframework's test, visual and preview tools peer on these exact versions, so `ui/components`
-  # takes them from here instead of the vite-plus aliases in `catalog:` (see `overrides` below).
+  # takes them from here, whatever `catalog:` holds (see `overrides` below).
   unframework:
     vite: 8.3.1
     vitest: 5.0.3
@@ -124,16 +131,10 @@ packageExtensions:
   "@analogjs/vite-plugin-angular":
     peerDependencies:
       typescript: "*"
-# The monorepo-wide `vite: catalog:` override routes every package's vite to the
-# vite-plus (rolldown) alias. The Nuxt website is the one exception: its
-# @nuxt/content client DB ships a @sqlite.org/sqlite-wasm web worker whose
-# `import.meta.url` worker-entry bundling crashes under vite-plus (reproduced on
-# 0.2.4 and 0.2.5 alike — a rolldown worker-bundling gap, not a version
-# regression). Scope the Nuxt vite builder back to upstream vite so the docs
-# site prerenders; the @vitejs/plugin-vue* plugins take vite as a peer and
-# resolve to this same real vite. Everything else keeps vite-plus. The range
-# follows the vite 8 line `@nuxt/vite-builder` declares for the website's Nuxt
-# (4.6): vite 7 has no `rolldownOptions`, and the builder throws on it.
+# The monorepo-wide `vite` and `vitest` overrides give every package the one Vite and Vitest of
+# `catalog:`. The Nuxt website is the one exception: `@nuxt/vite-builder` for its Nuxt (4.6)
+# declares vite ^8.3.2, above the 8.3.1 that Unframework's tools peer on, and vite 7 has no
+# `rolldownOptions`, so the builder throws on it. So it keeps the range it declares.
 overrides:
   vite: "catalog:"
   vitest: "catalog:"

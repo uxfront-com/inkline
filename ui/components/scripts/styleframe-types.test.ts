@@ -13,12 +13,14 @@ function importedNames(dir = join(ROOT, "src")): string[] {
   for (const entry of readdirSync(dir, { withFileTypes: true, recursive: true })) {
     if (!entry.isFile() || !/\.(ts|tsx)$/.test(entry.name)) continue;
     const source = readFileSync(join(entry.parentPath, entry.name), "utf8");
-    for (const [, list] of source.matchAll(/import\s*\{([^}]*)\}\s*from\s*"virtual:styleframe"/g)) {
+    for (const [, list = ""] of source.matchAll(
+      /import\s*\{([^}]*)\}\s*from\s*"virtual:styleframe"/g,
+    )) {
       for (const name of list.split(",")) {
         const imported = name
           .replace(/^\s*type\s+/, "")
           .split(/\s+as\s+/)[0]
-          .trim();
+          ?.trim();
         if (imported) names.add(imported);
       }
     }
@@ -39,12 +41,14 @@ await test("writes a declaration of virtual:styleframe for every name the source
       .map((content) => content.match(/declare module "virtual:styleframe" \{([\s\S]*?)\n\}/)?.[1])
       .filter((body): body is string => body !== undefined);
     deepStrictEqual(declarations.length, 1, "expected one declaration of virtual:styleframe");
+    const [declaration] = declarations;
+    ok(declaration !== undefined, "expected one declaration of virtual:styleframe");
 
     const names = importedNames();
     ok(names.includes("buttonRecipe"), "the styled button imports buttonRecipe");
     const missing = names.filter(
       (name) =>
-        !new RegExp(`export (?:declare )?(?:const|function|type) ${name}\\b`).test(declarations[0]),
+        !new RegExp(`export (?:declare )?(?:const|function|type) ${name}\\b`).test(declaration),
     );
     deepStrictEqual(missing, [], "virtual:styleframe doesn't declare every imported name");
   } finally {

@@ -4,6 +4,10 @@ Date: 2026-07-29 · Status: Superseded
 Deciders: Project owner · Informed by: internal tracker UXF-71 (friction audit), UXF-90 (RFC + measurements), UXF-133 (implementation)
 Supersedes: — · Superseded by: [ADR-012](./012-components-compile-with-unframework.md)
 
+> **Note (2026-11-27).** The commands this record names are given as the tools they ran, because
+> Inkline has since moved to running Oxfmt, OXLint, Vite and Vitest directly, through Turbo (see
+> [`docs/conventions.md`](../conventions.md)). Nothing else in the record has changed.
+
 Resolves the first item ADR-001 left in "Explicitly still undecided". ADR-001 is unchanged and still
 Accepted; its ordering of diagnostic work stands, subject to the revisit trigger it wrote for exactly
 this event ("a decision lands on typing the authoring surface").
@@ -73,7 +77,7 @@ Four commitments come with it:
    [`manifest.json`](https://github.com/uxfront-com/inkline/blob/e57570bc46976b320929a76141cce799402075c5/core/core/src/vendor/manifest.json), the single input. The MIT attribution,
    the pinned version, the body checksum and the re-sync procedure all travel inside the header of
    [`jsx-intrinsics.d.ts`](https://github.com/uxfront-com/inkline/blob/e57570bc46976b320929a76141cce799402075c5/core/core/src/vendor/jsx-intrinsics.d.ts) rather than in a sibling
-   file, so they cannot be separated from the copy they describe. It is excluded from `vp fmt` so the
+   file, so they cannot be separated from the copy they describe. It is excluded from the formatter (Oxfmt) so the
    body stays byte-identical and re-syncing stays a plain `diff`. It is _not_ excluded from lint,
    because that list also gates type-checking and this file is the surface under test.
 3. **`InklineOwned` is where Inkline overrides upstream**, and nowhere else: `ref` is Inkline's

@@ -1,5 +1,5 @@
 import { resolve } from "node:path";
-import { defineConfig } from "vite-plus";
+import { defineConfig } from "vite";
 import { qwikVite } from "@qwik.dev/core/optimizer";
 import styleframe from "styleframe/plugin/vite";
 

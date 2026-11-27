@@ -52,8 +52,8 @@ Author these into the branch _first_; the PR only describes them:
 1. **Surgical diff.** Every changed line traces to the issue. No drive-by reformatting, no adjacent "improvements", no unrelated dead-code deletion. Orphans your change creates ARE cleaned up.
 2. **Changeset.** Present for every affected **published** package, at the correct bump level (`pnpm changeset`). Ignore-listed: `website`, `@inkline/components` — but a component change ships through the framework packages, so it needs a changeset for **each affected `@inkline/<framework>`**. Semver: new API = minor; observable output/type change ≠ patch; breaking (removed exports/subpaths, IR schema, prop/axis renames) = major + migration note + Alex sign-off.
 3. **Docs fresh.** Any API/behavior change updates its `AGENTS.md` / docs / compiler-README in the same PR. Stale docs = `review-gate` requests changes.
-4. **Verified.** Ran the issue's Verify block and your VERIFY (`vp run ready` or the scoped equivalent). You have real output to paste — not "tests pass".
-5. **Conventions.** Conventional-commit title with package scope; `vp check` clean (mind the known noise baselines); tests colocated; no hand-edits under `.inkline/`, `.styleframe/`, `dist/`, `.old/`.
+4. **Verified.** Ran the issue's Verify block and your VERIFY (`pnpm run ready` or the scoped equivalent). You have real output to paste — not "tests pass".
+5. **Conventions.** Conventional-commit title with package scope; `pnpm run check` clean (mind the known noise baselines); tests colocated; no hand-edits under `.inkline/`, `.styleframe/`, `dist/`, `.old/`.
 
 ## The fixed skeleton
 
@@ -105,10 +105,10 @@ screen readers (INK-118). Forward it through to the root element.
 
 ## Verification
 
-$ vp test --filter @inkline/components button
+$ pnpm --filter @inkline/components exec vitest run button
 ✓ forwards aria-label to root (real-DOM mount)
 32 passed
-$ vp check
+$ pnpm run check
 clean (baseline TS17004 fixture noise only)
 
 ## Notes

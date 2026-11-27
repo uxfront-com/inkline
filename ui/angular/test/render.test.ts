@@ -39,7 +39,7 @@ async function render(component: Type<unknown>, selector: string): Promise<strin
 function button(html: string): { id: string | null; text: string } {
   const match = html.match(/<button\b([^>]*)>([\s\S]*?)<\/button>/);
   if (!match) throw new Error(`no <button> in ${html}`);
-  const [, attributes, content] = match;
+  const [, attributes = "", content = ""] = match;
   return {
     id: attributes.match(/\bid="([^"]*)"/)?.[1] ?? null,
     text: content.replace(/<[^>]*>/g, "").trim(),

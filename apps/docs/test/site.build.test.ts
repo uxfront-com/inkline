@@ -7,7 +7,7 @@ import { LANDING_FRAMEWORKS } from "../app/data/frameworks.ts";
 /**
  * Checks the static site `nuxt generate` wrote to `.output/public`.
  *
- * Requires a prior `generate`. Excluded from the default `vp test` run (see
+ * Requires a prior `generate`. Excluded from the default `vitest run` (see
  * `vite.config.ts`); runs via `test:build` in the Build Website CI job, against
  * the artifact that job just produced.
  */
@@ -69,6 +69,13 @@ const frameworkOf = (file: string) =>
 
 /** The framework of a landing page, `<framework>.html` at the top level. */
 const landingOf = (file: string) => FRAMEWORKS.find((framework) => file === `${framework}.html`);
+
+/** The `content` of every `<meta>` whose `attribute` is `key`, in either attribute order. */
+const metaContent = (html: string, attribute: "name" | "property", key: string) =>
+  [...html.matchAll(/<meta\b[^>]*>/g)]
+    .map(([tag]) => tag)
+    .filter((tag) => tag.includes(`${attribute}="${key}"`))
+    .map((tag) => tag.match(/content="([^"]*)"/)?.[1]);
 
 const isNoindex = (html: string) => /<meta[^>]*name="robots"[^>]*content="[^"]*noindex/.test(html);
 
@@ -195,7 +202,7 @@ describe("framework URLs", () => {
     );
     expect(canonical).toEqual([`${SITE_URL}/docs/vue/components/button`]);
     const alternates = [...html.matchAll(/<link rel="alternate" href="([^"]*)"/g)].map(
-      (match) => match[1],
+      (match) => match[1] ?? "",
     );
     expect(alternates.sort()).toEqual(
       FRAMEWORKS.filter((value) => value !== "vue")
@@ -205,10 +212,11 @@ describe("framework URLs", () => {
     expect(isNoindex(html)).toBe(false);
   });
 
-  // D10: titles name the framework, and only on a framework page.
+  // D10: the layer names the framework in the title of a framework page, as
+  // "{title} for {framework}", and the site's template adds " - Inkline".
   it.each([
-    ["docs/vue/components/button.html", "Button - Inkline Vue"],
-    ["docs/qwik/getting-started.html", "Introduction - Inkline Qwik"],
+    ["docs/vue/components/button.html", "Button for Vue - Inkline"],
+    ["docs/qwik/getting-started.html", "Introduction for Qwik - Inkline"],
   ])("titles %s %j", (file, title) => {
     expect(read(file).match(/<title>([^<]*)<\/title>/)?.[1]).toBe(title);
   });
@@ -216,13 +224,43 @@ describe("framework URLs", () => {
   it("names the framework in the title of every framework page", () => {
     for (const file of htmlFiles().filter(frameworkOf)) {
       const title = read(file).match(/<title>([^<]*)<\/title>/)?.[1];
-      expect(title, file).toMatch(new RegExp(` - Inkline ${LABELS[frameworkOf(file)!]}$`));
+      expect(title, file).toContain(LABELS[frameworkOf(file)!]);
+      expect(title, file).toMatch(/ - Inkline$/);
     }
   });
 
   it.each(["index.html", "404.html"])("names no framework in the title of %s", (file) => {
     const title = read(file).match(/<title>([^<]*)<\/title>/)?.[1] ?? "";
-    for (const label of Object.values(LABELS)) expect(title).not.toContain(`Inkline ${label}`);
+    for (const label of Object.values(LABELS)) {
+      expect(title).not.toContain(`Inkline ${label}`);
+      expect(title).not.toContain(`for ${label}`);
+    }
+  });
+
+  // D10 (descriptions): the layer names the framework in the meta description of a framework
+  // page too, so each page's seven copies differ.
+  it("names the framework in the description of every framework page", () => {
+    for (const file of htmlFiles().filter(frameworkOf)) {
+      const [description] = metaContent(read(file), "name", "description");
+      expect(description, file).toContain(LABELS[frameworkOf(file)!]);
+    }
+  });
+
+  it("gives each copy of a docs page its own title and description", () => {
+    const pages = new Map<string, { titles: Set<string>; descriptions: Set<string> }>();
+    for (const file of htmlFiles().filter(frameworkOf)) {
+      const page = file.slice(`docs/${frameworkOf(file)}/`.length);
+      const html = read(file);
+      const entry = pages.get(page) ?? { titles: new Set(), descriptions: new Set() };
+      entry.titles.add(html.match(/<title>([^<]*)<\/title>/)?.[1] ?? "");
+      entry.descriptions.add(metaContent(html, "name", "description")[0] ?? "");
+      pages.set(page, entry);
+    }
+    expect(pages.size).toBeGreaterThan(0);
+    for (const [page, { titles, descriptions }] of pages) {
+      expect(titles.size, page).toBe(FRAMEWORKS.length);
+      expect(descriptions.size, page).toBe(FRAMEWORKS.length);
+    }
   });
 });
 
@@ -247,6 +285,18 @@ describe("the sitemap", () => {
     expect([...locs].sort()).toEqual(expected.sort());
     // `/`, six pages under each of the seven frameworks, and the seven landing pages.
     expect(locs).toHaveLength(50);
+  });
+
+  // Each `<url>` is dated by the last commit that changed its source, or the
+  // build day without one (server/routes/sitemap.xml.ts).
+  it("dates every URL with a <lastmod> day", () => {
+    const urls = [...read("sitemap.xml").matchAll(/<url>([\s\S]*?)<\/url>/g)].map(
+      (match) => match[1]!,
+    );
+    expect(urls).toHaveLength(50);
+    for (const url of urls) {
+      expect(url.match(/<lastmod>([^<]*)<\/lastmod>/)?.[1]).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+    }
   });
 });
 
@@ -307,6 +357,27 @@ describe("the framework landing pages", () => {
     expect(canonical).toEqual([`${SITE_URL}/${value}`]);
     expect(html).toContain(install);
     expect(html).toContain(`href="/docs/${value}/getting-started"`);
+  });
+
+  // The homepage and the seven landing pages share public/share.png as their card.
+  it.each(["index", ...FRAMEWORKS])("gives %s.html the share image and a large card", (page) => {
+    const html = read(`${page}.html`);
+    expect(metaContent(html, "property", "og:image")).toEqual([`${SITE_URL}/share.png`]);
+    expect(metaContent(html, "property", "og:image:width")).toEqual(["1200"]);
+    expect(metaContent(html, "property", "og:image:height")).toEqual(["630"]);
+    expect(metaContent(html, "name", "twitter:card")).toEqual(["summary_large_image"]);
+    expect(metaContent(html, "name", "twitter:image")).toEqual([`${SITE_URL}/share.png`]);
+  });
+
+  it("ships share.png as a 1200 × 630 PNG", () => {
+    const png = readFileSync(join(output, "share.png"));
+    expect(png.subarray(0, 8)).toEqual(
+      Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]),
+    );
+    // The IHDR chunk: width at bytes 16 to 19 and height at 20 to 23, big-endian.
+    expect(png.toString("ascii", 12, 16)).toBe("IHDR");
+    expect([png.readUInt32BE(16), png.readUInt32BE(20)]).toEqual([1200, 630]);
+    expect(png.length).toBeLessThan(300 * 1024);
   });
 
   // D13a: each page shows its own package only.

@@ -1,4 +1,16 @@
 import { LANDING_PATHS } from "~/data/frameworks";
+import { lastModified } from "../lib/git";
+
+// The fields read below. Nitro's types don't see the collections Docus defines.
+interface DocsPage {
+  path: string;
+  stem: string;
+  extension: string;
+}
+
+// The sources that date the homepage and the framework landing pages.
+const HOMEPAGE = "app/pages/index.vue";
+const LANDING = ["app/pages/[framework].vue", "app/data/frameworks.ts"];
 
 /**
  * Serves `/sitemap.xml`, which robots.txt points crawlers at, in place of the
@@ -9,15 +21,40 @@ import { LANDING_PATHS } from "~/data/frameworks";
  * Docus's rules (`sitemap: false` in a page's frontmatter leaves it out, and
  * `modifiedAt` sets its `<lastmod>`).
  *
+ * Every entry has a `<lastmod>`, by the last commit that changed its source
+ * (server/lib/git.ts): the homepage by app/pages/index.vue, each landing page
+ * by the later of its template and app/data/frameworks.ts, and each docs page
+ * without `modifiedAt` by its markdown file, so its seven framework copies share
+ * one date. A source with no Git date, like one not committed yet or a build
+ * with no history, dates by the build's day in UTC.
+ *
  * The layer drops its own handler when the app has this one. Docus still adds
  * the route to the prerendered ones.
  */
 export default defineEventHandler(async (event) => {
   const { siteUrl } = useRuntimeConfig(event).public;
-  const urls: { loc: string; lastmod?: string }[] = [
-    { loc: "/" },
-    ...LANDING_PATHS.map((loc) => ({ loc })),
-    ...(await getDocsSitemapEntries(event)),
+  const pages = (await queryCollection(event, "docs" as never).all()) as DocsPage[];
+  const sources = new Map(
+    pages.map((page) => [page.path, `content/${page.stem}.${page.extension}`]),
+  );
+
+  const changed = lastModified(["content/docs", HOMEPAGE, ...LANDING]);
+  const today = new Date().toISOString().slice(0, 10);
+  const dateOf = (...files: string[]) =>
+    files
+      .map((file) => changed.get(file))
+      .filter((date) => date !== undefined)
+      .sort()
+      .at(-1) ?? today;
+
+  const landing = dateOf(...LANDING);
+  const urls: { loc: string; lastmod: string }[] = [
+    { loc: "/", lastmod: dateOf(HOMEPAGE) },
+    ...LANDING_PATHS.map((loc) => ({ loc, lastmod: landing })),
+    ...(await getDocsSitemapEntries(event)).map(({ loc, path, lastmod }) => {
+      const source = sources.get(path);
+      return { loc, lastmod: lastmod ?? (source ? dateOf(source) : today) };
+    }),
   ];
 
   setHeader(event, "Content-Type", "application/xml");
@@ -28,7 +65,7 @@ export default defineEventHandler(async (event) => {
       [
         "  <url>",
         `    <loc>${escapeXml(siteUrl + loc)}</loc>`,
-        ...(lastmod ? [`    <lastmod>${escapeXml(lastmod)}</lastmod>`] : []),
+        `    <lastmod>${escapeXml(lastmod)}</lastmod>`,
         "  </url>",
       ].join("\n"),
     ),

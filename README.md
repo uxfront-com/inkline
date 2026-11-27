@@ -1,29 +1,29 @@
-# Vite+ Monorepo Starter
+# Inkline
 
-A starter for creating a Vite+ monorepo.
+A UI library in seven frameworks: each component is written once in `ui/components` and compiled to React, Vue, Svelte, Solid, Angular, Qwik and Astro, styled with Styleframe. Start with [`AGENTS.md`](./AGENTS.md) and [`docs/contributing.md`](./docs/contributing.md).
 
 ## Development
 
 - Check everything is ready:
 
 ```bash
-vp run ready
+pnpm run ready
 ```
 
 - Run the tests:
 
 ```bash
-vp run -r test
+pnpm run test
 ```
 
 - Build the monorepo:
 
 ```bash
-vp run -r build
+pnpm run build
 ```
 
 - Run the development server:
 
 ```bash
-vp run dev
+pnpm run dev
 ```

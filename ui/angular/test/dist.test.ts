@@ -41,6 +41,8 @@ for (const [entry, names] of Object.entries(report.entries)) {
 
     it.each(names)("compiles %s with every input, model and event", (name) => {
       const component = report.components[name];
+      if (!component)
+        throw new Error(`api.json lists ${name} in ${entry} but has no report for it`);
       const def = (module[name] as { ɵcmp?: ComponentDef } | undefined)?.ɵcmp;
 
       expect(def, `${name} has no component definition`).toBeDefined();

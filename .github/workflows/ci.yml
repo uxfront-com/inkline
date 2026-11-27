@@ -11,9 +11,6 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
-env:
-  NODE_VERSION: 24
-
 permissions:
   contents: read
   pull-requests: write
@@ -30,17 +27,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4.3.0
-
-      - name: Setup Node.js
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Setup
+        uses: uxfront-com/.github/.github/actions/setup@35f7cdaf9b3c62c04b411c6c454c6f75ae43e54b # main
 
       - name: Build packages
         run: pnpm run build
@@ -68,17 +56,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4.3.0
-
-      - name: Setup Node.js
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Setup
+        uses: uxfront-com/.github/.github/actions/setup@35f7cdaf9b3c62c04b411c6c454c6f75ae43e54b # main
 
       - name: Download build artifacts
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
@@ -105,6 +84,11 @@ jobs:
       - name: Check generated site
         run: pnpm --filter website run test:build
 
+      # The search and AI search checks from @uxfront/site-checks: the core rules
+      # (apps/docs/site-checks.config.mjs) on every page in the sitemap.
+      - name: Check SEO
+        run: pnpm --filter website run check:seo
+
       # `.output/public` is `generate`'s real output. The previous path,
       # `apps/docs/dist`, is an untracked symlink Nuxt only creates on
       # `generate` — under `build` it never existed and this artifact uploaded
@@ -128,17 +112,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4.3.0
-
-      - name: Setup Node.js
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Setup
+        uses: uxfront-com/.github/.github/actions/setup@35f7cdaf9b3c62c04b411c6c454c6f75ae43e54b # main
 
       - name: Download build artifacts
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
@@ -147,10 +122,10 @@ jobs:
           path: ui
 
       - name: Run oxlint
-        run: npx vp lint
+        run: pnpm run lint
 
       - name: Check formatting
-        run: npx vp fmt --check
+        run: pnpm run format:check
 
   # Builds each framework package's API report from Build Packages' artifacts and compares it with
   # the committed `ui/<framework>/test/api.json`, once per run. A difference fails the job with the
@@ -167,17 +142,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4.3.0
-
-      - name: Setup Node.js
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Setup
+        uses: uxfront-com/.github/.github/actions/setup@35f7cdaf9b3c62c04b411c6c454c6f75ae43e54b # main
 
       - name: Download build artifacts
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
@@ -204,17 +170,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4.3.0
-
-      - name: Setup Node.js
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Setup
+        uses: uxfront-com/.github/.github/actions/setup@35f7cdaf9b3c62c04b411c6c454c6f75ae43e54b # main
 
       - name: Run type checking
         run: pnpm run typecheck
@@ -234,17 +191,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4.3.0
-
-      - name: Setup Node.js
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Setup
+        uses: uxfront-com/.github/.github/actions/setup@35f7cdaf9b3c62c04b411c6c454c6f75ae43e54b # main
 
       - name: Download build artifacts
         uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
@@ -255,13 +203,14 @@ jobs:
       - name: Run tests
         # Each shard runs only part of the suite, so per-package coverage is partial. Disable the
         # 100% coverage thresholds for the sharded run (Codecov merges the two shard uploads); the
-        # gate still applies to full local `vp test --coverage` runs. A CLI flag is used rather than
-        # an env var because `vp run` executes tasks in a clean environment that strips ad-hoc vars.
-        # There is no `--` before the flags: `vp run` forwards what follows the task name to each
-        # package's `vp test`, and Vitest ignores everything after a `--` that isn't its first argument.
-        # So no package's `test` script may repeat one of these flags, or Vitest fails on the repeat.
+        # gate still applies to full local `vitest run --coverage` runs. A CLI flag is used rather than
+        # an env var because Turbo runs tasks with only the env vars `turbo.json` names.
+        # The `--` ends Turbo's own options: Turbo passes what follows it to each package's `test`
+        # script, `vitest run`, with no `--` in front, since Vitest ignores everything after a `--`
+        # that isn't its first argument. So no package's `test` script may repeat one of these
+        # flags, or Vitest fails on the repeat.
         run: >-
-          pnpm run test
+          pnpm run test --
           --coverage --shard=${{ matrix.shard }}/2 --passWithNoTests
           --coverage.thresholds.lines=0 --coverage.thresholds.branches=0
           --coverage.thresholds.functions=0 --coverage.thresholds.statements=0
@@ -285,17 +234,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4.3.0
-
-      - name: Setup Node.js
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Setup
+        uses: uxfront-com/.github/.github/actions/setup@35f7cdaf9b3c62c04b411c6c454c6f75ae43e54b # main
 
       - name: Install Playwright Chromium
         run: pnpm --filter @inkline/components exec playwright install --with-deps chromium
@@ -318,17 +258,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4.3.0
-
-      - name: Setup Node.js
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Setup
+        uses: uxfront-com/.github/.github/actions/setup@35f7cdaf9b3c62c04b411c6c454c6f75ae43e54b # main
 
       - name: Install Playwright Chromium
         run: pnpm --filter @inkline/components exec playwright install --with-deps chromium
@@ -361,17 +292,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4.3.0
-
-      - name: Setup Node.js
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: pnpm
-
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Setup
+        uses: uxfront-com/.github/.github/actions/setup@35f7cdaf9b3c62c04b411c6c454c6f75ae43e54b # main
 
       - name: Build the components
         run: pnpm --filter "@inkline/components..." build

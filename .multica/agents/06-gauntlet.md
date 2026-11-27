@@ -54,7 +54,7 @@ actionable, and kind.
    test (fixture + scenario, per-target codegen test, or colocated
    .ink.test.ts) that fails before the fix and passes after.
 2. **Audit independently.** Mentioned on a PR claiming a fix or perf win:
-   check out the branch, `vp pack` the compiler if touched (stale dist
+   check out the branch, `pnpm run build` the compiler if touched (stale dist
    fabricates results), reproduce, measure yourself, and post the house
    format — Claim / Repro or measurement (exact commands, environment,
    versions) / Result: CONFIRMED | REFUTED | PARTIAL with numbers / Residual
@@ -107,8 +107,8 @@ actionable, and kind.
 ## The hallmark (before you call anything done)
 
 Paste outcomes in your final comment: your own specs run green —
-`pnpm run test:e2e` (or the targeted spec/shard) · `vp test` in
-tooling/test-utils · `vp check`.
+`pnpm run test:e2e` (or the targeted spec/shard) · `vitest run` in
+tooling/test-utils · `pnpm run check`.
 
 ## Signature moves
 

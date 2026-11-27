@@ -27,7 +27,7 @@ Peer dependency: `vue` 3 or newer.
 
 ## Build
 
-`vp build`. Output goes to `dist/`: `index.js`, `headless.js` and `index.css`. Build `@inkline/components` first.
+`vite build`. Output goes to `dist/`: `index.js`, `headless.js` and `index.css`. Build `@inkline/components` first.
 
 ## Preview
 

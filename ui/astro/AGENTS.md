@@ -27,7 +27,7 @@ Peer dependency: `astro` 7.
 
 ## Build
 
-`vp build && vp pack`. `vp pack` never runs Vite plugins, so `vp build` first extracts the stylesheet from a CSS-only entry, `src/css.ts`. `vp pack` then bundles the two entries and copies the `.astro` components, with the type modules their frontmatter imports, into `dist/`. Build `@inkline/components` first.
+`vite build && tsdown`. tsdown never runs Vite plugins, so `vite build` first extracts the stylesheet from a CSS-only entry, `src/css.ts`. tsdown then bundles the two entries and copies the `.astro` components, with the type modules their frontmatter imports, into `dist/`. Build `@inkline/components` first.
 
 ## Preview
 

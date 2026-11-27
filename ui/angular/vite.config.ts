@@ -1,6 +1,6 @@
 import { resolve } from "node:path";
 import angular from "@analogjs/vite-plugin-angular";
-import { defineConfig } from "vite-plus";
+import { defineConfig } from "vite";
 import styleframe from "styleframe/plugin/vite";
 
 export default defineConfig({

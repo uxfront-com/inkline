@@ -4,18 +4,19 @@ Repo-wide conventions for code, tests, files, and commits. This document is a po
 
 ## Tooling
 
-| Concern                   | Tool                   | Configured in                                                                                          |
-| ------------------------- | ---------------------- | ------------------------------------------------------------------------------------------------------ |
-| Package manager           | pnpm 11.x              | [`package.json`](../package.json) `packageManager` field                                               |
-| Node runtime              | Node ≥24               | [`package.json`](../package.json) `engines.node`                                                       |
-| Workspace layout          | pnpm workspaces        | [`pnpm-workspace.yaml`](../pnpm-workspace.yaml)                                                        |
-| Build / dev / test driver | Vite+ (`vp` CLI)       | per-package [`vite.config.ts`](../vite.config.ts) + root [`vite.config.ts`](../vite.config.ts)         |
-| Linter                    | OXLint (via `vp lint`) | root [`vite.config.ts`](../vite.config.ts) `lint` section                                              |
-| Formatter                 | Oxfmt (via `vp fmt`)   | root [`vite.config.ts`](../vite.config.ts) `fmt` section                                               |
-| Type checker              | `pnpm run typecheck`   | root [`tsconfig.json`](../tsconfig.json) + per-package extensions — never bare `tsc` from the root     |
-| Test runner               | Vitest                 | per-package `vite.config.ts` `test` section                                                            |
-| Versioning / publishing   | Changesets             | [`.changeset/config.json`](../.changeset/config.json) — see [release-process.md](./release-process.md) |
-| Component previews        | `unframework preview`  | [`ui/components/unframework.config.ts`](../ui/components/unframework.config.ts)                        |
+| Concern                 | Tool                      | Configured in                                                                                                               |
+| ----------------------- | ------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| Package manager         | pnpm 11.x                 | [`package.json`](../package.json) `packageManager` field                                                                    |
+| Node runtime            | Node ≥24                  | [`package.json`](../package.json) `engines.node`                                                                            |
+| Workspace layout        | pnpm workspaces           | [`pnpm-workspace.yaml`](../pnpm-workspace.yaml)                                                                             |
+| Task runner             | Turbo                     | root [`turbo.json`](../turbo.json)                                                                                          |
+| Build / dev / test      | Vite, Vitest, tsdown      | per-package [`vite.config.ts`](../ui/react/vite.config.ts), and [`tsdown.config.ts`](../ui/astro/tsdown.config.ts) on Astro |
+| Linter                  | OXLint (`pnpm run lint`)  | root [`oxlint.config.ts`](../oxlint.config.ts)                                                                              |
+| Formatter               | Oxfmt (`pnpm run format`) | root [`oxfmt.config.ts`](../oxfmt.config.ts)                                                                                |
+| Type checker            | `pnpm run typecheck`      | root [`tsconfig.json`](../tsconfig.json) + per-package extensions — never bare `tsc` from the root                          |
+| Test runner             | Vitest                    | per-package `vite.config.ts` `test` section                                                                                 |
+| Versioning / publishing | Changesets                | [`.changeset/config.json`](../.changeset/config.json) — see [release-process.md](./release-process.md)                      |
+| Component previews      | `unframework preview`     | [`ui/components/unframework.config.ts`](../ui/components/unframework.config.ts)                                             |
 
 ESLint and Prettier are **not** used. Their config schemas appear in the catalog because some framework plugins (Vue, Svelte, Angular, Astro, Solid, Qwik) ship ESLint configs as transitive deps — we do not invoke them.
 
@@ -48,7 +49,7 @@ Tests live next to their source as `<file>.test.ts`. Examples:
 - [`ui/components/scripts/recipes.test.ts`](../ui/components/scripts/recipes.test.ts) is colocated with `recipes.ts`.
 - [`ui/components/scripts/barrels.test.ts`](../ui/components/scripts/barrels.test.ts) is colocated with `barrels.ts`.
 
-Run all tests with `vp run -r test` from the repo root; run a single package's tests with `vp test` inside that package. Coverage uses `@vitest/coverage-v8`.
+Run all tests with `pnpm run test` from the repo root, and a single package's tests with `pnpm --filter <pkg> test`, which runs `vitest run`. Coverage uses `@vitest/coverage-v8`.
 
 **Exception: the component tests.** `ui/components` runs its tests with Unframework, which runs Vitest in Chromium on every target. Each component's case is a directory under [`ui/components/test/`](../ui/components/test/), with its spec, a harness parent and its expectations, and `test:targets` runs them, not `test`. See [`ui/components/AGENTS.md`](../ui/components/AGENTS.md).
 
@@ -57,8 +58,8 @@ Run all tests with `vp run -r test` from the repo root; run a single package's t
 ## Code style
 
 - TypeScript everywhere. No JavaScript source.
-- `vp fmt` is authoritative — do not configure editor formatters that disagree. The `staged` hook ([`vite.config.ts`](../vite.config.ts)) runs `vp check --fix` on staged files.
-- The lint config in [`vite.config.ts:lint`](../vite.config.ts) enables `typeAware: true, typeCheck: true`. Lint failures are CI-blocking.
+- Oxfmt is authoritative — do not configure editor formatters that disagree. Run `pnpm run format` before you commit, since CI's Lint job runs `pnpm run format:check`.
+- The lint config in [`oxlint.config.ts`](../oxlint.config.ts) enables `typeAware: true, typeCheck: true`. Lint failures are CI-blocking.
 - No `console.log` in shipped code (lint will catch it).
 - Public APIs are explicitly typed at the boundary (no inferred return types on exported functions).
 

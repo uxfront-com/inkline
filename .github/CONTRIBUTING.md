@@ -1,6 +1,6 @@
 # Contributing to Inkline
 
-The full contributing guide lives at **[docs/contributing.md](../docs/contributing.md)** — dev setup, the `vp run ready` gate, changesets, and the before-PR checklist.
+The full contributing guide lives at **[docs/contributing.md](../docs/contributing.md)** — dev setup, the `pnpm run ready` gate, changesets and the before-PR checklist.
 
 Quick links:
 

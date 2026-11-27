@@ -7,16 +7,16 @@ This file is the entry point for any LLM agent or new contributor working in the
 ## Quick start
 
 ```bash
-vp install              # install + configure git hooks
-vp run ready            # build + check + test (mirrors the CI gate)
+pnpm install            # install the workspace
+pnpm run ready          # build + check + test (mirrors the CI gate)
 pnpm run typecheck      # types only — build + type-check. Never `tsc` from the root.
-vp run dev              # start the docs website (alias for `vp run website#dev`)
+pnpm run dev            # start the docs website (`turbo run dev --filter=website`)
 pnpm --filter @inkline/components dev   # unframework preview: every example on all 7 targets
 pnpm --filter @inkline/components preview:build   # the same preview as a static site, which Cloudflare deploys
 pnpm --filter @inkline/components preview:build:react   # one framework's preview (vue, svelte, solid, angular, qwik, astro alike)
 ```
 
-Run `vp env doctor` if anything about the toolchain looks wrong, and `vp help` for the full command list. Vite+ docs: [viteplus.dev/guide/](https://viteplus.dev/guide/).
+Turbo runs `build`, `dev` and `test` in every package ([`turbo.json`](./turbo.json)). The root [`package.json`](./package.json) `scripts` hold the full command list.
 
 ## Repository map
 
@@ -61,31 +61,10 @@ Per topic — read the relevant `docs/`:
 
 These apply everywhere. Package-level `AGENTS.md` files repeat them only when consequential.
 
-- **Tooling**: pnpm 11, Node ≥24, Vite+ (`vp` CLI). OXLint via `vp lint`; Oxfmt via `vp fmt`. **Not ESLint, not Prettier.**
+- **Tooling**: pnpm 11, Node ≥24, Turbo for the tasks, Vite and Vitest in each package, tsdown for Astro. OXLint via `pnpm run lint`, Oxfmt via `pnpm run format`. **Not ESLint, not Prettier.**
 - **Tests**: colocated as `<file>.test.ts`. Vitest. Never in a separate `tests/` folder, with two exceptions: the component cases in `ui/components/test/`, since Unframework compiles every `.uf.tsx` under `src/`, and each framework package's API report in `ui/<framework>/test/`.
 - **Commits**: conventional commits with package scope — `feat(components): …`, `fix(ci): …`. See [docs/conventions.md](./docs/conventions.md) → "Commit messages".
 - **Changesets**: every change to a published package needs one (`pnpm changeset`). See [docs/release-process.md](./docs/release-process.md).
 - **Generated directories — never hand-edit**: `ui/components/dist/` (Unframework's output), `ui/components/src/recipes.ts`, `ui/components/.styleframe/`, `ui/<framework>/.styleframe/`, every other `dist/` and `coverage/`.
 - **Archived directory — never touch**: `.old/` is the v0 codebase, kept for reference only.
 - **Doc freshness**: if your change touches public API, build flow, conventions, or the directory shape, update the relevant `AGENTS.md` / `docs/*.md`. See [docs/maintenance.md](./docs/maintenance.md).
-
-## Tooling reference
-
-The block below is auto-managed by Vite+. Do not edit between the `<!--VITE PLUS START/END-->` markers.
-
-<!--VITE PLUS START-->
-
-# Using Vite+, the Unified Toolchain for the Web
-
-This project is using Vite+, a unified toolchain built on top of Vite, Rolldown, Vitest, tsdown, Oxlint, Oxfmt, and Vite Task. Vite+ wraps runtime management, package management, and frontend tooling in a single global CLI called `vp`. Vite+ is distinct from Vite, and it invokes Vite through `vp dev` and `vp build`. Run `vp help` to print a list of commands and `vp <command> --help` for information about a specific command.
-
-Docs are local at `node_modules/vite-plus/docs` or online at https://viteplus.dev/guide/.
-
-## Review Checklist
-
-- [ ] Run `vp install` after pulling remote changes and before getting started.
-- [ ] Run `vp check` and `vp test` to format, lint, type check and test changes.
-- [ ] Check if there are `vite.config.ts` tasks or `package.json` scripts necessary for validation, run via `vp run <script>`.
-- [ ] If setup, runtime, or package-manager behavior looks wrong, run `vp env doctor` and include its output when asking for help.
-
-<!--VITE PLUS END-->
