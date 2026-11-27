@@ -1,6 +1,6 @@
 {
   "name": "@inkline/theme",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "The Styleframe recipes that style Inkline's components.",
   "license": "MIT",
   "files": [
