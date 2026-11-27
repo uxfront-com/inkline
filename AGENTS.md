@@ -4,6 +4,8 @@ A UI library in seven frameworks. Each component is written once as a `.uf.tsx` 
 
 This file is the entry point for any LLM agent or new contributor working in the repo. Read it first, then descend to the nearest `AGENTS.md` for the area you're editing.
 
+Before you plan, build or write docs, read the [UXFront vision](https://raw.githubusercontent.com/uxfront-com/.github/main/VISION.md). It says how Inkline, Open Components, Unframework and Styleframe fit together, and which project owns each rule, recipe and example.
+
 ## Quick start
 
 ```bash
