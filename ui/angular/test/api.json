@@ -41,6 +41,8 @@
         "label",
         "size",
         "style",
+        "ufAttributes",
+        "ufListeners",
         "variant"
       ],
       "models": [],
@@ -54,7 +56,9 @@
       "props": [
         "class",
         "label",
-        "style"
+        "style",
+        "ufAttributes",
+        "ufListeners"
       ],
       "models": [],
       "events": [],
@@ -76,6 +80,7 @@
         "color",
         "disabled",
         "focusableWhenDisabled",
+        "href",
         "iconOnly",
         "id",
         "label",
@@ -84,6 +89,8 @@
         "size",
         "style",
         "type",
+        "ufAttributes",
+        "ufListeners",
         "variant"
       ],
       "models": [],
@@ -107,6 +114,7 @@
         "color",
         "disabled",
         "focusableWhenDisabled",
+        "href",
         "iconOnly",
         "id",
         "label",
@@ -115,6 +123,8 @@
         "size",
         "style",
         "type",
+        "ufAttributes",
+        "ufListeners",
         "variant"
       ],
       "models": [],
@@ -140,7 +150,9 @@
         "readonly",
         "required",
         "size",
-        "style"
+        "style",
+        "ufAttributes",
+        "ufListeners"
       ],
       "models": [
         "checked"
@@ -154,7 +166,9 @@
       ],
       "props": [
         "class",
-        "style"
+        "style",
+        "ufAttributes",
+        "ufListeners"
       ],
       "models": [],
       "events": [],
@@ -174,7 +188,9 @@
         "name",
         "readonly",
         "required",
-        "style"
+        "style",
+        "ufAttributes",
+        "ufListeners"
       ],
       "models": [
         "checked"
@@ -191,7 +207,9 @@
         "class",
         "id",
         "orientation",
-        "style"
+        "style",
+        "ufAttributes",
+        "ufListeners"
       ],
       "models": [],
       "events": [],
@@ -204,7 +222,9 @@
       "props": [
         "class",
         "id",
-        "style"
+        "style",
+        "ufAttributes",
+        "ufListeners"
       ],
       "models": [],
       "events": [],
@@ -222,7 +242,9 @@
         "color",
         "disabled",
         "size",
-        "style"
+        "style",
+        "ufAttributes",
+        "ufListeners"
       ],
       "models": [
         "open"
@@ -239,7 +261,9 @@
         "ariaLabel",
         "class",
         "disabled",
-        "style"
+        "style",
+        "ufAttributes",
+        "ufListeners"
       ],
       "models": [
         "open"
@@ -267,6 +291,8 @@
         "size",
         "style",
         "type",
+        "ufAttributes",
+        "ufListeners",
         "variant"
       ],
       "models": [
@@ -285,7 +311,9 @@
       "props": [
         "class",
         "id",
-        "style"
+        "style",
+        "ufAttributes",
+        "ufListeners"
       ],
       "models": [],
       "events": [],
@@ -322,7 +350,9 @@
       ],
       "props": [
         "class",
-        "style"
+        "style",
+        "ufAttributes",
+        "ufListeners"
       ],
       "models": [],
       "events": [],
@@ -334,7 +364,9 @@
       ],
       "props": [
         "class",
-        "style"
+        "style",
+        "ufAttributes",
+        "ufListeners"
       ],
       "models": [],
       "events": [],
@@ -355,7 +387,9 @@
         "placeholder",
         "readonly",
         "required",
-        "style"
+        "style",
+        "ufAttributes",
+        "ufListeners"
       ],
       "models": [
         "value"
@@ -373,7 +407,9 @@
       "props": [
         "class",
         "id",
-        "style"
+        "style",
+        "ufAttributes",
+        "ufListeners"
       ],
       "models": [],
       "events": [],
@@ -391,6 +427,8 @@
         "readonly",
         "required",
         "style",
+        "ufAttributes",
+        "ufListeners",
         "value"
       ],
       "models": [
@@ -415,7 +453,9 @@
         "orientation",
         "readonly",
         "size",
-        "style"
+        "style",
+        "ufAttributes",
+        "ufListeners"
       ],
       "models": [
         "value"
@@ -433,7 +473,9 @@
         "id",
         "label",
         "readonly",
-        "style"
+        "style",
+        "ufAttributes",
+        "ufListeners"
       ],
       "models": [],
       "events": [],
@@ -454,7 +496,9 @@
         "name",
         "readonly",
         "size",
-        "style"
+        "style",
+        "ufAttributes",
+        "ufListeners"
       ],
       "models": [
         "checked"
@@ -468,7 +512,9 @@
       ],
       "props": [
         "class",
-        "style"
+        "style",
+        "ufAttributes",
+        "ufListeners"
       ],
       "models": [],
       "events": [],
@@ -486,7 +532,9 @@
         "id",
         "name",
         "readonly",
-        "style"
+        "style",
+        "ufAttributes",
+        "ufListeners"
       ],
       "models": [
         "checked"
@@ -500,7 +548,9 @@
       ],
       "props": [
         "class",
-        "style"
+        "style",
+        "ufAttributes",
+        "ufListeners"
       ],
       "models": [],
       "events": [],

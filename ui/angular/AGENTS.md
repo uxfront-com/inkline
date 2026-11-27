@@ -44,7 +44,7 @@ Two settings keep every component compiled:
 
 ## Notable target behaviour
 
-- Each component is a standalone component whose selector is its name in kebab case with Unframework's `uf-` prefix: `uf-i-button`, `uf-i-button-base`. Its host is `display: contents`, and a `class` or `style` on the host lands on its root element.
+- Each component is a standalone component whose selector is its name in kebab case with Unframework's `uf-` prefix: `uf-i-button`, `uf-i-button-base`. Its host is `display: contents`, and a `class` or `style` on the host lands on its root element. Every other attribute and listener reaches the root through the `ufAttributes` and `ufListeners` inputs, since an attribute written on the host stays on the host.
 - The package ships no `./css` entry. Each component imports the stylesheet it needs.
 - The `types` conditions in `package.json` point at `dist/.inkline/`, which no build writes, as they did before the port. Shipping the Angular declarations is a known gap.
 

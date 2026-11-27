@@ -1,5 +1,5 @@
 {
-  "description": "The headless button: its type, disabled and loading states, its parts, and its label from the prop and the slot.",
+  "description": "The headless button: its type, disabled and loading states, its parts, its label from the prop and the slot, and the link it renders with an href in each state.",
   "ssr": {
     "default": {
       "props": {}
@@ -12,6 +12,11 @@
     "loading": {
       "props": {
         "loading": true
+      }
+    },
+    "link": {
+      "props": {
+        "link": true
       }
     }
   }

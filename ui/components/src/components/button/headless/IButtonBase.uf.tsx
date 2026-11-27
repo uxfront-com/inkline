@@ -3,7 +3,8 @@ import type { Element } from "@uxfront/unframework";
 
 import type { ButtonBaseProps } from "../types.ts";
 
-// The native `<button>`, with its parts in a fixed order: leading, label, trailing, spinner.
+// The native `<button>`, or with an `href` a link (`<a href>`) for navigation, with its parts in a
+// fixed order: leading, label, trailing, spinner.
 //
 // A loading button, and a disabled one that stays focusable, can't be activated, but keep their
 // focus, so they're `aria-disabled` rather than natively disabled. `aria-disabled` stops nothing on
@@ -11,6 +12,11 @@ import type { ButtonBaseProps } from "../types.ts";
 // client code, so both states render natively disabled until the component mounts: on the server,
 // and on Astro, which runs no client code, the button stays inert. The handler reads only the
 // element, so Qwik can run it synchronously, before the browser submits the form.
+//
+// A link that's disabled or loading drops its `href`, so it can't navigate even before it mounts,
+// and stays `role="link"` with `aria-disabled`, since an `<a>` without `href` has no role. It keeps
+// its focus with `tabindex="0"` while loading or focusable when disabled, and otherwise leaves the
+// tab order, as a disabled button does. A link takes no `type`, `disabled` or `aria-pressed`.
 //
 // When loading starts, the button announces its `loadingLabel` in a polite live region outside it,
 // since a region inside the button would change its name. Screen readers announce only changes to
@@ -20,6 +26,7 @@ import type { ButtonBaseProps } from "../types.ts";
 export default function IButtonBase({
   label,
   type = "button",
+  href,
   disabled = false,
   focusableWhenDisabled = false,
   loading = false,
@@ -36,9 +43,9 @@ export default function IButtonBase({
   color,
   size,
 }: ButtonBaseProps) {
-  // `click` fires on the native button's click, unless the button is disabled or loading.
-  // Unframework passes no listener through to a component's root, so the component declares the
-  // one a button exists for.
+  // `click` fires on the native button's or link's click, unless it's disabled or loading. Other
+  // listeners fall through to the root, but `click` is declared so that the guard below decides
+  // when a consumer's handler runs, since `aria-disabled` stops no click on its own.
   const emit = defineEmits<{ click: [] }>();
   const slots = defineSlots<{
     default?(): Element;
@@ -97,15 +104,19 @@ export default function IButtonBase({
   );
 
   return (
-    <button
-      type={type}
+    <component
+      is={href ? "a" : "button"}
+      type={href ? undefined : type}
+      href={href && !disabled && !loading ? href : undefined}
+      role={href && (disabled || loading) ? "link" : undefined}
+      tabindex={href && (loading || (disabled && focusableWhenDisabled)) ? 0 : undefined}
       id={id}
       disabled={
         (disabled && !focusableWhenDisabled) ||
         (!mounted.value && (loading || (disabled && focusableWhenDisabled)))
       }
-      aria-disabled={loading || (disabled && focusableWhenDisabled) ? "true" : undefined}
-      aria-pressed={ariaPressed}
+      aria-disabled={loading || (disabled && (focusableWhenDisabled || href)) ? "true" : undefined}
+      aria-pressed={href ? undefined : ariaPressed}
       aria-expanded={ariaExpanded}
       aria-haspopup={ariaHaspopup}
       aria-controls={ariaControls}
@@ -145,6 +156,6 @@ export default function IButtonBase({
             </span>
           ))
         : null}
-    </button>
+    </component>
   );
 }

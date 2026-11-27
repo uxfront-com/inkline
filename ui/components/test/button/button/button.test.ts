@@ -327,4 +327,197 @@ describeTargets("button/button", () => {
         .toHaveAttribute("data-loading", "");
     },
   );
+
+  it("renders a link with the button's recipe and data attributes when it has an href", async () => {
+    const styling = { color: "primary", variant: "outline", size: "lg", block: true } as const;
+    const plain = await mount(ButtonCase, { props: styling });
+    await plain.expectParity("link-button");
+    const base = plain.getByRole("button", { name: "Save" }).element().className;
+    await plain.unmount();
+    const view = await mount(ButtonCase, {
+      props: { scenario: "link", href: "/docs", ...styling },
+    });
+    await view.expectParity("link");
+    await expect.element(view.locator).toHaveAriaTree(`
+      - link "Docs":
+        - /url: /docs
+      - searchbox "Search"
+    `);
+    await expect.element(view.locator).toHaveNoAxeViolations();
+    const docs = view.getByRole("link", { name: "Docs" });
+    await expect.element(docs).toHaveAttribute("href", "/docs");
+    expect(docs.element().tagName).toBe("A");
+    expect(docs.element().className).toBe(base);
+    await expect.element(docs).toHaveAttribute("data-variant", "outline");
+    await expect.element(docs).toHaveAttribute("data-color", "primary");
+    await expect.element(docs).toHaveAttribute("data-size", "lg");
+    expect(view.locator.element().querySelector("button")).toBeNull();
+  });
+
+  it("renders no type, disabled state or toggle state on a link", async () => {
+    const view = await mount(ButtonCase, {
+      props: {
+        scenario: "link",
+        href: "/docs",
+        type: "submit",
+        ariaPressed: true,
+        ariaExpanded: false,
+      },
+    });
+    await view.expectParity("link-attributes");
+    await expect.element(view.locator).toHaveNoAxeViolations();
+    const docs = view.getByRole("link", { name: "Docs" });
+    for (const name of ["type", "disabled", "aria-pressed", "aria-disabled", "role", "tabindex"]) {
+      await expect.element(docs).not.toHaveAttribute(name);
+    }
+    await expect.element(docs).toHaveAttribute("aria-expanded", "false");
+  });
+
+  it("drops a link's href while it's disabled or loading, and says so", async () => {
+    for (const [name, props, tabindex] of [
+      ["link-disabled", { disabled: true }, null],
+      ["link-focusable-disabled", { disabled: true, focusableWhenDisabled: true }, "0"],
+      ["link-loading", { loading: true }, "0"],
+    ] as const) {
+      const view = await mount(ButtonCase, {
+        props: { scenario: "link", href: "/docs", ...props },
+      });
+      await view.expectParity(name);
+      await expect.element(view.locator).toHaveNoAxeViolations();
+      const docs = view.getByRole("link", { name: "Docs" });
+      await expect.element(docs).not.toHaveAttribute("href");
+      await expect.element(docs).not.toHaveAttribute("disabled");
+      await expect.element(docs).toHaveAttribute("role", "link");
+      await expect.element(docs).toHaveAttribute("aria-disabled", "true");
+      expect(docs.element().getAttribute("tabindex")).toBe(tabindex);
+      await view.unmount();
+    }
+  });
+
+  it(
+    "keeps a loading or focusable disabled link's focus, and emits nothing",
+    { requires: ["interactivity"] },
+    async () => {
+      const start = location.href;
+      for (const [name, props, focused] of [
+        ["link-disabled", { disabled: true }, "Search"],
+        ["link-focusable-disabled", { disabled: true, focusableWhenDisabled: true }, "Docs"],
+        ["link-loading", { loading: true }, "Docs"],
+      ] as const) {
+        const view = await mount(ButtonCase, {
+          props: { scenario: "link", href: "/docs", ...props },
+        });
+        await view.user.tab();
+        await view.expectParity(`${name}-tabbed`);
+        const docs = view.getByRole("link", { name: "Docs" });
+        if (focused === "Docs") await expect.element(docs).toHaveFocus();
+        else await expect.element(view.getByRole("searchbox", { name: "Search" })).toHaveFocus();
+        // Playwright refuses to click an `aria-disabled` element, so the click is the element's own.
+        (docs.element() as HTMLElement).click();
+        await view.expectParity(`${name}-clicked`);
+        await view.user.keyboard("{Enter}");
+        await view.expectParity(`${name}-entered`);
+        expect(view.emitted("click")).toEqual([]);
+        expect(location.href).toBe(start);
+        await view.unmount();
+      }
+    },
+  );
+
+  it(
+    "keeps a link's focus and name when it starts loading, and announces it",
+    { requires: ["interactivity"] },
+    async () => {
+      const view = await mount(ButtonCase, {
+        props: { scenario: "link", href: "/docs", loadingLabel: "Opening" },
+      });
+      const docs = view.getByRole("link", { name: "Docs" });
+      await view.user.tab();
+      await view.expectParity("link-focused");
+      const element = docs.element();
+      await expect.element(docs).toHaveFocus();
+      await view.rerender({
+        scenario: "link",
+        href: "/docs",
+        loadingLabel: "Opening",
+        loading: true,
+      });
+      await view.expectParity("link-loading-started");
+      expect(document.activeElement).toBe(element);
+      await expect.element(docs).toHaveAccessibleName("Docs");
+      await expect.element(docs).not.toHaveAttribute("href");
+      await expect.element(view.getByRole("status")).toHaveTextContent("Opening");
+      expect([...element.children].map((child) => child.getAttribute("data-slot"))).toEqual([
+        "label",
+        "spinner",
+      ]);
+    },
+  );
+
+  it("follows a link on Enter, and not on Space", { requires: ["interactivity"] }, async () => {
+    // The harness fails a test whose link click goes unprevented, since it would leave the page.
+    // So this listener, which runs after the component's, records whether the component let the
+    // click through to the browser, and then stops the navigation itself.
+    const followed: string[] = [];
+    const follow = (event: MouseEvent) => {
+      const link = (event.target as Element).closest("a[href]");
+      if (!link || event.defaultPrevented) return;
+      followed.push(link.getAttribute("href") ?? "");
+      event.preventDefault();
+    };
+    document.addEventListener("click", follow);
+    try {
+      const view = await mount(ButtonCase, { props: { scenario: "link", href: "/docs" } });
+      await view.user.tab();
+      await view.expectParity("link-href-tabbed");
+      await expect.element(view.getByRole("link", { name: "Docs" })).toHaveFocus();
+      await view.user.keyboard("{Enter}");
+      await view.expectParity("link-href-entered");
+      expect(followed).toEqual(["/docs"]);
+      expect(view.emitted("click")).toEqual([["docs"]]);
+      await view.user.keyboard("{Space}");
+      await view.expectParity("link-href-spaced");
+      expect(followed).toEqual(["/docs"]);
+      expect(view.emitted("click")).toEqual([["docs"]]);
+    } finally {
+      document.removeEventListener("click", follow);
+    }
+  });
+
+  it("names an icon-only link by its hidden label, and hides its icons", async () => {
+    const view = await mount(ButtonCase, { props: { scenario: "link-icons" } });
+    await view.expectParity("link-icons");
+    await expect.element(view.locator).toHaveAriaTree(`
+      - link "Settings":
+        - /url: /settings
+      - link "Continue":
+        - /url: /next
+    `);
+    await expect.element(view.locator).toHaveNoAxeViolations();
+    const settings = view.getByRole("link", { name: "Settings" });
+    await expect.element(settings).toHaveAttribute("href", "/settings");
+    await expect.element(settings).toHaveAttribute("data-icon-only", "");
+    expect(settings.element().querySelector('[data-slot="label"]')?.textContent).toBe("Settings");
+    expect(settings.element().querySelector('[data-slot="trailing"]')).toBeNull();
+    const continued = view.getByRole("link", { name: "Continue" });
+    for (const part of ["leading", "trailing"]) {
+      const icon = continued.element().querySelector(`[data-slot="${part}"]`);
+      expect(icon?.getAttribute("aria-hidden")).toBe("true");
+    }
+    expect(
+      [...continued.element().children].map((child) => child.getAttribute("data-slot")),
+    ).toEqual(["leading", "label", "trailing"]);
+  });
+
+  it(
+    "renders a link with no href on the server while it's disabled",
+    { requires: ["interactivity"] },
+    async () => {
+      const view = await mountScenario(ButtonCase, "link-disabled");
+      await view.expectParity("link-disabled-hydrated");
+      const docs = view.getByRole("link", { name: "Docs" });
+      await expect.element(docs).not.toHaveAttribute("href");
+      await expect.element(docs).toHaveAttribute("aria-disabled", "true");
+    },
+  );
 });

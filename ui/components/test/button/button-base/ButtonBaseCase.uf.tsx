@@ -1,7 +1,8 @@
 // A harness parent: `mount` takes props but no slots, so this fills the buttons' slots. With
 // `attributes`, it renders buttons that take the declared id, accessible name and description, and
 // emits `click` with the button's id whenever one of them does. With `loading`, it renders a loading
-// button with a leading and a trailing part beside an idle one.
+// button with a leading and a trailing part beside an idle one. With `link`, it renders a link with an
+// `href` in each state: active, disabled, disabled but focusable, and loading.
 import { defineEmits } from "@uxfront/unframework";
 
 import IButtonBase from "../../../src/components/button/headless/IButtonBase.uf.tsx";
@@ -9,9 +10,11 @@ import IButtonBase from "../../../src/components/button/headless/IButtonBase.uf.
 export default function ButtonBaseCase({
   attributes = false,
   loading = false,
+  link = false,
 }: {
   attributes?: boolean;
   loading?: boolean;
+  link?: boolean;
 }) {
   const emit = defineEmits<{ click: [button: string] }>();
 
@@ -29,6 +32,29 @@ export default function ButtonBaseCase({
             <span aria-hidden="true">×</span>
           </IButtonBase>
           <p id="save-hint">Saves the draft.</p>
+        </div>
+      ) : link ? (
+        <div>
+          <IButtonBase label="Docs" href="/docs" onClick={() => emit("click", "docs")} />
+          <IButtonBase
+            label="Off"
+            href="/off"
+            disabled={true}
+            onClick={() => emit("click", "off")}
+          />
+          <IButtonBase
+            label="Held"
+            href="/held"
+            disabled={true}
+            focusableWhenDisabled={true}
+            onClick={() => emit("click", "held")}
+          />
+          <IButtonBase
+            label="Wait"
+            href="/wait"
+            loading={true}
+            onClick={() => emit("click", "wait")}
+          />
         </div>
       ) : loading ? (
         <div>

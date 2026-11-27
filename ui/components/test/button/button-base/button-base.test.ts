@@ -104,4 +104,67 @@ describeTargets("button/button-base", () => {
       expect(view.emitted("click")).toEqual([["save"], ["save"], ["save"], ["close"]]);
     },
   );
+
+  it("renders a link for each state, with an href only while it's active", async () => {
+    const view = await mountScenario(ButtonBaseCase, "link");
+    await view.expectParity("link");
+    await expect.element(view.locator).toHaveAriaTree(`
+      - link "Docs":
+        - /url: /docs
+      - link "Off" [disabled]
+      - link "Held" [disabled]
+      - link "Wait" [disabled]
+    `);
+    await expect.element(view.locator).toHaveNoAxeViolations();
+    expect(view.locator.element().querySelector("button")).toBeNull();
+    for (const [name, href, tabindex] of [
+      ["Docs", "/docs", null],
+      ["Off", null, null],
+      ["Held", null, "0"],
+      ["Wait", null, "0"],
+    ] as const) {
+      const link = view.getByRole("link", { name }).element();
+      expect(link.tagName).toBe("A");
+      expect(link.getAttribute("href")).toBe(href);
+      expect(link.getAttribute("role")).toBe(href ? null : "link");
+      expect(link.getAttribute("aria-disabled")).toBe(href ? null : "true");
+      expect(link.getAttribute("tabindex")).toBe(tabindex);
+      for (const attribute of ["type", "disabled", "aria-pressed"]) {
+        expect(link.hasAttribute(attribute)).toBe(false);
+      }
+    }
+  });
+
+  it(
+    "emits click only from an active link, and cancels the click of one that isn't",
+    { requires: ["interactivity"] },
+    async () => {
+      // The harness fails a test whose link click goes unprevented, since it would leave the page.
+      // So this listener, which runs after the component's, records whether the component let the
+      // click through, and then stops the navigation itself.
+      const unprevented: string[] = [];
+      const record = (event: MouseEvent) => {
+        const link = (event.target as Element).closest("a");
+        if (!link || event.defaultPrevented) return;
+        unprevented.push(link.textContent ?? "");
+        event.preventDefault();
+      };
+      document.addEventListener("click", record);
+      try {
+        const view = await mountScenario(ButtonBaseCase, "link");
+        await view.expectParity("link-2");
+        await view.user.click(view.getByRole("link", { name: "Docs" }));
+        await view.expectParity("link-clicked");
+        // Playwright refuses to click an `aria-disabled` element, so these clicks are the element's own.
+        for (const name of ["Off", "Held", "Wait"]) {
+          (view.getByRole("link", { name }).element() as HTMLElement).click();
+        }
+        await view.expectParity("link-inert-clicked");
+        expect(unprevented).toEqual(["Docs"]);
+        expect(view.emitted("click")).toEqual([["docs"]]);
+      } finally {
+        document.removeEventListener("click", record);
+      }
+    },
+  );
 });

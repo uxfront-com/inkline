@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "steps": [
+    {
+      "action": "tab",
+      "dom": [
+        "<div>",
+        "  <a aria-disabled=\"true\" class=\"_active:background:color.gray-200 _align-items:[center] _any-pointer-coarse:before:inset:abd02d0 _any-pointer-coarse:before:position:[absolute] _aria-disabled:active:background:color.white _aria-disabled:active:color:text _aria-disabled:background:color.white _aria-disabled:color:text _aria-disabled:cursor:[not-allowed] _aria-disabled:opacity:[0.75] _aria-expanded:background:color.gray-200 _aria-pressed:background:color.gray-200 _background:color.white _border-color:gray-450 _border-radius:md _border-style:border-style.solid _border-width:thin _color:text _cursor:[pointer] _dark:active:background:color.gray-750 _dark:aria-disabled:active:background:color.gray-900 _dark:aria-disabled:active:color:white _dark:aria-disabled:background:color.gray-900 _dark:aria-disabled:color:white _dark:aria-expanded:background:color.gray-750 _dark:aria-pressed:background:color.gray-750 _dark:background:color.gray-900 _dark:border-color:gray-450 _dark:color:white _dark:disabled:background:color.gray-900 _dark:disabled:color:white _dark:hover-capable:hover:background:color.gray-800 _dark:hover-capable:hover:color:white _data-loading:cursor:[progress] _disabled:background:color.white _disabled:color:text _disabled:cursor:[not-allowed] _disabled:opacity:[0.75] _display:[inline-flex] _focus-visible:outline-color:focus _focus-visible:outline-offset:[2px] _focus-visible:outline-style:[solid] _focus-visible:outline-width:[2px] _font-size:sm _font-weight:medium _forced-colors:focus-visible:outline-color:[Highlight] _gap:0.375 _hover-capable:hover:background:color.gray-100 _hover-capable:hover:color:text _hover-capable:hover:text-decoration-line:[none] _justify-content:[center] _line-height:normal _min-height:2.25 _min-width:2.25 _outline:[none] _padding-bottom:0.5 _padding-inline:0.75 _padding-top:0.5 _position:[relative] _text-align:[center] _text-decoration:[none] _transition-duration:[150ms] _transition-property:f102251 _transition-timing-function:ease-in-out _user-select:[none] button\" data-color=\"neutral\" data-loading=\"\" data-size=\"md\" data-variant=\"solid\" role=\"link\" tabindex=\"0\" uf:focused=\"\">",
+        "    <span data-slot=\"label\">",
+        "      \"Docs\"",
+        "    </span>",
+        "    <span aria-hidden=\"true\" class=\"_align-items:[center] _color:primary _dark:color:primary-400 _display:[inline-flex] _flex-shrink:[0] _font-size:[inherit] _justify-content:[center] _line-height:normal _position:[relative] _vertical-align:[-0.125em] spinner\" data-slot=\"spinner\">",
+        "      <svg class=\"_animation-duration:[1.2s] _animation-iteration-count:[infinite] _animation-name:[spinner-rotate] _animation-timing-function:[linear] _flex-shrink:[0] _height:[1em] _motion-reduce:animation-duration:8377408 _motion-reduce:animation-iteration-count:951ebc9 _motion-reduce:animation-name:[spinner-pulse] _motion-reduce:animation-timing-function:ease-in-out _transform-origin:496125a _width:[1em] spinner-circle\" viewBox=\"0 0 50 50\">",
+        "        <circle cx=\"25\" cy=\"25\" r=\"20\"></circle>",
+        "      </svg>",
+        "    </span>",
+        "  </a>",
+        "  <input aria-label=\"Search\" type=\"search\" uf:value=\"\">",
+        "</div>",
+        "<uf:teleported>",
+        "  <div data-inkline-announcer=\"1\" role=\"status\" style=\"clip-path: inset(50%); height: 1px; margin: -1px; overflow: hidden; position: absolute; white-space: nowrap; width: 1px;\"></div>",
+        "</uf:teleported>"
+      ],
+      "aria": [
+        "- link \"Docs\" [disabled]",
+        "- searchbox \"Search\"",
+        "- status"
+      ],
+      "events": {}
+    }
+  ]
+}
